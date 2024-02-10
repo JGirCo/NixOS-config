@@ -10,7 +10,7 @@ let
   # add unstable channel declaratively
   unstableTarball =
     fetchTarball
-      https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
+      "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
 in
 
 {
@@ -192,6 +192,9 @@ in
     wireshark
     arduino
     vlc
+
+    # Miscelaneous
+    emacs-all-the-icons-fonts
   ];
 
   environment.sessionVariables = rec {

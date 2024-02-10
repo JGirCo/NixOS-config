@@ -41,6 +41,7 @@ with colorScheme."${theme}";{
           "${mod}+b" = "exec firefox";
           "${mod}+d" = "exec rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi";
           "${mod}+t" = "exec wezterm";
+          "${mod}+m" = "exec emacs";
           "Print" = "exec flameshot gui";
 
 

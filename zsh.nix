@@ -19,6 +19,8 @@
       };
       initExtra = ''
         export PATH="$HOME/.emacs.d/bin:$PATH"
+        export PATH="$PWD/diagslave/x86_64-linux-gnu:$PATH"
+        export PATH="$PWD/modpoll/modpoll/x86_64-linux-gnu:$PATH"
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
       '';
     };

@@ -7,7 +7,7 @@
       shadow = false;
       fade = true;
       fadeSteps = [ 0.04 0.04 ];
-      inactiveOpacity = 1;
+      inactiveOpacity = .95;
       opacityRules = [ "90:class_g = 'org.wezfurlong.wezterm'" ];
       vSync = true;
     };
