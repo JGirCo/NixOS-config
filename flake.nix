@@ -23,9 +23,8 @@
       };
     };
     homeConfigurations = {
-      juanma = home-manager.lib.home-managerConfiguration {
+      juanma = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        inherit system;
         modules =  [./home.nix];
       };
     };
