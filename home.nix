@@ -7,7 +7,9 @@
       ./desktop/i3.nix
       ./desktop/picom.nix
     ];
-  home-manager.users.juanma = { pkgs, ... }: {
+    home.username = "juanma";
+    home.homeDirectory = "/home/juanma";
+    programs.home-manager.enable = true;
     home.stateVersion = "23.11";
     home.packages = with pkgs; [
       rofi
@@ -49,5 +51,4 @@
       };
       Install.WantedBy = [ "timers.target" ];
     };
-  };
 }

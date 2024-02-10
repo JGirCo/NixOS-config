@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  home-manager.users.juanma = { pkgs, ... }: {
     services.picom = {
       enable = true;
       shadow = false;
@@ -11,5 +10,4 @@
       opacityRules = [ "90:class_g = 'org.wezfurlong.wezterm'" ];
       vSync = true;
     };
-  };
 }

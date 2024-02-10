@@ -14,7 +14,6 @@ let
   colorScheme = import ./colors.nix;
 in
 with colorScheme."${theme}";{
-  home-manager.users.juanma = { pkgs, ... }: {
     xsession.windowManager.i3 = {
       enable = true;
       config = {
@@ -143,5 +142,4 @@ with colorScheme."${theme}";{
         };
       };
     };
-  };
 }

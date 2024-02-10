@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  home-manager.users.juanma = { pkgs, ... }: {
     programs.zsh = {
       enable = true;
       enableCompletion = true;
@@ -24,5 +23,4 @@
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
       '';
     };
-  };
 }

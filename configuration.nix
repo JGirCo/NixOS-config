@@ -18,8 +18,6 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./home.nix
-      <home-manager/nixos>
     ];
 
   # Experimental features
@@ -129,10 +127,6 @@ in
       firefox
       #  thunderbird
     ];
-  };
-
-  home-manager.users.juanma = { pkgs, ... }: {
-    home.stateVersion = "23.11";
   };
 
   # Allow unfree packages
