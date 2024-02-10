@@ -1,11 +1,11 @@
 {
 
-  description = "Configuration flake"
+  description = "Configuration flake";
 
   inputs = {
     nixpkgs = {
       url = "nixpkgs/nixos/nixos-23.11";
-    }
+    };
   };
 
   outputs = {self, nixpkgs, ...}:
@@ -17,7 +17,7 @@
       nixos-config = lib.nixosSystem {
         system = "x86_64-linux";
         modules =  [./configuration.nix];
-      }
+      };
     };
   };
 
