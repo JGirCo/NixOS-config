@@ -6,6 +6,7 @@
       ./zsh.nix
       ./desktop/i3.nix
       ./desktop/picom.nix
+      ./desktop/wezterm.nix
     ];
     home.username = "juanma";
     home.homeDirectory = "/home/juanma";

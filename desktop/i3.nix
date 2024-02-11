@@ -10,7 +10,8 @@ let
   unfocused = "#ffffff00";
   focused_inactive = "#ffffff00";
 
-  theme = "dracula";
+  theme = (import ./global.nix).theme;
+
   colorScheme = import ./colors.nix;
 in
 with colorScheme."${theme}";{
