@@ -2,8 +2,8 @@
   rosepine = {
     base = "#faf4ed";
     text = "#faf4ed";
-    inactive = "#9893a5";
-    focused = "#d7827e";
+    inactive = "#d7827e";
+    focused = "#b4637a";
     active = "#59949f";
     urgent = "#ea9d34";
     binding = "#907aa9";
@@ -23,6 +23,19 @@
 
     key = {
       wezterm = "Dracula";
+    };
+  };
+  gruvbox = {
+    base = "#282828";
+    text = "#282828";
+    inactive = "#458588";
+    focused = "#83a598";
+    active = "#8ec07e";
+    urgent = "#fb4934";
+    binding = "#d3869b";
+
+    key = {
+      wezterm = "Gruvbox Dark (Gogh)";
     };
   };
 }

@@ -157,6 +157,7 @@ in
     fd
     coreutils
     clang
+    python
 
     #System tools
     xclip
@@ -167,14 +168,16 @@ in
     # Terminal Tools
     kitty
     wezterm
+    libqalculate
+    spicetify-cli
 
     # TUI Tools
+    spotify-tui
     emacs
     ranger
     lazygit
     bottom
     bluetuith
-    libqalculate
 
     #GUI Tools
     spotify

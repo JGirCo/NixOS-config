@@ -19,6 +19,10 @@ with colorScheme."${theme}";{
       enable = true;
       config = {
         modifier = mod;
+        defaultWorkspace = "workspace number 9";
+        workspaceAutoBackAndForth = true;
+
+        assigns = {"10: background" = [{class = "^spotify$";}];};
 
         fonts = { names = [ "FantasqueSansM Nerd Font" ]; size = 9.0; };
         startup = [
@@ -42,6 +46,7 @@ with colorScheme."${theme}";{
           "${mod}+d" = "exec rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi";
           "${mod}+t" = "exec wezterm";
           "${mod}+m" = "exec emacs";
+          "${mod}+s" = "exec wezterm start spt;exec spotify";
           "Print" = "exec flameshot gui";
 
 
@@ -72,6 +77,16 @@ with colorScheme."${theme}";{
 
           "${mod}+Shift+c" = "reload";
 
+"${mod}+Shift+1" = "move container to workspace number 1; workspace number 1";
+"${mod}+Shift+2" = "move container to workspace number 2; workspace number 2";
+"${mod}+Shift+3" = "move container to workspace number 3; workspace number 3";
+"${mod}+Shift+4" = "move container to workspace number 4; workspace number 4";
+"${mod}+Shift+5" = "move container to workspace number 5; workspace number 5";
+"${mod}+Shift+6" = "move container to workspace number 6; workspace number 6";
+"${mod}+Shift+7" = "move container to workspace number 7; workspace number 7";
+"${mod}+Shift+8" = "move container to workspace number 8; workspace number 8";
+"${mod}+Shift+9" = "move container to workspace number 9; workspace number 9";
+"${mod}+Shift+10" = "move container to workspace number 10; workspace number 10";
 
           "XF86AudioRaiseVolume" = "exec --no-startup-id pamixer -i 5 && pkill -RTMIN+12 i3blocks";
           "XF86AudioLowerVolume" = "exec --no-startup-id pamixer -d 5 && pkill -RTMIN+12 i3blocks ";
@@ -99,8 +114,7 @@ with colorScheme."${theme}";{
           {
             fonts = { names = [ "FantasqueSansM Nerd Font" ]; size = 9.0; };
             position = "bottom";
-            statusCommand = "SCRIPT_DIR=~/.config/i3blocks ${pkgs.i3blocks}/bin/i3blocks";
-            # background = "#ffffff";
+            statusCommand = "SCRIPT_DIR=~/.config/i3blocks ${pkgs.i3blocks}/bin/i3blocks -c ~/.config/i3blocks/${theme}";
             colors = {
               background = "${base}ff";
               separator = text;
