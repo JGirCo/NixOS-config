@@ -157,7 +157,6 @@ in
     fd
     coreutils
     clang
-    python
 
     #System tools
     xclip
