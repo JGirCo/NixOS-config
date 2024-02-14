@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nixvim, ... }:
 
 {
   imports =
@@ -8,6 +8,7 @@
       ./desktop/picom.nix
       ./desktop/wezterm.nix
     ];
+
     home.username = "juanma";
     home.homeDirectory = "/home/juanma";
     programs.home-manager.enable = true;

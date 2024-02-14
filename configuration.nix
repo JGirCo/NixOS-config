@@ -2,16 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
-
-
-let
-  # add unstable channel declaratively
-  unstableTarball =
-    fetchTarball
-      "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-in
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   imports =
@@ -131,67 +122,67 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.packageOverrides = pkgs: {
-    unstable = import unstableTarball {
-      config = config.nixpkgs.config;
-    };
-  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    # Basic tools
-    git
-    wget
-    gcc
-    gnumake
-    ripgrep
-    nodejs
-    python3
-    cargo
-    rustc
-    rust-analyzer
-    zip
-    unzip
-    gh
-    fd
-    coreutils
-    clang
+  environment.systemPackages = 
+    (with pkgs; [
+      # Basic tools
+      git
+      wget
+      gcc
+      gnumake
+      ripgrep
+      nodejs
+      python3
+      cargo
+      rustc
+      rust-analyzer
+      zip
+      unzip
+      gh
+      fd
+      coreutils
+      clang
 
-    #System tools
-    xclip
-    acpi
-    pamixer
-    playerctl
+      #System tools
+      xclip
+      acpi
+      pamixer
+      playerctl
 
-    # Terminal Tools
-    kitty
-    wezterm
-    libqalculate
-    spicetify-cli
+      # Terminal Tools
+      kitty
+      wezterm
+      libqalculate
+      spicetify-cli
 
-    # TUI Tools
-    spotify-tui
-    emacs
-    ranger
-    lazygit
-    bottom
-    bluetuith
+      # TUI Tools
+      spotify-tui
+      emacs
+      ranger
+      lazygit
+      bottom
+      bluetuith
 
-    #GUI Tools
-    spotify
-    libreoffice
-    inkscape
-    flameshot
-    bottles
-    ungoogled-chromium
-    wireshark
-    arduino
-    vlc
+      #GUI Tools
+      spotify
+      libreoffice
+      inkscape
+      flameshot
+      bottles
+      ungoogled-chromium
+      wireshark
+      arduino
+      vlc
 
-    # Miscelaneous
-    emacs-all-the-icons-fonts
-  ];
+      # Miscelaneous
+      emacs-all-the-icons-fonts
+    ])
+    ++
+    (with pkgs-unstable; [
+      floorp
+    ]);
 
   environment.sessionVariables = rec {
     XDG_CACHE_HOME = "$HOME/.cache";

@@ -8,8 +8,11 @@
       # syntaxHighlighting.enable = true;
       shellAliases = {
         ll = "ls -l";
-        update = "sudo nixos-rebuild switch";
+        update = "sudo nixos-rebuild switch --flake ~/etc/nixos/flake.nix";
+        rebuildHome = "home.manaer switch --flake ~/etc/nixos/flake.nix";
         editSystem = "nvim ~/etc/nixos/configuration.nix";
+	      astro = "NVIM_APPNAME=astro nvim";
+	      aScheme = "NVIM_APPNAME=astro nvim ~/.config/astro/lua/user/init.lua";
       };
       oh-my-zsh = {
         enable = true;
