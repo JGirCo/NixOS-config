@@ -19,7 +19,7 @@ with colorScheme."${theme}";{
       enable = true;
       config = {
         modifier = mod;
-        defaultWorkspace = "workspace number 9";
+        defaultWorkspace = "workspace number 1";
         workspaceAutoBackAndForth = true;
 
         assigns = {"10: background" = [{class = "^spotify$";}];};

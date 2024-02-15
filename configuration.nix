@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, ... }:
 
 {
   imports =
@@ -178,10 +178,6 @@
 
       # Miscelaneous
       emacs-all-the-icons-fonts
-    ])
-    ++
-    (with pkgs-unstable; [
-      floorp
     ]);
 
   environment.sessionVariables = rec {

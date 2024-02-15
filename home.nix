@@ -7,6 +7,7 @@
       ./desktop/i3.nix
       ./desktop/picom.nix
       ./desktop/wezterm.nix
+      ./neovim/default.nix
     ];
 
     home.username = "juanma";

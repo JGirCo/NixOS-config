@@ -10,6 +10,7 @@
 
     key = {
       wezterm = "rose-pine-dawn";
+      nvim = "rose-pine";
     };
   };
   dracula = {
@@ -23,6 +24,7 @@
 
     key = {
       wezterm = "Dracula";
+      nvim = "dracula";
     };
   };
   gruvbox = {
@@ -36,6 +38,7 @@
 
     key = {
       wezterm = "Gruvbox Dark (Gogh)";
+      nvim = "gruvbox";
     };
   };
 }

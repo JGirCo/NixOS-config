@@ -3,31 +3,30 @@
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "nixpkgs/nixos-23.11";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      # url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-        url = "github:nix-community/nixvim/nixos-23.11";
+        url = "github:nix-community/nixvim";
         inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, home-manager, nixvim, ... }:
+  outputs = { nixpkgs, home-manager, nixvim, ... }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
-      pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
     in {
       nixosConfigurations = {
         nixos = lib.nixosSystem {
           inherit system;
           modules =  [./configuration.nix];
           specialArgs = {
-            inherit pkgs-unstable;
           };
         };
       };
@@ -38,7 +37,6 @@
         nixvim.homeManagerModules.nixvim
         ];
         extraSpecialArgs = {
-          inherit pkgs-unstable;
         };
       };
     };

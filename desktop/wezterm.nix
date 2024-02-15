@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let 
+let
   theme = (import ./global.nix).theme;
   color_scheme = import ./colors.nix;
 in
@@ -8,7 +8,7 @@ with color_scheme."${theme}";{
     programs.wezterm = {
       enable = true;
       enableZshIntegration = true;
-      extraConfig = '' 
+      extraConfig = ''
 
         -- This table will hold the configuration.
         local config = {}
