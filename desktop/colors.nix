@@ -11,6 +11,14 @@
     key = {
       wezterm = "rose-pine-dawn";
       nvim = "rose-pine";
+      gtk = {
+        themeName = "rose-pine-dawn";
+        themePackage = "rose-pine-gtk-theme";
+        iconsName = "rose-pine-dawn";
+        iconsPackage = "rose-pine-icon-theme";
+        cursorName = "phinger-cursors";
+        cursorPackage = "phinger-cursors";
+      };
     };
   };
   dracula = {
@@ -25,6 +33,14 @@
     key = {
       wezterm = "Dracula";
       nvim = "dracula";
+      gtk = {
+        themeName = "Dracula";
+        themePackage = "dracula-theme";
+        iconsName = "dracula";
+        iconsPackage = "dracula-icon-theme";
+        cursorName = "Dracula-cursors";
+        cursorPackage = "phinger-cursors";
+      };
     };
   };
   gruvbox = {
@@ -39,6 +55,14 @@
     key = {
       wezterm = "Gruvbox Dark (Gogh)";
       nvim = "gruvbox";
+      gtk = {
+        themeName = "gruvbox-dark";
+        themePackage = "gruvbox-dark-gtk";
+        iconsName = "oomox-gruvbox-dark";
+        iconsPackage = "gruvbox-dark-icons-gtk";
+        cursorName = "Capitaine Cursors (Gruvbox) - White";
+        cursorPackage = "capitaine-cursors-themed";
+      };
     };
   };
 }

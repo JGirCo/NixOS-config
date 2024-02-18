@@ -1,5 +1,6 @@
 {
   imports = [
+    ./which-key.nix
     ./barbar.nix
     ./comment.nix
     ./efm.nix
@@ -8,13 +9,13 @@
     ./lsp.nix
     ./lualine.nix
     ./markdown-preview.nix
-    ./neorg.nix
+    # ./neorg.nix
     ./neo-tree.nix
     ./startify.nix
     ./tagbar.nix
     ./telescope.nix
     ./treesitter.nix
-    ./vimtex.nix
+    # ./vimtex.nix
   ];
 
   programs.nixvim = {
@@ -27,14 +28,12 @@
           change.text = "~";
         };
       };
-
       nvim-autopairs.enable = true;
 
       nvim-colorizer = {
         enable = true;
         userDefaultOptions.names = false;
       };
-
       oil.enable = true;
     };
   };

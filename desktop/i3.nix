@@ -42,7 +42,7 @@ with colorScheme."${theme}";{
 
         keybindings = lib.mkOptionDefault {
           "${mod}+q" = "kill";
-          "${mod}+b" = "exec firefox";
+          "${mod}+b" = "exec floorp";
           "${mod}+d" = "exec rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi";
           "${mod}+t" = "exec wezterm";
           "${mod}+m" = "exec emacs";

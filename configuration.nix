@@ -67,9 +67,9 @@
   };
 
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "latam";
-    xkbVariant = "";
+    variant = "";
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -125,7 +125,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = 
+  environment.systemPackages =
     (with pkgs; [
       # Basic tools
       git
@@ -166,6 +166,7 @@
       bluetuith
 
       #GUI Tools
+      floorp
       spotify
       libreoffice
       inkscape
