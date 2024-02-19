@@ -160,7 +160,7 @@
       # TUI Tools
       spotify-tui
       emacs
-      ranger
+      yazi
       lazygit
       bottom
       bluetuith

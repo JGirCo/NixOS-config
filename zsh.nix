@@ -8,8 +8,8 @@
       # syntaxHighlighting.enable = true;
       shellAliases = {
         ll = "ls -l";
-        update = "sudo nixos-rebuild switch --flake ~/etc/nixos/flake.nix";
-        rebuildHome = "home-manager switch --flake ~/etc/nixos/flake.nix";
+        update = "sudo nixos-rebuild switch --flake ~/etc/nixos/";
+        rebuildHome = "home-manager switch --flake ~/etc/nixos/";
         editSystem = "nvim ~/etc/nixos/configuration.nix";
 	      astro = "NVIM_APPNAME=astro nvim";
 	      kick = "NVIM_APPNAME=kick nvim";
