@@ -211,8 +211,14 @@
 
   programs.kdeconnect.enable = true;
 
-
   programs.dconf.enable = true;
+
+  services.emacs = {
+    enable = true;
+    package = pkgs.emacs;
+  };
+
+
 
   # List services that you want to enable:
 

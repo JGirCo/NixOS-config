@@ -21,11 +21,4 @@ with color_scheme."${theme}".key.gtk;{
       x11.defaultCursor = "${cursorName}";
       package = pkgs."${cursorPackage}";
     };
-
-    # gtk.cursorTheme = {
-    #   name = "${cursorName}";
-    #   package = pkgs."${cursorPackage}";
-    #   # name = "Capitaine Cursors (Gruvbox) - White";
-    #   # package = pkgs.capitaine-cursors-themed;
-    # };
 }
