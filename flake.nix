@@ -11,12 +11,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-        url = "github:nix-community/nixvim";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-doom-emacs = {
+      url = "github:nix-community/nix-doom-emacs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, ... }:
+  outputs = { nixpkgs, home-manager, nixvim, nix-doom-emacs, ... }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -32,11 +37,12 @@
       };
       homeConfigurations."juanma" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ 
+        modules = [
         ./home.nix
-        nixvim.homeManagerModules.nixvim
+          nixvim.homeManagerModules.nixvim
         ];
         extraSpecialArgs = {
+          inherit (inputs) nix-doom-emacs;
         };
       };
     };

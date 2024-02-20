@@ -26,6 +26,11 @@
     ];
     programs.zoxide.enable = true;
 
+    programs.doom-emacs = {
+      enable = true;
+      doomPrivateDir = ./doom.d;
+    };
+
     # systemd services
 
     systemd.user.services."battery-notifier" = {
