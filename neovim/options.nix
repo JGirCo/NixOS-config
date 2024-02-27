@@ -1,11 +1,12 @@
+{config, theme, ...}:
 let
-  theme = (import ../desktop/global.nix).theme;
   color_scheme = import ../desktop/colors.nix;
 in
-with color_scheme."${theme}";{
+with color_scheme.${theme};
+{
   programs.nixvim = {
-    colorschemes."${key.nvim}".enable = true;
-    #colorschemes.rose-pine.style = "dawn";
+    colorschemes.base16.enable = true;
+    colorschemes.base16.colorscheme = "${key.nvim}";
     globals = {
       # Disable useless providers
       loaded_ruby_provider = 0; # Ruby

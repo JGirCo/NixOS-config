@@ -14,13 +14,18 @@
         url = "github:nix-community/nixvim";
         inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, ... }:
+  outputs = { nixpkgs, home-manager, nixvim, ... }@inputs:
     let
+      # System settings
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
+
+      theme = "gruvbox-dark-hard";
+      # USER settings
     in {
       nixosConfigurations = {
         nixos = lib.nixosSystem {
@@ -32,11 +37,13 @@
       };
       homeConfigurations."juanma" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ 
+        modules = [
         ./home.nix
         nixvim.homeManagerModules.nixvim
         ];
         extraSpecialArgs = {
+          inherit inputs;
+          inherit theme;
         };
       };
     };

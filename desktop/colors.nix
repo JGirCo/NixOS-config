@@ -1,5 +1,5 @@
 {
-  rosepine = {
+  rose-pine-dawn = {
     base = "#faf4ed";
     text = "#faf4ed";
     inactive = "#d7827e";
@@ -8,9 +8,17 @@
     urgent = "#ea9d34";
     binding = "#907aa9";
 
+    # base = "#${config.colorScheme.colors.base00}";
+    # text = "#${config.colorScheme.colors.base00}";
+    # inactive = "#${config.colorScheme.colors.base03}";
+    # focused = "#${config.colorScheme.colors.base09}";
+    # active = "#${config.colorScheme.colors.base0A}";
+    # urgent = "#${config.colorScheme.colors.base08}";
+    # binding = "#${config.colorScheme.colors.base0E}";
+
     key = {
       wezterm = "rose-pine-dawn";
-      nvim = "rose-pine";
+      nvim = "rose-pine-dawn";
       gtk = {
         themeName = "rose-pine-dawn";
         themePackage = "rose-pine-gtk-theme";
@@ -43,7 +51,7 @@
       };
     };
   };
-  gruvbox = {
+  gruvbox-dark-hard = {
     base = "#282828";
     text = "#282828";
     inactive = "#458588";
@@ -54,7 +62,7 @@
 
     key = {
       wezterm = "Gruvbox Dark (Gogh)";
-      nvim = "gruvbox";
+      nvim = "gruvbox-dark-hard";
       gtk = {
         themeName = "gruvbox-dark";
         themePackage = "gruvbox-dark-gtk";

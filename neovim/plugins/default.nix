@@ -1,5 +1,6 @@
 {
   imports = [
+    ./surround.nix
     ./which-key.nix
     ./barbar.nix
     ./comment.nix

@@ -1,11 +1,10 @@
-{ config, pkgs, nixvim, ... }:
+{ config, pkgs, nixvim, theme,... }:
 
 let
-  theme = (import ./global.nix).theme;
   color_scheme = import ./colors.nix;
 in
 
-with color_scheme."${theme}".key.gtk;{
+with color_scheme.${theme}.key.gtk;{
     gtk.enable = true;
 
     gtk.theme.name = "${themeName}";

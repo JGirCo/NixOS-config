@@ -1,4 +1,4 @@
-{ config, pkgs, nixvim, ... }:
+{ config, pkgs, nixvim, inputs, theme, ... }:
 
 {
   imports =
@@ -9,7 +9,10 @@
       ./desktop/wezterm.nix
       ./desktop/gtk.nix
       ./neovim/default.nix
+      inputs.nix-colors.homeManagerModules.default
     ];
+
+    colorScheme = inputs.nix-colors.colorSchemes.${theme};
 
     home.username = "juanma";
     home.homeDirectory = "/home/juanma";
