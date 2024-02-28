@@ -4,8 +4,8 @@
   imports =
     [
       ./zsh.nix
-      ./desktop/i3.nix
-      ./desktop/picom.nix
+      # ./desktop/i3.nix
+      ./desktop/sway.nix
       ./desktop/wezterm.nix
       ./desktop/gtk.nix
       ./neovim/default.nix
@@ -18,15 +18,6 @@
     home.homeDirectory = "/home/juanma";
     programs.home-manager.enable = true;
     home.stateVersion = "23.11";
-    home.packages = with pkgs; [
-      rofi
-      i3blocks
-      i3lock
-      picom
-      feh
-      dunst
-      lxappearance
-    ];
     programs.zoxide.enable = true;
 
     # systemd services

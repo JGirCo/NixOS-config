@@ -14,13 +14,26 @@ let
   base = "#${config.colorScheme.palette.base00}";
   text = "#${config.colorScheme.palette.base00}";
   inactive = "#${config.colorScheme.palette.base03}";
-  focused = "#${config.colorScheme.palette.base08}";
+  focused = "#${config.colorScheme.palette.base09}";
   active = "#${config.colorScheme.palette.base0A}";
   urgent = "#${config.colorScheme.palette.base08}";
   binding = "#${config.colorScheme.palette.base0E}";
 in
 # with colorScheme."${theme}";
 {
+
+    imports = [
+      ./picom.nix
+    ];
+    home.packages = with pkgs; [
+      rofi
+      i3blocks
+      # i3lock
+      picom
+      # feh
+      # dunst
+      lxappearance
+    ];
     xsession.windowManager.i3 = {
       enable = true;
       config = {

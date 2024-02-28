@@ -65,6 +65,7 @@
   services.xserver.windowManager.i3 = {
     enable = true;
   };
+  programs.sway.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -158,6 +159,7 @@
       spicetify-cli
 
       # TUI Tools
+      cava
       spotify-tui
       emacs
       yazi
