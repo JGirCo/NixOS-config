@@ -9,17 +9,9 @@ let
 
   unfocused = "#ffffff00";
   focused_inactive = "#ffffff00";
-  # colorScheme = import ./colors.nix;
-
-  base = "#${config.colorScheme.palette.base00}";
-  text = "#${config.colorScheme.palette.base00}";
-  inactive = "#${config.colorScheme.palette.base03}";
-  focused = "#${config.colorScheme.palette.base09}";
-  active = "#${config.colorScheme.palette.base0A}";
-  urgent = "#${config.colorScheme.palette.base08}";
-  binding = "#${config.colorScheme.palette.base0E}";
+  colorScheme = import ./colors.nix;
 in
-# with colorScheme."${theme}";
+with colorScheme."${theme}";
 {
 
     imports = [

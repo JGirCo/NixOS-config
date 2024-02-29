@@ -145,6 +145,7 @@
       fd
       coreutils
       clang
+      busybox
 
       #System tools
       xclip

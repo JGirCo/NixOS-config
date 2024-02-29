@@ -9,17 +9,17 @@ let
 
   unfocused = "#ffffff00";
   focused_inactive = "#ffffff00";
-  # colorScheme = import ./colors.nix;
+  colorScheme = import ./colors.nix;
 
-  base = "#${config.colorScheme.palette.base00}";
-  text = "#${config.colorScheme.palette.base00}";
-  inactive = "#${config.colorScheme.palette.base03}";
-  focused = "#${config.colorScheme.palette.base09}";
-  active = "#${config.colorScheme.palette.base0A}";
-  urgent = "#${config.colorScheme.palette.base08}";
-  binding = "#${config.colorScheme.palette.base0E}";
+  # base = "#${config.colorScheme.palette.base00}";
+  # text = "#${config.colorScheme.palette.base00}";
+  # inactive = "#${config.colorScheme.palette.base03}";
+  # focused = "#${config.colorScheme.palette.base09}";
+  # active = "#${config.colorScheme.palette.base0A}";
+  # urgent = "#${config.colorScheme.palette.base08}";
+  # binding = "#${config.colorScheme.palette.base0E}";
 in
-# with colorScheme."${theme}";
+with colorScheme."${theme}";
 {
     imports = [
       ./waybar.nix
@@ -28,15 +28,17 @@ in
       swww
       waybar
       dunst
+      rofi
     ];
     wayland.windowManager.sway = {
       enable = true;
       extraConfig = ''
         for_window [class = "^Emacs$"] opacity 0.85
+        for_window [app_id = "^org.wezfurlong.wezterm"] opacity 0.85
         '';
       config = {
         modifier = mod;
-        defaultWorkspace = "workspace  1";
+        defaultWorkspace = "workspace 1: Main";
         workspaceAutoBackAndForth = true;
 
           input = {
@@ -48,13 +50,15 @@ in
 
         };
 
-        assigns = {"10: background" = [{class = "^Spotify$";}];};
+        assigns = {"10: Background" = [{class = "^Spotify$";}];};
 
         fonts = { names = [ "FantasqueSansM Nerd Font" ]; size = 9.0; };
         startup = [
           { command = "--no-startup-id swww init"; always = true; }
           { command = "--no-startup-id swww img ~/Pictures/wallpapers/${theme}.jpg"; always = true; }
-          { command = "--no-startup-id nm-applet"; }
+        #     command = "${pkgs.waybar}/bin/waybar";
+          { command = "--no-startup-id ${pkgs.waybar}/bin/waybar"; always = true; }
+          { command = "--no-startup-id nm-applet"; always = true; }
         ];
         window = {
           border = 3;
@@ -101,7 +105,7 @@ in
 
           "${mod}+Shift+c" = "reload";
 
-          "${mod}+Shift+1" = "move container to workspace 1; workspace 1";
+          "${mod}+Shift+1" = "move container to workspace 1: Main; workspace 1: Main";
           "${mod}+Shift+2" = "move container to workspace 2; workspace 2";
           "${mod}+Shift+3" = "move container to workspace 3; workspace 3";
           "${mod}+Shift+4" = "move container to workspace 4; workspace 4";
@@ -110,6 +114,7 @@ in
           "${mod}+Shift+7" = "move container to workspace 7; workspace 7";
           "${mod}+Shift+8" = "move container to workspace 8; workspace 8";
           "${mod}+Shift+9" = "move container to workspace 9; workspace 9";
+          "${mod}+Shift+0" = "move container to workspace 10: Background; workspace 10: Background";
 
           "XF86AudioRaiseVolume" = "exec --no-startup-id pamixer -i 5 && pkill -RTMIN+12 i3blocks";
           "XF86AudioLowerVolume" = "exec --no-startup-id pamixer -d 5 && pkill -RTMIN+12 i3blocks ";
@@ -134,20 +139,6 @@ in
         };
 
         bars = [
-          {
-            fonts = { names = [ "FantasqueSansM Nerd Font" ]; size = 9.0; };
-            command = "${pkgs.waybar}/bin/waybar";
-            position = "bottom";
-            # statusCommand = "SCRIPT_DIR=~/.config/i3blocks ${pkgs.i3blocks}/bin/i3blocks -c ~/.config/i3blocks/${theme}";
-            colors = {
-              background = "${base}ff";
-              separator = text;
-              bindingMode = { background = binding; border = binding; text = base; };
-              focusedWorkspace = { background = focused; border = focused; text = base; };
-              inactiveWorkspace = { background = inactive; border = inactive; text = text; };
-              urgentWorkspace = { background = urgent; border = urgent; text = base; };
-            };
-          }
         ];
         colors = {
           focused = {
