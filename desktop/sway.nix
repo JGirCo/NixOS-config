@@ -29,12 +29,16 @@ with colorScheme."${theme}";
       waybar
       dunst
       rofi
+      swayfx
     ];
+    # wayland.windowManager.swayfx.enable = true;
     wayland.windowManager.sway = {
       enable = true;
+      package = pkgs.swayfx;
       extraConfig = ''
         for_window [class = "^Emacs$"] opacity 0.85
         for_window [app_id = "^org.wezfurlong.wezterm"] opacity 0.85
+        corner_radius 10
         '';
       config = {
         modifier = mod;
@@ -114,7 +118,7 @@ with colorScheme."${theme}";
           "${mod}+Shift+7" = "move container to workspace 7; workspace 7";
           "${mod}+Shift+8" = "move container to workspace 8; workspace 8";
           "${mod}+Shift+9" = "move container to workspace 9; workspace 9";
-          "${mod}+Shift+0" = "move container to workspace 10: Background; workspace 10: Background";
+          "${mod}+Shift+0" = "move container to workspace 10: Background";
 
           "XF86AudioRaiseVolume" = "exec --no-startup-id pamixer -i 5 && pkill -RTMIN+12 i3blocks";
           "XF86AudioLowerVolume" = "exec --no-startup-id pamixer -d 5 && pkill -RTMIN+12 i3blocks ";

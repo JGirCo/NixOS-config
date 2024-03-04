@@ -7,7 +7,14 @@
 
       folding = true;
       indent = true;
+      ensureInstalled = [
+        "nix"
+        "arduino"
+        "python"
+        "rust"
+      ];
     };
+
 
     treesitter-refactor = {
       enable = true;

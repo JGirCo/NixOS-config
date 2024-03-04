@@ -139,6 +139,7 @@
       cargo
       rustc
       rust-analyzer
+      arduino-language-server
       zip
       unzip
       gh
@@ -161,6 +162,7 @@
 
       # TUI Tools
       cava
+      arduino-cli
       spotify-tui
       emacs
       yazi
@@ -177,11 +179,14 @@
       bottles
       ungoogled-chromium
       wireshark
-      arduino
+      arduino-ide
       vlc
 
       # Miscelaneous
       emacs-all-the-icons-fonts
+
+      #python
+      python311Packages.pyserial
     ]);
 
   environment.sessionVariables = rec {

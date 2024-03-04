@@ -7,7 +7,8 @@ with color_scheme.${theme};
   programs.nixvim = {
     # colorschemes.base16.enable = true;
     # colorschemes.base16.colorscheme = "${key.nvim}";
-    colorschemes.${key.nvim}.enable = true;
+
+    colorschemes.${key.nvim} =  if key.nvim == "catppuccin" then {enable = true; flavour = "latte";} else {enable = true;};
     globals = {
       # Disable useless providers
       loaded_ruby_provider = 0; # Ruby

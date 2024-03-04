@@ -39,7 +39,7 @@ with colorScheme.${theme};
 
           "pulseaudio" = {
             format = "{volume}% {icon}";
-            format-icons = ["" ""];
+            format-icons = ["" "" ""];
             format-muted = "";
             };
 
@@ -48,13 +48,16 @@ with colorScheme.${theme};
           };
 
           "battery" = {
-            interval = 60;
+            interval = 5;
             states = {
               warning = 30;
               critical = 10;
             };
             format = "{capacity}% {icon}";
-            format-icons = ["" "" "" "" ""];
+            format-full = "{capacity}% {icon}";
+            format-charging = "{capacity}%󱐋{icon}";
+            format-plugged = "{capacity}% ";
+            format-icons = [" " " " " " " " " "];
           };
           "clock" = {
             interval = 60;
@@ -69,8 +72,8 @@ with colorScheme.${theme};
         border-radius: 0;
         font-family: FantasqueSansM Nerd Font;
         font-size: 13px;
-        padding: 0;
-        margin: 0;
+        padding: 0px;
+        margin: -1px;
       }
       window#waybar {
         background: ${base};
@@ -78,46 +81,72 @@ with colorScheme.${theme};
         opacity: 0.85;
       }
 
-      #pulseaudio,
+      #pulseaudio {
+        background: ${green};
+        color: ${base};
+        border-radius: 7px 0px 0px 7px;
+        margin-left: 4px;
+      }
       #cava {
         background: ${green};
         color: ${base};
+        border-radius: 0px 7px 7px 0px;
+        margin-right: 4px;
       }
 
       #backlight {
         background: ${text2};
         color: ${base};
+        border-radius: 7px;
+        padding-right: 1px;
       }
 
-      #cpu,
+      #cpu {
+        background: ${blue};
+        color: ${base};
+        border-radius: 0px 7px 7px 0px;
+        margin-right: 4px;
+
+      }
       #memory{
         background: ${blue};
         color: ${base};
+        border-radius: 7px 0px 0px 7px;
+        margin-left: 4px;
       }
 
       #clock{
         background: ${purple};
         color: ${base};
+        margin: 0 4px;
+        border-radius: 7px;
       }
 
       #tray{
-        background: ${base};
+        background: ${orange};
+        margin: 0 4px;
+        border-radius: 5px;
       }
 
+      #workspaces button,
+      #scratchpad,
       #cpu,
       #memory,
       #pulseaudio,
       #backlight,
       #tray,
       #clock,
-      #cava,
-      #battery {
-        padding: 0 10px;
+      #cava {
+        padding: 0 7px;
       }
 
       #battery{
         background: ${green};
         color: ${base};
+        padding: 0 7px;
+        padding-right: 7px;
+        margin: 0 2px;
+        border-radius: 7px;
       }
 
       #battery.warning {
@@ -128,7 +157,7 @@ with colorScheme.${theme};
       #battery.charging,
       #battery.plugged {
         background: ${base};
-        color: ${base};
+        color: ${text2};
       }
 
       @keyframes blink {
@@ -152,13 +181,14 @@ with colorScheme.${theme};
           background: ${pink};
           color: ${base};
        }
-       #workspaces button.focused {
-          background: ${focused};
+
+       #workspaces button {
+          background: ${inactive};
           color: ${base};
        }
 
-       #workspaces button.visible {
-          background: ${inactive};
+       #workspaces button.focused {
+          background: ${focused};
           color: ${base};
        }
 

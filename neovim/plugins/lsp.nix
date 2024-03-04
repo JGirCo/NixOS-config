@@ -23,6 +23,7 @@
         };
 
         servers = {
+          # arduino_language_server.enable = true;
           rnix-lsp.enable = true;
           pylsp.enable = true;
           rust-analyzer = {
@@ -33,7 +34,6 @@
           ruff-lsp.enable = true;
           clangd.enable = true;
           lua-ls.enable = true;
-          texlab.enable = true;
         };
       };
     };
