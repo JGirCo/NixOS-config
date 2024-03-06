@@ -24,7 +24,7 @@
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
 
-      theme = "gruvbox-dark-medium";
+      theme = "catppuccin-latte";
       # USER settings
     in {
       nixosConfigurations = {

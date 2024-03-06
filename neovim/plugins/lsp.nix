@@ -22,8 +22,11 @@
           };
         };
 
+        enabledServers = [
+          {name = "arduino_language_server"; extraOptions = {};}
+        ];
+
         servers = {
-          # arduino_language_server.enable = true;
           rnix-lsp.enable = true;
           pylsp.enable = true;
           rust-analyzer = {

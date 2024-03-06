@@ -1,4 +1,4 @@
-{ config, pkgs, nixvim, inputs, theme, ... }:
+{ config, pkgs, nixvim, inputs, theme, lib, ... }:
 
 {
   imports =
@@ -6,11 +6,13 @@
       ./zsh.nix
       # ./desktop/i3.nix
       ./desktop/sway.nix
-      ./desktop/wezterm.nix
+      ./apps/wezterm.nix
       ./desktop/gtk.nix
       ./neovim/default.nix
       inputs.nix-colors.homeManagerModules.default
-    ];
+    ]
+    ++
+    lib.optionals (builtins.pathExists ./apps/spotifyd.nix) [./apps/spotifyd.nix];
 
     colorScheme = inputs.nix-colors.colorSchemes.${theme};
 
@@ -19,7 +21,6 @@
     programs.home-manager.enable = true;
     home.stateVersion = "23.11";
     programs.zoxide.enable = true;
-
     # systemd services
 
     systemd.user.services."battery-notifier" = {
