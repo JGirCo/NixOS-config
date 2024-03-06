@@ -24,7 +24,7 @@
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
 
-      theme = "catppuccin-latte";
+      theme = "rose-pine-dawn";
       # USER settings
     in {
       nixosConfigurations = {
