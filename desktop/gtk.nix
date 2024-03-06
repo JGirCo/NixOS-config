@@ -2,14 +2,15 @@
 
 let
   color_scheme = import ./colors.nix;
-  cssContent = with config.colorScheme.palette;
-  with color_scheme.${theme};''
 
+  cssContent = with config.colorScheme.palette;
+  with color_scheme.${theme};
+  ''
     @define-color accent_color #${base0D};
     @define-color accent_bg_color mix(#${base0D}, #${base00},0.3);
-    @define-color accent_fg_color #${focused};
+    @define-color accent_fg_color #${base00};
     @define-color destructive_color #${base0C};
-    @define-color destructive_bg_color mix(#${base0C}, #${base00},0.3);
+    @define-color destructive_bg_color mix(#${base0C}, #${base00},0.5);
     @define-color destructive_fg_color #${base02};
     @define-color success_color #${base0B};
     @define-color success_bg_color mix(#${base0B}, black,0.6);
@@ -20,9 +21,9 @@ let
     @define-color error_color #${base08};
     @define-color error_bg_color mix(#${base0C}, #${base00},0.3);
     @define-color error_fg_color #${base02};
-    @define-color window_bg_color ${focused};
-    @define-color window_fg_color #${base01};
-    @define-color view_bg_color #${base01};
+    @define-color window_bg_color mix(${focused}, ${base}, 0.5);
+    @define-color window_fg_color ${text2};
+    @define-color view_bg_color #${base00};
     @define-color view_fg_color ${text2};
     @define-color headerbar_bg_color #${base00};
     @define-color headerbar_fg_color ${text2};
@@ -35,7 +36,7 @@ let
     @define-color dialog_bg_color #${base02};
     @define-color dialog_fg_color ${text2};
     @define-color popover_bg_color #${base02};
-    @define-color popover_fg_color ${text2};
+    @define-color popover_fg_color ${text};
     @define-color shade_color rgba(0,0,0,0.36);
     @define-color scrollbar_outline_color rgba(0,0,0,0.5);
     @define-color blue_1 #${base0D};
