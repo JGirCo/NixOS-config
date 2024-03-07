@@ -9,7 +9,7 @@ let
 
   unfocused = "#ffffff00";
   focused_inactive = "#ffffff00";
-  colorScheme = import ./colors.nix;
+  colorScheme = import ../colors.nix;
 in
 with colorScheme."${theme}";
 {

@@ -9,10 +9,10 @@
       ./apps/wezterm.nix
       ./desktop/gtk.nix
       ./neovim/default.nix
+      ./apps/spotifyd.nix
+      ./apps/zathura.nix
       inputs.nix-colors.homeManagerModules.default
-    ]
-    ++
-    lib.optionals (builtins.pathExists ./apps/spotifyd.nix) [./apps/spotifyd.nix];
+    ];
 
     colorScheme = inputs.nix-colors.colorSchemes.${theme};
 

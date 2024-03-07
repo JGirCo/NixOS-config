@@ -1,10 +1,10 @@
 { config, pkgs, nixvim, theme,... }:
 
 let
-  color_scheme = import ./colors.nix;
+  colorScheme = import ../colors.nix;
 
   cssContent = with config.colorScheme.palette;
-  with color_scheme.${theme};
+  with colorScheme.${theme};
   ''
     @define-color accent_color #${base0D};
     @define-color accent_bg_color mix(#${base0D}, #${base00},0.3);
@@ -87,7 +87,7 @@ let
   '';
 in
 
-with color_scheme.${theme}.key.gtk;{
+with colorScheme.${theme}.key.gtk;{
     gtk.enable = true;
 
     gtk.theme.name = "adw-gtk3";

@@ -1,7 +1,7 @@
 { config, lib, pkgs, theme, ... }:
 
 let
-  colorScheme = import ./colors.nix;
+  colorScheme = import ../colors.nix;
 in
 with colorScheme.${theme};
 {
@@ -9,7 +9,7 @@ with colorScheme.${theme};
       enable = true;
       settings = {
         mainBar = {
-          position = "bottom";
+          position = "top";
           modules-left = ["pulseaudio" "cava" "backlight" "memory" "cpu"];
           modules-center = ["sway/workspaces" "sway/mode" "sway/scratchpad"];
           modules-right = ["battery" "clock" "tray"];
@@ -55,8 +55,8 @@ with colorScheme.${theme};
             };
             format = "{capacity}% {icon}";
             format-full = "{capacity}% {icon}";
-            format-charging = "{capacity}%󱐋{icon}";
-            format-plugged = "{capacity}% ";
+            format-charging = "{capacity}% 󱐋{icon}";
+            format-plugged = "";
             format-icons = [" " " " " " " " " "];
           };
           "clock" = {
@@ -72,13 +72,13 @@ with colorScheme.${theme};
         border-radius: 0;
         font-family: FantasqueSansM Nerd Font;
         font-size: 13px;
-        padding: 0px;
-        margin: -1px;
+        min-height: 10px;
       }
+
       window#waybar {
         background: ${base};
         color: ${text2};
-        opacity: 0.85;
+        opacity: 0.7;
       }
 
       #pulseaudio {
@@ -87,6 +87,7 @@ with colorScheme.${theme};
         border-radius: 7px 0px 0px 7px;
         margin-left: 4px;
       }
+
       #cava {
         background: ${green};
         color: ${base};
@@ -106,8 +107,8 @@ with colorScheme.${theme};
         color: ${base};
         border-radius: 0px 7px 7px 0px;
         margin-right: 4px;
-
       }
+
       #memory{
         background: ${blue};
         color: ${base};
@@ -180,11 +181,25 @@ with colorScheme.${theme};
        #mode {
           background: ${pink};
           color: ${base};
+          border-radius: 7px;
+          padding: 0 7px;
+          margin-left: 12px;
+          margin-right: 12px;
+       }
+
+       #workspaces {
+          margin-left: 12px;
+          margin-right: 12px;
+          margin-bottom: 0;
+          transition: none;
+          background: ${inactive};
+          border-radius: 7px;
        }
 
        #workspaces button {
-          background: ${inactive};
+          background: transparent;
           color: ${base};
+          border-radius: 7px;
        }
 
        #workspaces button.focused {

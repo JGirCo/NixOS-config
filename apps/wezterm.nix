@@ -1,7 +1,7 @@
 { config, lib, pkgs, theme, ... }:
 
 let
-  color_scheme = import ../desktop/colors.nix;
+  color_scheme = import ../colors.nix;
 in
 with color_scheme.${theme};{
     programs.wezterm = {

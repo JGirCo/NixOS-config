@@ -9,7 +9,7 @@ let
 
   unfocused = "#ffffff00";
   focused_inactive = "#ffffff00";
-  colorScheme = import ./colors.nix;
+  colorScheme = import ../colors.nix;
 
   # base = "#${config.colorScheme.palette.base00}";
   # text = "#${config.colorScheme.palette.base00}";
@@ -37,7 +37,9 @@ with colorScheme."${theme}";
       package = pkgs.swayfx;
       extraConfig = ''
         for_window [class = "^Emacs$"] opacity 0.85
-        for_window [app_id = "^org.wezfurlong.wezterm"] opacity 0.85
+        for_window [app_id = "^org.wezfurlong.wezterm"] opacity 0.7
+        blur enable
+        blur_radius 2
         corner_radius 10
         '';
       config = {
