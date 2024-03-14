@@ -21,7 +21,7 @@ let
     @define-color error_color #${base08};
     @define-color error_bg_color mix(#${base0C}, #${base00},0.3);
     @define-color error_fg_color #${base02};
-    @define-color window_bg_color mix(${focused}, ${base}, 0.5);
+    @define-color window_bg_color mix(${focused}, ${base}, 0.35);
     @define-color window_fg_color ${text2};
     @define-color view_bg_color #${base00};
     @define-color view_fg_color ${text2};
@@ -36,7 +36,7 @@ let
     @define-color dialog_bg_color #${base02};
     @define-color dialog_fg_color ${text2};
     @define-color popover_bg_color #${base02};
-    @define-color popover_fg_color ${text};
+    @define-color popover_fg_color ${text2};
     @define-color shade_color rgba(0,0,0,0.36);
     @define-color scrollbar_outline_color rgba(0,0,0,0.5);
     @define-color blue_1 #${base0D};

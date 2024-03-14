@@ -42,6 +42,8 @@ with config.colorScheme.palette;
 
         recolor = "true";
         recolor-keephue = "false";
+
+        selection-clipboard = "clipboard";
       };
     };
   };

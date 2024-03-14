@@ -23,7 +23,13 @@
         };
 
         enabledServers = [
-          {name = "arduino_language_server"; extraOptions = {};}
+          {name = "arduino_language_server";
+            extraOptions = {
+              cmd = ["arduino-language-server"];
+              capabilities = ["default_capabilities.textDocument.semanticTokens = vim.NIL"
+              "default_capabilities.workspace.semanticTokens = vim.NIL"];
+            };
+          }
         ];
 
         servers = {

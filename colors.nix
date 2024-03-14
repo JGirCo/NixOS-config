@@ -28,6 +28,7 @@
     key = {
       wezterm = "catppuccin-latte";
       nvim = "catppuccin";
+      isNvimBuiltin = true;
       gtk = {
         iconsName = "rose-pine-dawn";
         iconsPackage = "rose-pine-icon-theme";
@@ -66,6 +67,7 @@
     key = {
       wezterm = "rose-pine-dawn";
       nvim = "rose-pine";
+      isNvimBuiltin = true;
       gtk = {
         themeName = "rose-pine-dawn";
         themePackage = "rose-pine-gtk-theme";
@@ -106,6 +108,7 @@
     key = {
       wezterm = "rose-pine";
       nvim = "rose-pine";
+      isNvimBuiltin = true;
       gtk = {
         themeName = "rose-pine";
         themePackage = "rose-pine-gtk-theme";
@@ -137,6 +140,7 @@
     key = {
       wezterm = "Dracula";
       nvim = "dracula";
+      isNvimBuiltin = true;
       gtk = {
         themeName = "Dracula";
         themePackage = "dracula-theme";
@@ -168,6 +172,7 @@
     key = {
       wezterm = "Gruvbox Dark (Gogh)";
       nvim = "gruvbox";
+      isNvimBuiltin = true;
       gtk = {
         themeName = "gruvbox-dark";
         themePackage = "gruvbox-dark-gtk";
@@ -200,6 +205,7 @@
     key = {
       wezterm = "GruvboxLight";
       nvim = "gruvbox";
+      isNvimBuiltin = true;
       gtk = {
         themeName = "gruvbox-light";
         themePackage = "gruvbox-gtk-theme";
@@ -210,4 +216,38 @@
       };
     };
   };
+
+  rebecca = {
+    base = "#292a44";
+    text = "#292a44";
+    text2 = "#f1eff8";
+    inactive = "#666699";
+    focused = "#6dfedf";
+    active = "#2de0a7";
+    urgent = "#ff5555";
+    binding = "#ff79c6";
+
+    red = "#ff5555";
+    yellow = "#efe4a1";
+    pink = "#ff79c6";
+    green = "#2de0a7";
+    blue = "#6dfedf";
+    purple = "#ae81ff";
+    orange = "#ffb86c";
+
+    key = {
+      wezterm = "rebecca";
+      nvim = "rebecca";
+      isNvimBuiltin = false;
+      gtk = {
+        themeName = "Dracula";
+        themePackage = "dracula-theme";
+        iconsName = "dracula";
+        iconsPackage = "dracula-icon-theme";
+        cursorName = "Dracula-cursors";
+        cursorPackage = "phinger-cursors";
+      };
+    };
+  };
+
 }

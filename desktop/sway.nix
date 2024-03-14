@@ -44,7 +44,7 @@ with colorScheme."${theme}";
         '';
       config = {
         modifier = mod;
-        defaultWorkspace = "workspace 1: Main";
+        defaultWorkspace = "1";
         workspaceAutoBackAndForth = true;
 
           input = {
@@ -67,7 +67,7 @@ with colorScheme."${theme}";
           { command = "--no-startup-id nm-applet"; always = true; }
         ];
         window = {
-          border = 3;
+          border = 4;
           titlebar = false;
         };
         gaps.inner = 5;
@@ -80,7 +80,7 @@ with colorScheme."${theme}";
           "${mod}+d" = "exec rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi";
           "${mod}+t" = "exec wezterm";
           "${mod}+m" = "exec emacsclient -r";
-          "${mod}+s" = "exec wezterm start spt;exec spotify";
+          "${mod}+s" = "exec wezterm start spt;exec spotifyd";
           "Print" = "exec flameshot gui";
 
 
@@ -111,7 +111,7 @@ with colorScheme."${theme}";
 
           "${mod}+Shift+c" = "reload";
 
-          "${mod}+Shift+1" = "move container to workspace 1: Main; workspace 1: Main";
+          "${mod}+Shift+1" = "move container to workspace 1; workspace 1";
           "${mod}+Shift+2" = "move container to workspace 2; workspace 2";
           "${mod}+Shift+3" = "move container to workspace 3; workspace 3";
           "${mod}+Shift+4" = "move container to workspace 4; workspace 4";

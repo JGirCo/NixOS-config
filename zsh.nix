@@ -11,9 +11,7 @@
         update = "sudo nixos-rebuild switch --flake ~/etc/nixos/";
         rebuildHome = "home-manager switch --flake ~/etc/nixos/";
         editSystem = "nvim ~/etc/nixos/configuration.nix";
-	      astro = "NVIM_APPNAME=astro nvim";
-	      kick = "NVIM_APPNAME=kick nvim";
-	      aScheme = "NVIM_APPNAME=astro nvim ~/.config/astro/lua/user/init.lua";
+        ardUpload = "arduino-cli compile && arduino-cli upload";
       };
       oh-my-zsh = {
         enable = true;

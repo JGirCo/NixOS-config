@@ -47,6 +47,24 @@ with colorScheme.${theme};
             format = " ";
           };
 
+          "sway/workspaces" = {
+            disable-scroll= true;
+            all-outputs= true;
+            format= "{icon}";
+            format-icons = {
+              "1"= "I";
+              "2"= "II";
+              "3"= "III";
+              "4"= "IV";
+              "5"= "V";
+              "6"= "VI";
+              "7"= "VII";
+              "8"= "VIII";
+              "9"= "IX";
+              "10"= "";
+            };
+          };
+
           "battery" = {
             interval = 5;
             states = {
@@ -78,7 +96,7 @@ with colorScheme.${theme};
       window#waybar {
         background: ${base};
         color: ${text2};
-        opacity: 0.7;
+        opacity: 0.85;
       }
 
       #pulseaudio {

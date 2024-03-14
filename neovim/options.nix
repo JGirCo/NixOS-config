@@ -1,14 +1,22 @@
-{config, theme, ...}:
+{config, theme, lib, ...}:
 let
   color_scheme = import ../colors.nix;
 in
 with color_scheme.${theme};
 {
-  programs.nixvim = {
-    # colorschemes.base16.enable = true;
-    # colorschemes.base16.colorscheme = "${key.nvim}";
+  programs.nixvim ={
+    colorschemes  =
+    if key.isNvimBuiltin then {
+      ${key.nvim}.enable = true;
+    }
+    // lib.optionalAttrs (theme == "catppuccin-latte"){catppuccin.enable = true; catppuccin.flavour = "latte";}
+    else {
+      base16 = {
+        enable = true;
+        colorscheme = key.nvim;
+      };
+    };
 
-    colorschemes.${key.nvim} =  if key.nvim == "catppuccin" then {enable = true; flavour = "latte";} else {enable = true;};
     globals = {
       # Disable useless providers
       loaded_ruby_provider = 0; # Ruby
@@ -24,7 +32,8 @@ with color_scheme.${theme};
     };
 
     options = {
-      updatetime = 100; # Faster completion
+      updatetime = if (config.programs.nixvim.colorschemes ? "rebecca") then 100 else 99;
+      # updatetime = 100; # Faster completion
 
       # Line numbers
       relativenumber = true; # Relative line numbers
