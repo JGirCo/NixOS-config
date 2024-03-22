@@ -32,8 +32,7 @@ with color_scheme.${theme};
     };
 
     options = {
-      updatetime = if (config.programs.nixvim.colorschemes ? "rebecca") then 100 else 99;
-      # updatetime = 100; # Faster completion
+      updatetime = 100; # Faster completion
 
       # Line numbers
       relativenumber = true; # Relative line numbers

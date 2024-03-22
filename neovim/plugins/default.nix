@@ -16,6 +16,7 @@
     ./tagbar.nix
     ./telescope.nix
     ./treesitter.nix
+    ./hardtime.nix
     # ./vimtex.nix
   ];
 

@@ -7,6 +7,6 @@
 
     title = "";
 
-    keymaps.toggle = "<leader>,";
+    keymaps.toggle = "<leader>t";
   };
 }

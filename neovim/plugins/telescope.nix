@@ -5,15 +5,15 @@
 
       keymaps = {
         # Find files using Telescope command-line sugar.
-        "<leader>ff" = "find_files";
-        "<leader>fg" = "live_grep";
-        "<leader>b" = "buffers";
-        "<leader>fh" = "help_tags";
-        "<leader>fd" = "diagnostics";
+        "<leader>ff" = {action = "find_files"; desc = "Find files";};
+        "<leader>fg" = {action = "live_grep"; desc = "Live Grep";};
+        "<leader>b" = {action = "buffers"; desc = "Find buffers";};
+        "<leader>fh" = {action = "help_tags"; desc = "Find help";};
+        "<leader>fd" = {action = "diagnostics"; desc = "Find diagnostics";};
 
         # FZF like bindings
         "<C-p>" = "git_files";
-        "<leader>p" = "oldfiles";
+        "<leader>p" = {action = "oldfiles"; desc = "Find Recent";};
         "<C-f>" = "live_grep";
       };
 

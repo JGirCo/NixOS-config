@@ -10,6 +10,8 @@
             # Navigate in diagnostics
             "<leader>k" = "goto_prev";
             "<leader>j" = "goto_next";
+            "<leader>q" = {action = "setloclist"; desc ="Open diagnostic [Q]uickfix list";};
+            "<leader><S-e>" = "open_float";
           };
 
           lspBuf = {

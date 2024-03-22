@@ -53,8 +53,6 @@
           # M = Alt key
           "<M-k>" = ":move-2<CR>";
           "<M-j>" = ":move+<CR>";
-
-          "<leader>rp" = ":!remi push<CR>";
         };
       visual =
         lib.mapAttrsToList
@@ -70,8 +68,8 @@
           "<S-TAB>" = "<gv";
 
           # move selected line / block of text in visual mode
-          "K" = ":m '<-2<CR>gv=gv";
-          "J" = ":m '>+1<CR>gv=gv";
+          "<M-k>" = ":m '<-2<CR>gv=gv";
+          "<M-j>" = ":m '>+1<CR>gv=gv";
         };
     in
       config.nixvim.helpers.keymaps.mkKeymaps
