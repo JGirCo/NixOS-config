@@ -28,7 +28,7 @@ with colorScheme."${theme}";
       swww
       waybar
       dunst
-      rofi
+      wofi
       swayfx
     ];
     # wayland.windowManager.swayfx.enable = true;
@@ -43,6 +43,7 @@ with colorScheme."${theme}";
         corner_radius 10
         '';
       config = {
+        terminal = "wezterm";
         modifier = mod;
         defaultWorkspace = "1";
         workspaceAutoBackAndForth = true;
@@ -56,7 +57,7 @@ with colorScheme."${theme}";
 
         };
 
-        assigns = {"10: Background" = [{class = "^Spotify$";}];};
+        assigns = {"10" = [{class = "^Spotify$";}];};
 
         fonts = { names = [ "FantasqueSansM Nerd Font" ]; size = 9.0; };
         startup = [
@@ -77,7 +78,7 @@ with colorScheme."${theme}";
         keybindings = lib.mkOptionDefault {
           "${mod}+q" = "kill";
           "${mod}+b" = "exec floorp";
-          "${mod}+d" = "exec rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi";
+          "${mod}+d" = "exec wofi --show drun";
           "${mod}+t" = "exec wezterm";
           "${mod}+m" = "exec emacsclient -r";
           "${mod}+s" = "exec wezterm start spt;exec spotifyd";
@@ -120,7 +121,7 @@ with colorScheme."${theme}";
           "${mod}+Shift+7" = "move container to workspace 7; workspace 7";
           "${mod}+Shift+8" = "move container to workspace 8; workspace 8";
           "${mod}+Shift+9" = "move container to workspace 9; workspace 9";
-          "${mod}+Shift+0" = "move container to workspace 10: Background";
+          "${mod}+Shift+0" = "move container to workspace 10";
 
           "XF86AudioRaiseVolume" = "exec --no-startup-id pamixer -i 5 && pkill -RTMIN+12 i3blocks";
           "XF86AudioLowerVolume" = "exec --no-startup-id pamixer -d 5 && pkill -RTMIN+12 i3blocks ";

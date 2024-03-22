@@ -1,4 +1,42 @@
 {
+  ayu-light = {
+    base = "#fafafa";
+    text = "#fafafa";
+    text2 = "#5c6773";
+    inactive = "#f2ae49";
+    focused = "#fa8d3e";
+    active = "#e6ba7e";
+    urgent = "#f07178";
+    binding = "#a37acc";
+
+    red = "#f07178";
+    yellow = "#f2ae49";
+    pink = "#f07178";
+    green = "#86b300";
+    blue = "#36a3d9";
+    purple = "#a37acc";
+    orange = "#fa8d3e";
+
+    # base = "#${config.colorScheme.colors.base00}";
+    # text = "#${config.colorScheme.colors.base00}";
+    # inactive = "#${config.colorScheme.colors.base03}";
+    # focused = "#${config.colorScheme.colors.base09}";
+    # active = "#${config.colorScheme.colors.base0A}";
+    # urgent = "#${config.colorScheme.colors.base08}";
+    # binding = "#${config.colorScheme.colors.base0E}";
+
+    key = {
+      wezterm = "Ayu Light (Gogh)";
+      nvim = "ayu-light";
+      isNvimBuiltin = false;
+      gtk = {
+        iconsName = "ayu_light";
+        iconsPackage = "rose-pine-icon-theme";
+        cursorName = "phinger-cursors";
+        cursorPackage = "bibata-cursors";
+      };
+    };
+  };
   catppuccin-latte = {
     base = "#eff1f5";
     text = "#eff1f5";
@@ -240,12 +278,9 @@
       nvim = "rebecca";
       isNvimBuiltin = false;
       gtk = {
-        themeName = "Dracula";
-        themePackage = "dracula-theme";
-        iconsName = "dracula";
-        iconsPackage = "dracula-icon-theme";
-        cursorName = "Dracula-cursors";
-        cursorPackage = "phinger-cursors";
+        iconsName = "dracula-icons";
+        cursorName = "Bibata-Modern-Ice";
+        cursorPackage = "bibata-cursors";
       };
     };
   };

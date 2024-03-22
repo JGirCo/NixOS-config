@@ -58,13 +58,14 @@
   # Enable the X11 windowing system.
   security.polkit.enable = true;
   services.xserver.enable = true;
+  services.xserver.excludePackages = [pkgs.xterm];
 
   services.xserver.displayManager.lightdm.enable = true;
 
   # Enable i3wm
-  services.xserver.windowManager.i3 = {
-    enable = true;
-  };
+  # services.xserver.windowManager.i3 = {
+  #   enable = true;
+  # };
   programs.sway.enable = true;
 
   # Configure keymap in X11
@@ -116,7 +117,6 @@
     extraGroups = [ "networkmanager" "wheel" "video" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
-      firefox
       #  thunderbird
     ];
   };
@@ -172,10 +172,9 @@
 
       #GUI Tools
       floorp
-      spotify
+      watershot
       libreoffice
       inkscape
-      flameshot
       bottles
       ungoogled-chromium
       wireshark

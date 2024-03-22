@@ -16,7 +16,7 @@ with colorScheme.${theme};
 
           "cpu" = {
             interval = 10;
-            format = "{}% ";
+            format = "{}%  ";
           };
 
           "memory" = {
@@ -52,15 +52,15 @@ with colorScheme.${theme};
             all-outputs= true;
             format= "{icon}";
             format-icons = {
-              "1"= "I";
-              "2"= "II";
-              "3"= "III";
-              "4"= "IV";
-              "5"= "V";
-              "6"= "VI";
-              "7"= "VII";
-              "8"= "VIII";
-              "9"= "IX";
+              "1"= " ";
+              "2"= "";
+              "3"= "󰔶";
+              "4"= "󰝤";
+              "5"= "󰜁";
+              "6"= "󰋘";
+              "7"= "󰋘  ";
+              "8"= "󰋘  ";
+              "9"= "󰋘 󰔶 ";
               "10"= "";
             };
           };
@@ -201,8 +201,8 @@ with colorScheme.${theme};
           color: ${base};
           border-radius: 7px;
           padding: 0 7px;
-          margin-left: 12px;
-          margin-right: 12px;
+          margin-left: 5px;
+          margin-right: 5px;
        }
 
        #workspaces {

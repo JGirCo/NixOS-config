@@ -100,6 +100,13 @@ with colorScheme.${theme}.key.gtk;{
     gtk.font.name = "FantasqueSansM Nerd Font";
     gtk.font.package =pkgs.nerdfonts;
 
+    home.pointerCursor = {
+      gtk.enable = true;
+      x11.enable = true;
+      package = pkgs.${cursorPackage};
+      name = cursorName;
+    };
+
 
     xdg.configFile."gtk-4.0/gtk.css" = {
       text = cssContent;
