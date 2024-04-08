@@ -1,4 +1,4 @@
-{ config, pkgs, nixvim, theme,... }:
+{ config, pkgs, nixvim, theme, font, ... }:
 
 let
   colorScheme = import ../colors.nix;
@@ -93,20 +93,36 @@ with colorScheme.${theme}.key.gtk;{
     gtk.theme.name = "adw-gtk3";
     gtk.theme.package = pkgs.adw-gtk3;
 
-    gtk.iconTheme.package = pkgs."${iconsPackage}";
-    gtk.iconTheme.name = "${iconsName}";
+    # gtk.iconTheme.package = pkgs."${iconsPackage}";
+    # gtk.iconTheme.name = "${iconsName}";
 
     gtk.font.size = 12;
-    gtk.font.name = "FantasqueSansM Nerd Font";
+    gtk.font.name = "${font} Nerd Font";
     gtk.font.package =pkgs.nerdfonts;
 
-    home.pointerCursor = {
-      gtk.enable = true;
-      x11.enable = true;
-      package = pkgs.${cursorPackage};
-      name = cursorName;
-    };
+    # home.pointerCursor = {
+    #   gtk.enable = true;
+    #   x11.enable = true;
+    #   package = pkgs.${cursorPackage};
+    #   name = cursorName;
+    # };
 
+    qt.enable = true;
+
+    # platform theme "gtk" or "gnome"
+    qt.platformTheme = "gtk";
+
+    # name of the qt theme
+    qt.style.name = "adwaita-dark";
+
+    # detected automatically:
+    # adwaita, adwaita-dark, adwaita-highcontrast,
+    # adwaita-highcontrastinverse, breeze,
+    # bb10bright, bb10dark, cde, cleanlooks,
+    # gtk2, motif, plastique
+
+        # package to use
+    qt.style.package = pkgs.adwaita-qt;
 
     xdg.configFile."gtk-4.0/gtk.css" = {
       text = cssContent;

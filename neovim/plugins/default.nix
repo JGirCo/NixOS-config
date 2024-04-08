@@ -1,5 +1,6 @@
 {
   imports = [
+    ./image.nix
     ./surround.nix
     ./which-key.nix
     ./barbar.nix
@@ -10,7 +11,7 @@
     ./lsp.nix
     ./lualine.nix
     ./markdown-preview.nix
-    # ./neorg.nix
+    ./neorg.nix
     ./neo-tree.nix
     ./startify.nix
     ./tagbar.nix
@@ -25,9 +26,11 @@
     plugins = {
       gitsigns = {
         enable = true;
-        signs = {
-          add.text = "+";
-          change.text = "~";
+        settings = {
+          signs = {
+            add.text = "+";
+            change.text = "~";
+          };
         };
       };
       nvim-autopairs.enable = true;

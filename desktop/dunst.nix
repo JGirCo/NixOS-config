@@ -1,4 +1,4 @@
-{config, theme, ...}:
+{config, theme, font, ...}:
 let
   colorScheme = import ../colors.nix;
 in
@@ -13,7 +13,7 @@ with colorScheme.${theme};
     offset = "8x8";
     separator_height = 2;
     padding = 8;
-    font = "FantasqueSansM Nerd Font 13";
+    font = "${font} Nerd Font 13";
     corner_radius = 10;
     };
 

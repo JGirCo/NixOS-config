@@ -1,4 +1,4 @@
-{ config, lib, pkgs, theme, ... }:
+{ config, lib, pkgs, theme, font, ... }:
 
 let
   mod = "Mod4";
@@ -20,10 +20,11 @@ with colorScheme."${theme}";
     home.packages = with pkgs; [
       rofi
       i3blocks
-      # i3lock
+      i3lock
       picom
-      # feh
-      # dunst
+      flameshot
+      feh
+      dunst
       lxappearance
     ];
     xsession.windowManager.i3 = {
@@ -35,7 +36,7 @@ with colorScheme."${theme}";
 
         assigns = {"10: background" = [{class = "^spotify$";}];};
 
-        fonts = { names = [ "FantasqueSansM Nerd Font" ]; size = 9.0; };
+        fonts = { names = [ "${font} Nerd Font" ]; size = 9.0; };
         startup = [
           { command = "--no-startup-id dex --autostart --environment i3"; }
           { command = "--no-startup-id feh --bg-scale ~/Pictures/wallpapers/${theme}.jpg"; always = true; }
@@ -123,7 +124,7 @@ with colorScheme."${theme}";
 
         bars = [
           {
-            fonts = { names = [ "FantasqueSansM Nerd Font" ]; size = 9.0; };
+            fonts = { names = [ "${font} Nerd Font" ]; size = 9.0; };
             position = "bottom";
             statusCommand = "SCRIPT_DIR=~/.config/i3blocks ${pkgs.i3blocks}/bin/i3blocks -c ~/.config/i3blocks/${theme}";
             colors = {

@@ -1,11 +1,104 @@
 {
+  # caroline = {
+  #   base = "#1c1213";
+  #   text = "#1c1213";
+  #   text2 = "#e3a68c";
+  #   inactive = "#c24f57";
+  #   focused = "#a63650";
+  #   alt = "#f28171";
+  #   urgent = "#a63650";
+  #   binding = "#c84c59";
+  #
+  #   red = "#c24f57";
+  #   yellow = "#f28171";
+  #   pink = "#a63650";
+  #   green = "#806c61";
+  #   blue = "#6b6566";
+  #   purple = "#684c59";
+  #   orange = "#e3a68c";
+  #
+  #   key = {
+  #     wezterm = "Caroline (base16)";
+  #     nvim = "caroline";
+  #     isNvimBuiltin = false;
+  #     gtk = {
+  #       iconsName = "rose-pine-dawn";
+  #       iconsPackage = "rose-pine-icon-theme";
+  #       cursorName = "phinger-cursors";
+  #       cursorPackage = "phinger-cursors";
+  #     };
+  #   };
+  # };
+
+  stella = {
+    base = "#2b213c";
+    text = "#2b213c";
+    text2 = "#ebdcff";
+    inactive = "#c594ff";
+    focused = "#8865c6";
+    alt = "#c7c691";
+    urgent = "#c7ab87";
+    binding = "#c594ff";
+
+    red = "#c79987";
+    yellow = "#c7c691";
+    pink = "#c594ff";
+    green = "#ACC79b";
+    blue = "#9bc7bf";
+    purple = "#a5aad4";
+    orange = "#e3a68c";
+
+    key = {
+      wezterm = "Stella (base16)";
+      nvim = "stella";
+      isNvimBuiltin = false;
+      gtk = {
+        iconsName = "rose-pine-dawn";
+        iconsPackage = "rose-pine-icon-theme";
+        cursorName = "phinger-cursors";
+        cursorPackage = "phinger-cursors";
+      };
+    };
+  };
+
+  brushtrees = {
+    base = "#E3efef";
+    text = "#E3efef";
+    text2 = "#485867";
+    inactive = "#aab386";
+    focused = "#87b386";
+    alt = "#868cb3";
+    urgent = "#b38686";
+    binding = "#b386b2";
+
+    red = "#b38686";
+    yellow = "#d8bba2";
+    pink = "#b386b2";
+    green = "#87b386";
+    blue = "#86b3b3";
+    purple = "#868cb3";
+    orange = "#c5a894";
+
+    key = {
+      wezterm = "Brush Trees (base16)";
+      nvim = "brushtrees";
+      isNvimBuiltin = false;
+      gtk = {
+        iconsName = "rose-pine-dawn";
+        iconsPackage = "rose-pine-icon-theme";
+        cursorName = "phinger-cursors";
+        cursorPackage = "phinger-cursors";
+      };
+    };
+  };
+
   ayu-light = {
     base = "#fafafa";
     text = "#fafafa";
     text2 = "#5c6773";
     inactive = "#f2ae49";
     focused = "#fa8d3e";
-    active = "#e6ba7e";
+    alt = "#36a3d9";
     urgent = "#f07178";
     binding = "#a37acc";
 
@@ -16,14 +109,6 @@
     blue = "#36a3d9";
     purple = "#a37acc";
     orange = "#fa8d3e";
-
-    # base = "#${config.colorScheme.colors.base00}";
-    # text = "#${config.colorScheme.colors.base00}";
-    # inactive = "#${config.colorScheme.colors.base03}";
-    # focused = "#${config.colorScheme.colors.base09}";
-    # active = "#${config.colorScheme.colors.base0A}";
-    # urgent = "#${config.colorScheme.colors.base08}";
-    # binding = "#${config.colorScheme.colors.base0E}";
 
     key = {
       wezterm = "Ayu Light (Gogh)";
@@ -37,13 +122,14 @@
       };
     };
   };
+
   catppuccin-latte = {
     base = "#eff1f5";
     text = "#eff1f5";
     text2 = "#4c4f69";
     inactive = "#04a5e5";
     focused = "#1e66f5";
-    active = "#179299";
+    alt = "#179299";
     urgent = "#d20f39";
     binding = "#ea76cb";
 
@@ -54,14 +140,6 @@
     blue = "#04a5e5";
     purple = "#8839ef";
     orange = "#fe640b";
-
-    # base = "#${config.colorScheme.colors.base00}";
-    # text = "#${config.colorScheme.colors.base00}";
-    # inactive = "#${config.colorScheme.colors.base03}";
-    # focused = "#${config.colorScheme.colors.base09}";
-    # active = "#${config.colorScheme.colors.base0A}";
-    # urgent = "#${config.colorScheme.colors.base08}";
-    # binding = "#${config.colorScheme.colors.base0E}";
 
     key = {
       wezterm = "catppuccin-latte";
@@ -82,7 +160,7 @@
     text2 = "#575279";
     inactive = "#d7827e";
     focused = "#b4637a";
-    active = "#56949f";
+    alt = "#56949f";
     urgent = "#ea9d34";
     binding = "#907aa9";
 
@@ -93,14 +171,6 @@
     blue = "#286983";
     purple = "#907aa9";
     orange = "#ea9d34";
-
-    # base = "#${config.colorScheme.colors.base00}";
-    # text = "#${config.colorScheme.colors.base00}";
-    # inactive = "#${config.colorScheme.colors.base03}";
-    # focused = "#${config.colorScheme.colors.base09}";
-    # active = "#${config.colorScheme.colors.base0A}";
-    # urgent = "#${config.colorScheme.colors.base08}";
-    # binding = "#${config.colorScheme.colors.base0E}";
 
     key = {
       wezterm = "rose-pine-dawn";
@@ -123,7 +193,7 @@
     text2 = "#e0def4";
     inactive = "#ebbcba";
     focused = "#eb6f92";
-    active = "#9ccfd8";
+    alt = "#9ccfd8";
     urgent = "#ea9d34";
     binding = "#c4a7e7";
 
@@ -134,14 +204,6 @@
     blue = "#31748f";
     purple = "#c4a7e7";
     orange = "#ea9d34";
-
-    # base = "#${config.colorScheme.colors.base00}";
-    # text = "#${config.colorScheme.colors.base00}";
-    # inactive = "#${config.colorScheme.colors.base03}";
-    # focused = "#${config.colorScheme.colors.base09}";
-    # active = "#${config.colorScheme.colors.base0A}";
-    # urgent = "#${config.colorScheme.colors.base08}";
-    # binding = "#${config.colorScheme.colors.base0E}";
 
     key = {
       wezterm = "rose-pine";
@@ -163,7 +225,7 @@
     text2 = "#f8f8f2";
     inactive = "#6272a4";
     focused = "#bd93f9";
-    active = "#50fa7b";
+    alt = "#ff79c6";
     urgent = "#ff5555";
     binding = "#ff79c6";
 
@@ -195,7 +257,7 @@
     text2 = "#ebdbb2";
     inactive = "#458588";
     focused = "#83a598";
-    active = "#8ec07e";
+    alt = "#f38019";
     urgent = "#fb4934";
     binding = "#d3869b";
 
@@ -228,7 +290,7 @@
     text2 = "#3c3836";
     inactive = "#689d6a";
     focused = "#427b58";
-    active = "#427b58";
+    alt = "#f38019";
     urgent = "#9d0006";
     binding = "#8f3f71";
 
@@ -261,7 +323,7 @@
     text2 = "#f1eff8";
     inactive = "#666699";
     focused = "#6dfedf";
-    active = "#2de0a7";
+    alt = "#ff79c6";
     urgent = "#ff5555";
     binding = "#ff79c6";
 
@@ -284,5 +346,4 @@
       };
     };
   };
-
 }
