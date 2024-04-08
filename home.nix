@@ -2,6 +2,7 @@
 
 {
   imports = [
+
     ./zsh.nix
     # ./desktop/i3.nix
     ./desktop/sway.nix

@@ -25,7 +25,7 @@ with colorScheme."${theme}";
       ./waybar.nix
     ];
     home.packages = with pkgs; [
-      swww
+      swaybg
       waybar
       dunst
       wofi
@@ -66,8 +66,7 @@ with colorScheme."${theme}";
 
         fonts = { names = [ "${font} Nerd Font" ]; size = 9.0; };
         startup = [
-          { command = "--no-startup-id swww init"; always = true; }
-          { command = "--no-startup-id swww img ~/Pictures/wallpapers/${theme}.jpg"; always = true; }
+          { command = "--no-startup-id swaybg -i ~/Pictures/wallpapers/${theme}.jpg"; always = true; }
         #     command = "${pkgs.waybar}/bin/waybar";
           { command = "--no-startup-id ${pkgs.waybar}/bin/waybar"; always = true; }
           { command = "--no-startup-id nm-applet"; always = true; }
