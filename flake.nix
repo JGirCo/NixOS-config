@@ -11,8 +11,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-        url = "github:nix-community/nixvim";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
   };
@@ -21,29 +21,27 @@
     let
       # System settings
       system = "x86_64-linux";
-      lib = nixpkgs.lib;
+      inherit (nixpkgs) lib;
       pkgs = nixpkgs.legacyPackages.${system};
 
-      theme = "rebecca";
       # USER settings
+      theme = "rose-pine";
+      font = "FantasqueSansM";
     in {
       nixosConfigurations = {
         nixos = lib.nixosSystem {
           inherit system;
-          modules =  [./configuration.nix];
-          specialArgs = {
-          };
+          modules = [ ./configuration.nix ];
+          specialArgs = { };
         };
       };
       homeConfigurations."juanma" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [
-        ./home.nix
-        nixvim.homeManagerModules.nixvim
-        ];
+        modules = [ ./home.nix nixvim.homeManagerModules.nixvim ];
         extraSpecialArgs = {
           inherit inputs;
           inherit theme;
+          inherit font;
         };
       };
     };

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, theme, ... }:
+{ config, lib, pkgs, theme, font, ... }:
 
 let
   colorScheme = import ../colors.nix;
@@ -88,7 +88,7 @@ with colorScheme.${theme};
       * {
         border: none;
         border-radius: 0;
-        font-family: FantasqueSansM Nerd Font;
+        font-family: ${font} Nerd Font;
         font-size: 13px;
         min-height: 10px;
       }
@@ -148,7 +148,6 @@ with colorScheme.${theme};
       }
 
       #workspaces button,
-      #scratchpad,
       #cpu,
       #memory,
       #pulseaudio,

@@ -25,6 +25,12 @@
           # fix Y behaviour
           Y = "y$";
 
+          # fix j and k behaviour when wrapping
+
+          j = "gj";
+
+          k = "gk";
+
           # back and fourth between the two most recent files
           "<C-c>" = ":b#<CR>";
 

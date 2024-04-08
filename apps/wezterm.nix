@@ -1,4 +1,4 @@
-{ config, lib, pkgs, theme, ... }:
+{ config, lib, pkgs, theme, font, ... }:
 
 let
   color_scheme = import ../colors.nix;
@@ -22,9 +22,11 @@ with color_scheme.${theme};{
 
         -- For example, changing the color scheme:
         config.color_scheme = "${key.wezterm}"
-        config.font = wezterm.font 'FantasqueSansM Nerd Font'
+        config.font = wezterm.font '${font} Nerd Font'
         config.hide_tab_bar_if_only_one_tab = true
         config.audible_bell="Disabled"
+        -- config.window_background_opacity = 0.85
+        -- config.text_background_opacity = 0.0
 
         config.window_padding = {
           left = 0,

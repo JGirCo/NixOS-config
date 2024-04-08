@@ -1,4 +1,4 @@
-{ config, lib, pkgs, theme, ... }:
+{ config, lib, pkgs, theme, font, ... }:
 
 let
   mod = "Mod4";
@@ -25,11 +25,16 @@ with colorScheme."${theme}";
       ./waybar.nix
     ];
     home.packages = with pkgs; [
-      swww
+      swaybg
       waybar
       dunst
       wofi
       swayfx
+      grim
+      slurp
+      imagemagick
+      swappy
+      wl-clipboard
     ];
     # wayland.windowManager.swayfx.enable = true;
     wayland.windowManager.sway = {
@@ -37,7 +42,7 @@ with colorScheme."${theme}";
       package = pkgs.swayfx;
       extraConfig = ''
         for_window [class = "^Emacs$"] opacity 0.85
-        for_window [app_id = "^org.wezfurlong.wezterm"] opacity 0.7
+        for_window [app_id = "^org.wezfurlong.wezterm"] opacity 0.75
         blur enable
         blur_radius 2
         corner_radius 10
@@ -59,10 +64,9 @@ with colorScheme."${theme}";
 
         assigns = {"10" = [{class = "^Spotify$";}];};
 
-        fonts = { names = [ "FantasqueSansM Nerd Font" ]; size = 9.0; };
+        fonts = { names = [ "${font} Nerd Font" ]; size = 9.0; };
         startup = [
-          { command = "--no-startup-id swww init"; always = true; }
-          { command = "--no-startup-id swww img ~/Pictures/wallpapers/${theme}.jpg"; always = true; }
+          { command = "--no-startup-id swaybg -i ~/Pictures/wallpapers/${theme}.jpg"; always = true; }
         #     command = "${pkgs.waybar}/bin/waybar";
           { command = "--no-startup-id ${pkgs.waybar}/bin/waybar"; always = true; }
           { command = "--no-startup-id nm-applet"; always = true; }
@@ -82,7 +86,8 @@ with colorScheme."${theme}";
           "${mod}+t" = "exec wezterm";
           "${mod}+m" = "exec emacsclient -r";
           "${mod}+s" = "exec wezterm start spt;exec spotifyd";
-          "Print" = "exec flameshot gui";
+          "Print" = "exec grim -g \"$(slurp)\" - | convert -  -shave 1x1 PNG: - | wl-copy";
+          "Shift+Print" = "exec grim -g \"$(slurp)\" - | swappy -f -";
 
 
           # Focus

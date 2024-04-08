@@ -1,15 +1,17 @@
 {
-  programs.nixvim.plugins.comment-nvim = {
+  programs.nixvim.plugins.comment = {
     enable = true;
 
-    opleader = {
-      line = "gc";
-      block = "gb";
+    settings = {
+      opleader = {
+        line = "gc";
+        block = "gb";
+      };
+      toggler = {
+        line = "gcc";
+        block = "gbc";
+      };
+      # toggler = {line = "<C-b>";};
     };
-    toggler = {
-      line = "gcc";
-      block = "gbc";
-    };
-    # toggler = {line = "<C-b>";};
   };
 }

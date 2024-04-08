@@ -36,7 +36,7 @@
 
         servers = {
           rnix-lsp.enable = true;
-          pylsp.enable = true;
+          # pylsp.enable = true;
           rust-analyzer = {
             enable = true;
             installRustc = true;
