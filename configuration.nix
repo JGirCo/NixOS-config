@@ -102,7 +102,7 @@
 
   services.logind = {
     # don’t shutdown when power button is short-pressed
-    lidSwitch = "ignore";
+    lidSwitch = "hibernate";
     powerKey = "hibernate";
   };
 
@@ -143,6 +143,7 @@
       coreutils
       clang
       busybox
+      luajit
 
       #System tools
       xclip
@@ -166,7 +167,7 @@
       bluetuith
 
       #GUI Tools
-      floorp
+      firefox-beta-bin
       libreoffice
       inkscape
       bottles

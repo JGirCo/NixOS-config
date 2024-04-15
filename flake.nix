@@ -25,7 +25,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
 
       # USER settings
-      theme = "rose-pine";
+      theme = "gruvbox-dark-medium";
       font = "FantasqueSansM";
     in {
       nixosConfigurations = {

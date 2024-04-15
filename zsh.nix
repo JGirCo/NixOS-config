@@ -12,6 +12,7 @@
         rebuildHome = "home-manager switch --flake ~/etc/nixos/";
         editSystem = "nvim ~/etc/nixos/configuration.nix";
         ardUpload = "arduino-cli compile && arduino-cli upload";
+        ardMonitor = "arduino-cli monitor -p /dev/ttyUSB0 -c 115200";
         cd = "z";
       };
       oh-my-zsh = {

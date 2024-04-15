@@ -66,6 +66,7 @@ with colorScheme."${theme}";
 
         fonts = { names = [ "${font} Nerd Font" ]; size = 9.0; };
         startup = [
+          { command = "--no-startup-id pkill swaybg"; always = true; }
           { command = "--no-startup-id swaybg -i ~/Pictures/wallpapers/${theme}.jpg"; always = true; }
         #     command = "${pkgs.waybar}/bin/waybar";
           { command = "--no-startup-id ${pkgs.waybar}/bin/waybar"; always = true; }
@@ -81,7 +82,7 @@ with colorScheme."${theme}";
 
         keybindings = lib.mkOptionDefault {
           "${mod}+q" = "kill";
-          "${mod}+b" = "exec floorp";
+          "${mod}+b" = "exec firefox-beta";
           "${mod}+d" = "exec wofi --show drun";
           "${mod}+t" = "exec wezterm";
           "${mod}+m" = "exec emacsclient -r";

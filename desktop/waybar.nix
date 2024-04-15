@@ -189,7 +189,7 @@ with colorScheme.${theme};
         background: ${red};
         color: ${base};
         animation-name: blink;
-        animation-duration: 2s;
+        animation-duration: 0.5s;
         animation-timing-function: steps(12);
         animation-iteration-count: infinite;
         animation-direction: alternate;

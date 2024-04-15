@@ -3,10 +3,10 @@
     enable = true;
 
     globalstatus = true;
-    componentSeparators.left = ")";
-    componentSeparators.right = "(";
-    sectionSeparators.left = "";
-    sectionSeparators.right = "";
+    componentSeparators.left = "|";
+    componentSeparators.right = "|";
+    sectionSeparators.left = "";
+    sectionSeparators.right = "";
     # +-------------------------------------------------+
     # | A | B | C                             X | Y | Z |
     # +-------------------------------------------------+
