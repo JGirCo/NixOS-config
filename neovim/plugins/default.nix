@@ -10,7 +10,7 @@
     ./harpoon.nix
     ./lsp.nix
     ./lualine.nix
-    # ./markdown-preview.nix
+    ./markdown-preview.nix
     ./neorg.nix
     ./neo-tree.nix
     ./startify.nix

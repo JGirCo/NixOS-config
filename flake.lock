@@ -285,6 +285,22 @@
         "type": "github"
       }
     },
+    "old-norg": {
+      "locked": {
+        "lastModified": 1709905912,
+        "narHash": "sha256-TofHtnlrOBCxtSZ9nnlsTybDnQXUmQrlIleXF1RQAwQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a343533bccc62400e8a9560423486a3b6c11a23b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a343533bccc62400e8a9560423486a3b6c11a23b",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -318,7 +334,8 @@
         "home-manager": "home-manager",
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs",
-        "nixvim": "nixvim"
+        "nixvim": "nixvim",
+        "old-norg": "old-norg"
       }
     },
     "systems": {

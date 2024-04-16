@@ -1,17 +1,4 @@
-{ pkgs, ... }:
-
-let
-     norgPkg = import (builtins.fetchGit {
-         # Descriptive name to make the store path easier to identify
-         name = "my-old-revision";
-         url = "https://github.com/NixOS/nixpkgs/";
-         ref = "refs/heads/nixpkgs-unstable";
-         rev = "07518c851b0f12351d7709274bbbd4ecc1f089c7";
-     }) {};
-
-     norg = norgPkg.vimPlugins.neorg;
-in
-{
+{ norgpkg, ... }: {
   programs.nixvim = {
     files."after/ftplugin/norg.lua" = {
       localOpts.conceallevel = 1;
@@ -26,7 +13,8 @@ in
 
     plugins.neorg = {
       enable = true;
-      package = norg;
+      package = norgpkg.vimPlugins.neorg;
+
       lazyLoading = true;
 
       modules = {
