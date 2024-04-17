@@ -2,6 +2,11 @@
   programs.nixvim = {
     files."after/ftplugin/norg.lua" = {
       localOpts.conceallevel = 1;
+      opts = {
+        wrap = true;
+        breakindent = true;
+        linebreak = true;
+      };
 
       keymaps = [{
         mode = "n";
