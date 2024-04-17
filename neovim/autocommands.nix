@@ -25,16 +25,18 @@
       pattern = "nix";
       command = "setlocal tabstop=2 shiftwidth=2";
     }
+    # Set indentation to 2 spaces for ino files
+    {
+      event = "FileType";
+      pattern = "ino";
+      command = "setlocal tabstop=2 shiftwidth=2";
+    }
 
     # Enable spellcheck for some filetypes
     {
       event = "FileType";
-      pattern = [
-        "tex"
-        "latex"
-        "markdown"
-      ];
-      command = "setlocal spell spelllang=en,fr";
+      pattern = [ "tex" "latex" "markdown" ];
+      command = "setlocal spell spelllang=en";
     }
   ];
 }

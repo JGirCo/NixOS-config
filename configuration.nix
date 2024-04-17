@@ -5,11 +5,10 @@
 { config, pkgs, font, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -31,7 +30,8 @@
 
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   services.blueman.enable = true;
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+  hardware.bluetooth.powerOnBoot =
+    true; # powers up the default Bluetooth controller on boot
 
   # Set your time zone.
   time.timeZone = "America/Bogota";
@@ -54,7 +54,7 @@
   # Enable the X11 windowing system.
   security.polkit.enable = true;
   services.xserver.enable = true;
-  services.xserver.excludePackages = [pkgs.xterm];
+  services.xserver.excludePackages = [ pkgs.xterm ];
 
   services.xserver.displayManager.lightdm.enable = true;
 
@@ -99,7 +99,6 @@
     #media-session.enable = true;
   };
 
-
   services.logind = {
     # don’t shutdown when power button is short-pressed
     lidSwitch = "hibernate";
@@ -112,9 +111,10 @@
     description = "Juan Manuel Giraldo";
     extraGroups = [ "networkmanager" "wheel" "video" ];
     shell = pkgs.zsh;
-    packages = with pkgs; [
-      #  thunderbird
-    ];
+    packages = with pkgs;
+      [
+        #  thunderbird
+      ];
   };
 
   # Allow unfree packages
@@ -122,66 +122,70 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages =
-    with pkgs; [
-      # Basic tools
-      git
-      wget
-      gcc
-      gnumake
-      ripgrep
-      nodejs
-      python3
-      cargo
-      rustc
-      rust-analyzer
-      arduino-language-server
-      zip
-      unzip
-      gh
-      fd
-      coreutils
-      clang
-      busybox
-      luajit
+  environment.systemPackages = with pkgs; [
+    # Basic tools
+    git
+    wget
+    gcc
+    gnumake
+    ripgrep
+    nodejs
+    python3
+    cargo
+    rustc
+    rust-analyzer
+    arduino-language-server
+    zip
+    unzip
+    gh
+    fd
+    coreutils
+    clang
+    busybox
+    luajit
 
-      #System tools
-      xclip
-      acpi
-      pamixer
-      playerctl
+    libsForQt5.qt5.qtquickcontrols2
+    libsForQt5.qt5.qtgraphicaleffects
+    libsForQt5.qtstyleplugins
 
-      # Terminal Tools
-      kitty
-      wezterm
-      libqalculate
-      spicetify-cli
+    #System tools
+    xclip
+    acpi
+    pamixer
+    playerctl
 
-      # TUI Tools
-      cava
-      arduino-cli
-      emacs
-      yazi
-      lazygit
-      bottom
-      bluetuith
+    # Terminal Tools
+    kitty
+    wezterm
+    libqalculate
+    spicetify-cli
 
-      #GUI Tools
-      firefox-beta-bin
-      libreoffice
-      inkscape
-      bottles
-      ungoogled-chromium
-      wireshark
-      arduino-ide
-      vlc
+    # TUI Tools
+    cava
+    arduino-cli
+    emacs
+    yazi
+    lazygit
+    bottom
+    bluetuith
 
-      # Miscelaneous
-      emacs-all-the-icons-fonts
+    #GUI Tools
+    # firefox-beta-bin
+    firefoxpwa
+    libreoffice
+    inkscape
+    bottles
+    ungoogled-chromium
+    wireshark
+    arduino-ide
+    vlc
 
-      #python
-      python311Packages.pyserial
-    ];
+    # Miscelaneous
+    emacs-all-the-icons-fonts
+
+    #python
+    python311Packages.pyserial
+  ];
 
   environment.sessionVariables = rec {
     XDG_CACHE_HOME = "$HOME/.cache";
@@ -191,36 +195,29 @@
 
     # Not officially in the specification
     XDG_BIN_HOME = "$HOME/.local/bin";
-    PATH = [
-      "${XDG_BIN_HOME}"
-    ];
+    PATH = [ "${XDG_BIN_HOME}" ];
   };
 
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-  ];
+  fonts.packages = with pkgs;
+    [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  programs.neovim = {
+  programs = {
+
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+    };
+    zsh.enable = true;
+    light.enable = true;
+    kdeconnect.enable = true;
+    dconf.enable = true;
+    firefox = {
     enable = true;
-    defaultEditor = true;
+    package = pkgs.firefox-beta-bin;
+    nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];};
   };
-
-  programs.zsh.enable = true;
-
-  programs.light.enable = true;
-
-  programs.kdeconnect.enable = true;
-
-  programs.dconf.enable = true;
-
-  services.emacs = {
-    enable = true;
-    package = pkgs.emacs;
-  };
-
-
 
   # List services that you want to enable:
 
@@ -234,8 +231,6 @@
   # networking.firewall.enable = false;
 
   # Systemd timers
-
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
