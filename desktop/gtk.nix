@@ -3,13 +3,16 @@
 let
   colorScheme = import ../colors.nix;
 
+  bibata-custom =  import ./bibata-custom.nix {inherit pkgs;
+  inherit theme;};
+
   cssContent = with config.colorScheme.palette;
     with colorScheme.${theme}; ''
       @define-color accent_color #${base0D};
-      @define-color accent_bg_color mix(#${base0D}, #${base00},0.3);
-      @define-color accent_fg_color #${base00};
+      @define-color accent_bg_color mix(#${base0D}, ${base},0.3);
+      @define-color accent_fg_color ${base};
       @define-color destructive_color #${base0C};
-      @define-color destructive_bg_color mix(#${base0C}, #${base00},0.5);
+      @define-color destructive_bg_color mix(#${base0C}, ${base},0.5);
       @define-color destructive_fg_color #${base02};
       @define-color success_color #${base0B};
       @define-color success_bg_color mix(#${base0B}, black,0.6);
@@ -18,13 +21,13 @@ let
       @define-color warning_bg_color mix(#${base0A}, black,0.6);
       @define-color warning_fg_color rgba(0, 0, 0, 0.8);
       @define-color error_color #${base08};
-      @define-color error_bg_color mix(#${base0C}, #${base00},0.3);
+      @define-color error_bg_color mix(#${base0C}, ${base},0.3);
       @define-color error_fg_color #${base02};
       @define-color window_bg_color mix(${focused}, ${base}, 0.35);
       @define-color window_fg_color ${text2};
-      @define-color view_bg_color #${base00};
+      @define-color view_bg_color ${base};
       @define-color view_fg_color ${text2};
-      @define-color headerbar_bg_color #${base00};
+      @define-color headerbar_bg_color ${base};
       @define-color headerbar_fg_color ${text2};
       @define-color headerbar_border_color #${base02};
       @define-color headerbar_backdrop_color @window_bg_color;
@@ -78,11 +81,11 @@ let
       @define-color light_3 #deddda;
       @define-color light_4 #c0bfbc;
       @define-color light_5 #9a9996;
-      @define-color dark_1 mix(#${base00},white,0.5);
-      @define-color dark_2 mix(#${base00},white,0.2);
-      @define-color dark_3 #${base00};
-      @define-color dark_4 mix(#${base00},black,0.2);
-      @define-color dark_5 mix(#${base00},black,0.4);
+      @define-color dark_1 mix(${base},white,0.5);
+      @define-color dark_2 mix(${base},white,0.2);
+      @define-color dark_3 ${base};
+      @define-color dark_4 mix(${base},black,0.2);
+      @define-color dark_5 mix(${base},black,0.4);
     '';
 
 in with colorScheme.${theme}.key.gtk; {
@@ -98,16 +101,15 @@ in with colorScheme.${theme}.key.gtk; {
     };
   };
 
-  # home.pointerCursor = {
-  #   gtk.enable = true;
-  #   x11.enable = true;
-  #   package = pkgs.${cursorPackage};
-  #   name = cursorName;
-  # };
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = bibata-custom;
+    name = "${theme}";
+  };
 
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme.name = "gtk";
     style.name = "adwaita-dark";
     style.package = pkgs.adwaita-qt;
   };
