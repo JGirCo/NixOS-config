@@ -3,7 +3,7 @@
 let
   colorScheme = import ../colors.nix;
 
-  bibata-custom =  import ./bibata-custom.nix {inherit pkgs;
+  bibata-custom =  import ./Bibata-Cursor/bibata-custom.nix {inherit pkgs;
   inherit theme;};
 
   cssContent = with config.colorScheme.palette;
