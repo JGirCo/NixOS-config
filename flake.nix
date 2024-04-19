@@ -26,7 +26,7 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "rose-pine-dawn";
+      theme = "brushtrees";
       font = "FantasqueSansM";
     in {
       nixosConfigurations = {
