@@ -1,5 +1,6 @@
 {
   imports = [
+    ./transparent.nix
     ./image.nix
     ./surround.nix
     ./which-key.nix

@@ -25,7 +25,7 @@ with color_scheme.${theme};{
         config.font = wezterm.font '${font} Nerd Font'
         config.hide_tab_bar_if_only_one_tab = true
         config.audible_bell="Disabled"
-        -- config.window_background_opacity = 0.85
+        config.window_background_opacity = 0.60
         -- config.text_background_opacity = 0.0
 
         config.window_padding = {
