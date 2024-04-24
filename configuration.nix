@@ -101,8 +101,8 @@
 
   services.logind = {
     # don’t shutdown when power button is short-pressed
-    lidSwitch = "hibernate";
-    powerKey = "hibernate";
+    lidSwitch = "suspend";
+    powerKey = "suspend";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -129,7 +129,6 @@
     gcc
     gnumake
     ripgrep
-    nodejs
     python3
     cargo
     rustc
@@ -168,6 +167,8 @@
     lazygit
     bottom
     bluetuith
+    spotify-player
+zsh-powerlevel10k
 
     #GUI Tools
     # firefox-beta-bin
