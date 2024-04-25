@@ -7,8 +7,9 @@ let
     gruvbox-light-medium = import ./colors/gruvbox-light-medium.nix;
     rose-pine-dawn = import ./colors/rose-pine-dawn.nix;
     rose-pine = import ./colors/rose-pine.nix;
-    catppuccin-latte = import ./colors/catpuccin-latte.nix;
-    tokyo-night-dark = import ./colors/tokyo-night-moon.nix;
+    catppuccin-latte = import ./colors/catppuccin-latte.nix;
+    tokyo-night-dark = import ./colors/tokyo-night-dark.nix;
+    rebecca = import ./colors/rebecca.nix;
   };
 in colorSchemes
 

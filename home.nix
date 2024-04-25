@@ -10,7 +10,7 @@
     ./apps/wezterm.nix
     ./desktop/gtk.nix
     ./neovim/default.nix
-    ./apps/spotifyd.nix
+    # ./apps/spotifyd.nix
     ./apps/zathura.nix
     ./desktop/dunst.nix
     inputs.nix-colors.homeManagerModules.default

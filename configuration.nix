@@ -157,11 +157,9 @@
     kitty
     wezterm
     libqalculate
-    spicetify-cli
 
     # TUI Tools
     cava
-    arduino-cli
     emacs
     yazi
     lazygit
@@ -178,7 +176,6 @@ zsh-powerlevel10k
     bottles
     ungoogled-chromium
     wireshark
-    arduino-ide
     vlc
 
     # Miscelaneous
