@@ -1,5 +1,6 @@
 {
   imports = [
+    ./undotree.nix
     ./transparent.nix
     ./image.nix
     ./surround.nix
@@ -41,6 +42,7 @@
         userDefaultOptions.names = false;
       };
       oil.enable = true;
+      indent-blankline.enable=true;
     };
   };
 }
