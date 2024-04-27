@@ -1,37 +1,55 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 let p10k = builtins.readFile ./p10k.zsh;
 in {
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    # syntaxHighlighting.enable = true;
-    shellAliases = {
-      ll = "ls -l";
-      update = "sudo nixos-rebuild switch --flake ~/etc/nixos/";
-      rebuildHome = "home-manager switch --flake ~/etc/nixos/";
-      editSystem = "nvim ~/etc/nixos/configuration.nix";
-      ardUpload = "arduino-cli compile && arduino-cli upload";
-      ardMonitor = "arduino-cli monitor -p /dev/ttyUSB0 -c 115200";
-      cd = "z";
-      py = "python";
-      nd = "nix develop -c zsh";
-    };
-    oh-my-zsh = {
+  programs = {
+    zoxide.enable = true;
+    zoxide.enableZshIntegration = true;
+    eza = {
       enable = true;
-      plugins = [ "git" "zoxide" "sudo" "colored-man-pages" ];
+      enableZshIntegration = true;
+      icons = true;
+      git = true;
     };
-    initExtra = lib.strings.concatStrings [
-      ''
-        export PATH="$HOME/.emacs.d/bin:$PATH"
-        export PATH="$PWD/diagslave/x86_64-linux-gnu:$PATH"
-        export PATH="$PWD/modpoll/modpoll/x86_64-linux-gnu:$PATH"
-        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+      # syntaxHighlighting.enable = true;
+      shellAliases = {
+        update = "sudo nixos-rebuild switch --flake ~/etc/nixos/";
+        rebuildHome = "home-manager switch --flake ~/etc/nixos/";
+        editSystem = "nvim ~/etc/nixos/configuration.nix";
+        ardUpload = "arduino-cli compile --upload";
+        ardMonitor = "arduino-cli monitor -p /dev/ttyUSB0 -c 115200";
+        cd = "z";
+        ".." = "cd ..";
+        "..." = "cd ../../../";
+        "...." = "cd ../../../../";
+        "....." = "cd ../../../../";
+        ".4" = "cd ../../../../";
+        ".5" = "cd ../../../../..";
+        mkdir = "mkdir -pv";
+        py = "python";
+        nd = "nix develop -c zsh";
+      };
+      # antidote = {
+      #   enable = true;
+      #   plugins = [ "git" "zoxide" "sudo" "colored-man-pages" ];
+      #   useFriendlyNames = true;
+      # };
+      initExtra = lib.strings.concatStrings [
+        p10k
 
-      ''
-      p10k
-    ];
+        ''
+          export PATH="$HOME/.emacs.d/bin:$PATH"
+          export PATH="$PWD/diagslave/x86_64-linux-gnu:$PATH"
+          export PATH="$PWD/modpoll/modpoll/x86_64-linux-gnu:$PATH"
+          source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+
+        ''
+      ];
+    };
   };
 }

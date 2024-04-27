@@ -23,7 +23,6 @@
     homeDirectory = "/home/juanma";
     stateVersion = "23.11";
   };
-  programs.zoxide.enable = true;
   # systemd services
 
   systemd.user.services."battery-notifier" = {
