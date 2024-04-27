@@ -8,10 +8,10 @@
           silent = true;
           diagnostic = {
             # Navigate in diagnostics
-            "<leader>k" = "goto_prev";
-            "<leader>j" = "goto_next";
-            "<leader>q" = {action = "setloclist"; desc ="Open diagnostic [Q]uickfix list";};
-            "<leader><S-e>" = "open_float";
+            "<leader>F" = {action = "setloclist"; desc ="Open diagnostic quick[F]ix list";};
+            "<leader>d" = {action = "open_float"; desc ="Open diagnostic float";};
+            "<leader>n" = {action = "goto_next"; desc ="Next diagnostic";};
+            "<leader>N" = {action = "goto_prev"; desc ="Prev diagnostic";};
           };
 
           lspBuf = {
