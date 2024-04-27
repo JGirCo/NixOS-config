@@ -36,13 +36,12 @@ with colorScheme."${theme}";
       swappy
       wl-clipboard
     ];
-    # wayland.windowManager.swayfx.enable = true;
     wayland.windowManager.sway = {
       enable = true;
       package = pkgs.swayfx;
       extraConfig = ''
         for_window [class = "^Emacs$"] opacity 0.85
-        # for_window [app_id = "^org.wezfurlong.wezterm"] opacity 0.75
+        for_window [app_id = "^org.wezfurlong.wezterm"] opacity 0.75
         blur enable
         blur_radius 2
         corner_radius 10
