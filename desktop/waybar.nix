@@ -102,35 +102,35 @@ with colorScheme.${theme};
       #pulseaudio {
         background: ${green};
         color: ${base};
-        border-radius: 7px 0px 0px 7px;
+        border-radius: 6px 0px 0px 6px;
         margin-left: 4px;
       }
 
       #cava {
         background: ${green};
         color: ${base};
-        border-radius: 0px 7px 7px 0px;
+        border-radius: 0px 6px 6px 0px;
         margin-right: 4px;
       }
 
       #backlight {
         background: ${text2};
         color: ${base};
-        border-radius: 7px;
+        border-radius: 6px;
         padding-right: 1px;
       }
 
       #cpu {
         background: ${blue};
         color: ${base};
-        border-radius: 0px 7px 7px 0px;
+        border-radius: 0px 6px 6px 0px;
         margin-right: 4px;
       }
 
       #memory{
         background: ${blue};
         color: ${base};
-        border-radius: 7px 0px 0px 7px;
+        border-radius: 6px 0px 0px 6px;
         margin-left: 4px;
       }
 
@@ -138,13 +138,13 @@ with colorScheme.${theme};
         background: ${purple};
         color: ${base};
         margin: 0 4px;
-        border-radius: 7px;
+        border-radius: 6px;
       }
 
       #tray{
         background: ${orange};
         margin: 0 4px;
-        border-radius: 5px;
+        border-radius: 6px;
       }
 
       #workspaces button,
@@ -155,16 +155,16 @@ with colorScheme.${theme};
       #tray,
       #clock,
       #cava {
-        padding: 0 7px;
+        padding: 0 6px;
       }
 
       #battery{
         background: ${green};
         color: ${base};
-        padding: 0 7px;
-        padding-right: 7px;
+        padding: 0 6px;
+        padding-right: 6px;
         margin: 0 2px;
-        border-radius: 7px;
+        border-radius: 6px;
       }
 
       #battery.warning {
@@ -198,10 +198,10 @@ with colorScheme.${theme};
        #mode {
           background: ${pink};
           color: ${base};
-          border-radius: 7px;
-          padding: 0 7px;
-          margin-left: 5px;
-          margin-right: 5px;
+          border-radius: 6px;
+          padding: 0 6px;
+          margin-left: 6px;
+          margin-right: 6px;
        }
 
        #workspaces {
@@ -210,13 +210,13 @@ with colorScheme.${theme};
           margin-bottom: 0;
           transition: none;
           background: ${inactive};
-          border-radius: 7px;
+          border-radius: 6px;
        }
 
        #workspaces button {
           background: transparent;
           color: ${base};
-          border-radius: 7px;
+          border-radius: 6px;
        }
 
        #workspaces button.focused {

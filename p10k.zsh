@@ -188,15 +188,15 @@
 
   #################################[ os_icon: os identifier ]##################################
   # OS identifier color.
-  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=
+  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=15
   # Custom icon.
   # typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='⭐'
 
   ################################[ prompt_char: prompt symbol ]################################
   # Green prompt symbol if the last command succeeded.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=76
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=2
   # Red prompt symbol if the last command failed.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=196
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=9
   # Default prompt symbol.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='❯'
   # Prompt symbol in command vi mode.
@@ -213,17 +213,17 @@
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND=31
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND=006
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
   # Replace removed segment suffixes with this symbol.
   typeset -g POWERLEVEL9K_SHORTEN_DELIMITER=
   # Color of the shortened directory segments.
-  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=103
+  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=12
   # Color of the anchor directory segments. Anchor segments are never shortened. The first
   # segment is always an anchor.
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=39
+  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=14
   # Display anchor directory segments in bold.
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   # Don't shorten directories that contain any of these files. They are anchors.
@@ -374,10 +374,10 @@
     if (( $1 )); then
       # Styling for up-to-date Git status.
       local       meta='%f'     # default foreground
-      local      clean='%76F'   # green foreground
-      local   modified='%178F'  # yellow foreground
+      local      clean='%2F'   # green foreground
+      local   modified='%3F'  # yellow foreground
       local  untracked='%39F'   # blue foreground
-      local conflicted='%196F'  # red foreground
+      local conflicted='%9F'  # red foreground
     else
       # Styling for incomplete and stale Git status.
       local       meta='%244F'  # grey foreground
@@ -490,7 +490,7 @@
   typeset -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED,CONFLICTED,COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=-1
 
   # Icon color.
-  typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=76
+  typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=2
   typeset -g POWERLEVEL9K_VCS_LOADING_VISUAL_IDENTIFIER_COLOR=244
   # Custom icon.
   # typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_EXPANSION='⭐'
@@ -504,9 +504,9 @@
 
   # These settings are used for repositories other than Git or when gitstatusd fails and
   # Powerlevel10k has to fall back to using vcs_info.
-  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=76
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=76
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=178
+  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=2
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=2
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=3
 
   ##########################[ status: exit code of the last command ]###########################
   # Enable OK_PIPE, ERROR_PIPE and ERROR_SIGNAL status states to allow us to enable, disable and
@@ -568,7 +568,7 @@
 
   #######################[ direnv: direnv status (https://direnv.net/) ]########################
   # Direnv color.
-  typeset -g POWERLEVEL9K_DIRENV_FOREGROUND=178
+  typeset -g POWERLEVEL9K_DIRENV_FOREGROUND=3
   # Custom icon.
   # typeset -g POWERLEVEL9K_DIRENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
@@ -723,7 +723,7 @@
 
   #################[ ranger: ranger shell (https://github.com/ranger/ranger) ]##################
   # Ranger shell color.
-  typeset -g POWERLEVEL9K_RANGER_FOREGROUND=178
+  typeset -g POWERLEVEL9K_RANGER_FOREGROUND=3
   # Custom icon.
   # typeset -g POWERLEVEL9K_RANGER_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
@@ -753,7 +753,7 @@
 
   ######[ midnight_commander: midnight commander shell (https://midnight-commander.org/) ]######
   # Midnight Commander shell color.
-  typeset -g POWERLEVEL9K_MIDNIGHT_COMMANDER_FOREGROUND=178
+  typeset -g POWERLEVEL9K_MIDNIGHT_COMMANDER_FOREGROUND=3
   # Custom icon.
   # typeset -g POWERLEVEL9K_MIDNIGHT_COMMANDER_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
@@ -807,7 +807,7 @@
   # Load color when load is under 50%.
   typeset -g POWERLEVEL9K_LOAD_NORMAL_FOREGROUND=66
   # Load color when load is between 50% and 70%.
-  typeset -g POWERLEVEL9K_LOAD_WARNING_FOREGROUND=178
+  typeset -g POWERLEVEL9K_LOAD_WARNING_FOREGROUND=3
   # Load color when load is over 70%.
   typeset -g POWERLEVEL9K_LOAD_CRITICAL_FOREGROUND=166
   # Custom icon.
@@ -895,7 +895,7 @@
 
   ##################################[ context: user@hostname ]##################################
   # Context color when running with privileges.
-  typeset -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=178
+  typeset -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=3
   # Context color in SSH without privileges.
   typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=180
   # Default context color (no privileges, no SSH).
@@ -1530,7 +1530,7 @@
 
   ##############[ toolbox: toolbox name (https://github.com/containers/toolbox) ]###############
   # Toolbox color.
-  typeset -g POWERLEVEL9K_TOOLBOX_FOREGROUND=178
+  typeset -g POWERLEVEL9K_TOOLBOX_FOREGROUND=3
   # Don't display the name of the toolbox if it matches fedora-toolbox-*.
   typeset -g POWERLEVEL9K_TOOLBOX_CONTENT_EXPANSION='${P9K_TOOLBOX_NAME:#fedora-toolbox-*}'
   # Custom icon.
@@ -1595,7 +1595,7 @@
   # Show battery in green when it's charging or fully charged.
   typeset -g POWERLEVEL9K_BATTERY_{CHARGING,CHARGED}_FOREGROUND=70
   # Show battery in yellow when it's discharging.
-  typeset -g POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND=178
+  typeset -g POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND=3
   # Battery pictograms going from low to high level of charge.
   typeset -g POWERLEVEL9K_BATTERY_STAGES='\UF008E\UF007A\UF007B\UF007C\UF007D\UF007E\UF007F\UF0080\UF0081\UF0082\UF0079'
   # Don't show the remaining time to charge/discharge.

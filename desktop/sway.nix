@@ -21,7 +21,9 @@ let
 in with colorScheme."${theme}"; {
   imports = [ ./waybar.nix ];
   home.packages = with pkgs; [
-    swaybg
+    # swaybg
+    wbg # The only one that works consistently...
+    # swww
     waybar
     dunst
     wofi
@@ -66,13 +68,14 @@ in with colorScheme."${theme}"; {
         size = 9.0;
       };
       startup = [
+        # {
+        #   # command = "--no-startup-id pkill swaybg";
+        #   # command = "${pkgs.swww}/bin/swww-daemon";
+        #   command = "pkill wbg";
+        #   always = true;
+        # }
         {
-          command = "--no-startup-id pkill swaybg";
-          always = true;
-        }
-        {
-          command =
-            "--no-startup-id swaybg -i ~/Pictures/wallpapers/${theme}.jpg";
+          command = "pkill wbg; ${pkgs.wbg}/bin/wbg ~/Pictures/wallpapers/${theme}.jpg";
           always = true;
         }
         #     command = "${pkgs.waybar}/bin/waybar";

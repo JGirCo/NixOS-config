@@ -7,7 +7,7 @@ in with color_scheme.${theme}; {
         ${key.nvim}.enable = true;
       } // lib.optionalAttrs (theme == "catppuccin-latte") {
         catppuccin.enable = true;
-        catppuccin.flavour = "latte";
+        catppuccin.settings.flavour = "latte";
       }
     else {
       base16 = {
@@ -26,7 +26,6 @@ in with color_scheme.${theme}; {
     clipboard = {
       # Use system clipboard
       register = "unnamedplus";
-
       providers.wl-copy.enable = true;
     };
 

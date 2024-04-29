@@ -26,6 +26,7 @@
         "core.defaults" = { __empty = null; };
         "core.dirman" = { config = { workspaces = { notes = "~/notes"; }; }; };
         "core.concealer".__empty = null;
+        "core.export".__empty = null;
         "core.completion".config.engine = "nvim-cmp";
         "core.qol.toc".config.close_after_use = true;
       };

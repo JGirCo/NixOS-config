@@ -191,7 +191,7 @@ in with colorScheme.${theme}.key.gtk; {
 
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme.name = "gtk";
     style.name = "adwaita-dark";
     style.package = pkgs.adwaita-qt;
   };
