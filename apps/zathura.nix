@@ -1,11 +1,12 @@
-{config, theme, ...}:
+{ lib, config, theme, ... }:
 
 let
-  colorScheme = import ../colors.nix;
-in
-with colorScheme.${theme};
-with config.colorScheme.palette;
-{
+  colors = import ../colors.nix {
+    inherit theme;
+    inherit lib;
+  };
+in with colors;
+with config.colorScheme.palette; {
   config = {
     programs.zathura = {
       enable = true;

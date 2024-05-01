@@ -1,90 +1,89 @@
 { config, lib, pkgs, theme, font, ... }:
 
 let
-  colorScheme = import ../colors.nix;
-in
-with colorScheme.${theme};
-{
-    programs.waybar = {
-      enable = true;
-      settings = {
-        mainBar = {
-          position = "top";
-          modules-left = ["pulseaudio" "cava" "backlight" "memory" "cpu"];
-          modules-center = ["sway/workspaces" "sway/mode" "sway/scratchpad"];
-          modules-right = ["battery" "clock" "tray"];
+  colors = import ../colors.nix {
+    inherit theme;
+    inherit lib;
+  };
+in with colors; {
+  programs.waybar = {
+    enable = true;
+    settings = {
+      mainBar = {
+        position = "top";
+        modules-left = [ "pulseaudio" "cava" "backlight" "memory" "cpu" ];
+        modules-center = [ "sway/workspaces" "sway/mode" "sway/scratchpad" ];
+        modules-right = [ "battery" "clock" "tray" ];
 
-          "cpu" = {
-            interval = 10;
-            format = "{}%  ";
-          };
+        "cpu" = {
+          interval = 10;
+          format = "{}%  ";
+        };
 
-          "memory" = {
-            interval = 10;
-            format = "{}% ";
-          };
-          "backlight" = {
-            format = "{percent}% {icon}";
-            format-icons = ["" "" "" "" "" "" "" "" ""];
-          };
+        "memory" = {
+          interval = 10;
+          format = "{}% ";
+        };
+        "backlight" = {
+          format = "{percent}% {icon}";
+          format-icons = [ "" "" "" "" "" "" "" "" "" ];
+        };
 
-          "cava" = {
-            framerate = 30;
-            autosens = 1;
-            bars = 12;
-            bar_delimiter = 0;
-            method = "pulse";
-            format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
-          };
+        "cava" = {
+          framerate = 30;
+          autosens = 1;
+          bars = 12;
+          bar_delimiter = 0;
+          method = "pulse";
+          format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+        };
 
-          "pulseaudio" = {
-            format = "{volume}% {icon}";
-            format-icons = ["" "" ""];
-            format-muted = "";
-            };
+        "pulseaudio" = {
+          format = "{volume}% {icon}";
+          format-icons = [ "" "" "" ];
+          format-muted = "";
+        };
 
-          "sway/scratchpad" = {
-            format = " ";
-          };
+        "sway/scratchpad" = { format = " "; };
 
-          "sway/workspaces" = {
-            disable-scroll= true;
-            all-outputs= true;
-            format= "{icon}";
-            format-icons = {
-              "1"= " ";
-              "2"= "";
-              "3"= "󰔶";
-              "4"= "󰝤";
-              "5"= "󰜁";
-              "6"= "󰋘";
-              "7"= "󰋘  ";
-              "8"= "󰋘  ";
-              "9"= "󰋘 󰔶 ";
-              "10"= "";
-            };
-          };
-
-          "battery" = {
-            interval = 5;
-            states = {
-              warning = 30;
-              critical = 10;
-            };
-            format = "{capacity}% {icon}";
-            format-full = "{capacity}% {icon}";
-            format-charging = "{capacity}% 󱐋{icon}";
-            format-plugged = "";
-            format-icons = [" " " " " " " " " "];
-          };
-          "clock" = {
-            interval = 60;
-            format = "{:%H:%M}  ";
-            format-alt = "{:%A, %B %d, %Y (%R)} 󰃭 ";
+        "sway/workspaces" = {
+          disable-scroll = true;
+          all-outputs = true;
+          format = "{icon}";
+          format-icons = {
+            "1" = " ";
+            "2" = "";
+            "3" = "󰔶";
+            "4" = "󰝤";
+            "5" = "󰜁";
+            "6" = "󰋘";
+            "7" = "󰋘  ";
+            "8" = "󰋘  ";
+            "9" = "󰋘 󰔶 ";
+            "10" = "";
           };
         };
+
+        "battery" = {
+          interval = 5;
+          states = {
+            warning = 30;
+            critical = 10;
+          };
+          format = "{capacity}% {icon}";
+          format-full = "{capacity}% {icon}";
+          format-charging = "{capacity}% 󱐋{icon}";
+          format-plugged = "";
+          format-icons = [ " " " " " " " " " " ];
+        };
+        "clock" = {
+          interval = 60;
+          format = "{:%H:%M}  ";
+          format-alt = "{:%A, %B %d, %Y (%R)} 󰃭 ";
+        };
       };
-      style = ''
+    };
+    style = ''
       * {
         border: none;
         border-radius: 0;
@@ -228,6 +227,6 @@ with colorScheme.${theme};
           background: ${urgent};
           color: ${base};
        }
-      '';
-    };
+    '';
+  };
 }

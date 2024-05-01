@@ -1,8 +1,12 @@
 { theme, lib, ... }:
-let color_scheme = import ../colors.nix;
-in with color_scheme.${theme}; {
+let
+  colors = import ../colors.nix {
+    inherit theme;
+    inherit lib;
+  };
+in with colors; {
   programs.nixvim = {
-    colorschemes = if key.isNvimBuiltin then
+    colorschemes = if isNvimBuiltin then
       {
         ${key.nvim}.enable = true;
       } // lib.optionalAttrs (theme == "catppuccin-latte") {
@@ -10,9 +14,29 @@ in with color_scheme.${theme}; {
         catppuccin.settings.flavour = "latte";
       }
     else {
-      base16 = {
+      base16 = if isBase16Builtin then {
         enable = true;
         colorscheme = key.nvim;
+      } else {
+        enable = true;
+        customColorScheme = {
+          base00 = base16.base00;
+          base01 = base16.base01;
+          base02 = base16.base02;
+          base03 = base16.base03;
+          base04 = base16.base04;
+          base05 = base16.base05;
+          base06 = base16.base06;
+          base07 = base16.base07;
+          base08 = base16.base08;
+          base09 = base16.base09;
+          base0A = base16.base0A;
+          base0B = base16.base0B;
+          base0C = base16.base0C;
+          base0D = base16.base0D;
+          base0E = base16.base0E;
+          base0F = base16.base0F;
+        };
       };
     };
 

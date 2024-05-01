@@ -1,7 +1,6 @@
 { config, lib, pkgs, theme, font, ... }:
 
-let color_scheme = import ../colors.nix;
-in with color_scheme.${theme}; {
+with config.colorScheme.palette; {
   programs.wezterm = {
     enable = true;
     enableZshIntegration = true;
@@ -16,10 +15,42 @@ in with color_scheme.${theme}; {
         config = wezterm.config_builder()
       end
 
-      -- This is where you actually apply your config choices
+      config.colors = {
+          foreground = '#${base05}',
+          background = '#${base00}',
 
-      -- For example, changing the color scheme:
-      config.color_scheme = "${key.wezterm}"
+          cursor_bg = '#${base05}',
+          cursor_fg = '#${base00}',
+          cursor_border = '#${base05}',
+
+          selection_fg = '#${base05}',
+          selection_bg = '#${base00}',
+
+          scrollbar_thumb = '#${base00}',
+
+          split = '#${base00}',
+
+        ansi = {
+          '#${base00}',
+          '#${base08}',
+          '#${base0B}',
+          '#${base0A}',
+          '#${base0D}',
+          '#${base0E}',
+          '#${base0C}',
+          '#${base05}',
+        },
+        brights = {
+          '#${base03}',
+          '#${base09}',
+          '#${base01}',
+          '#${base02}',
+          '#${base04}',
+          '#${base06}',
+          '#${base0F}',
+          '#${base07}',
+        },
+        }
       config.font = wezterm.font '${font} Nerd Font'
       config.hide_tab_bar_if_only_one_tab = true
       config.audible_bell="Disabled"

@@ -9,7 +9,10 @@ let
 
   unfocused = "#ffffff00";
   focused_inactive = "#ffffff00";
-  colorScheme = import ../colors.nix;
+  colors = import ../colors.nix {
+    inherit theme;
+    inherit lib;
+  };
 
   # base = "#${config.colorScheme.palette.base00}";
   # text = "#${config.colorScheme.palette.base00}";
@@ -18,7 +21,7 @@ let
   # active = "#${config.colorScheme.palette.base0A}";
   # urgent = "#${config.colorScheme.palette.base08}";
   # binding = "#${config.colorScheme.palette.base0E}";
-in with colorScheme."${theme}"; {
+in with colors; {
   imports = [ ./waybar.nix ];
   home.packages = with pkgs; [
     # swaybg
@@ -75,7 +78,8 @@ in with colorScheme."${theme}"; {
         #   always = true;
         # }
         {
-          command = "pkill wbg; ${pkgs.wbg}/bin/wbg ~/Pictures/wallpapers/${theme}.jpg";
+          command =
+            "pkill wbg; ${pkgs.wbg}/bin/wbg ~/Pictures/wallpapers/${theme}.jpg";
           always = true;
         }
         #     command = "${pkgs.waybar}/bin/waybar";

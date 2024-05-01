@@ -19,6 +19,5 @@
     key = {
       wezterm = "rose-pine-dawn";
       nvim = "rose-pine";
-      isNvimBuiltin = true;
     };
 }

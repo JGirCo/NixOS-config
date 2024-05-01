@@ -19,6 +19,5 @@
   key = {
     wezterm = "tokyonight";
     nvim = "tokyonight";
-    isNvimBuiltin = true;
   };
 }
