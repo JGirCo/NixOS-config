@@ -24,31 +24,31 @@ with config.colorScheme.palette; {
           cursor_border = '#${base05}',
 
           selection_fg = '#${base05}',
-          selection_bg = '#${base00}',
+          selection_bg = '#${base02}',
 
           scrollbar_thumb = '#${base00}',
 
           split = '#${base00}',
 
         ansi = {
-          '#${base00}',
-          '#${base08}',
-          '#${base0B}',
-          '#${base0A}',
-          '#${base0D}',
-          '#${base0E}',
-          '#${base0C}',
-          '#${base05}',
+          '#${base00}', --0x00
+          '#${base08}', --0x01
+          '#${base0B}', --0x02
+          '#${base09}', --0x03
+          '#${base0D}', --0x04
+          '#${base0E}', --0x05
+          '#${base0C}', --0x06
+          '#${base06}', --0x07
         },
         brights = {
-          '#${base03}',
-          '#${base09}',
-          '#${base01}',
-          '#${base02}',
-          '#${base04}',
-          '#${base06}',
-          '#${base0F}',
-          '#${base07}',
+          '#${base03}', --0x08
+          '#${base08}', --0x09
+          '#${base0B}', --0x0a
+          '#${base0A}', --0x0b
+          '#${base0D}', --0x0c
+          '#${base0E}', --0x0d
+          '#${base0C}', --0x0e
+          '#${base06}', --0x0f
         },
         }
       config.font = wezterm.font '${font} Nerd Font'

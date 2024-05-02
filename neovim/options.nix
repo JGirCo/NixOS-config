@@ -19,7 +19,7 @@ in with colors; {
         colorscheme = key.nvim;
       } else {
         enable = true;
-        customColorScheme = {
+        colorscheme = {
           base00 = base16.base00;
           base01 = base16.base01;
           base02 = base16.base02;
