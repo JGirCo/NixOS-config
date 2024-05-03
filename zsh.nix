@@ -49,6 +49,11 @@ in {
           source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
 
         ''
+
+        ''
+          bindkey "^[k" history-beginning-search-backward
+          bindkey "^[j" history-beginning-search-forward
+        ''
       ];
     };
   };

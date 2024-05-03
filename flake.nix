@@ -26,7 +26,7 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "stella";
+      theme = "dracula";
       font = "FantasqueSansM";
     in {
       nixosConfigurations = {

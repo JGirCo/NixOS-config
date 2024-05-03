@@ -17,6 +17,7 @@ in {
     # ./apps/spotifyd.nix
     ./apps/zathura.nix
     ./desktop/dunst.nix
+    ./apps/cava.nix
     inputs.nix-colors.homeManagerModules.default
   ];
 

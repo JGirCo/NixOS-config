@@ -48,10 +48,11 @@ with config.colorScheme.palette; {
           '#${base0D}', --0x0c
           '#${base0E}', --0x0d
           '#${base0C}', --0x0e
-          '#${base06}', --0x0f
+          '#${base05}', --0x0f
         },
         }
       config.font = wezterm.font '${font} Nerd Font'
+      config.font_size = 13.0
       config.hide_tab_bar_if_only_one_tab = true
       config.audible_bell="Disabled"
       -- config.window_background_opacity = 0.60

@@ -20,4 +20,25 @@
     wezterm = "Dracula";
     nvim = "dracula";
   };
+  isBase16Builtin = false;
+  base16 = {
+    name = "Dracula";
+    author = "http://github.com/dracula";
+    base00 = "#282A36";
+    base01 = "#1e2030";
+    base02 = "#44475A";
+    base03 = "#6272A4";
+    base04 = "#828bb8";
+    base05 = "#F8F8F2";
+    base06 = "#828bb8";
+    base07 = "#F8F8F2";
+    base08 = "#FF5555";
+    base09 = "#ffc777";
+    base0A = "#F1FA8C";
+    base0B = "#50FA7B";
+    base0C = "#8BE9FD";
+    base0D = "#BD93F9";
+    base0E = "#FF79C6";
+    base0F = "#FF5555";
+  };
 }
