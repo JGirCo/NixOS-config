@@ -166,7 +166,9 @@
     bottom
     bluetuith
     spotify-player
-zsh-powerlevel10k
+    zsh-powerlevel10k
+    pulsemixer
+    ncdu
 
     #GUI Tools
     # firefox-beta-bin
@@ -212,9 +214,10 @@ zsh-powerlevel10k
     kdeconnect.enable = true;
     dconf.enable = true;
     firefox = {
-    enable = true;
-    package = pkgs.firefox-beta-bin;
-    nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];};
+      enable = true;
+      package = pkgs.firefox-beta-bin;
+      nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
+    };
   };
 
   # List services that you want to enable:
