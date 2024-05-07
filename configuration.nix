@@ -33,6 +33,9 @@
   hardware.bluetooth.powerOnBoot =
     true; # powers up the default Bluetooth controller on boot
 
+  # Enable openGL
+  hardware.opengl.enable = true;
+
   # Set your time zone.
   time.timeZone = "America/Bogota";
 
@@ -62,7 +65,7 @@
   # services.xserver.windowManager.i3 = {
   #   enable = true;
   # };
-  programs.sway.enable = true;
+  programs.hyprland.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -171,8 +174,6 @@
     ncdu
 
     #GUI Tools
-    # firefox-beta-bin
-    firefoxpwa
     libreoffice
     inkscape
     bottles
@@ -215,7 +216,7 @@
     dconf.enable = true;
     firefox = {
       enable = true;
-      package = pkgs.firefox-beta-bin;
+      package = pkgs.floorp;
       nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
     };
   };
