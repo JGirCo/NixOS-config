@@ -77,6 +77,9 @@ flake-overlays:
 
   services.blueman.enable = true;
 
+  # Enable openGL
+  hardware.opengl.enable = true;
+
   # Set your time zone.
   time.timeZone = "America/Bogota";
 
@@ -107,7 +110,7 @@ flake-overlays:
   # services.xserver.windowManager.i3 = {
   #   enable = true;
   # };
-  programs.sway.enable = true;
+  programs.hyprland.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {

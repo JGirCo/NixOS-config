@@ -9,7 +9,7 @@ in {
 
     ./zsh.nix
     # ./desktop/i3.nix
-    ./desktop/sway.nix
+    ./desktop/hyprland.nix
     ./desktop/wofi.nix
     ./apps/wezterm.nix
     ./desktop/gtk.nix

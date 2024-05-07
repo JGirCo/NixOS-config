@@ -1,7 +1,7 @@
 { config, lib, pkgs, theme, font, ... }:
 
 let
-  mod = "Mod4";
+  mod = "MOD4";
   up = "k";
   down = "j";
   left = "h";
@@ -29,6 +29,11 @@ in with colors; {
     wl-clipboard
   ];
   wayland.windowManager.hyprland = {
-enable = true;
+    enable = true;
+    settings = {
+      border_size = 4;
+      gaps_in = 4;
+      col.active_border = focused;
+    };
   };
 }
