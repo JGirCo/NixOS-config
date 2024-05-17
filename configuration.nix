@@ -159,6 +159,7 @@
     kitty
     wezterm
     libqalculate
+    translate-shell
 
     # TUI Tools
     cava
@@ -172,7 +173,7 @@
     pulsemixer
     ncdu
 
-    #GUI Tools
+    # GUI Tools
     # firefox-beta-bin
     libreoffice
     pcmanfm

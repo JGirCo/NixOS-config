@@ -18,6 +18,7 @@ in {
     ./apps/zathura.nix
     ./desktop/dunst.nix
     ./apps/cava.nix
+    ./scripts/default.nix
     inputs.nix-colors.homeManagerModules.default
   ];
 
@@ -51,28 +52,5 @@ in {
     username = "juanma";
     homeDirectory = "/home/juanma";
     stateVersion = "23.11";
-  };
-  # systemd services
-
-  systemd.user.services."battery-notifier" = {
-    Unit = { Description = "Systemd user service template"; };
-    Service = {
-      Type = "oneshot";
-      ExecStart = toString (pkgs.writeShellScript "battery-notifier-script" ''
-        set -eou pipefail
-        ${pkgs.bash}/bin/bash "/home/juanma/.local/bin/batteryIndicator";
-      '');
-    };
-    Install.WantedBy = [ "default.target" ];
-  };
-
-  systemd.user.timers."battery-notifier" = {
-    Unit = { Description = "sysdtimer template"; };
-    Timer = {
-      OnBootSec = "1m";
-      OnUnitActiveSec = "1m";
-      Unit = "battery-notifier";
-    };
-    Install.WantedBy = [ "timers.target" ];
   };
 }
