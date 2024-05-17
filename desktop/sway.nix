@@ -40,6 +40,7 @@ in with colors; {
   # wayland.windowManager.swayfx.enable = true;
   wayland.windowManager.sway = {
     enable = true;
+    checkConfig = false;
     package = pkgs.swayfx;
     extraConfig = ''
       for_window [class = "^Emacs$"] opacity 0.85

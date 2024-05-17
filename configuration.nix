@@ -32,6 +32,7 @@
   services.blueman.enable = true;
   hardware.bluetooth.powerOnBoot =
     true; # powers up the default Bluetooth controller on boot
+  hardware.opengl.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Bogota";
@@ -71,7 +72,7 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput = {
+  services.libinput = {
     enable = true;
     touchpad.naturalScrolling = true;
   };
@@ -142,6 +143,7 @@
     clang
     busybox
     luajit
+    wine
 
     libsForQt5.qt5.qtquickcontrols2
     libsForQt5.qt5.qtgraphicaleffects
@@ -172,12 +174,12 @@
 
     #GUI Tools
     # firefox-beta-bin
-    firefoxpwa
     libreoffice
+    pcmanfm
     inkscape
     bottles
+    lutris
     ungoogled-chromium
-    wireshark
     vlc
 
     # Miscelaneous
@@ -196,6 +198,10 @@
     # Not officially in the specification
     XDG_BIN_HOME = "$HOME/.local/bin";
     PATH = [ "${XDG_BIN_HOME}" ];
+  };
+
+  xdg.mime.defaultApplications = {
+    "inode/directory" = "pcmanfm.desktop";
   };
 
   fonts.packages = with pkgs;
