@@ -65,6 +65,7 @@ with config.colorScheme.palette; {
         bottom = 0,
       }
       -- and finally, return the configuration to wezterm
+      enable_kitty_graphics=true
       return config
     '';
   };

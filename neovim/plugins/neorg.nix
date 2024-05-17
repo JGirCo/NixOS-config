@@ -8,12 +8,24 @@
         linebreak = true;
       };
 
-      keymaps = [{
-        mode = "n";
-        key = "<C-g>";
-        action = ":Neorg toc<CR>";
-        options.silent = true;
-      }];
+      keymaps = [
+        {
+          mode = "n";
+          key = "<C-g>";
+          action = ":Neorg toc<CR>";
+          options.silent = true;
+        }
+        {
+          mode = "i";
+          key = "<C-c>";
+          action = "<Esc>b~ea";
+          options = {
+            silent = true;
+            noremap = true;
+            desc = "Change the case of the first letter of the current word";
+          };
+        }
+      ];
     };
 
     plugins.neorg = {
