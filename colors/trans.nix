@@ -1,42 +1,44 @@
 {
   base = "#ffffff";
   text = "#ffffff";
-  text2 = "#905B75";
-  inactive = "#f8cDDA";
-  focused = "#F5A9B8";
-  alt = "#5bCEFa";
-  urgent = "#FF988B";
-  binding = "#BA92D0";
+  text2 = "#905b75";
+  inactive = "#f8cdda";
+  focused = "#f5a9b8";
+  alt = "#5bcefa";
+  urgent = "#ff988b";
+  binding = "#ba92d0";
 
-  red = "#FF988B";
+  red = "#ff988b";
   yellow = "#ffde3b";
-  pink = "#F5A9B8";
-  green = "#65FD55";
-  blue = "#5bCEFa";
-  purple = "#BA92D0";
-  orange = "#FFae56";
+  pink = "#f5a9b8";
+  green = "#65fd55";
+  blue = "#5bcefa";
+  purple = "#ba92d0";
+  orange = "#ffae56";
 
   isNvimBuiltin = false;
   isBase16Builtin = false;
   base16 = {
+    # TEST
     name = "Trans";
     author = "JGirCo";
-    base00 = "#FFFFFF";
-    base01 = "#Fde8ef";
+
+    base00 = "#ffffff";
+    base01 = "#fde8ef";
     base02 = "#fceeee";
-    base03 = "#fCdddf";
+    base03 = "#fcdddf";
     base04 = "#f2b2cf";
-    base05 = "#905B75";
-    base06 = "#B94D6E";
+    base05 = "#905b75";
+    base06 = "#b94d6e";
     base07 = "#f292af";
-    base08 = "#FF988B";
+    base08 = "#ff988b";
     base09 = "#ffde3b";
-    base0A = "#FFae56";
-    base0B = "#65FD55";
-    base0C = "#8DCDBB";
-    base0D = "#5bCEFa";
-    base0E = "#F5A9B8";
-    base0F = "#FFC6Af";
+    base0A = "#ffae56";
+    base0B = "#65fd55";
+    base0C = "#8dcdbb";
+    base0D = "#5bcefa";
+    base0E = "#f5a9b8";
+    base0F = "#ffc6af";
   };
 }
 

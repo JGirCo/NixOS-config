@@ -16,10 +16,6 @@
   purple = "#dcc3f9";
   orange = "#f6dddd";
 
-  key = {
-    wezterm = "Stella (base16)";
-    nvim = "stella";
-  };
   isNvimBuiltin = false;
   isBase16Builtin = false;
   base16 = {
@@ -28,7 +24,7 @@
     base00 = "#05080a";
     base01 = "#0a1014";
     base02 = "#0f181e";
-    base03 = "#141f27";
+    base03 = "#242f37";
     base04 = "#192630";
     base05 = "#dce2f7";
     base06 = "#fff6ff";
