@@ -38,5 +38,10 @@
       pattern = [ "tex" "latex" "markdown" ];
       command = "setlocal spell spelllang=en";
     }
+    {
+      event = "FileType";
+      pattern = "norg";
+      command = "setlocal nonumber norelativenumber colorcolumn=0";
+    }
   ];
 }

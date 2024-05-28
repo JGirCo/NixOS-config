@@ -1,13 +1,15 @@
 {
   imports = [
+    ./navic.nix
+    ./barbecue.nix
+    ./navbuddy.nix
     ./undotree.nix
     ./transparent.nix
     ./image.nix
     ./surround.nix
     ./which-key.nix
-    ./barbar.nix
     ./comment.nix
-    ./efm.nix
+    # ./efm.nix
     ./floaterm.nix
     ./harpoon.nix
     ./lsp.nix
@@ -42,7 +44,7 @@
         userDefaultOptions.names = false;
       };
       oil.enable = true;
-      indent-blankline.enable=true;
+      indent-blankline.enable = true;
     };
   };
 }
