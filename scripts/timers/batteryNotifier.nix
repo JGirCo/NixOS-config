@@ -16,8 +16,8 @@ in {
 
         # Battery percentage at which to notify
         WARNING_LEVEL=10
-        BATTERY_DISCHARGING=$(acpi -b | grep "Battery 0" | grep -c "Discharging")
-        BATTERY_LEVEL=$(acpi -b | grep "Battery 0" | grep -P -o '[0-9]+(?=%)')
+        BATTERY_DISCHARGING=$(${pkgs.acpi}/bin/acpi -b | ${pkgs.gnugrep}/bin/grep "Battery 0" | ${pkgs.gnugrep}/bin/grep -c "Discharging")
+        BATTERY_LEVEL=$(${pkgs.acpi}/bin/acpi -b | ${pkgs.gnugrep}/bin/grep "Battery 0" | ${pkgs.gnugrep}/bin/grep -P -o '[0-9]+(?=%)')
 
         # Use two files to store whether we've shown a notification or not (to prevent multiple notifications)
         EMPTY_FILE=/tmp/batteryempty
@@ -36,7 +36,7 @@ in {
         	touch $FULL_FILE
         # If the battery is low and is not charging (and has not shown notification yet)
         elif [ "$BATTERY_LEVEL" -le $WARNING_LEVEL ] && [ "$BATTERY_DISCHARGING" -eq 1 ] && [ ! -f $EMPTY_FILE ]; then
-        	${pkgs.dunst}/bin/dunstify 9992 -u critical "Battery Low" "Battery level is ''${BATTERY_LEVEL}%!"
+        	${pkgs.dunst}/bin/dunstify -r 9992 -u critical "Battery Low" "Battery level is ''${BATTERY_LEVEL}%!"
         	touch $EMPTY_FILE
         fi
       '');

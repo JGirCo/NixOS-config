@@ -18,6 +18,7 @@ in {
       syntaxHighlighting.enable = true;
       # syntaxHighlighting.enable = true;
       shellAliases = {
+        mktmp = "cd $(mktemp -d)";
         update = "sudo nixos-rebuild switch --flake ~/etc/nixos/";
         rebuildHome = "home-manager switch --flake ~/etc/nixos/";
         editSystem = "nvim ~/etc/nixos/configuration.nix";
