@@ -24,8 +24,8 @@ let
 in with colors; {
   imports = [ ./waybar.nix ];
   home.packages = with pkgs; [
-    # swaybg
-    wbg # The only one that works consistently...
+    swaybg
+    # wbg # The only one that works consistently...
     # swww
     waybar
     dunst
@@ -62,7 +62,6 @@ in with colors; {
           natural_scroll = "enabled";
         };
         "5215:711:Trust_Wireless_Mouse" = { natural_scroll = "disabled"; };
-
       };
 
       assigns = { "10" = [{ class = "^Spotify$"; }]; };
@@ -72,24 +71,16 @@ in with colors; {
         size = 9.0;
       };
       startup = [
-        # {
-        #   # command = "--no-startup-id pkill swaybg";
-        #   # command = "${pkgs.swww}/bin/swww-daemon";
-        #   command = "pkill wbg";
-        #   always = true;
-        # }
         {
-          command =
-            "pkill wbg; ${pkgs.wbg}/bin/wbg ~/Pictures/wallpapers/${theme}.jpg";
+          command = "--no-startup-id pkill swaybg; ${pkgs.swaybg}/bin/swaybg -i ~/Pictures/wallpapers/${theme}.jpg";
           always = true;
         }
-        #     command = "${pkgs.waybar}/bin/waybar";
         {
           command = "--no-startup-id ${pkgs.waybar}/bin/waybar";
           always = true;
         }
         {
-          command = "--no-startup-id nm-applet";
+          command = "--no-startup-id systemctl --user restart nm-applet.service";
           always = true;
         }
       ];
