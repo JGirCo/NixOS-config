@@ -48,7 +48,7 @@
         }];
 
         servers = {
-          nil_ls = {
+          nil-ls = {
             enable = true;
             onAttach.function = ''
               navic.attach(client, bufnr)

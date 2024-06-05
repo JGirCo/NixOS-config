@@ -26,7 +26,7 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "catppuccin-latte";
+      theme = "tokyo-night-moon";
       font = "FantasqueSansM";
     in {
       nixosConfigurations = {
