@@ -175,6 +175,7 @@
 
     # GUI Tools
     # firefox-beta-bin
+    thunderbird
     libreoffice
     pcmanfm
     inkscape
