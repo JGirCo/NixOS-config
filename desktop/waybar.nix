@@ -1,90 +1,89 @@
 { config, lib, pkgs, theme, font, ... }:
 
 let
-  colorScheme = import ../colors.nix;
-in
-with colorScheme.${theme};
-{
-    programs.waybar = {
-      enable = true;
-      settings = {
-        mainBar = {
-          position = "top";
-          modules-left = ["pulseaudio" "cava" "backlight" "memory" "cpu"];
-          modules-center = ["sway/workspaces" "sway/mode" "sway/scratchpad"];
-          modules-right = ["battery" "clock" "tray"];
+  colors = import ../colors.nix {
+    inherit theme;
+    inherit lib;
+  };
+in with colors; {
+  programs.waybar = {
+    enable = true;
+    settings = {
+      mainBar = {
+        position = "top";
+        modules-left = [ "pulseaudio" "cava" "backlight" "memory" "cpu" ];
+        modules-center = [ "sway/workspaces" "sway/mode" "sway/scratchpad" ];
+        modules-right = [ "battery" "clock" "tray" ];
 
-          "cpu" = {
-            interval = 10;
-            format = "{}%  ";
-          };
+        "cpu" = {
+          interval = 10;
+          format = "{}%  ";
+        };
 
-          "memory" = {
-            interval = 10;
-            format = "{}% ";
-          };
-          "backlight" = {
-            format = "{percent}% {icon}";
-            format-icons = ["" "" "" "" "" "" "" "" ""];
-          };
+        "memory" = {
+          interval = 10;
+          format = "{}% ";
+        };
+        "backlight" = {
+          format = "{percent}% {icon}";
+          format-icons = [ "" "" "" "" "" "" "" "" "" ];
+        };
 
-          "cava" = {
-            framerate = 30;
-            autosens = 1;
-            bars = 12;
-            bar_delimiter = 0;
-            method = "pulse";
-            format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
-          };
+        "cava" = {
+          framerate = 30;
+          autosens = 1;
+          bars = 12;
+          bar_delimiter = 0;
+          method = "pulse";
+          format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+        };
 
-          "pulseaudio" = {
-            format = "{volume}% {icon}";
-            format-icons = ["" "" ""];
-            format-muted = "";
-            };
+        "pulseaudio" = {
+          format = "{volume}% {icon}";
+          format-icons = [ "" "" "" ];
+          format-muted = "";
+        };
 
-          "sway/scratchpad" = {
-            format = " ";
-          };
+        "sway/scratchpad" = { format = " "; };
 
-          "sway/workspaces" = {
-            disable-scroll= true;
-            all-outputs= true;
-            format= "{icon}";
-            format-icons = {
-              "1"= " ";
-              "2"= "";
-              "3"= "󰔶";
-              "4"= "󰝤";
-              "5"= "󰜁";
-              "6"= "󰋘";
-              "7"= "󰋘  ";
-              "8"= "󰋘  ";
-              "9"= "󰋘 󰔶 ";
-              "10"= "";
-            };
-          };
-
-          "battery" = {
-            interval = 5;
-            states = {
-              warning = 30;
-              critical = 10;
-            };
-            format = "{capacity}% {icon}";
-            format-full = "{capacity}% {icon}";
-            format-charging = "{capacity}% 󱐋{icon}";
-            format-plugged = "";
-            format-icons = [" " " " " " " " " "];
-          };
-          "clock" = {
-            interval = 60;
-            format = "{:%H:%M}  ";
-            format-alt = "{:%A, %B %d, %Y (%R)} 󰃭 ";
+        "sway/workspaces" = {
+          disable-scroll = true;
+          all-outputs = true;
+          format = "{icon}";
+          format-icons = {
+            "1" = "I";
+            "2" = "II";
+            "3" = "III";
+            "4" = "IV";
+            "5" = "V";
+            "6" = "VI";
+            "7" = "VII";
+            "8" = "VIII";
+            "9" = "IX";
+            "10" = "";
           };
         };
+
+        "battery" = {
+          interval = 5;
+          states = {
+            warning = 30;
+            critical = 10;
+          };
+          format = "{capacity}% {icon}";
+          format-full = "{capacity}% {icon}";
+          format-charging = "{capacity}% 󱐋{icon}";
+          format-plugged = "";
+          format-icons = [ " " " " " " " " " " ];
+        };
+        "clock" = {
+          interval = 60;
+          format = "{:%H:%M}  ";
+          format-alt = "{:%A, %B %d, %Y (%R)} 󰃭 ";
+        };
       };
-      style = ''
+    };
+    style = ''
       * {
         border: none;
         border-radius: 0;
@@ -102,35 +101,35 @@ with colorScheme.${theme};
       #pulseaudio {
         background: ${green};
         color: ${base};
-        border-radius: 7px 0px 0px 7px;
+        border-radius: 6px 0px 0px 6px;
         margin-left: 4px;
       }
 
       #cava {
         background: ${green};
         color: ${base};
-        border-radius: 0px 7px 7px 0px;
+        border-radius: 0px 6px 6px 0px;
         margin-right: 4px;
       }
 
       #backlight {
         background: ${text2};
         color: ${base};
-        border-radius: 7px;
+        border-radius: 6px;
         padding-right: 1px;
       }
 
       #cpu {
         background: ${blue};
         color: ${base};
-        border-radius: 0px 7px 7px 0px;
+        border-radius: 0px 6px 6px 0px;
         margin-right: 4px;
       }
 
       #memory{
         background: ${blue};
         color: ${base};
-        border-radius: 7px 0px 0px 7px;
+        border-radius: 6px 0px 0px 6px;
         margin-left: 4px;
       }
 
@@ -138,13 +137,13 @@ with colorScheme.${theme};
         background: ${purple};
         color: ${base};
         margin: 0 4px;
-        border-radius: 7px;
+        border-radius: 6px;
       }
 
       #tray{
         background: ${orange};
         margin: 0 4px;
-        border-radius: 5px;
+        border-radius: 6px;
       }
 
       #workspaces button,
@@ -155,16 +154,16 @@ with colorScheme.${theme};
       #tray,
       #clock,
       #cava {
-        padding: 0 7px;
+        padding: 0 6px;
       }
 
       #battery{
         background: ${green};
         color: ${base};
-        padding: 0 7px;
-        padding-right: 7px;
+        padding: 0 6px;
+        padding-right: 6px;
         margin: 0 2px;
-        border-radius: 7px;
+        border-radius: 6px;
       }
 
       #battery.warning {
@@ -198,10 +197,10 @@ with colorScheme.${theme};
        #mode {
           background: ${pink};
           color: ${base};
-          border-radius: 7px;
-          padding: 0 7px;
-          margin-left: 5px;
-          margin-right: 5px;
+          border-radius: 6px;
+          padding: 0 6px;
+          margin-left: 6px;
+          margin-right: 6px;
        }
 
        #workspaces {
@@ -210,13 +209,13 @@ with colorScheme.${theme};
           margin-bottom: 0;
           transition: none;
           background: ${inactive};
-          border-radius: 7px;
+          border-radius: 6px;
        }
 
        #workspaces button {
           background: transparent;
           color: ${base};
-          border-radius: 7px;
+          border-radius: 6px;
        }
 
        #workspaces button.focused {
@@ -228,6 +227,6 @@ with colorScheme.${theme};
           background: ${urgent};
           color: ${base};
        }
-      '';
-    };
+    '';
+  };
 }

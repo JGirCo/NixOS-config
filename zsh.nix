@@ -18,6 +18,7 @@ in {
       syntaxHighlighting.enable = true;
       # syntaxHighlighting.enable = true;
       shellAliases = {
+        mktmp = "cd $(mktemp -d)";
         update = "sudo nixos-rebuild switch --flake ~/etc/nixos/";
         rebuildHome = "home-manager switch --flake ~/etc/nixos/";
         editSystem = "nvim ~/etc/nixos/configuration.nix";
@@ -48,6 +49,11 @@ in {
           export PATH="$PWD/modpoll/modpoll/x86_64-linux-gnu:$PATH"
           source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
 
+        ''
+
+        ''
+          bindkey "^[k" history-beginning-search-backward
+          bindkey "^[j" history-beginning-search-forward
         ''
       ];
     };

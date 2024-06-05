@@ -19,6 +19,6 @@
   key = {
     wezterm = "Brush Trees (base16)";
     nvim = "brushtrees";
-    isNvimBuiltin = false;
   };
+  isNvimBuiltin = false;
 }

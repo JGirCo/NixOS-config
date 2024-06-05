@@ -19,6 +19,5 @@
   key = {
     wezterm = "catppuccin-latte";
     nvim = "catppuccin";
-    isNvimBuiltin = true;
   };
 }

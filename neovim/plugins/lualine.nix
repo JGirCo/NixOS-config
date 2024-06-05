@@ -3,6 +3,8 @@
     enable = true;
 
     globalstatus = true;
+    disabledFiletypes.statusline = [ "norg" ];
+    disabledFiletypes.winbar = [ "norg" ];
     componentSeparators.left = "";
     componentSeparators.right = "";
     sectionSeparators.left = "";
@@ -11,9 +13,9 @@
     # | A | B | C                             X | Y | Z |
     # +-------------------------------------------------+
     sections = {
-      lualine_a = ["mode"];
-      lualine_b = ["branch"];
-      lualine_c = ["filename" "diff"];
+      lualine_a = [ "mode" ];
+      lualine_b = [ "branch" ];
+      lualine_c = [ "diff" ];
 
       lualine_x = [
         "diagnostics"
@@ -38,7 +40,6 @@
             end
           '';
           icon = "";
-          color.fg = "#ffffff";
         }
         "fileformat"
         "filetype"

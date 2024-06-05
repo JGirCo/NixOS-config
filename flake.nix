@@ -4,9 +4,9 @@
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # nixpkgs.url = "nixpkgs/nixos-23.11";
+    old-norg.url =
+      "github:nixos/nixpkgs/a343533bccc62400e8a9560423486a3b6c11a23b";
     home-manager = {
-      # url = "github:nix-community/home-manager/release-23.11";
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -17,15 +17,16 @@
     nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, ... }@inputs:
+  outputs = { old-norg, nixpkgs, home-manager, nixvim, ... }@inputs:
     let
       # System settings
       system = "x86_64-linux";
       inherit (nixpkgs) lib;
       pkgs = nixpkgs.legacyPackages.${system};
+      norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "gruvbox-dark-medium";
+      theme = "tokyo-night-moon";
       font = "FantasqueSansM";
     in {
       nixosConfigurations = {
@@ -42,6 +43,7 @@
           inherit inputs;
           inherit theme;
           inherit font;
+          inherit norgpkg;
         };
       };
     };

@@ -12,6 +12,7 @@
         "arduino"
         "python"
         "rust"
+        "norg"
       ];
     };
 

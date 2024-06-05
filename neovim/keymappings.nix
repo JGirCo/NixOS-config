@@ -92,6 +92,18 @@
           desc = "nav to left window";
         };
       }
+
+      {
+        mode = [ "n" ];
+        key = "<leader>l";
+        action = "<C-w>l";
+        options = {
+          silent = true;
+          noremap = true;
+          desc = "nav to right window";
+        };
+      }
+
       {
         mode = [ "n" ];
         key = "<leader>j";
@@ -99,7 +111,18 @@
         options = {
           silent = true;
           noremap = true;
-          desc = "nav to right window";
+          desc = "nav to bottom window";
+        };
+      }
+
+      {
+        mode = [ "n" ];
+        key = "<leader>k";
+        action = "<C-w>k";
+        options = {
+          silent = true;
+          noremap = true;
+          desc = "nav to upper window";
         };
       }
 
