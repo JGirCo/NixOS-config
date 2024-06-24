@@ -3,7 +3,7 @@
     plugins.navbuddy = {
       enable = true;
       lsp.preference = [
-        "nil_ls"
+        "nil-ls"
         "rust-analizer"
         "ruff-lsp"
         "arduino-language-server"

@@ -46,6 +46,7 @@
       oil.enable = true;
       indent-blankline.enable = true;
       fugitive.enable = true;
+      # rustaceanvim.enable = true;
     };
   };
 }

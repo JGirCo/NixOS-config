@@ -50,9 +50,9 @@
         servers = {
           nil-ls = {
             enable = true;
-            onAttach.function = ''
-              navic.attach(client, bufnr)
-              navbuddy.attach(client, bufnr)'';
+            # onAttach.function = ''
+            #   navic.attach(client, bufnr)
+            #   navbuddy.attach(client, bufnr)'';
           };
           rust-analyzer = {
             enable = true;
