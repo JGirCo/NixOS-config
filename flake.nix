@@ -15,9 +15,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
+    nix-matlab ={
+      url ="gitlab:doronbehar/nix-matlab";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { old-norg, nixpkgs, home-manager, nixvim, ... }@inputs:
+  outputs = { old-norg, nixpkgs, home-manager, nixvim, nix-matlab, ... }@inputs:
     let
       # System settings
       system = "x86_64-linux";
@@ -26,13 +30,20 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "tokyo-night-moon";
+      theme = "rose-pine";
       font = "FantasqueSansM";
+      flake-overlays = [
+        nix-matlab.overlay
+      ];
     in {
       nixosConfigurations = {
         nixos = lib.nixosSystem {
           inherit system;
-          modules = [ ./configuration.nix ];
+          modules = [
+            (import ./configuration.nix
+              flake-overlays
+            )
+          ];
           specialArgs = { };
         };
       };

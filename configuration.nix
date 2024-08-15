@@ -2,6 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
+flake-overlays:
+
 { config, pkgs, font, ... }:
 
 {
@@ -12,6 +14,7 @@
 
   # Experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowBroken = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -32,7 +35,7 @@
   services.blueman.enable = true;
   hardware.bluetooth.powerOnBoot =
     true; # powers up the default Bluetooth controller on boot
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Bogota";
@@ -83,8 +86,6 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -112,10 +113,6 @@
     description = "Juan Manuel Giraldo";
     extraGroups = [ "networkmanager" "wheel" "video" ];
     shell = pkgs.zsh;
-    packages = with pkgs;
-      [
-        #  thunderbird
-      ];
   };
 
   # Allow unfree packages
@@ -175,6 +172,10 @@
 
     # GUI Tools
     # firefox-beta-bin
+    spot
+    zotero
+    vipsdisp
+    itch
     thunderbird
     libreoffice
     pcmanfm
@@ -183,6 +184,8 @@
     lutris
     ungoogled-chromium
     vlc
+    projectm
+    matlab
 
     # Miscelaneous
     emacs-all-the-icons-fonts
@@ -190,6 +193,8 @@
     #python
     python311Packages.pyserial
   ];
+
+  nixpkgs.overlays = flake-overlays;
 
   environment.sessionVariables = rec {
     XDG_CACHE_HOME = "$HOME/.cache";
