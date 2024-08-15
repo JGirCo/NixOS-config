@@ -11,7 +11,7 @@ in with colors; {
     settings = {
       mainBar = {
         position = "top";
-        modules-left = [ "pulseaudio" "cava" "backlight" "memory" "cpu" ];
+        modules-left = [ "pulseaudio" "backlight" "memory" "cpu" ];
         modules-center = [ "sway/workspaces" "sway/mode" "sway/scratchpad" ];
         modules-right = [ "battery" "clock" "tray" ];
 
@@ -29,14 +29,14 @@ in with colors; {
           format-icons = [ "" "" "" "" "" "" "" "" "" ];
         };
 
-        "cava" = {
-          framerate = 30;
-          autosens = 1;
-          bars = 12;
-          bar_delimiter = 0;
-          method = "pulse";
-          format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
-        };
+        # "cava" = {
+        #   framerate = 30;
+        #   autosens = 1;
+        #   bars = 12;
+        #   bar_delimiter = 0;
+        #   method = "pulse";
+        #   format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+        # };
 
         "pulseaudio" = {
           format = "{volume}% {icon}";
@@ -101,16 +101,17 @@ in with colors; {
       #pulseaudio {
         background: ${green};
         color: ${base};
-        border-radius: 6px 0px 0px 6px;
+        border-radius: 6px 6px 6px 6px;
         margin-left: 4px;
-      }
-
-      #cava {
-        background: ${green};
-        color: ${base};
-        border-radius: 0px 6px 6px 0px;
         margin-right: 4px;
       }
+
+      /* #cava { */
+      /*   background: ${green}; */
+      /*   color: ${base}; */
+      /*   border-radius: 0px 6px 6px 0px; */
+      /*   margin-right: 4px; */
+      /* } */
 
       #backlight {
         background: ${text2};
@@ -152,8 +153,7 @@ in with colors; {
       #pulseaudio,
       #backlight,
       #tray,
-      #clock,
-      #cava {
+      #clock {
         padding: 0 6px;
       }
 

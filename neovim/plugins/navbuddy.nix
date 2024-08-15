@@ -10,6 +10,7 @@
         "clangd"
       ];
       lsp.autoAttach = true;
+      window.size = 60;
     };
     keymaps = [{
       mode = [ "n" ];
@@ -18,4 +19,3 @@
     }];
   };
 }
-

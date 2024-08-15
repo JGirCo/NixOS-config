@@ -10,7 +10,7 @@
     ./which-key.nix
     ./comment.nix
     # ./efm.nix
-    ./floaterm.nix
+    # ./floaterm.nix
     ./harpoon.nix
     ./lsp.nix
     ./lualine.nix

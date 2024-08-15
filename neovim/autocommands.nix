@@ -35,13 +35,13 @@
     # Enable spellcheck for some filetypes
     {
       event = "FileType";
-      pattern = [ "tex" "latex" "markdown" ];
-      command = "setlocal spell spelllang=en";
+      pattern = [ "tex" "latex" "markdown" "norg" ];
+      command = "setlocal spell spelllang=en,es";
     }
     {
       event = "FileType";
       pattern = "norg";
-      command = "setlocal nonumber norelativenumber colorcolumn=0";
+      command = "setlocal norelativenumber colorcolumn=0 conceallevel=2";
     }
   ];
 }

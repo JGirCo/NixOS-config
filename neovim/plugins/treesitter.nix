@@ -6,14 +6,16 @@
       nixvimInjections = true;
 
       folding = true;
-      indent = true;
-      ensureInstalled = [
-        "nix"
-        "arduino"
-        "python"
-        "rust"
-        "norg"
-      ];
+      settings = {
+        indent.enable = true;
+        ensureInstalled = [
+          "nix"
+          "arduino"
+          "python"
+          "rust"
+          "norg"
+        ];
+      };
     };
 
 

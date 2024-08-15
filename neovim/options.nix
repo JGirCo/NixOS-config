@@ -106,6 +106,9 @@ in with colors; {
       # Folding
       foldlevel =
         99; # Folds with a level higher than this number will be closed
+
+      #Conceal
+      conceallevel = 2;
     };
   };
 }

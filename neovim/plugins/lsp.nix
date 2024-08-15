@@ -60,16 +60,16 @@
             installCargo = true;
           };
           ruff-lsp = { enable = true; };
-          pyright = {
-            enable = true;
-            onAttach.function = ''
-              navic.attach(client, bufnr)
-            '';
-            settings = {
-              pyright.disableOrganizeImports = true;
-              python.analysis.ignore = [ "*" ];
-            };
-          };
+          # pyright = {
+          #   enable = true;
+          #   onAttach.function = ''
+          #     navic.attach(client, bufnr)
+          #   '';
+          #   settings = {
+          #     pyright.disableOrganizeImports = true;
+          #     python.analysis.ignore = [ "*" ];
+          #   };
+          # };
           clangd.enable = true;
           lua-ls.enable = true;
         };
