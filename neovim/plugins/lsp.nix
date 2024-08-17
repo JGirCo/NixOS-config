@@ -48,6 +48,7 @@
         }];
 
         servers = {
+          typst-lsp.enable = true;
           nil-ls = {
             enable = true;
             # onAttach.function = ''
