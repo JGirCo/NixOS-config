@@ -4,7 +4,7 @@ in {
   # systemd services
 
   systemd.user.services."battery-notifier" = {
-    Unit = { Description = "Systemd user service template"; };
+    Unit = { Description = "Battery low notification service"; };
     Service = {
       Type = "oneshot";
       ExecStart = toString (pkgs.writeShellScript "battery-notifier-script" ''
