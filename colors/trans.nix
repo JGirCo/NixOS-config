@@ -16,7 +16,7 @@
   purple = "#ba92d0";
   orange = "#ffae56";
 
-  isNvimBuiltin = false;
+  nvimEngine = "palette";
   isBase16Builtin = false;
   base16 = {
     # TEST
@@ -24,13 +24,13 @@
     author = "JGirCo";
 
     base00 = "#ffffff";
-    base01 = "#fde8ef";
-    base02 = "#fceeee";
-    base03 = "#fcdddf";
-    base04 = "#f2b2cf";
-    base05 = "#905b75";
-    base06 = "#b94d6e";
-    base07 = "#f292af";
+    base01 = "#fbe5ec";
+    base02 = "#f8cdda";
+    base03 = "#e6bac8";
+    base04 = "#d6a7b8";
+    base05 = "#c595a7";
+    base06 = "#b38195";
+    base07 = "#905a74";
     base08 = "#ff988b";
     base09 = "#ffde3b";
     base0A = "#ffae56";

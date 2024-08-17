@@ -21,7 +21,7 @@
     nvim = "tokyonight";
   };
 
-  isNvimBuiltin = false;
+  nvimEngine = "base16";
   isBase16Builtin = false;
   base16 = {
     name = "Tokyo Night Moon";
@@ -35,7 +35,7 @@
     base06 = "#828bb8";
     base07 = "#c8d3f5";
     base08 = "#ff757f";
-    base09 = "#ffc777";
+    base09 = "#ff966c";
     base0A = "#ffc777";
     base0B = "#c3e88d";
     base0C = "#86e1fc";

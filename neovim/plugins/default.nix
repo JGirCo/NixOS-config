@@ -1,5 +1,6 @@
 {
   imports = [
+    ./typst.nix
     ./navic.nix
     ./barbecue.nix
     ./navbuddy.nix
@@ -44,9 +45,17 @@
         userDefaultOptions.names = false;
       };
       oil.enable = true;
-      indent-blankline.enable = true;
+      indent-blankline = {
+        enable = true;
+        settings.scope = {
+          enabled = true;
+          show_end = false;
+          show_exact_scope = true;
+          show_start = false;
+        };
+      };
       fugitive.enable = true;
-      # rustaceanvim.enable = true;
+      hop.enable = true;
     };
   };
 }

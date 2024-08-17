@@ -16,7 +16,7 @@
   purple = "#dcc3f9";
   orange = "#f6dddd";
 
-  isNvimBuiltin = false;
+  nvimEngine = "base16";
   isBase16Builtin = false;
   base16 = {
     name = "Saga";

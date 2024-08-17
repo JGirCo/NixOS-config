@@ -20,5 +20,5 @@
     wezterm = "Brush Trees (base16)";
     nvim = "brushtrees";
   };
-  isNvimBuiltin = false;
+  nvimEngine = "palette";
 }

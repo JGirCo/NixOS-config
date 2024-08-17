@@ -2,7 +2,6 @@
 
 let colors = import ./colors/${theme}.nix;
 in {
-  isNvimBuiltin = colors.isNvimBuiltin or true;
-
+  nvimEngine = colors.nvimEngine or "builtin";
   isBase16Builtin = colors.isBase16Builtin or true;
 } // colors

@@ -20,5 +20,5 @@
     wezterm = "rebecca";
     nvim = "rebecca";
   };
-  isNvimBuiltin = false;
+  nvimEngine = "base16";
 }

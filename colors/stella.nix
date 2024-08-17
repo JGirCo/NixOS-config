@@ -20,7 +20,7 @@
     wezterm = "Stella (base16)";
     nvim = "stella";
   };
-  isNvimBuiltin = false;
+  nvimEngine = "base16";
   isBase16Builtin = false;
   base16 = {
     name = "Stella";
