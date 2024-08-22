@@ -3,10 +3,10 @@
 {
   services.spotifyd.enable = true;
   services.spotifyd.settings = {
-  global = {
-    username = "foo";
-    password = "bar";
-    device_name = "nix";
+    global = {
+      username = "foo";
+      password = "bar";
+      device_name = "nix";
     };
   };
 }

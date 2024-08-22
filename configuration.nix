@@ -207,9 +207,7 @@ flake-overlays:
     PATH = [ "${XDG_BIN_HOME}" ];
   };
 
-  xdg.mime.defaultApplications = {
-    "inode/directory" = "pcmanfm.desktop";
-  };
+  xdg.mime.defaultApplications = { "inode/directory" = "pcmanfm.desktop"; };
 
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];

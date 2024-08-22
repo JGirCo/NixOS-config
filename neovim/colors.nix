@@ -1,4 +1,4 @@
-{ config, theme, lib, ...}:
+{ config, theme, lib, ... }:
 let
   colors = import ../colors.nix {
     inherit theme;
@@ -13,7 +13,7 @@ in with colors; {
         catppuccin.enable = true;
         catppuccin.settings.flavour = "latte";
       }
-    else if nvimEngine == "base16" then  {
+    else if nvimEngine == "base16" then {
       base16 = if isBase16Builtin then {
         enable = true;
         colorscheme = key.nvim;
@@ -44,9 +44,9 @@ in with colors; {
         settings = {
           italics = true;
           palettes = {
-              main = "pastel";
-              accent = "pastel";
-              state = "pastel";
+            main = "pastel";
+            accent = "pastel";
+            state = "pastel";
           };
           custom_palettes = {
             main = {

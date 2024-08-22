@@ -41,7 +41,7 @@ with config.colorScheme.palette; {
         recolor-lightcolor = "${base}";
         recolor-darkcolor = "${text2}";
 
-        recolor = "false";
+        recolor = "true";
         recolor-keephue = "true";
 
         selection-clipboard = "clipboard";

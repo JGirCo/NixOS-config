@@ -36,8 +36,15 @@
 
       modules = {
         "core.defaults" = { __empty = null; };
-        "core.dirman" = { config = { workspaces = { notes = "~/notes"; thesis = "~/Documents/thesis"; }; }; };
-        "core.concealer" = { config = {icon_preset = "basic";};};
+        "core.dirman" = {
+          config = {
+            workspaces = {
+              notes = "~/notes";
+              thesis = "~/Documents/thesis";
+            };
+          };
+        };
+        "core.concealer" = { config = { icon_preset = "basic"; }; };
         "core.export".__empty = null;
         "core.completion".config.engine = "nvim-cmp";
         "core.qol.toc".config.close_after_use = true;

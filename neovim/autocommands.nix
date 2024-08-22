@@ -41,7 +41,8 @@
     {
       event = "FileType";
       pattern = "norg";
-      command = "setlocal norelativenumber nonumber colorcolumn=0 conceallevel=2";
+      command =
+        "setlocal norelativenumber nonumber colorcolumn=0 conceallevel=2";
     }
   ];
 }

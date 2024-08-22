@@ -72,7 +72,8 @@ in with colors; {
       };
       startup = [
         {
-          command = "--no-startup-id pkill swaybg; ${pkgs.swaybg}/bin/swaybg -i ~/Pictures/wallpapers/${theme}.jpg";
+          command =
+            "--no-startup-id pkill swaybg; ${pkgs.swaybg}/bin/swaybg -i ~/Pictures/wallpapers/${theme}.jpg";
           always = true;
         }
         {
@@ -80,7 +81,8 @@ in with colors; {
           always = true;
         }
         {
-          command = "--no-startup-id systemctl --user restart nm-applet.service";
+          command =
+            "--no-startup-id systemctl --user restart nm-applet.service";
           always = true;
         }
       ];

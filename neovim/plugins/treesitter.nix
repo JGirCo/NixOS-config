@@ -8,16 +8,9 @@
       folding = true;
       settings = {
         indent.enable = true;
-        ensureInstalled = [
-          "nix"
-          "arduino"
-          "python"
-          "rust"
-          "norg"
-        ];
+        ensureInstalled = [ "nix" "arduino" "python" "rust" "norg" ];
       };
     };
-
 
     treesitter-refactor = {
       enable = true;

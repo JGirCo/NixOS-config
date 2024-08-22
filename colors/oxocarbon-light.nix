@@ -16,14 +16,12 @@
   purple = "#673ab7";
   orange = "#ff6f00";
 
-  key = {
-    nvim = "oxocarbon";
-  };
+  key = { nvim = "oxocarbon"; };
   nvimEngine = "builtin";
   isBase16Builtin = false;
   base16 = {
     name = "oxocarbon light";
-    autor = "shaunsingh/IBM" ;
+    autor = "shaunsingh/IBM";
     base00 = "#f2f4f8";
     base01 = "#edf1f6";
     base02 = "#dde1e6";
