@@ -4,13 +4,14 @@
     ./navic.nix
     ./barbecue.nix
     ./navbuddy.nix
+    ./hop.nix
     ./undotree.nix
     ./transparent.nix
     ./image.nix
     ./surround.nix
     ./which-key.nix
     ./comment.nix
-    # ./efm.nix
+    ./efm.nix
     # ./floaterm.nix
     ./harpoon.nix
     ./lsp.nix
@@ -55,7 +56,6 @@
         };
       };
       fugitive.enable = true;
-      hop.enable = true;
     };
   };
 }
