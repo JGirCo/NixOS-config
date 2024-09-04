@@ -40,17 +40,6 @@
 
       {
         mode = [ "n" ];
-        key = "Y";
-        action = "y$";
-        options = {
-          silent = true;
-          noremap = true;
-          desc = "Copy to end";
-        };
-      }
-
-      {
-        mode = [ "n" ];
         key = "j";
         action = "gj";
         options = {
@@ -68,17 +57,6 @@
           silent = true;
           noremap = true;
           desc = "Up, follows wrapped line";
-        };
-      }
-
-      {
-        mode = [ "n" ];
-        key = "<leader>s";
-        action = ":w<CR>";
-        options = {
-          silent = true;
-          noremap = true;
-          desc = "Save";
         };
       }
 
@@ -139,7 +117,7 @@
 
       {
         mode = [ "n" ];
-        key = "K";
+        key = "H";
         action = "^";
         options = {
           silent = true;

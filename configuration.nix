@@ -141,6 +141,7 @@ flake-overlays:
     busybox
     luajit
     wine
+    pandoc
 
     libsForQt5.qt5.qtquickcontrols2
     libsForQt5.qt5.qtgraphicaleffects
@@ -157,6 +158,7 @@ flake-overlays:
     wezterm
     libqalculate
     translate-shell
+    plantuml
 
     # TUI Tools
     cava

@@ -1,5 +1,7 @@
-{
+{ pkgs, ... }: {
   imports = [
+    ./vim-table-mode.nix
+    ./knap.nix
     ./typst.nix
     ./navic.nix
     ./barbecue.nix
@@ -40,6 +42,7 @@
         };
       };
       nvim-autopairs.enable = true;
+      plantuml-syntax.enable = true;
 
       nvim-colorizer = {
         enable = true;
