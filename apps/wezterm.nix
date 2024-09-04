@@ -15,6 +15,7 @@ with config.colorScheme.palette; {
         config = wezterm.config_builder()
       end
 
+      config.front_end = "WebGpu"
       config.colors = {
           foreground = '#${base05}',
           background = '#${base00}',
