@@ -34,21 +34,15 @@ in {
         mkdir = "mkdir -pv";
         py = "python";
         nd = "nix develop -c zsh";
+        thesis = "cd ~/Documents/thesis && nvim index.norg";
       };
-      # antidote = {
-      #   enable = true;
-      #   plugins = [ "git" "zoxide" "sudo" "colored-man-pages" ];
-      #   useFriendlyNames = true;
-      # };
       initExtra = lib.strings.concatStrings [
         p10k
-
         ''
           export PATH="$HOME/.emacs.d/bin:$PATH"
           export PATH="$PWD/diagslave/x86_64-linux-gnu:$PATH"
           export PATH="$PWD/modpoll/modpoll/x86_64-linux-gnu:$PATH"
           source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-
         ''
 
         ''

@@ -6,7 +6,7 @@
         let g:knap_settings = {
             \ "umloutputext": "png",
             \ "umltopng": "plantuml %docroot%",
-            \ "umltopngviewerlaunch": "zathura %outputfile%",
+            \ "umltopngviewerlaunch": "xdg-open %outputfile%",
             \ "textopdfviewerrefresh": "kill -HUP %pid%"
         \ }
       '';

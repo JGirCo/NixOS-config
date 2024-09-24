@@ -96,7 +96,7 @@ in with colors; {
 
       keybindings = lib.mkOptionDefault {
         "${mod}+q" = "kill";
-        "${mod}+b" = "exec firefox-beta";
+        "${mod}+b" = "exec firefox";
         "${mod}+d" = "exec wofi --show drun";
         "${mod}+t" = "exec wezterm";
         "${mod}+m" = "exec emacsclient -r";
