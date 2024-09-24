@@ -173,7 +173,7 @@ flake-overlays:
     ncdu
 
     # GUI Tools
-    # firefox-beta-bin
+    nsxiv
     spot
     zotero
     vipsdisp
@@ -190,7 +190,7 @@ flake-overlays:
     matlab
 
     # Miscelaneous
-    emacs-all-the-icons-fonts
+    firefoxpwa
 
     #python
     python311Packages.pyserial
@@ -209,7 +209,10 @@ flake-overlays:
     PATH = [ "${XDG_BIN_HOME}" ];
   };
 
-  xdg.mime.defaultApplications = { "inode/directory" = "pcmanfm.desktop"; };
+  xdg.mime.defaultApplications = {
+    "inode/directory" = "pcmanfm.desktop";
+    "image/png" = "nsxiv.desktop";
+  };
 
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
@@ -228,7 +231,7 @@ flake-overlays:
     dconf.enable = true;
     firefox = {
       enable = true;
-      package = pkgs.firefox-beta-bin;
+      # package = pkgs.firefox-beta-bin;
       nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
     };
   };
