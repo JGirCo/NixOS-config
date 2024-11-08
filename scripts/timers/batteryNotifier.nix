@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-let batteryScript = import ../batteryNotifier.nix { inherit pkgs; };
-in {
+{ pkgs, ... }: {
   # systemd services
 
   systemd.user.services."battery-notifier" = {
