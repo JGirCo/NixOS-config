@@ -1,4 +1,4 @@
-{ config, lib, pkgs, theme, font, ... }:
+{ lib, theme, font, ... }:
 
 let
   colors = import ../colors.nix {
@@ -11,7 +11,8 @@ in with colors; {
     settings = {
       mainBar = {
         position = "top";
-        modules-left = [ "pulseaudio" "backlight" "memory" "cpu" ];
+        # modules-left = [ "pulseaudio" "backlight" "memory" "cpu" ];
+        modules-left = [ "pulseaudio" "cava" "backlight" "memory" "cpu" ];
         modules-center = [ "sway/workspaces" "sway/mode" "sway/scratchpad" ];
         modules-right = [ "battery" "clock" "tray" ];
 
@@ -29,14 +30,14 @@ in with colors; {
           format-icons = [ "" "" "" "" "" "" "" "" "" ];
         };
 
-        # "cava" = {
-        #   framerate = 30;
-        #   autosens = 1;
-        #   bars = 12;
-        #   bar_delimiter = 0;
-        #   method = "pulse";
-        #   format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
-        # };
+        "cava" = {
+          framerate = 30;
+          autosens = 1;
+          bars = 12;
+          bar_delimiter = 0;
+          method = "pulse";
+          format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+        };
 
         "pulseaudio" = {
           format = "{volume}% {icon}";
@@ -80,6 +81,23 @@ in with colors; {
           interval = 60;
           format = "{:%H:%M}  ";
           format-alt = "{:%A, %B %d, %Y (%R)} 󰃭 ";
+          tooltip-format = "<tt><small>{calendar}</small></tt>";
+          calendar = {
+            mode = "month";
+            mode-mon-col = 3;
+            # on-scroll = 1;
+            format = {
+              months = "<span color='${text2}'><b>{}</b></span>";
+              days = "<span color='${inactive}'>{}</span>";
+              weekdays = "<span color='${alt}'><b>{}</b></span>";
+              today = "<span color='${focused}'><b>{}</b></span>";
+            };
+          };
+          actions = {
+            on-click-right = "mode";
+            on-scroll-up = [ "tz_up" "shift_up" ];
+            on-scroll-down = [ "tz_down" "shift_down" ];
+          };
         };
       };
     };
@@ -89,7 +107,7 @@ in with colors; {
         border-radius: 0;
         font-family: ${font} Nerd Font;
         font-size: 13px;
-        min-height: 10px;
+        min-height: 1em;
       }
 
       window#waybar {
@@ -98,20 +116,33 @@ in with colors; {
         opacity: 0.85;
       }
 
+      tooltip {
+        border-radius: 10px;
+        background-color: ${base};
+      }
+
+      tooltip label {
+        color: ${text2};
+        font-size: 16px;
+        text-shadow: 0px 0px 0px ${base};
+      }
       #pulseaudio {
         background: ${green};
         color: ${base};
-        border-radius: 6px 6px 6px 6px;
+        border-radius: 6px 0px 0px 6px;
         margin-left: 4px;
-        margin-right: 4px;
+        /* margin-right: 4px; */
+        padding-right: 8px;
       }
 
-      /* #cava { */
-      /*   background: ${green}; */
-      /*   color: ${base}; */
-      /*   border-radius: 0px 6px 6px 0px; */
-      /*   margin-right: 4px; */
-      /* } */
+      #cava {
+        background: ${green};
+        color: ${base};
+        border-radius: 0px 6px 6px 0px;
+        margin-right: 4px;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
 
       #backlight {
         background: ${text2};
