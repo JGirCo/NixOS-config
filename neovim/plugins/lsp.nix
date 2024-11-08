@@ -48,21 +48,18 @@
         }];
 
         servers = {
-          typst-lsp.enable = true;
-          nil-ls = {
+          typst_lsp.enable = true;
+          nil_ls = {
             enable = true;
-            # onAttach.function = ''
-            #   navic.attach(client, bufnr)
-            #   navbuddy.attach(client, bufnr)'';
           };
-          rust-analyzer = {
+          rust_analyzer = {
             enable = true;
             installRustc = true;
             installCargo = true;
           };
-          ruff-lsp = { enable = true; };
+          ruff_lsp = { enable = true; };
           clangd.enable = true;
-          lua-ls.enable = true;
+          lua_ls.enable = true;
         };
       };
     };

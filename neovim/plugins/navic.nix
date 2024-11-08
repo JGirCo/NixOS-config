@@ -1,16 +1,20 @@
 {
   programs.nixvim = {
     plugins.navic = {
-      enable = true;
-      separator = "";
-      lsp.preference = [
-        "nil_ls"
-        "rust-analizer"
-        "ruff-lsp"
-        "arduino-language-server"
-        "clangd"
-      ];
-      lsp.autoAttach = true;
+      enable = false;
+      settings = {
+        separator = "";
+        lsp.preference = [
+          "nil_ls"
+          "nil-ls"
+          "rust_analizer"
+          "ruff_lsp"
+          "arduino-language-server"
+          "clangd"
+          "efm"
+        ];
+        highlight = true;
+      };
     };
   };
 }
