@@ -27,6 +27,9 @@ let
       @define-color window_fg_color ${text2};
       @define-color view_bg_color #${base01};
       @define-color view_fg_color ${text2};
+      @define-color sidebar_fg_color ${text2};
+      @define-color sidebar_bg_color ${base};
+      @define-color sidebar_backdrop_color ${base};
       @define-color headerbar_bg_color ${base};
       @define-color headerbar_fg_color ${text2};
       @define-color headerbar_border_color #${base02};

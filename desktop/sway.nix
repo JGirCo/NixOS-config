@@ -52,7 +52,7 @@ in with colors; {
     config = {
       terminal = "wezterm";
       modifier = mod;
-      defaultWorkspace = "1";
+      defaultWorkspace = "workspace number 1";
       workspaceAutoBackAndForth = true;
 
       input = {

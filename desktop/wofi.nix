@@ -13,7 +13,7 @@ in with colors; {
       show = "drun";
       allow_images = true;
       # allow_markup=true;
-      term = "wezterm";
+      term = "kitty";
       matching = "contains";
       width = 400;
       height = 300;
@@ -22,7 +22,7 @@ in with colors; {
       print_command = true;
       location = "top";
       layer = "overlay";
-      hide_scroll = false;
+      hide_scroll = true;
       insensitive = true;
       no_actions = true;
       columns = 1;
@@ -35,6 +35,7 @@ in with colors; {
     style = ''
       window {
       margin: 5px;
+      padding: 20px;
       border: 2px solid ${focused};
       border-radius: 20px;
       background-image: url('/home/juanma/Pictures/wallpapers/${theme}.jpg');
@@ -44,7 +45,8 @@ in with colors; {
       }
 
       #input {
-      margin: 5px;
+      margin: 15px;
+      paddi
       border: 2px solid ${focused};
       background-color: ${base};
       color: ${text2};
@@ -58,12 +60,11 @@ in with colors; {
       }
 
       #outer-box {
-      margin: 20px;
-      padding: 10px;
-      border: 2px solid ${focused};
-      background-color: ${base};
+      margin: 20px; !important
+      # padding: 10px;
+      # border: 2px solid ${focused};
+      # background-color: ${base};
       border-radius: 20px;
-      border-radius: 10px;
       }
 
       #scroll {
