@@ -30,8 +30,9 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "ayu-light";
+      theme = "rose-pine-dawn";
       font = "FantasqueSansM";
+      # font = "CaskaydiaCove";
       flake-overlays = [ nix-matlab.overlay ];
     in {
       nixosConfigurations = {

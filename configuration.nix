@@ -163,7 +163,7 @@ flake-overlays:
     # TUI Tools
     cava
     emacs
-    yazi
+    # yazi
     lazygit
     bottom
     bluetuith
@@ -212,6 +212,10 @@ flake-overlays:
   xdg.mime.defaultApplications = {
     "inode/directory" = "pcmanfm.desktop";
     "image/png" = "nsxiv.desktop";
+    "x-scheme-handler/http" = "firefox.desktop";
+    "x-scheme-handler/https" = "firefox.desktop";
+    "x-scheme-handler/about" = "firefox.desktop";
+    "x-scheme-handler/unknown" = "firefox.desktop";
   };
 
   fonts.packages = with pkgs;
