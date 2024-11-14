@@ -30,7 +30,7 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "rose-pine-dawn";
+      theme = "dracula";
       font = "FantasqueSansM";
       # font = "CaskaydiaCove";
       flake-overlays = [ nix-matlab.overlay ];

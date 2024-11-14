@@ -163,7 +163,7 @@ flake-overlays:
     # TUI Tools
     cava
     emacs
-    # yazi
+    yazi-unwrapped
     lazygit
     bottom
     bluetuith
@@ -173,6 +173,7 @@ flake-overlays:
     ncdu
 
     # GUI Tools
+    ripdrag
     nsxiv
     spot
     zotero
@@ -188,6 +189,7 @@ flake-overlays:
     vlc
     projectm
     matlab
+    floorp
 
     # Miscelaneous
     firefoxpwa
