@@ -24,9 +24,9 @@ let
 in with colors; {
   imports = [ ./waybar.nix ];
   home.packages = with pkgs; [
-    swaybg
+    # swaybg
     # wbg # The only one that works consistently...
-    # swww
+    swww
     waybar
     dunst
     wofi
@@ -72,8 +72,12 @@ in with colors; {
       };
       startup = [
         {
+          command = "swww-daemon";
+          always = true;
+        }
+        {
           command =
-            "--no-startup-id pkill swaybg; ${pkgs.swaybg}/bin/swaybg -i ~/Pictures/wallpapers/${theme}.jpg";
+            "${pkgs.swww}/bin/swww img ~/Pictures/wallpapers/${theme}.jpg";
           always = true;
         }
         {
