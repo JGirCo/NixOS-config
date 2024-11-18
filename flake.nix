@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of juanma";
+  description = "Home Manager configuration of jgirco";
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
@@ -42,7 +42,7 @@
           specialArgs = { };
         };
       };
-      homeConfigurations."juanma" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."jgirco" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home.nix nixvim.homeManagerModules.nixvim ];
         extraSpecialArgs = {

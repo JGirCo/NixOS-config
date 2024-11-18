@@ -14,7 +14,6 @@ flake-overlays:
 
   # Experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nixpkgs.config.allowBroken = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -108,7 +107,7 @@ flake-overlays:
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.juanma = {
+  users.users.jgirco = {
     isNormalUser = true;
     description = "Juan Manuel Giraldo";
     extraGroups = [ "networkmanager" "wheel" "video" ];

@@ -38,7 +38,7 @@ in with colors; {
       padding: 20px;
       border: 2px solid ${focused};
       border-radius: 20px;
-      background-image: url('/home/juanma/Pictures/wallpapers/${theme}.jpg');
+      background-image: url('/home/jgirco/Pictures/wallpapers/${theme}.jpg');
       background-size: cover; /* This will make the image cover the entire box */
       background-repeat: no-repeat; /* This will prevent the image from repeating */
       background-position: center; /* This will center the image within the box */

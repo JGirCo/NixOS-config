@@ -49,8 +49,8 @@ in {
   };
   programs.home-manager.enable = true;
   home = {
-    username = "juanma";
-    homeDirectory = "/home/juanma";
+    username = "jgirco";
+    homeDirectory = "/home/jgirco";
     stateVersion = "23.11";
   };
 }
