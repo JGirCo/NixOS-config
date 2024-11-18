@@ -19,8 +19,8 @@ in {
       # syntaxHighlighting.enable = true;
       shellAliases = {
         mktmp = "cd $(mktemp -d)";
-        update = "sudo nixos-rebuild switch --flake ~/etc/nixos/";
-        rebuildHome = "home-manager switch --flake ~/etc/nixos/";
+        update = "sudo nixos-rebuild switch --flake ~/.nixos/";
+        rebuildHome = "home-manager switch --flake ~/.nixos/";
         editSystem = "nvim ~/etc/nixos/configuration.nix";
         ardUpload = "arduino-cli compile --upload";
         ardMonitor = "arduino-cli monitor -p /dev/ttyUSB0 -c 115200";

@@ -160,6 +160,7 @@ flake-overlays:
     plantuml
 
     # TUI Tools
+    pavucontrol
     cava
     emacs
     yazi-unwrapped

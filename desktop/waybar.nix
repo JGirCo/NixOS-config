@@ -43,6 +43,7 @@ in with colors; {
           format = "{volume}% {icon}";
           format-icons = [ "" "" "" ];
           format-muted = "";
+          on-click = "pavucontrol";
         };
 
         "sway/scratchpad" = { format = " "; };
