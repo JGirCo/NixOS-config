@@ -8,7 +8,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "sd_mod" "alcor" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "uas" "sd_mod" "alcor" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
@@ -22,6 +22,11 @@
     { device = "/dev/disk/by-uuid/DB41-AB71";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  fileSystems."/media/prev" =
+    { device = "/dev/disk/by-uuid/87295bc9-131f-4239-8a1e-3efac36327f3";
+      fsType = "ext4";
     };
 
   swapDevices =
