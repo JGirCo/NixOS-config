@@ -80,6 +80,9 @@ flake-overlays:
   # Enable openGL
   hardware.opengl.enable = true;
 
+  # Enable openGL
+  hardware.opengl.enable = true;
+
   # Set your time zone.
   time.timeZone = "America/Bogota";
 
