@@ -102,9 +102,16 @@ flake-overlays:
 
   services.logind = {
     # don’t shutdown when power button is short-pressed
-    lidSwitch = "suspend";
-    powerKey = "suspend";
+    lidSwitch = "suspend-then-hibernate";
+    powerKey = "hibernate";
   };
+
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=yes
+    AllowHibernation=yes
+    AllowHybridSleep=yes
+    AllowSuspendThenHibernate=yes
+  '';
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jgirco = {
