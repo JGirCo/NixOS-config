@@ -12,6 +12,7 @@ in {
     ./desktop/hyprland.nix
     ./desktop/wofi.nix
     ./apps/wezterm.nix
+    ./apps/kitty.nix
     ./desktop/gtk.nix
     ./neovim/default.nix
     # ./apps/spotifyd.nix

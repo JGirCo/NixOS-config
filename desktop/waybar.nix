@@ -13,7 +13,7 @@ in with colors; {
         position = "top";
         # modules-left = [ "pulseaudio" "backlight" "memory" "cpu" ];
         modules-left = [ "pulseaudio" "cava" "backlight" "memory" "cpu" ];
-        modules-center = [ "sway/workspaces" "sway/mode" "sway/scratchpad" ];
+        modules-center = [ "hyprland/workspaces" ];
         modules-right = [ "battery" "clock" "tray" ];
 
         "cpu" = {
@@ -46,9 +46,7 @@ in with colors; {
           on-click = "pavucontrol";
         };
 
-        "sway/scratchpad" = { format = " "; };
-
-        "sway/workspaces" = {
+        "hyprland/workspaces" = {
           disable-scroll = true;
           all-outputs = true;
           format = "{icon}";
@@ -88,10 +86,10 @@ in with colors; {
             mode-mon-col = 3;
             # on-scroll = 1;
             format = {
-              months = "<span color='${text2}'><b>{}</b></span>";
-              days = "<span color='${inactive}'>{}</span>";
-              weekdays = "<span color='${alt}'><b>{}</b></span>";
-              today = "<span color='${focused}'><b>{}</b></span>";
+              months = "<span color='#${text2}'><b>{}</b></span>";
+              days = "<span color='#${inactive}'>{}</span>";
+              weekdays = "<span color='#${alt}'><b>{}</b></span>";
+              today = "<span color='#${focused}'><b>{}</b></span>";
             };
           };
           actions = {
@@ -112,24 +110,24 @@ in with colors; {
       }
 
       window#waybar {
-        background: ${base};
-        color: ${text2};
+        background: #${base};
+        color: #${text2};
         opacity: 0.85;
       }
 
       tooltip {
         border-radius: 10px;
-        background-color: ${base};
+        background-color: #${base};
       }
 
       tooltip label {
-        color: ${text2};
+        color: #${text2};
         font-size: 16px;
-        text-shadow: 0px 0px 0px ${base};
+        text-shadow: 0px 0px 0px #${base};
       }
       #pulseaudio {
-        background: ${green};
-        color: ${base};
+        background: #${green};
+        color: #${base};
         border-radius: 6px 0px 0px 6px;
         margin-left: 4px;
         /* margin-right: 4px; */
@@ -137,8 +135,8 @@ in with colors; {
       }
 
       #cava {
-        background: ${green};
-        color: ${base};
+        background: #${green};
+        color: #${base};
         border-radius: 0px 6px 6px 0px;
         margin-right: 4px;
         padding-left: 8px;
@@ -146,35 +144,35 @@ in with colors; {
       }
 
       #backlight {
-        background: ${text2};
-        color: ${base};
+        background: #${text2};
+        color: #${base};
         border-radius: 6px;
         padding-right: 1px;
       }
 
       #cpu {
-        background: ${blue};
-        color: ${base};
+        background: #${blue};
+        color: #${base};
         border-radius: 0px 6px 6px 0px;
         margin-right: 4px;
       }
 
       #memory{
-        background: ${blue};
-        color: ${base};
+        background: #${blue};
+        color: #${base};
         border-radius: 6px 0px 0px 6px;
         margin-left: 4px;
       }
 
       #clock{
-        background: ${purple};
-        color: ${base};
+        background: #${purple};
+        color: #${base};
         margin: 0 4px;
         border-radius: 6px;
       }
 
       #tray{
-        background: ${orange};
+        background: #${orange};
         margin: 0 4px;
         border-radius: 6px;
       }
@@ -190,8 +188,8 @@ in with colors; {
       }
 
       #battery{
-        background: ${green};
-        color: ${base};
+        background: #${green};
+        color: #${base};
         padding: 0 6px;
         padding-right: 6px;
         margin: 0 2px;
@@ -199,26 +197,26 @@ in with colors; {
       }
 
       #battery.warning {
-        background: ${yellow};
-        color: ${base};
+        background: #${yellow};
+        color: #${base};
       }
 
       #battery.charging,
       #battery.plugged {
-        background: ${base};
-        color: ${text2};
+        background: #${base};
+        color: #${text2};
       }
 
       @keyframes blink {
         to {
-          background: ${base};
-          color: ${text2};
+          background: #${base};
+          color: #${text2};
         }
       }
 
       #battery.critical:not(.charging) {
-        background: ${red};
-        color: ${base};
+        background: #${red};
+        color: #${base};
         animation-name: blink;
         animation-duration: 0.5s;
         animation-timing-function: steps(12);
@@ -226,38 +224,29 @@ in with colors; {
         animation-direction: alternate;
       }
 
-       #mode {
-          background: ${pink};
-          color: ${base};
-          border-radius: 6px;
-          padding: 0 6px;
-          margin-left: 6px;
-          margin-right: 6px;
-       }
-
        #workspaces {
           margin-left: 12px;
           margin-right: 12px;
           margin-bottom: 0;
           transition: none;
-          background: ${inactive};
+          background: #${inactive};
           border-radius: 6px;
        }
 
        #workspaces button {
           background: transparent;
-          color: ${base};
+          color: #${base};
           border-radius: 6px;
        }
 
-       #workspaces button.focused {
-          background: ${focused};
-          color: ${base};
+       #workspaces button.active {
+          background: #${focused};
+          color: #${base};
        }
 
        #workspaces button.urgent {
-          background: ${urgent};
-          color: ${base};
+          background: #${urgent};
+          color: #${base};
        }
     '';
   };

@@ -17,7 +17,6 @@ flake-overlays:
     bluetooth.powerOnBoot =
       true; # powers up the default Bluetooth controller on boot
     graphics.enable = true;
-    pulseaudio.enable = false;
     # nvidia = {
     #
     #   # Modesetting is required.
@@ -57,9 +56,7 @@ flake-overlays:
     # };
   };
 
-  programs.hyprland = {
-    enable = true;
-  };
+  programs.hyprland = { enable = true; };
 
   # Experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

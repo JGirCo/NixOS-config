@@ -36,7 +36,7 @@ in with colors; {
       window {
       margin: 5px;
       padding: 20px;
-      border: 2px solid ${focused};
+      border: 2px solid #${focused};
       border-radius: 20px;
       background-image: url('/home/jgirco/Pictures/wallpapers/${theme}.jpg');
       background-size: cover; /* This will make the image cover the entire box */
@@ -47,9 +47,9 @@ in with colors; {
       #input {
       margin: 15px;
       paddi
-      border: 2px solid ${focused};
-      background-color: ${base};
-      color: ${text2};
+      border: 2px solid #${focused};
+      background-color: #${base};
+      color: #${text2};
       }
 
       #inner-box {
@@ -62,15 +62,15 @@ in with colors; {
       #outer-box {
       margin: 20px; !important
       # padding: 10px;
-      # border: 2px solid ${focused};
-      # background-color: ${base};
+      # border: 2px solid #${focused};
+      # background-color: #${base};
       border-radius: 20px;
       }
 
       #scroll {
       margin: 0px;
-      border: 0px solid ${focused};
-      background-color: ${base};
+      border: 0px solid #${focused};
+      background-color: #${base};
       border-radius: 10px;
       }
 
@@ -78,15 +78,15 @@ in with colors; {
       margin: 5px;
       border: 0px solid cyan;
       background-color: transparent;
-      color: ${base};
+      color: #${base};
       }
 
       #entry:selected {
-      background-color: ${focused};
+      background-color: #${focused};
       }
       #entry {
       margin: 5px;
-      background-color: ${inactive};
+      background-color: #${inactive};
       border-radius: 10px;
       }
     '';
