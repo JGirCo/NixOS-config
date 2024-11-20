@@ -1,7 +1,7 @@
 { config, lib, pkgs, theme, font, ... }:
 
 let
-  mod = "MOD4";
+  mod = "SUPER";
   up = "k";
   down = "j";
   left = "h";
@@ -27,11 +27,12 @@ in with colors; {
     imagemagick
     swappy
     wl-clipboard
+    wezterm
   ];
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      "$mod" = "${mod}";
+      "$mod" = "SUPER";
       general = {
         border_size = 4;
         gaps_in = 4;
@@ -43,53 +44,53 @@ in with colors; {
         "$mod ALT, mouse:272, resizewindow"
       ];
       input = {
-        name = "keyboard";
+        # name = "keyboard";
         kb_layout = "latam";
         touchpad = { natural_scroll = true; };
+      };
 
-        decoration = {
-          rounding = 10;
-          drop_shadow = false;
-        };
+      decoration = {
+        rounding = 10;
+        drop_shadow = false;
+      };
 
-        animations = {
-          enabled = true;
+      animations = {
+        enabled = true;
 
-          bezier = "myBezier, 0.25, 0.9, 0.1, 1.02";
-          animation = [
-            "windows, 1, 7, myBezier"
-            "windowsMove, 1, 7, myBezier"
-            "windowsOut, 1, 7, default, popin 80%"
-            "border, 1, 10, default"
-            "borderangle, 1, 8, default"
-            "fade, 1, 7, default"
-          ];
-        };
-
-        dwindle = {
-          # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-          pseudotile = true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-          preserve_split = true; # you probably want this
-        };
-
-        master = {
-          # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-          new_is_master = true;
-          # soon :)
-          # orientation = "center";
-        };
-
-        gestures = {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          workspace_swipe = false;
-        };
-
-        bind = [
-          "$mod, T, exec, wezterm"
-          "$mod, Q, killactive"
-          "$mod, SHIFT, SPACE"
+        bezier = "myBezier, 0.25, 0.9, 0.1, 1.02";
+        animation = [
+          "windows, 1, 7, myBezier"
+          "windowsMove, 1, 7, myBezier"
+          "windowsOut, 1, 7, default, popin 80%"
+          "border, 1, 10, default"
+          "borderangle, 1, 8, default"
+          "fade, 1, 7, default"
         ];
       };
+      #
+      # dwindle = {
+      #   # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
+      #   pseudotile = true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+      #   preserve_split = true; # you probably want this
+      # };
+      #
+      # master = {
+      #   # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+      #   new_is_master = true;
+      #   # soon :)
+      #   # orientation = "center";
+      # };
+      #
+      # gestures = {
+      #   # See https://wiki.hyprland.org/Configuring/Variables/ for more
+      #   workspace_swipe = false;
+      # };
+
+      bind = [
+        "$mod, T, exec, wezterm"
+        "$mod, Q, killactive"
+        "$mod, B, exec, firefox"
+      ];
     };
   };
 }
