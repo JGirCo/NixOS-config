@@ -41,14 +41,15 @@ in with colors; {
     enable = true;
     settings = {
       exec-once = "${startupScript}/bin/startupScript";
-      exec = "swww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any";
+      exec =
+        "swww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any";
       "$mod" = "SUPER";
       general = {
         border_size = 4;
         gaps_in = 4;
         gaps_out = 10;
         "col.active_border" = "rgb(${focused}) rgb(${alt}) 45deg";
-        "col.inactive_border" = "rgba(${inactive}44)";
+        "col.inactive_border" = "rgba(${inactive}00)";
       };
       bindm = [
         "$mod, mouse:272, movewindow"
@@ -105,25 +106,23 @@ in with colors; {
       windowrule = [
 
         "opacity 0.77,^(kitty)$"
+        "noborder on,^(wofi)$"
+        "animation slide,^(wofi)$"
       ];
       monitor = "eDP-1,preferred,auto,1";
-      # dwindle = {
-      #   # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-      #   pseudotile = true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-      #   preserve_split = true; # you probably want this
-      # };
-      #
-      # master = {
-      #   # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-      #   new_is_master = true;
-      #   # soon :)
-      #   # orientation = "center";
-      # };
-      #
-      # gestures = {
-      #   # See https://wiki.hyprland.org/Configuring/Variables/ for more
-      #   workspace_swipe = false;
-      # };
+      dwindle = {
+        pseudotile =
+          true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+        preserve_split = true; # you probably want this
+      };
+
+      bindr = [ "$mod, SUPER_L,exec,pkill wofi || wofi --show drun" ];
+      binde = [
+        "$mod ALT, ${right}, resizeactive, 10 0"
+        "$mod ALT, ${left}, resizeactive, -10 0"
+        "$mod ALT, ${up}, resizeactive, 0 -10"
+        "$mod ALT, ${down}, resizeactive, 0 10"
+      ];
 
       bind = [
         "$mod, T, exec, kitty"

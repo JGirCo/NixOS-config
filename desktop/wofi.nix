@@ -30,6 +30,7 @@ in with colors; {
       image_size = 24;
       line_wrap = "char";
       prompt = "";
+      normal_window = true;
     };
 
     style = ''
