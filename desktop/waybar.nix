@@ -104,7 +104,7 @@ in with colors; {
       * {
         border: none;
         border-radius: 0;
-        font-family: ${font} Nerd Font;
+        font-family: ${font.name};
         font-size: 13px;
         min-height: 1em;
       }

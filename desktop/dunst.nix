@@ -14,7 +14,7 @@ in with colors; {
       offset = "8x8";
       separator_height = 2;
       padding = 8;
-      font = "#${font} Nerd Font 13";
+      font = "${font.name} 13";
       corner_radius = 10;
     };
 

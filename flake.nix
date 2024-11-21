@@ -30,16 +30,25 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "rose-pine";
-      font = "FantasqueSansM";
-      # font = "CaskaydiaCove";
+      theme = "saga";
+      font = {
+        name = "FantasqueSansM Nerd Font";
+        nameNF = "FantasqueSansM";
+        pkg = "nerdfonts";
+        isNF = true;
+      };
+      # font = {
+      #   name = "Maple Mono NF";
+      #   pkg = "maple-mono-NF";
+      #   isNF = false;
+      # };
       flake-overlays = [ nix-matlab.overlay ];
     in {
       nixosConfigurations = {
         nixos = lib.nixosSystem {
           inherit system;
           modules = [ (import ./configuration.nix flake-overlays) ];
-          specialArgs = { };
+          specialArgs = { inherit font; };
         };
       };
       homeConfigurations."jgirco" = home-manager.lib.homeManagerConfiguration {

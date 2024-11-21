@@ -7,14 +7,13 @@ let
   left = "h";
   right = "l";
 
-  startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
-    pkill swww &
-    sleep 1 &
+  startupScript = pkgs.pkgs.writeShellScriptBin "startupScript" ''
+    pkill swww
+    sleep 1
     swww-daemon &
-    sleep 1 &
+    sleep 1
     swww img ~/Pictures/wallpapers/${theme}.jpg &
     waybar &
-
   '';
 
   colors = import ../colors.nix {
@@ -41,7 +40,8 @@ in with colors; {
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      exec-once = "${startupScript}/bin/start";
+      exec-once = "${startupScript}/bin/startupScript";
+      exec = "swww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any";
       "$mod" = "SUPER";
       general = {
         border_size = 4;
@@ -79,7 +79,7 @@ in with colors; {
 
       decoration = {
         rounding = 10;
-        drop_shadow = false;
+        shadow.enabled = false;
 
         blur = {
           enabled = true;
@@ -104,7 +104,7 @@ in with colors; {
       };
       windowrule = [
 
-        "opacity 0.7,^(kitty)$"
+        "opacity 0.77,^(kitty)$"
       ];
       monitor = "eDP-1,preferred,auto,1";
       # dwindle = {
@@ -130,6 +130,7 @@ in with colors; {
         "$mod, Q, killactive"
         "$mod, B, exec, floorp"
         "$mod, D, exec, wofi --show drun"
+        "$mod, R, exec, rofi -show drun"
 
         "$mod, ${left}, movefocus, l"
         "$mod, ${right}, movefocus, r"

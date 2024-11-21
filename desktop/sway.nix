@@ -67,7 +67,7 @@ in with colors; {
       assigns = { "10" = [{ class = "^Spotify$"; }]; };
 
       fonts = {
-        names = [ "${font} Nerd Font" ];
+        names = [ "${font.name}" ];
         size = 9.0;
       };
       startup = [

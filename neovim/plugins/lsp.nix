@@ -49,7 +49,7 @@
 
         servers = {
           typst_lsp.enable = true;
-          nil_ls = {
+          nixd = {
             enable = true;
           };
           rust_analyzer = {
@@ -57,7 +57,7 @@
             installRustc = true;
             installCargo = true;
           };
-          ruff_lsp = { enable = true; };
+          ruff = { enable = true; };
           clangd.enable = true;
           lua_ls.enable = true;
         };

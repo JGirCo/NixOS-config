@@ -3,7 +3,8 @@
 with config.colorScheme.palette; {
   programs.kitty = {
     enable = true;
-    font.name = font;
+    font.name = font.name;
+    font.size = 13;
     shellIntegration.enableZshIntegration = true;
     settings = {
       foreground = "#${base05}";

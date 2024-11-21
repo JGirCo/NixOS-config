@@ -209,7 +209,7 @@ flake-overlays:
 
     # TUI Tools
     pavucontrol
-    cava
+    # cava
     emacs
     yazi-unwrapped
     lazygit
@@ -269,8 +269,12 @@ flake-overlays:
     "x-scheme-handler/unknown" = "firefox.desktop";
   };
 
-  fonts.packages = with pkgs;
-    [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+  fonts.fontDir.enable = true;
+  fonts.packages = if font.isNF then
+    # with pkgs; [ (nerdfonts.override { fonts = [ font.nameNF ]; }) ]
+    with pkgs; [nerdfonts]
+  else
+    [ pkgs.${font.pkg} ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

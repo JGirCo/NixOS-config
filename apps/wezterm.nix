@@ -15,6 +15,7 @@ with config.colorScheme.palette; {
         config = wezterm.config_builder()
       end
 
+      config.enable_wayland = false
       config.front_end = "WebGpu"
       config.colors = {
           foreground = '#${base05}',
@@ -52,12 +53,12 @@ with config.colorScheme.palette; {
           '#${base05}', --0x0f
         },
         }
-      config.font = wezterm.font '${font} Nerd Font'
+      config.font = wezterm.font '${font.name}'
       config.font_size = 13.0
       config.hide_tab_bar_if_only_one_tab = true
       config.audible_bell="Disabled"
-      -- config.window_background_opacity = 0.60
-      -- config.text_background_opacity = 0.0
+      config.window_background_opacity = 0.60
+      config.text_background_opacity = 0.5
 
       config.window_padding = {
         left = 0,

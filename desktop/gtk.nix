@@ -101,8 +101,8 @@ in {
 
     font = {
       size = 12;
-      name = "${font} Nerd Font";
-      package = pkgs.nerdfonts;
+      name = "${font.name}";
+      # package = pkgs.${font.pkg};
     };
   };
 
