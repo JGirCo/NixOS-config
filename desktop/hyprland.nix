@@ -6,6 +6,9 @@ let
   down = "j";
   left = "h";
   right = "l";
+  monitorHeight = 1080;
+  monitorWidth = 1920;
+  terminal = "kitty";
 
   startupScript = pkgs.pkgs.writeShellScriptBin "startupScript" ''
     pkill swww
@@ -45,10 +48,13 @@ in with colors; {
         "swww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any";
       "$mod" = "SUPER";
       general = {
-        border_size = 4;
-        gaps_in = 4;
+        border_size = 5;
+        gaps_in = 3;
         gaps_out = 10;
-        "col.active_border" = "rgb(${focused}) rgb(${alt}) 45deg";
+        # "col.active_border" =
+        #   " rgb(${focused}) rgb(${focused}) rgb(${base}) rgb(${alt}) rgb(${alt}) 45deg";
+        "col.active_border" =
+          "rgba(${red}FF) rgba(${yellow}FF) rgba(${yellow}FF) rgba(${green}FF) rgba(${green}FF) rgba(${blue}FF) rgba(${blue}FF) rgba(${purple}FF) 30deg";
         "col.inactive_border" = "rgba(${inactive}00)";
       };
       bindm = [
@@ -105,10 +111,22 @@ in with colors; {
       };
       windowrule = [
 
-        "opacity 0.77,^(kitty)$"
         "noborder on,^(wofi)$"
         "animation slide,^(wofi)$"
       ];
+
+      windowrulev2 = [
+        "opacity 0.77,initialTitle:^(${terminal})$"
+        "minsize ${builtins.toString (builtins.floor (monitorWidth * 0.75))} ${
+          builtins.toString (builtins.floor (monitorHeight * 0.75))
+        },title:(WhatsApp)(.*)"
+      ];
+
+      workspace = [
+        "special:whatsapp,on-created-empty:[float] floorp --new-window web.whatsapp.com -P Whatsapp"
+        # "special:whatsapp,:gapsout:50"
+      ];
+
       monitor = "eDP-1,preferred,auto,1";
       dwindle = {
         pseudotile =
@@ -116,7 +134,7 @@ in with colors; {
         preserve_split = true; # you probably want this
       };
 
-      bindr = [ "$mod, SUPER_L,exec,pkill wofi || wofi --show drun" ];
+      # bindr = [ "$mod, SUPER_L,exec,pkill wofi || wofi --show drun" ];
       binde = [
         "$mod ALT, ${right}, resizeactive, 10 0"
         "$mod ALT, ${left}, resizeactive, -10 0"
@@ -125,10 +143,11 @@ in with colors; {
       ];
 
       bind = [
-        "$mod, T, exec, kitty"
+        "$mod, D ,exec,pkill wofi || wofi --show drun"
+        "$mod, T, exec, ${terminal}"
         "$mod, Q, killactive"
+        "$mod, F, fullscreen"
         "$mod, B, exec, floorp"
-        "$mod, D, exec, wofi --show drun"
         "$mod, R, exec, rofi -show drun"
 
         "$mod, ${left}, movefocus, l"
@@ -141,8 +160,13 @@ in with colors; {
         "$mod SHIFT, ${up}, movewindow, u"
         "$mod SHIFT, ${down}, movewindow, d"
 
+        "$mod, W, togglespecialworkspace, whatsapp"
+        "$mod, S, togglespecialworkspace, magic"
+        "$mod SHIFT, S, movetoworkspace, special:magic"
+        ''
+          , PRINT, exec, grim -g "$(slurp)" - | convert -  -shave 1x1 PNG: - | wl-copy''
+
       ] ++ (
-        # workspaces
         # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
         builtins.concatLists (builtins.genList (i:
           let ws = i + 1;

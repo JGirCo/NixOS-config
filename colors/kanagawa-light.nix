@@ -1,20 +1,20 @@
 {
-  base = "#DCD7BA";
-  text = "#DCD7BA";
-  text2 = "#1F1F28";
-  inactive = "#658594";
-  focused = "#2D4F67";
-  alt = "#7E9CD8";
-  urgent = "#C34043";
-  binding = "#D27E99";
+  base = "DCD7BA";
+  text = "DCD7BA";
+  text2 = "1F1F28";
+  inactive = "658594";
+  focused = "2D4F67";
+  alt = "7E9CD8";
+  urgent = "C34043";
+  binding = "D27E99";
 
-  red = "#C34043";
-  yellow = "#DCA561";
-  pink = "#D27E99";
-  green = "#76946A";
-  blue = "#658594";
-  purple = "#957FB8";
-  orange = "#FF9E3B";
+  red = "C34043";
+  yellow = "DCA561";
+  pink = "D27E99";
+  green = "76946A";
+  blue = "658594";
+  purple = "957FB8";
+  orange = "FF9E3B";
 
   key = { nvim = "kanagawa"; };
   nvimEngine = "builtin";

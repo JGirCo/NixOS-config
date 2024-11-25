@@ -1,22 +1,22 @@
 {
-  base = "#ffffff";
-  text = "#ffffff";
-  text2 = "#905b75";
-  inactive = "#f8cdda";
-  focused = "#f5a9b8";
-  alt = "#5bcefa";
-  urgent = "#ff988b";
-  binding = "#ba92d0";
+  base = "ffffff";
+  text = "ffffff";
+  text2 = "905b75";
+  inactive = "f8cdda";
+  focused = "f5a9b8";
+  alt = "5bcefa";
+  urgent = "ff988b";
+  binding = "ba92d0";
 
-  red = "#ff988b";
-  yellow = "#ffde3b";
-  pink = "#f5a9b8";
-  green = "#65fd55";
-  blue = "#5bcefa";
-  purple = "#ba92d0";
-  orange = "#ffae56";
+  red = "ff988b";
+  yellow = "ffde3b";
+  pink = "f5a9b8";
+  green = "65fd55";
+  blue = "5bcefa";
+  purple = "ba92d0";
+  orange = "ffae56";
 
-  nvimEngine = "palette";
+  nvimEngine = "base16";
   isBase16Builtin = false;
   base16 = {
     # TEST

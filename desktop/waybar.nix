@@ -116,7 +116,7 @@ in with colors; {
       }
 
       tooltip {
-        border-radius: 10px;
+        border-radius: 0.5rem;
         background-color: #${base};
       }
 
@@ -128,7 +128,7 @@ in with colors; {
       #pulseaudio {
         background: #${green};
         color: #${base};
-        border-radius: 6px 0px 0px 6px;
+        border-radius: 0.5rem 0px 0px 0.5rem;
         margin-left: 4px;
         /* margin-right: 4px; */
         padding-right: 8px;
@@ -137,7 +137,7 @@ in with colors; {
       #cava {
         background: #${green};
         color: #${base};
-        border-radius: 0px 6px 6px 0px;
+        border-radius: 0px 0.5rem 0.5rem 0px;
         margin-right: 4px;
         padding-left: 8px;
         padding-right: 8px;
@@ -146,21 +146,21 @@ in with colors; {
       #backlight {
         background: #${text2};
         color: #${base};
-        border-radius: 6px;
+        border-radius: 0.5rem;
         padding-right: 1px;
       }
 
       #cpu {
         background: #${blue};
         color: #${base};
-        border-radius: 0px 6px 6px 0px;
+        border-radius: 0px 0.5rem 0.5rem 0px;
         margin-right: 4px;
       }
 
       #memory{
         background: #${blue};
         color: #${base};
-        border-radius: 6px 0px 0px 6px;
+        border-radius: 0.5rem 0px 0px 0.5rem;
         margin-left: 4px;
       }
 
@@ -168,13 +168,13 @@ in with colors; {
         background: #${purple};
         color: #${base};
         margin: 0 4px;
-        border-radius: 6px;
+        border-radius: 0.5rem;
       }
 
       #tray{
         background: #${orange};
         margin: 0 4px;
-        border-radius: 6px;
+        border-radius: 0.5rem;
       }
 
       #workspaces button,
@@ -193,7 +193,7 @@ in with colors; {
         padding: 0 6px;
         padding-right: 6px;
         margin: 0 2px;
-        border-radius: 6px;
+        border-radius: 0.5rem;
       }
 
       #battery.warning {
@@ -230,13 +230,13 @@ in with colors; {
           margin-bottom: 0;
           transition: none;
           background: #${inactive};
-          border-radius: 6px;
+          border-radius: 0.5rem;
        }
 
        #workspaces button {
           background: transparent;
           color: #${base};
-          border-radius: 6px;
+          border-radius: 0.5rem;
        }
 
        #workspaces button.active {

@@ -37,7 +37,7 @@ in with colors; {
       window {
       margin: 5px;
       padding: 20px;
-      border: 2px solid #${focused};
+      border: 4px solid #${focused};
       border-radius: 20px;
       background-image: url('/home/jgirco/Pictures/wallpapers/${theme}.jpg');
       background-size: cover; /* This will make the image cover the entire box */
@@ -47,7 +47,7 @@ in with colors; {
 
       #input {
       margin: 15px;
-      paddi
+      padding: 4px;
       border: 2px solid #${focused};
       background-color: #${base};
       color: #${text2};
@@ -61,9 +61,9 @@ in with colors; {
       }
 
       #outer-box {
-      margin: 20px; !important
+      margin: 20px;
       # padding: 10px;
-      # border: 2px solid #${focused};
+      # border: 8px solid #${focused};
       # background-color: #${base};
       border-radius: 20px;
       }

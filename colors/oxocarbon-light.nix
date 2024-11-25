@@ -1,20 +1,20 @@
 {
-  base = "#f2f4f8";
-  text = "#f2f4f8";
-  text2 = "#525252";
-  inactive = "#ff7eb6";
-  focused = "#ee5396";
-  alt = "#0f62fe";
-  urgent = "#ff4f60";
-  binding = "#673ab7";
+  base = "f2f4f8";
+  text = "f2f4f8";
+  text2 = "525252";
+  inactive = "ff7eb6";
+  focused = "ee5396";
+  alt = "0f62fe";
+  urgent = "ff4f60";
+  binding = "673ab7";
 
-  red = "#ff4f60";
-  yellow = "#ffaf00";
-  pink = "#ff7eb6";
-  green = "#42be65";
-  blue = "#0f52fe";
-  purple = "#673ab7";
-  orange = "#ff6f00";
+  red = "ff4f60";
+  yellow = "ffaf00";
+  pink = "ff7eb6";
+  green = "42be65";
+  blue = "0f52fe";
+  purple = "673ab7";
+  orange = "ff6f00";
 
   key = { nvim = "oxocarbon"; };
   nvimEngine = "builtin";
