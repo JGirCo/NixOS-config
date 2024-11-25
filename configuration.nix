@@ -6,7 +6,8 @@ flake-overlays:
 
 { inputs, config, pkgs, font, ... }:
 
-{
+let maplefont = import ./derivations/maple-font.nix { inherit pkgs; };
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -97,6 +98,7 @@ flake-overlays:
   };
 
   # Enable the X11 windowing system.
+  services.udisks2.enable = true;
   security.polkit.enable = true;
   services.xserver.enable = true;
   # services.xserver.videoDrivers = ["nvidia"];
@@ -113,6 +115,21 @@ flake-overlays:
   services.xserver.xkb = {
     layout = "latam";
     variant = "";
+  };
+
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = [ "*" ];
+        settings = {
+          main = {
+            "rightshift" = "up";
+            "up" = "down";
+          };
+        };
+      };
+    };
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -189,6 +206,7 @@ flake-overlays:
     luajit
     wine
     pandoc
+    exfatprogs
 
     libsForQt5.qt5.qtquickcontrols2
     libsForQt5.qt5.qtgraphicaleffects
@@ -221,6 +239,7 @@ flake-overlays:
     ncdu
 
     # GUI Tools
+    gparted
     pavucontrol
     ripdrag
     nsxiv
@@ -236,9 +255,9 @@ flake-overlays:
     lutris
     ungoogled-chromium
     vlc
-    projectm
     matlab
     floorp
+    qbittorrent
 
     # Miscelaneous
     firefoxpwa
@@ -254,6 +273,9 @@ flake-overlays:
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
+    GBM_BACKEND = ''
+      nvidia-drm
+      __GLX_VENDOR_LIBRARY_NAME=nvidia'';
 
     # Not officially in the specification
     XDG_BIN_HOME = "$HOME/.local/bin";
@@ -271,10 +293,11 @@ flake-overlays:
 
   fonts.fontDir.enable = true;
   fonts.packages = if font.isNF then
-    # with pkgs; [ (nerdfonts.override { fonts = [ font.nameNF ]; }) ]
-    with pkgs; [nerdfonts]
+  # with pkgs; [ (nerdfonts.override { fonts = [ font.nameNF ]; }) ]
+    with pkgs; [ nerdfonts ]
   else
-    [ pkgs.${font.pkg} ];
+  # with pkgs; [ maple-mono miracode monaspace ];
+    [ maplefont ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

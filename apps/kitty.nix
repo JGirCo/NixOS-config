@@ -35,5 +35,10 @@ with config.colorScheme.palette; {
 
       enable_audio_bell = "no";
     };
+    keybindings = {
+      "alt+n" = "new_os_window_with_cwd";
+      "alt+space" =
+        "launch --stdin-source=@screen --type=overlay  nvim -R";
+    };
   };
 }
