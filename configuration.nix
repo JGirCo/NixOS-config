@@ -131,6 +131,8 @@ in {
       };
     };
   };
+  users.groups.keyd = { members = [ "root" ]; };
+  systemd.services.keyd.serviceConfig.CapabilityBoundingSet = [ "CAP_SETGID" ];
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput = {
@@ -175,7 +177,7 @@ in {
   users.users.jgirco = {
     isNormalUser = true;
     description = "Juan Manuel Giraldo";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "input" "keyd" ];
     shell = pkgs.zsh;
   };
 
@@ -213,7 +215,7 @@ in {
     libsForQt5.qtstyleplugins
 
     #System tools
-    xclip
+    keyd
     acpi
     pamixer
     playerctl
@@ -239,6 +241,9 @@ in {
     ncdu
 
     # GUI Tools
+
+    gnome-network-displays
+    miraclecast
     gparted
     pavucontrol
     ripdrag

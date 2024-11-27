@@ -14,7 +14,7 @@ in with colors; {
         # modules-left = [ "pulseaudio" "backlight" "memory" "cpu" ];
         modules-left = [ "pulseaudio" "cava" "backlight" "memory" "cpu" ];
         modules-center = [ "hyprland/workspaces" ];
-        modules-right = [ "battery" "clock" "tray" ];
+        modules-right = [ "keyboard-state" "battery" "clock" "tray" ];
 
         "cpu" = {
           interval = 10;
@@ -75,6 +75,14 @@ in with colors; {
           format-charging = "{capacity}% 󱐋{icon}";
           format-plugged = "";
           format-icons = [ " " " " " " " " " " ];
+        };
+        keyboard-state = {
+          numlock = true;
+          format = { numlock = "{icon}"; };
+          format-icons = {
+            unlocked = "<span color='#${purple}'><b>     </b></span>";
+            locked = "<span color='#${orange}'><b>1 2 3 4</b></span>";
+          };
         };
         "clock" = {
           interval = 60;
@@ -162,6 +170,15 @@ in with colors; {
         color: #${base};
         border-radius: 0.5rem 0px 0px 0.5rem;
         margin-left: 4px;
+      }
+
+      #keyboard-state{
+        background: #${base};
+        color: #${base};
+        margin: 0 4px;
+        padding: 0px 3px;
+        font-size: 20px;
+        border-radius: 0.5rem;
       }
 
       #clock{
