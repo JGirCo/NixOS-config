@@ -13,6 +13,10 @@ in {
     ./hardware-configuration.nix
   ];
 
+  qt.enable = true;
+  qt.platformTheme = "gtk2";
+  qt.style = "gtk2";
+
   hardware = {
     bluetooth.enable = true; # enables support for Bluetooth
     bluetooth.powerOnBoot =
@@ -101,10 +105,10 @@ in {
   services.udisks2.enable = true;
   security.polkit.enable = true;
   services.xserver.enable = true;
-  # services.xserver.videoDrivers = ["nvidia"];
+  # services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.excludePackages = [ pkgs.xterm ];
 
-  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
 
   # Enable i3wm
   # services.xserver.windowManager.i3 = {
@@ -242,7 +246,6 @@ in {
 
     # GUI Tools
 
-    gnome-network-displays
     miraclecast
     gparted
     pavucontrol
