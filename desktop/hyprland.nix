@@ -22,7 +22,40 @@ let
   colors = import ../colors.nix {
     inherit theme;
     inherit lib;
+
   };
+  scratch-program = { name, command, key, title }: {
+    keybind = "MOD5, ${key}, togglespecialworkspace, ${name}";
+    winrule =
+      "minsize ${builtins.toString (builtins.floor (monitorWidth * 0.75))} ${
+        builtins.toString (builtins.floor (monitorHeight * 0.75))
+      },title:(${title})(.*)";
+
+    workspace = "special:${name},on-created-empty:[float] ${command}";
+  };
+
+  scratch-apps = [
+    (scratch-program {
+      name = "bluetooth";
+      key = "B";
+      command = "blueman-manager";
+      title = "Bluetooth Devices";
+    })
+
+    (scratch-program {
+      name = "volume";
+      key = "V";
+      command = "pavucontrol";
+      title = "Volume Control";
+    })
+
+    (scratch-program {
+      name = "whatsapp";
+      key = "W";
+      command = "floorp --new-window web.whatsapp.com -P Whatsapp";
+      title = "WhatsApp";
+    })
+  ];
 
 in with colors; {
   imports = [ ./waybar.nix ];
@@ -51,10 +84,10 @@ in with colors; {
         border_size = 5;
         gaps_in = 3;
         gaps_out = 10;
-        # "col.active_border" =
-        #   " rgb(${focused}) rgb(${focused}) rgb(${base}) rgb(${alt}) rgb(${alt}) 45deg";
         "col.active_border" =
-          "rgba(${red}FF) rgba(${yellow}FF) rgba(${yellow}FF) rgba(${green}FF) rgba(${green}FF) rgba(${blue}FF) rgba(${blue}FF) rgba(${purple}FF) 30deg";
+          " rgb(${focused}) rgb(${focused}) rgb(${base}) rgb(${alt}) rgb(${alt}) 45deg";
+        # "col.active_border" =
+        #   "rgba(${red}FF) rgba(${yellow}FF) rgba(${yellow}FF) rgba(${green}FF) rgba(${green}FF) rgba(${blue}FF) rgba(${blue}FF) rgba(${purple}FF) 30deg";
         "col.inactive_border" = "rgba(${inactive}00)";
       };
       bindm = [
@@ -115,23 +148,16 @@ in with colors; {
         "animation slide,^(wofi)$"
       ];
 
-      windowrulev2 = [
-        "opacity 0.77,initialTitle:^(${terminal})$"
-        "minsize ${builtins.toString (builtins.floor (monitorWidth * 0.75))} ${
-          builtins.toString (builtins.floor (monitorHeight * 0.75))
-        },title:(WhatsApp)(.*)"
-      ];
+      windowrulev2 = [ "opacity 0.77,initialTitle:^(${terminal})$" ]
+        ++ map (app: app.winrule) scratch-apps;
 
-      workspace = [
-        "special:whatsapp,on-created-empty:[float] floorp --new-window web.whatsapp.com -P Whatsapp"
-        # "special:whatsapp,:gapsout:50"
-      ];
+      workspace = [ ] ++ map (app: app.workspace) scratch-apps;
 
       monitor = "eDP-1,preferred,auto,1";
       dwindle = {
-        pseudotile =
-          true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+        pseudotile = true;
         preserve_split = true; # you probably want this
+        force_split = 2;
       };
 
       # bindr = [ "$mod, SUPER_L,exec,pkill wofi || wofi --show drun" ];
@@ -160,7 +186,6 @@ in with colors; {
         "$mod SHIFT, ${up}, movewindow, u"
         "$mod SHIFT, ${down}, movewindow, d"
 
-        "$mod, W, togglespecialworkspace, whatsapp"
         "$mod, S, togglespecialworkspace, magic"
         "$mod SHIFT, S, movetoworkspace, special:magic"
         ''
@@ -173,8 +198,7 @@ in with colors; {
           in [
             "$mod, code:1${toString i}, workspace, ${toString ws}"
             "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-          ]) 9));
-
+          ]) 9)) ++ map (app: app.keybind) scratch-apps;
     };
   };
 }
