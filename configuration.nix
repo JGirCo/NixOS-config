@@ -131,6 +131,12 @@ in {
             "rightshift" = "up";
             "up" = "down";
           };
+          "control+alt" = {
+            "h" = "left";
+            "k" = "up";
+            "j" = "down";
+            "l" = "right";
+          };
         };
       };
     };
@@ -246,15 +252,12 @@ in {
 
     # GUI Tools
 
-    miraclecast
+    freecad-wayland
     gparted
     pavucontrol
     ripdrag
-    nsxiv
-    spot
     zotero
     vipsdisp
-    itch
     thunderbird
     libreoffice
     pcmanfm
@@ -263,7 +266,6 @@ in {
     lutris
     ungoogled-chromium
     vlc
-    matlab
     floorp
     qbittorrent
 
@@ -277,6 +279,7 @@ in {
   nixpkgs.overlays = flake-overlays;
 
   environment.sessionVariables = rec {
+    GSK_RENDERER = "gl";
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
@@ -323,6 +326,23 @@ in {
       enable = true;
       # package = pkgs.firefox-beta-bin;
       nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
+    };
+
+    steam = {
+      enable = true;
+      remotePlay.openFirewall =
+        true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall =
+        true; # Open ports in the firewall for Source Dedicated Server
+      localNetworkGameTransfers.openFirewall =
+        true; # Open ports in the firewall for Steam Local Network Game Transfers
+    };
+
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 4d --keep 3";
+      flake = "/home/jgirco/.nixos/";
     };
   };
 

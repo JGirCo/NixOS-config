@@ -19,6 +19,7 @@ in {
     ./apps/zathura.nix
     ./desktop/dunst.nix
     ./apps/cava.nix
+    ./apps/freecad.nix
     ./scripts/default.nix
     inputs.nix-colors.homeManagerModules.default
   ];

@@ -177,7 +177,6 @@ in with colors; {
         color: #${base};
         margin: 0 4px;
         padding: 0px 3px;
-        font-size: 20px;
         border-radius: 0.5rem;
       }
 

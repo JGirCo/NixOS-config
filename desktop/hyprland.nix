@@ -17,6 +17,7 @@ let
     sleep 1
     swww img ~/Pictures/wallpapers/${theme}.jpg &
     waybar &
+    systemctl --user restart pipewire pipewire-pulse &
   '';
 
   colors = import ../colors.nix {
