@@ -30,16 +30,9 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "catppuccin-latte";
-      # font = {
-      #   name = "FantasqueSansM Nerd Font";
-      #   nameNF = "FantasqueSansM";
-      #   pkg = "nerdfonts";
-      #   isNF = true;
-      # };
+      theme = "tokyo-night-moon";
       font = {
         name = "Maple Mono NF";
-        # pkg = "maple-mono-NF";
         isNF = false;
       };
       flake-overlays = [ nix-matlab.overlay ];
