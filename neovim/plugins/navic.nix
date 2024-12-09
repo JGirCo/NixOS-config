@@ -5,8 +5,7 @@
       settings = {
         separator = "";
         lsp.preference = [
-          "nil_ls"
-          "nil-ls"
+          "nixd"
           "rust_analizer"
           "ruff_lsp"
           "arduino-language-server"

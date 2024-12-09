@@ -37,8 +37,7 @@ with config.colorScheme.palette; {
     };
     keybindings = {
       "alt+n" = "new_os_window_with_cwd";
-      "alt+space" =
-        "launch --stdin-source=@screen --type=overlay  nvim -R";
+      "alt+space" = "launch --stdin-source=@screen --type=overlay  nvim -R";
     };
   };
 }

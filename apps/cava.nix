@@ -2,7 +2,7 @@
 
 with config.colorScheme.palette; {
   programs.cava = {
-    enable = false;
+    enable = true;
     settings = {
       color = {
         gradient = 1;

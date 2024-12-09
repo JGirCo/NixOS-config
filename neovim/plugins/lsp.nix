@@ -49,9 +49,7 @@
 
         servers = {
           typst_lsp.enable = true;
-          nixd = {
-            enable = true;
-          };
+          nixd = { enable = true; };
           rust_analyzer = {
             enable = true;
             installRustc = true;

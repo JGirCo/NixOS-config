@@ -14,16 +14,14 @@
 
     lsp-format = {
       enable = true;
-      lspServersToEnable = [ "efm" "nil_ls" ];
+      lspServersToEnable = [ "efm" ];
     };
 
     efmls-configs = {
       enable = true;
       setup = {
         python.formatter = "ruff";
-        python.linter = "ruff";
         nix.formatter = "nixfmt";
-        nix.linter = "statix";
         "c++".formatter = "clang_format";
         "c++".linter = "gcc";
       };
