@@ -48,14 +48,44 @@
         }];
 
         servers = {
-          typst_lsp.enable = true;
+          tinymist.enable = true;
           nixd = { enable = true; };
           rust_analyzer = {
             enable = true;
             installRustc = true;
             installCargo = true;
           };
-          ruff = { enable = true; };
+          # pylsp = {
+          #   enable = true;
+          #   settings.plugins = {
+          #     jedi.enabled = true;
+          #     jedi_completion.enabled = true;
+          #     jedi_definition.enabled = true;
+          #     jedi_hover.enabled = true;
+          #     pyright.enabled = true;
+          #   };
+          # };
+          pyright = {
+            enable = true;
+            extraOptions.settings = {
+              # Using Ruff's import organizer
+              pyright.disableOrganizeImports = true;
+              python.analysis = {
+                # Ignore all files for analysis to exclusively use Ruff for linting
+                ignore.__raw = "{ '*' }";
+              };
+            };
+          };
+
+          ruff = {
+            enable = true;
+            onAttach.function = ''
+              if client.name == 'ruff' then
+                -- Disable hover in favor of Pyright
+                client.server_capabilities.hoverProvider = false
+              end
+            '';
+          };
           clangd.enable = true;
           lua_ls.enable = true;
         };

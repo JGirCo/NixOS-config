@@ -12,6 +12,9 @@ in with colors; {
       } // lib.optionalAttrs (theme == "catppuccin-latte") {
         catppuccin.enable = true;
         catppuccin.settings.flavour = "latte";
+      } // lib.optionalAttrs (theme == "kanagawa-light") {
+        kanagawa.enable = true;
+        kanagawa.settings.transparent = true;
       }
     else if nvimEngine == "base16" then {
       base16 = if isBase16Builtin then {

@@ -7,6 +7,7 @@ let
 
 in {
   imports = [
+    ./debugging.nix
     ./autocommands.nix
     ./completion.nix
     ./keymappings.nix

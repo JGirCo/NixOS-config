@@ -13,7 +13,7 @@
     ./surround.nix
     ./which-key.nix
     ./comment.nix
-    ./efm.nix
+    ./none-ls.nix
     # ./floaterm.nix
     ./harpoon.nix
     ./lsp.nix
@@ -44,11 +44,12 @@
       nvim-autopairs.enable = true;
       plantuml-syntax.enable = true;
 
-      nvim-colorizer = {
+      colorizer = {
         enable = true;
-        userDefaultOptions.names = false;
+        settings.user_default_options.names = true;
       };
       oil.enable = true;
+      lsp-lines.enable = true;
       indent-blankline = {
         enable = true;
         settings.scope = {
