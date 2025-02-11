@@ -1,7 +1,6 @@
-{ config, lib, pkgs, theme, font, ... }:
+{ lib, pkgs, theme, ... }:
 
 let
-  mod = "SUPER";
   up = "k";
   down = "j";
   left = "h";
@@ -11,13 +10,18 @@ let
   terminal = "kitty";
 
   startupScript = pkgs.pkgs.writeShellScriptBin "startupScript" ''
-    pkill swww
-    sleep 1
+    udiskie &
     swww-daemon &
-    sleep 1
     swww img ~/Pictures/wallpapers/${theme}.jpg &
-    waybar &
     systemctl --user restart pipewire pipewire-pulse &
+    waybar & disown
+  '';
+
+  reloadScript = pkgs.pkgs.writeShellScriptBin "reloadScript" ''
+    pkill waybar &
+    sleep 0.2
+    swww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any &
+    waybar & disown
   '';
 
   colors = import ../colors.nix {
@@ -78,8 +82,7 @@ in with colors; {
     enable = true;
     settings = {
       exec-once = "${startupScript}/bin/startupScript";
-      exec =
-        "swww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any";
+      exec = "${reloadScript}/bin/reloadScript";
       "$mod" = "SUPER";
       general = {
         border_size = 5;
@@ -191,6 +194,9 @@ in with colors; {
         "$mod SHIFT, S, movetoworkspace, special:magic"
         ''
           , PRINT, exec, grim -g "$(slurp)" - | convert -  -shave 1x1 PNG: - | wl-copy''
+
+        "$mod, 0, workspace, 10"
+        "$mod SHIFT, 0, movetoworkspacesilent, 10"
 
       ] ++ (
         # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}

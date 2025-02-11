@@ -117,11 +117,11 @@ in {
     enable = true;
     platformTheme.name = "gtk";
     style.name = "adwaita-dark";
-    style.package = pkgs.adwaita-qt;
+    style.package = pkgs.adwaita-qt6;
   };
 
   home.sessionVariables = { QT_STYLE_OVERRIDE = "adwaita-dark"; };
-  home.packages = [ pkgs.adwaita-qt ];
+  home.packages = [ pkgs.adwaita-qt6 ];
   # detected automatically:
   # adwaita, adwaita-dark, adwaita-highcontrast,
   # adwaita-highcontrastinverse, breeze,

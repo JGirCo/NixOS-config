@@ -13,10 +13,6 @@ in {
     ./hardware-configuration.nix
   ];
 
-  qt.enable = true;
-  qt.platformTheme = "gtk2";
-  qt.style = "gtk2";
-
   hardware = {
     bluetooth.enable = true; # enables support for Bluetooth
     bluetooth.powerOnBoot =
@@ -103,12 +99,14 @@ in {
 
   # Enable the X11 windowing system.
   services.udisks2.enable = true;
+  services.gvfs.enable = true;
   security.polkit.enable = true;
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.excludePackages = [ pkgs.xterm ];
 
   services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.debug = true;
 
   # Enable i3wm
   # services.xserver.windowManager.i3 = {
@@ -131,7 +129,7 @@ in {
             "rightshift" = "up";
             "up" = "down";
           };
-          "control+alt" = {
+          "shift+alt" = {
             "h" = "left";
             "k" = "up";
             "j" = "down";
@@ -196,29 +194,25 @@ in {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+
   environment.systemPackages = with pkgs; [
     # Basic tools
     git
     wget
     gcc
+    rsync
     gnumake
     ripgrep
-    python3
-    cargo
-    rustc
-    rust-analyzer
-    arduino-language-server
     zip
     unzip
     gh
     fd
     coreutils
-    clang
-    busybox
     luajit
     wine
-    pandoc
     exfatprogs
+
+    devenv
 
     libsForQt5.qt5.qtquickcontrols2
     libsForQt5.qt5.qtgraphicaleffects
@@ -229,6 +223,7 @@ in {
     acpi
     pamixer
     playerctl
+    udiskie
 
     # Terminal Tools
     kitty
@@ -239,7 +234,7 @@ in {
 
     # TUI Tools
     pavucontrol
-    # cava
+    cava
     emacs
     yazi-unwrapped
     lazygit
@@ -251,26 +246,25 @@ in {
     ncdu
 
     # GUI Tools
-
+    foot
+    airshipper
     freecad-wayland
+    celluloid
     gparted
     pavucontrol
     ripdrag
     zotero
     vipsdisp
-    thunderbird
     libreoffice
     pcmanfm
     inkscape
     bottles
     lutris
     ungoogled-chromium
-    vlc
     floorp
-    qbittorrent
+    deluge
 
     # Miscelaneous
-    firefoxpwa
 
     #python
     python311Packages.pyserial
@@ -279,6 +273,7 @@ in {
   nixpkgs.overlays = flake-overlays;
 
   environment.sessionVariables = rec {
+    QT_STYLE_OVERRIDE = "kvantum";
     GSK_RENDERER = "gl";
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
@@ -295,11 +290,11 @@ in {
 
   xdg.mime.defaultApplications = {
     "inode/directory" = "pcmanfm.desktop";
-    "image/png" = "nsxiv.desktop";
-    "x-scheme-handler/http" = "firefox.desktop";
-    "x-scheme-handler/https" = "firefox.desktop";
-    "x-scheme-handler/about" = "firefox.desktop";
-    "x-scheme-handler/unknown" = "firefox.desktop";
+    "image/png" = "vipsdisp.desktop";
+    "x-scheme-handler/http" = "floorp.desktop";
+    "x-scheme-handler/https" = "floorp.desktop";
+    "x-scheme-handler/about" = "floorp.desktop";
+    "x-scheme-handler/unknown" = "floorp.desktop";
   };
 
   fonts.fontDir.enable = true;
@@ -320,7 +315,10 @@ in {
     };
     zsh.enable = true;
     light.enable = true;
-    kdeconnect.enable = true;
+    kdeconnect = {
+      enable = true;
+      package = pkgs.valent;
+    };
     dconf.enable = true;
     firefox = {
       enable = true;

@@ -35,6 +35,9 @@ in {
         py = "python";
         nd = "nix develop -c zsh";
         thesis = "cd ~/Documents/thesis && nvim index.norg";
+        rcp = "${pkgs.rsync}/bin/rsync -av --info=progress2";
+        rmv =
+          "${pkgs.rsync}/bin/rsync -av --remove-source-files --info=progress2";
       };
       initExtra = lib.strings.concatStrings [
         p10k
