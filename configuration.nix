@@ -195,6 +195,10 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
 
+  services.flatpak = {
+    enable = true;
+    packages = [ "io.github.qwersyk.Newelle" ];
+  };
   environment.systemPackages = with pkgs; [
     # Basic tools
     git
@@ -263,6 +267,7 @@ in {
     ungoogled-chromium
     floorp
     deluge
+    inputs.zen-browser.packages."${system}".specific
 
     # Miscelaneous
 
@@ -322,7 +327,7 @@ in {
     dconf.enable = true;
     firefox = {
       enable = true;
-      # package = pkgs.firefox-beta-bin;
+      package = inputs.firefox.packages.${pkgs.system}.firefox-nightly-bin;
       nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
     };
 

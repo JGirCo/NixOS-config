@@ -19,9 +19,17 @@
       url = "gitlab:doronbehar/nix-matlab";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    firefox = {
+      url = "github:nix-community/flake-firefox-nightly";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    textfox.url = "github:adriankarlen/textfox";
   };
 
-  outputs = { old-norg, nixpkgs, home-manager, nixvim, nix-matlab, ... }@inputs:
+  outputs = { old-norg, nixpkgs, home-manager, nixvim, nix-matlab, nix-flatpak
+    , textfox, ... }@inputs:
     let
       # System settings
       system = "x86_64-linux";
@@ -30,7 +38,7 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "tokyo-night-moon";
+      theme = "ayu-light";
       font = {
         name = "Maple Mono NF";
         isNF = false;
@@ -40,13 +48,23 @@
       nixosConfigurations = {
         nixos = lib.nixosSystem {
           inherit system;
-          modules = [ (import ./configuration.nix flake-overlays) ];
-          specialArgs = { inherit font; };
+          modules = [
+            (import ./configuration.nix flake-overlays)
+            nix-flatpak.nixosModules.nix-flatpak
+          ];
+          specialArgs = {
+            inherit font;
+            inherit inputs;
+          };
         };
       };
       homeConfigurations."jgirco" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ ./home.nix nixvim.homeManagerModules.nixvim ];
+        modules = [
+          ./home.nix
+          nixvim.homeManagerModules.nixvim
+          textfox.homeManagerModules.default
+        ];
         extraSpecialArgs = {
           inherit inputs;
           inherit theme;

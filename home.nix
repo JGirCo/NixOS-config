@@ -20,8 +20,10 @@ in {
     ./desktop/dunst.nix
     ./apps/cava.nix
     ./apps/freecad.nix
+    ./apps/textfox.nix
     ./scripts/default.nix
     inputs.nix-colors.homeManagerModules.default
+    inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
   colorScheme = if colors.isBase16Builtin then
@@ -55,4 +57,5 @@ in {
     homeDirectory = "/home/jgirco";
     stateVersion = "23.11";
   };
+
 }
