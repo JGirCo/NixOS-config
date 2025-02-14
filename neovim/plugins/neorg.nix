@@ -32,9 +32,9 @@
       enable = true;
       package = norgpkg.vimPlugins.neorg;
 
-      lazyLoading = true;
+      settings.lazy_loading = true;
 
-      modules = {
+      settings.load = {
         "core.defaults" = { __empty = null; };
         "core.dirman" = {
           config = {
