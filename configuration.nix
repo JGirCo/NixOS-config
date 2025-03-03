@@ -105,8 +105,18 @@ in {
   services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.excludePackages = [ pkgs.xterm ];
 
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.debug = true;
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.displayManager.gdm.debug = true;
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd hyprland";
+        user = "jgirco";
+      };
+    };
+  };
 
   # Enable i3wm
   # services.xserver.windowManager.i3 = {
@@ -139,7 +149,8 @@ in {
       };
     };
   };
-  users.groups.keyd = { members = [ "root" ]; };
+
+  users.groups.keyd = { members = [ "root" "jgirco" ]; };
   systemd.services.keyd.serviceConfig.CapabilityBoundingSet = [ "CAP_SETGID" ];
 
   # Enable touchpad support (enabled default in most desktopManager).

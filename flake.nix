@@ -20,7 +20,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
     firefox = {
       url = "github:nix-community/flake-firefox-nightly";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,7 +39,7 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "ayu-light";
+      theme = "oxocarbon-light";
       font = {
         name = "Maple Mono NF";
         isNF = false;

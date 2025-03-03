@@ -11,10 +11,10 @@ let
 
   startupScript = pkgs.pkgs.writeShellScriptBin "startupScript" ''
     udiskie &
+    # keyd-application-mapper -d &
     swww-daemon &
     swww img ~/Pictures/wallpapers/${theme}.jpg &
     systemctl --user restart pipewire pipewire-pulse &
-    waybar & disown
   '';
 
   reloadScript = pkgs.pkgs.writeShellScriptBin "reloadScript" ''
