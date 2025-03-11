@@ -11,7 +11,7 @@ let
 
   startupScript = pkgs.pkgs.writeShellScriptBin "startupScript" ''
     udiskie &
-    # keyd-application-mapper -d &
+    keyd-application-mapper -d &
     swww-daemon &
     swww img ~/Pictures/wallpapers/${theme}.jpg &
     systemctl --user restart pipewire pipewire-pulse &
@@ -87,7 +87,7 @@ in with colors; {
       general = {
         border_size = 5;
         gaps_in = 3;
-        gaps_out = 10;
+        gaps_out = 6;
         "col.active_border" =
           " rgb(${focused}) rgb(${focused}) rgb(${base}) rgb(${alt}) rgb(${alt}) 45deg";
         # "col.active_border" =

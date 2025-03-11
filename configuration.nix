@@ -278,7 +278,7 @@ in {
     ungoogled-chromium
     floorp
     deluge
-    inputs.zen-browser.packages."${system}".specific
+    inputs.zen-browser.packages."${system}".twilight
 
     # Miscelaneous
 

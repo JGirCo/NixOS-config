@@ -39,7 +39,7 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "oxocarbon-light";
+      theme = "catppuccin-latte";
       font = {
         name = "Maple Mono NF";
         isNF = false;

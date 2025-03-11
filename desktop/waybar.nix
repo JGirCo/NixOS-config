@@ -51,16 +51,16 @@ in with colors; {
           all-outputs = true;
           format = "{icon}";
           format-icons = {
-            "1" = "I";
-            "2" = "II";
-            "3" = "III";
-            "4" = "IV";
-            "5" = "V";
-            "6" = "VI";
-            "7" = "VII";
-            "8" = "VIII";
-            "9" = "IX";
-            "10" = "";
+            "1" = "Ⅰ";
+            "2" = "Ⅱ";
+            "3" = "Ⅲ";
+            "4" = "Ⅳ";
+            "5" = "Ⅴ";
+            "6" = "Ⅵ";
+            "7" = "Ⅶ";
+            "8" = "Ⅷ";
+            "9" = "Ⅸ";
+            "10" = " ";
           };
         };
 
@@ -109,18 +109,26 @@ in with colors; {
       };
     };
     style = ''
+      @keyframes selection {
+        0%   {margin-top: 0px; padding-bottom: 1px;}
+        10%  {margin-top: -4px; padding-bottom: 4px;}
+        100% {margin-top: 0px; padding-bottom: 1px;}
+      }
       * {
         border: none;
-        border-radius: 0;
-        font-family: ${font.name};
+        font-family: "${font.name}";
         font-size: 13px;
-        min-height: 1em;
+        min-height: 0;
+        margin: 2px;
+        border-radius: 999px;
+        margin-bottom: 0px;
       }
 
       window#waybar {
-        background: #${base};
+        background: rgba(0,0,0,0);
         color: #${text2};
-        opacity: 0.85;
+        opacity: 1;
+        padding-top: 20px;
       }
 
       tooltip {
@@ -136,17 +144,17 @@ in with colors; {
       #pulseaudio {
         background: #${green};
         color: #${base};
-        border-radius: 0.5rem 0px 0px 0.5rem;
-        margin-left: 4px;
-        /* margin-right: 4px; */
-        padding-right: 8px;
+        border-radius: 999px 0px 0px 999px;
+        padding-right: 10px;
+        margin-right: 0px;
       }
 
       #cava {
         background: #${green};
         color: #${base};
-        border-radius: 0px 0.5rem 0.5rem 0px;
-        margin-right: 4px;
+        border-radius: 0px 999px 999px 0px;
+        /* margin-right: 4px; */
+        margin-left: 0px;
         padding-left: 8px;
         padding-right: 8px;
       }
@@ -154,43 +162,37 @@ in with colors; {
       #backlight {
         background: #${text2};
         color: #${base};
-        border-radius: 0.5rem;
         padding-right: 1px;
       }
 
       #cpu {
         background: #${blue};
         color: #${base};
-        border-radius: 0px 0.5rem 0.5rem 0px;
-        margin-right: 4px;
+        border-radius: 0px 999px 999px 0px;
+        margin-left: 0px;
+        padding-right: 8px;
       }
 
       #memory{
         background: #${blue};
         color: #${base};
-        border-radius: 0.5rem 0px 0px 0.5rem;
-        margin-left: 4px;
+        border-radius: 999px 0px 0px 999px;
+        margin-right: 0px;
       }
 
       #keyboard-state{
         background: #${base};
         color: #${base};
-        margin: 0 4px;
         padding: 0px 3px;
-        border-radius: 0.5rem;
       }
 
       #clock{
         background: #${purple};
         color: #${base};
-        margin: 0 4px;
-        border-radius: 0.5rem;
       }
 
       #tray{
         background: #${orange};
-        margin: 0 4px;
-        border-radius: 0.5rem;
       }
 
       #workspaces button,
@@ -208,8 +210,6 @@ in with colors; {
         color: #${base};
         padding: 0 6px;
         padding-right: 6px;
-        margin: 0 2px;
-        border-radius: 0.5rem;
       }
 
       #battery.warning {
@@ -241,23 +241,24 @@ in with colors; {
       }
 
        #workspaces {
-          margin-left: 12px;
-          margin-right: 12px;
-          margin-bottom: 0;
           transition: none;
           background: #${inactive};
-          border-radius: 0.5rem;
        }
 
        #workspaces button {
           background: transparent;
           color: #${base};
-          border-radius: 0.5rem;
+          padding-bottom: 3px;
+          margin: 0px;
        }
 
        #workspaces button.active {
           background: #${focused};
           color: #${base};
+          animation-name: selection;
+          animation-duration: 1s;
+          padding-left: 8px;
+          padding-right: 8px;
        }
 
        #workspaces button.urgent {
