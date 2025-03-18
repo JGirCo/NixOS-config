@@ -39,11 +39,12 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "catppuccin-latte";
+      theme = "dracula";
       font = {
         name = "Maple Mono NF";
         isNF = false;
       };
+      browser = { name = "firefox-nightly"; };
       flake-overlays = [ nix-matlab.overlay ];
     in {
       nixosConfigurations = {
@@ -54,6 +55,7 @@
             nix-flatpak.nixosModules.nix-flatpak
           ];
           specialArgs = {
+            inherit browser;
             inherit font;
             inherit inputs;
           };
@@ -69,6 +71,7 @@
         extraSpecialArgs = {
           inherit inputs;
           inherit theme;
+          inherit browser;
           inherit font;
           inherit norgpkg;
         };

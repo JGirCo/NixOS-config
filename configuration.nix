@@ -4,7 +4,7 @@
 
 flake-overlays:
 
-{ inputs, config, pkgs, font, ... }:
+{ inputs, config, pkgs, font, browser, ... }:
 
 let maplefont = import ./derivations/maple-font.nix { inherit pkgs; };
 in {
@@ -110,11 +110,13 @@ in {
 
   services.greetd = {
     enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd hyprland";
+    settings = rec {
+      initial_session = {
+        command =
+          "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --time --cmd hyprland -g Hola!";
         user = "jgirco";
       };
+      default_session = initial_session;
     };
   };
 
@@ -281,6 +283,7 @@ in {
     inputs.zen-browser.packages."${system}".twilight
 
     # Miscelaneous
+    tridactyl-native
 
     #python
     python311Packages.pyserial
@@ -307,10 +310,10 @@ in {
   xdg.mime.defaultApplications = {
     "inode/directory" = "pcmanfm.desktop";
     "image/png" = "vipsdisp.desktop";
-    "x-scheme-handler/http" = "floorp.desktop";
-    "x-scheme-handler/https" = "floorp.desktop";
-    "x-scheme-handler/about" = "floorp.desktop";
-    "x-scheme-handler/unknown" = "floorp.desktop";
+    "x-scheme-handler/http" = "${browser.name}.desktop";
+    "x-scheme-handler/https" = "${browser.name}.desktop";
+    "x-scheme-handler/about" = "${browser.name}.desktop";
+    "x-scheme-handler/unknown" = "${browser.name}.desktop";
   };
 
   fonts.fontDir.enable = true;
@@ -339,7 +342,7 @@ in {
     firefox = {
       enable = true;
       package = inputs.firefox.packages.${pkgs.system}.firefox-nightly-bin;
-      nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
+      nativeMessagingHosts.packages = [ pkgs.firefoxpwa pkgs.tridactyl-native ];
     };
 
     steam = {

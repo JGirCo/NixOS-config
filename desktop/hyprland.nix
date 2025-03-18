@@ -1,4 +1,4 @@
-{ lib, pkgs, theme, ... }:
+{ lib, pkgs, theme, browser, ... }:
 
 let
   up = "k";
@@ -13,7 +13,7 @@ let
     udiskie &
     keyd-application-mapper -d &
     swww-daemon &
-    swww img ~/Pictures/wallpapers/${theme}.jpg &
+    swww img ~/Pictures/wallpapers/${theme}.jpg --transition-duration 0s &
     systemctl --user restart pipewire pipewire-pulse &
   '';
 
@@ -57,7 +57,7 @@ let
     (scratch-program {
       name = "whatsapp";
       key = "W";
-      command = "floorp --new-window web.whatsapp.com -P Whatsapp";
+      command = "${browser.name} --new-window web.whatsapp.com -P Whatsapp";
       title = "WhatsApp";
     })
   ];
@@ -152,8 +152,9 @@ in with colors; {
         "animation slide,^(wofi)$"
       ];
 
-      windowrulev2 = [ "opacity 0.77,initialTitle:^(${terminal})$" ]
-        ++ map (app: app.winrule) scratch-apps;
+      windowrulev2 = [
+        # "opacity 0.77,initialTitle:^(${terminal})$"
+      ] ++ map (app: app.winrule) scratch-apps;
 
       workspace = [ ] ++ map (app: app.workspace) scratch-apps;
 
@@ -177,7 +178,7 @@ in with colors; {
         "$mod, T, exec, ${terminal}"
         "$mod, Q, killactive"
         "$mod, F, fullscreen"
-        "$mod, B, exec, floorp"
+        "$mod, B, exec, ${browser.name}"
         "$mod, R, exec, rofi -show drun"
 
         "$mod, ${left}, movefocus, l"
