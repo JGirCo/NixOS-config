@@ -15,12 +15,15 @@ in with colors; {
       # allow_markup=true;
       term = "kitty";
       matching = "contains";
-      width = 400;
-      height = 300;
+
+      width = "30%";
+      left = "35%";
+      height = "40%";
+      top = "25%";
       always_parse_args = true;
       show_all = true;
       print_command = true;
-      location = "top";
+      # location = "top";
       layer = "overlay";
       hide_scroll = true;
       insensitive = true;
@@ -37,8 +40,6 @@ in with colors; {
       window {
       margin: 5px;
       padding: 20px;
-      border: 4px solid #${focused};
-      border-radius: 20px;
       background-image: url('/home/jgirco/Pictures/wallpapers/${theme}.jpg');
       background-size: cover; /* This will make the image cover the entire box */
       background-repeat: no-repeat; /* This will prevent the image from repeating */
