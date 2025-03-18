@@ -19,8 +19,10 @@ in {
     ./apps/zathura.nix
     ./desktop/dunst.nix
     ./apps/cava.nix
-    ./apps/freecad.nix
-    ./apps/textfox.nix
+    ./apps/directwrite/freecad.nix
+    ./apps/directwrite/keyd-application-mapper.nix
+    ./apps/directwrite/tridactyl.nix
+    # ./apps/textfox.nix
     ./scripts/default.nix
     inputs.nix-colors.homeManagerModules.default
     inputs.nix-flatpak.homeManagerModules.nix-flatpak

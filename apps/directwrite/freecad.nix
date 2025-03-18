@@ -1,7 +1,7 @@
-{ pkgs, config, theme, lib, ... }:
+{ config, theme, lib, ... }:
 
 let
-  colors = import ../colors.nix {
+  colors = import ../../colors.nix {
     inherit theme;
     inherit lib;
   };
@@ -2304,6 +2304,6 @@ let
       }
     '';
 in {
-  home.file.".local/share/FreeCAD/Mod/Dracula/Dracula/Dracula.qss".text =
+  home.file."~/.local/share/FreeCAD/Mod/Dracula/Dracula/Dracula.qss".text =
     qssContent;
 }
