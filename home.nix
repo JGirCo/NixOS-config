@@ -22,6 +22,7 @@ in {
     ./apps/directwrite/freecad.nix
     ./apps/directwrite/keyd-application-mapper.nix
     ./apps/directwrite/tridactyl.nix
+    ./apps/directwrite/darkreader.nix
     # ./apps/textfox.nix
     ./scripts/default.nix
     inputs.nix-colors.homeManagerModules.default

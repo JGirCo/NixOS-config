@@ -23,7 +23,15 @@ let
     d = right
   '';
 in {
-  home.file.".config/keyd/app.conf".text = appconfig;
+  xdg = {
+    configFile = {
+      keyd = {
+        enable = true;
+        target = "keyd/app.conf";
+        text = appconfig;
+      };
+    };
+  };
 }
 
 # alt.h = C-S-tab

@@ -23,26 +23,58 @@ let
 
     " " Comment toggler for Reddit, Hacker News and Lobste.rs
     bind ;c hint -Jc [class*="expand"],[class*="togg"],[class="comment_folder"]
-    bind ;r hint -b -Jc [class="bylink comments may-blank"]
+    bind ;r hint -b -Jc [class*="bylink comments may-blank"],[class*="expando"]
+
+    " " Hint fallback for modified websites
+
+    bind ;f hint
+    bind ;F hint -b
 
     " " Only hint results in DDG
-    bindurl https://duckduckgo.com f hint -Jc [data-testid="result-title-a"]
-    bindurl https://duckduckgo.com F hint -Jbc [data-testid="result-title-a"]
+    bindurl https://www.duckduckgo.com f hint -Jc [data-testid="result-title-a"]
+    bindurl https://www.duckduckgo.com F hint -Jbc [data-testid="result-title-a"]
+
+
+
+    " " Easier reddit navigation (with RES)
+    bindurl https://old.reddit.com f hint -Jc [class*="comments"],[class*="expand"],[class*="res-step-next"]
+    bindurl https://old.reddit.com F hint -Jbc [class*="comments"],[class*="subreddit hover"],[class*="redditname"]
+
+    " " Easier youtube navigation
+    bindurl https://www.youtube.com f hint -Jc [class*="yt-simple-endpoint"],[class*="yt-spec-button-shape-next__button-text-content"]
+    bindurl https://www.youtube.com F hint -Jbc [class*="yt-simple-endpoint"]
+
 
     " " Focus on input
     bind i focusinput
 
+    " " b is bmarks T is tabs
+    bind b fillcmdline bmarks
+    bind T fillcmdline tab
 
     " " make d take you to the left (I find it much less confusing)
     bind d composite tabprev; tabclose #
     bind D tabclose
 
-    " " Binds for new reader mode
-    " bind gr reader
-    " bind gR reader --tab
-    "
     " " New reddit is bad
     autocmd DocStart ^http(s?)://www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
+
+    " "
+    set editor kitty nvim
+
+    " " Search engines
+    set searchurls.nix https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=
+    set searchurls.no https://mynixos.com/search?q=
+    set searchurls.red https://duckduckgo.com/?t=ffab&q=site%3Areddit.com+
+    set searchurls.yt https://www.youtube.com/results?search_query=
+
+    " " Easy access to dark reader settings
+    unbind ;d
+    bind ;dr open moz-extension://cc83bf43-cd13-4b64-9895-1ed9620a5620/ui/options/index.html
+
+    " " Unbind annoying settings
+    unbind gf
+    bing gf hint -qb
   '';
   cssconfig = with config.colorScheme.palette;
     with colors; ''
@@ -60,7 +92,7 @@ let
           --tridactyl-hint-active-fg: #${base};
           --tridactyl-hint-active-bg: #${focused};
           --tridactyl-hint-active-outline: 0px solid #000;
-          --tridactyl-hint-bg: color-mix(in srgb, #${focused}, transparent 95%)
+          --tridactyl-hint-bg: color-mix(in srgb, #${focused}, transparent 97%);
           --tridactyl-hint-outline: 1px solid var(--tridactyl-hintspan-bg);
           --tridactyl-cmplt-option-height: 1.9em;
           --tridactyl-border-radius: 16px;
@@ -217,6 +249,18 @@ let
 
     '';
 in {
-  home.file.".config/tridactyl/tridactylrc".text = appconfig;
-  home.file.".config/tridactyl/themes/main.css".text = cssconfig;
+  xdg = {
+    configFile = {
+      tridactyl = {
+        enable = true;
+        target = "tridactyl/tridactylrc";
+        text = appconfig;
+      };
+      tridactylcss = {
+        enable = true;
+        target = "tridactyl/themes/main.css";
+        text = cssconfig;
+      };
+    };
+  };
 }

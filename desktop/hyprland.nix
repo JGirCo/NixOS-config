@@ -13,7 +13,7 @@ let
     udiskie &
     keyd-application-mapper -d &
     swww-daemon &
-    swww img ~/Pictures/wallpapers/${theme}.jpg --transition-duration 0s &
+    swww img ~/Pictures/wallpapers/${theme}.jpg --transition-duration 0s&
     systemctl --user restart pipewire pipewire-pulse &
   '';
 
@@ -127,9 +127,9 @@ in with colors; {
 
         blur = {
           enabled = true;
-          size = 10;
+          size = 5;
           passes = 2;
-          noise = 0.0;
+          noise = 1.0e-2;
         };
       };
 
@@ -152,9 +152,8 @@ in with colors; {
         "animation slide,^(wofi)$"
       ];
 
-      windowrulev2 = [
-        # "opacity 0.77,initialTitle:^(${terminal})$"
-      ] ++ map (app: app.winrule) scratch-apps;
+      windowrulev2 = [ "opacity 0.75,initialTitle:^(${terminal})$" ]
+        ++ map (app: app.winrule) scratch-apps;
 
       workspace = [ ] ++ map (app: app.workspace) scratch-apps;
 

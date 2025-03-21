@@ -9,9 +9,8 @@ with config.colorScheme.palette; {
     settings = {
       foreground = "#${base05}";
       background = "#${base00}";
-      background_opacity = 0.75;
-      # background_tint = 0.5;
-
+      # background_opacity = 0.75;
+      # background_tint = 0;
       selection_fg = "#${base05}";
       selection_bg = "#${base02}";
 
