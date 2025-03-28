@@ -33,6 +33,7 @@ with config.colorScheme.palette; {
       color15 = "#${base05}";
 
       enable_audio_bell = "no";
+      confirm_os_window_close = 0;
     };
     keybindings = {
       "alt+n" = "new_os_window_with_cwd";

@@ -13,7 +13,7 @@ in with colors; {
       show = "drun";
       allow_images = true;
       # allow_markup=true;
-      term = "kitty";
+      term = "wezterm";
       matching = "contains";
 
       width = "30%";

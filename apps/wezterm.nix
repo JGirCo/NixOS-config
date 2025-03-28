@@ -57,8 +57,8 @@ with config.colorScheme.palette; {
       config.font_size = 13.0
       config.hide_tab_bar_if_only_one_tab = true
       config.audible_bell="Disabled"
-      config.window_background_opacity = 0.60
-      config.text_background_opacity = 0.5
+      config.window_background_opacity = 0.75
+      config.text_background_opacity = 1
 
       config.window_padding = {
         left = 0,

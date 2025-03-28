@@ -7,7 +7,7 @@ let
   right = "l";
   monitorHeight = 1080;
   monitorWidth = 1920;
-  terminal = "kitty";
+  terminal = "wezterm";
 
   startupScript = pkgs.pkgs.writeShellScriptBin "startupScript" ''
     udiskie &
@@ -67,7 +67,6 @@ in with colors; {
   home.packages = with pkgs; [
     swww
     waybar
-    kitty
     dunst
     wofi
     swayfx
@@ -152,8 +151,8 @@ in with colors; {
         "animation slide,^(wofi)$"
       ];
 
-      windowrulev2 = [ "opacity 0.75,initialTitle:^(${terminal})$" ]
-        ++ map (app: app.winrule) scratch-apps;
+      # windowrulev2 = [ "opacity 0.75,initialTitle:^(${terminal})$" ]
+      windowrulev2 = [ ] ++ map (app: app.winrule) scratch-apps;
 
       workspace = [ ] ++ map (app: app.workspace) scratch-apps;
 

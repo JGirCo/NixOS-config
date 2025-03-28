@@ -6,27 +6,23 @@ let
   };
   # from https://github.com/tridactyl/tridactyl/blob/master/.tridactylrc
   appconfig = ''
-    " " Binds
-    " "
-    "
+
+    " " Misc
+    colors main
+    set searchengine duckduckgo
     " Movement
     bind j scrollpx 0 50
     bind k scrollpx 0 -50
     bind K scrollline -10
     bind J scrollline 10
 
-    unbind u
-
     set smoothscroll true
-
-    colors main
 
     " " Comment toggler for Reddit, Hacker News and Lobste.rs
     bind ;c hint -Jc [class*="expand"],[class*="togg"],[class="comment_folder"]
     bind ;r hint -b -Jc [class*="bylink comments may-blank"],[class*="expando"]
 
     " " Hint fallback for modified websites
-
     bind ;f hint
     bind ;F hint -b
 
@@ -34,39 +30,33 @@ let
     bindurl https://www.duckduckgo.com f hint -Jc [data-testid="result-title-a"]
     bindurl https://www.duckduckgo.com F hint -Jbc [data-testid="result-title-a"]
 
-
-
     " " Easier reddit navigation (with RES)
     bindurl https://old.reddit.com f hint -Jc [class*="comments"],[class*="expand"],[class*="res-step-next"]
-    bindurl https://old.reddit.com F hint -Jbc [class*="comments"],[class*="subreddit hover"],[class*="redditname"]
+    bindurl https://old.reddit.com F hint -Jbc [class*="comments"],[class*="title"],[class*="redditname"]
 
     " " Easier youtube navigation
     bindurl https://www.youtube.com f hint -Jc [class*="yt-simple-endpoint"],[class*="yt-spec-button-shape-next__button-text-content"]
     bindurl https://www.youtube.com F hint -Jbc [class*="yt-simple-endpoint"]
 
-
     " " Focus on input
     bind i focusinput
 
     " " b is bmarks T is tabs
-    bind b fillcmdline bmarks
+    bind b fillcmdline bmarks -b
     bind T fillcmdline tab
-
-    " " make d take you to the left (I find it much less confusing)
-    bind d composite tabprev; tabclose #
-    bind D tabclose
 
     " " New reddit is bad
     autocmd DocStart ^http(s?)://www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
 
     " "
-    set editor kitty nvim
+    set editorcmd wezterm start nvim
 
     " " Search engines
     set searchurls.nix https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=
     set searchurls.no https://mynixos.com/search?q=
     set searchurls.red https://duckduckgo.com/?t=ffab&q=site%3Areddit.com+
     set searchurls.yt https://www.youtube.com/results?search_query=
+    set searchurls.sub https://reddit.com/r/
 
     " " Easy access to dark reader settings
     unbind ;d
@@ -75,6 +65,9 @@ let
     " " Unbind annoying settings
     unbind gf
     bing gf hint -qb
+
+    unbind d
+    unbind u
   '';
   cssconfig = with config.colorScheme.palette;
     with colors; ''
