@@ -60,6 +60,10 @@
         };
       };
       fugitive.enable = true;
+      transparent = {
+        enable = true;
+        autoLoad = true;
+      };
     };
   };
 }
