@@ -41,8 +41,8 @@ in with colors; {
 
         "pulseaudio" = {
           format = "{volume}% {icon}";
-          format-icons = [ "" "" "" ];
-          format-muted = "";
+          format-icons = [ " " " " " " ];
+          format-muted = " ";
           on-click = "pavucontrol";
         };
 

@@ -118,6 +118,7 @@ in with colors; {
         # name = "keyboard";
         kb_layout = "latam";
         touchpad = { natural_scroll = true; };
+        follow_mouse = 2;
       };
 
       decoration = {
@@ -145,14 +146,9 @@ in with colors; {
           "fade, 1, 7, default"
         ];
       };
-      windowrule = [
-
-        "noborder on,^(wofi)$"
-        "animation slide,^(wofi)$"
-      ];
-
       # windowrulev2 = [ "opacity 0.75,initialTitle:^(${terminal})$" ]
-      windowrulev2 = [ ] ++ map (app: app.winrule) scratch-apps;
+      windowrule = [ "animation slide, class:wofi" "stayfocused, class:wofi" ]
+        ++ map (app: app.winrule) scratch-apps;
 
       workspace = [ ] ++ map (app: app.workspace) scratch-apps;
 

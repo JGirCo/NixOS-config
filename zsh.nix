@@ -16,7 +16,6 @@ in {
       enableCompletion = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      # syntaxHighlighting.enable = true;
       shellAliases = {
         mktmp = "cd $(mktemp -d)";
         update = "sudo nixos-rebuild switch --flake ~/.nixos/";
@@ -26,11 +25,9 @@ in {
         ardMonitor = "arduino-cli monitor -p /dev/ttyUSB0 -c 115200";
         cd = "z";
         ".." = "cd ..";
-        "..." = "cd ../../../";
-        "...." = "cd ../../../../";
-        "....." = "cd ../../../../";
-        ".4" = "cd ../../../../";
-        ".5" = "cd ../../../../..";
+        "..." = "cd ../../";
+        "4." = "cd ../../../";
+        "5." = "cd ../../../../";
         mkdir = "mkdir -pv";
         py = "python";
         nd = "nix develop -c zsh";

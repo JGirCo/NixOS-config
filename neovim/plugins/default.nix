@@ -15,7 +15,7 @@
     ./comment.nix
     ./none-ls.nix
     # ./floaterm.nix
-    ./harpoon.nix
+    # ./harpoon.nix
     ./lsp.nix
     ./lualine.nix
     ./markdown-preview.nix
@@ -50,13 +50,14 @@
       };
       oil.enable = true;
       lsp-lines.enable = true;
+      rainbow-delimiters.enable = true;
       indent-blankline = {
         enable = true;
         settings.scope = {
           enabled = true;
-          show_end = false;
+          show_end = true;
           show_exact_scope = true;
-          show_start = false;
+          show_start = true;
         };
       };
       fugitive.enable = true;

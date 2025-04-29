@@ -101,8 +101,10 @@ in {
 
     font = {
       size = 12;
-      name = "${font.name}";
-      # package = pkgs.${font.pkg};
+      name = "Atkinson Hyperlegible Next";
+      package = pkgs.atkinson-hyperlegible-next;
+      # name = "Lexend Deca";
+      # package = pkgs.lexend;
     };
   };
 

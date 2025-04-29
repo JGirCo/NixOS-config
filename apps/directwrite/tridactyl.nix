@@ -9,7 +9,7 @@ let
 
     " " Misc
     colors main
-    set searchengine duckduckgo
+
     " Movement
     bind j scrollpx 0 50
     bind k scrollpx 0 -50
@@ -42,7 +42,7 @@ let
     bind i focusinput
 
     " " b is bmarks T is tabs
-    bind b fillcmdline bmarks -b
+    bind b fillcmdline bmarks
     bind T fillcmdline tab
 
     " " New reddit is bad
@@ -54,7 +54,7 @@ let
     " " Search engines
     set searchurls.nix https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=
     set searchurls.no https://mynixos.com/search?q=
-    set searchurls.red https://duckduckgo.com/?t=ffab&q=site%3Areddit.com+
+    set searchurls.red https://www.ecosia.org/search?&q=site%3Areddit.com+
     set searchurls.yt https://www.youtube.com/results?search_query=
     set searchurls.sub https://reddit.com/r/
 
@@ -64,7 +64,7 @@ let
 
     " " Unbind annoying settings
     unbind gf
-    bing gf hint -qb
+    bind gf hint -qb
 
     unbind d
     unbind u

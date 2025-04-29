@@ -61,6 +61,7 @@ in {
 
   # Experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "root" "jgirco" ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -173,17 +174,11 @@ in {
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
   services.logind = {
     # don’t shutdown when power button is short-pressed
-    lidSwitch = "suspend-then-hibernate";
+    lidSwitch = "ignore";
     powerKey = "hibernate";
   };
 
@@ -204,13 +199,14 @@ in {
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.nvidia.acceptLicense = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
 
   services.flatpak = {
     enable = true;
-    packages = [ "io.github.qwersyk.Newelle" ];
+    packages = [ "de.z_ray.OptimusUI" "io.github.qwersyk.Newelle" ];
   };
   environment.systemPackages = with pkgs; [
     # Basic tools
@@ -263,8 +259,9 @@ in {
     ncdu
 
     # GUI Tools
-    foot
-    airshipper
+    newsflash
+    blockbench
+    prismlauncher
     freecad-wayland
     celluloid
     gparted
@@ -280,13 +277,11 @@ in {
     ungoogled-chromium
     floorp
     deluge
-    inputs.zen-browser.packages."${system}".twilight
 
     # Miscelaneous
     tridactyl-native
-
-    #python
-    python311Packages.pyserial
+    gamescope
+    nix-prefetch-github
   ];
 
   nixpkgs.overlays = flake-overlays;
@@ -322,7 +317,11 @@ in {
     with pkgs; [ nerdfonts ]
   else
   # with pkgs; [ maple-mono miracode monaspace ];
-    [ maplefont ];
+  [
+    maplefont
+    pkgs.atkinson-hyperlegible-next
+    pkgs.lexend
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
