@@ -15,10 +15,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
-    nix-matlab = {
-      url = "gitlab:doronbehar/nix-matlab";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nix-matlab = {
+    #   url = "gitlab:doronbehar/nix-matlab";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
@@ -29,8 +29,8 @@
     textfox.url = "github:adriankarlen/textfox";
   };
 
-  outputs = { old-norg, nixpkgs, home-manager, nixvim, nix-matlab, nix-flatpak
-    , textfox, ... }@inputs:
+  outputs = { old-norg, nixpkgs, home-manager, nixvim, nix-flatpak, textfox, ...
+    }@inputs:
     let
       # System settings
       system = "x86_64-linux";
@@ -39,13 +39,13 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "dracula";
+      theme = "rose-pine-dawn";
       font = {
         name = "Maple Mono NF";
         isNF = false;
       };
       browser = { name = "firefox-nightly"; };
-      flake-overlays = [ nix-matlab.overlay ];
+      flake-overlays = [ ];
     in {
       nixosConfigurations = {
         nixos = lib.nixosSystem {

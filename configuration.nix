@@ -280,8 +280,11 @@ in {
 
     # Miscelaneous
     tridactyl-native
-    gamescope
     nix-prefetch-github
+
+    #games
+    gamescope
+    _2048-in-terminal
   ];
 
   nixpkgs.overlays = flake-overlays;
