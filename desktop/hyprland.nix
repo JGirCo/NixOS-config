@@ -5,8 +5,8 @@ let
   down = "j";
   left = "h";
   right = "l";
-  monitorHeight = 1080;
-  monitorWidth = 1920;
+  monitorHeight = 1600;
+  monitorWidth = 2560;
   terminal = "wezterm";
 
   startupScript = pkgs.pkgs.writeShellScriptBin "startupScript" ''
