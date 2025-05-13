@@ -41,7 +41,6 @@
               name = "buffer";
               keywordLength = 3;
             }
-            { name = "supermaven"; }
           ];
 
           snippet.expand =

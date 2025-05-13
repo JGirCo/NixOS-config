@@ -5,6 +5,7 @@
       sources.formatting = {
         nixfmt.enable = true;
         black.enable = true;
+        rufo.enable = true;
       };
     };
     conform-nvim = {
@@ -24,6 +25,7 @@
           lua = [ "stylua" ];
           markdown = [ "prettier" ];
           nix = [ "nixfmt" ];
+          ruby = [ "rufo" ];
         };
       };
     };

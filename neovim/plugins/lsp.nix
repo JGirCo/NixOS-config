@@ -88,6 +88,7 @@
           };
           clangd.enable = true;
           lua_ls.enable = true;
+          ruby_lsp.enable = true;
         };
       };
     };

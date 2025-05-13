@@ -13,6 +13,11 @@ in {
     };
     zsh = {
       enable = true;
+      plugins = [{
+        name = "vi-mode";
+        src = pkgs.zsh-vi-mode;
+        file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+      }];
       enableCompletion = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
@@ -36,7 +41,7 @@ in {
         rmv =
           "${pkgs.rsync}/bin/rsync -av --remove-source-files --info=progress2";
       };
-      initExtra = lib.strings.concatStrings [
+      initContent = lib.strings.concatStrings [
         p10k
         ''
           export PATH="$HOME/.emacs.d/bin:$PATH"

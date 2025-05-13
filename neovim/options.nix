@@ -14,8 +14,9 @@
     };
 
     highlightOverride.Normal.bg = "none";
-    diagnostics = {
+    diagnostic.settings = {
       signs = { text = { "vim.diagnostic.severity.ERROR" = ""; }; };
+      virtual_lines = true;
     };
     opts = {
       updatetime = 100; # Faster completion

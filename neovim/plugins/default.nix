@@ -50,7 +50,7 @@
       };
       oil.enable = true;
       lsp-lines.enable = true;
-      rainbow-delimiters.enable = true;
+      # rainbow-delimiters.enable = true;
       indent-blankline = {
         enable = true;
         settings.scope = {

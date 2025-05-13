@@ -7,9 +7,14 @@ let
   right = "l";
   monitorHeight = 1600;
   monitorWidth = 2560;
-  terminal = "wezterm";
+  terminal = "kitty";
 
-  startupScript = pkgs.pkgs.writeShellScriptBin "startupScript" ''
+  colors = import ../colors.nix {
+    inherit theme;
+    inherit lib;
+  };
+
+  startupScript = pkgs.writeShellScriptBin "startupScript" ''
     udiskie &
     keyd-application-mapper -d &
     swww-daemon &
@@ -17,18 +22,19 @@ let
     systemctl --user restart pipewire pipewire-pulse &
   '';
 
-  reloadScript = pkgs.pkgs.writeShellScriptBin "reloadScript" ''
+  reloadScript = pkgs.writeShellScriptBin "reloadScript" ''
     pkill waybar &
     sleep 0.2
     swww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any &
     waybar & disown
   '';
 
-  colors = import ../colors.nix {
-    inherit theme;
-    inherit lib;
+  lockScript = pkgs.pkgs.writeShellScriptBin "lockScript" ''
+    tmpbg="/tmp/screen.png"
+    ${pkgs.grim}/bin/grim "$tmpbg"
+    ${pkgs.imagemagick}/bin/magick "$tmpbg" -blur 0x5 -fill "#${colors.base}" -colorize 50% "$tmpbg"
+  '';
 
-  };
   scratch-program = { name, command, key, title }: {
     keybind = "MOD5, ${key}, togglespecialworkspace, ${name}";
     winrule =
@@ -69,14 +75,43 @@ in with colors; {
     waybar
     dunst
     wofi
-    swayfx
     grim
     slurp
-    imagemagick
     swappy
+    imagemagick
     wl-clipboard
     wezterm
+    gtklock-powerbar-module
+    gtklock-playerctl-module
+    gtklock-userinfo-module
   ];
+  services.hypridle = {
+    enable = true;
+    settings = {
+      listener = [
+        {
+          timeout = 60; # 1 min.
+          on-timeout =
+            "light -O && light -T 0.75"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
+          on-resume = "light -I"; # monitor backlight restore.
+        }
+        {
+          timeout = 60;
+          on-timeout = "${lockScript}/bin/lockScript";
+        }
+        {
+          timeout = 180; # 3 min
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+        {
+          timeout = 300; # 5 min
+          on-timeout = ''
+            ${pkgs.gtklock}/bin/gtklock -m ${pkgs.gtklock-powerbar-module}/lib/gtklock/powerbar-module.so -m ${pkgs.gtklock-playerctl-module}/lib/gtklock/playerctl-module.so -b "/tmp/screen.png"'';
+        }
+      ];
+    };
+  };
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -84,7 +119,7 @@ in with colors; {
       exec = "${reloadScript}/bin/reloadScript";
       "$mod" = "SUPER";
       general = {
-        border_size = 5;
+        border_size = 8;
         gaps_in = 3;
         gaps_out = 6;
         "col.active_border" =
@@ -152,7 +187,7 @@ in with colors; {
 
       workspace = [ ] ++ map (app: app.workspace) scratch-apps;
 
-      monitor = "eDP-1,preferred,auto,1";
+      monitor = [ "eDP-1,preferred,auto,1" "eDP-2,preferred,auto,1" ];
       dwindle = {
         pseudotile = true;
         preserve_split = true; # you probably want this

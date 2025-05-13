@@ -39,7 +39,7 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "rose-pine-dawn";
+      theme = "gruvbox-dark-medium";
       font = {
         name = "Maple Mono NF";
         isNF = false;

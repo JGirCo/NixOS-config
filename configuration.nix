@@ -13,25 +13,20 @@ in {
     ./hardware-configuration.nix
   ];
 
+  powerManagement.enable = true;
   hardware = {
     bluetooth.enable = true; # enables support for Bluetooth
     bluetooth.powerOnBoot =
       true; # powers up the default Bluetooth controller on boot
     graphics.enable = true;
+    amdgpu.initrd.enable = false;
     nvidia = {
 
       # Modesetting is required.
       modesetting.enable = true;
-
-      # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-      # Enable this if you have graphical corruption issues or application crashes after waking
-      # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-      # of just the bare essentials.
       powerManagement.enable = false;
-
-      # Fine-grained power management. Turns off GPU when not in use.
-      # Experimental and only works on modern Nvidia GPUs (Turing or newer).
       powerManagement.finegrained = false;
+      dynamicBoost.enable = true;
 
       # Use the NVidia open source kernel module (not to be confused with the
       # independent third-party "nouveau" open source driver).
@@ -50,14 +45,27 @@ in {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
 
       prime = {
-        sync.enable = true;
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
+        };
+        amdgpuBusId = "PCI:1:0:0";
+        nvidiaBusId = "PCI:5:0:0";
       };
     };
   };
 
   programs.hyprland = { enable = true; };
+
+  boot.kernelModules = [ "lenovo-legion-module" "amdgpu" "k10temp" ];
+  boot.extraModulePackages = with config.boot.kernelPackages;
+    [ lenovo-legion-module ];
+
+  programs.coolercontrol = {
+    enable = true;
+    nvidiaSupport = true;
+  };
+  services.preload.enable = true;
 
   # Experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -105,26 +113,24 @@ in {
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.excludePackages = [ pkgs.xterm ];
+  services.autorandr.enable = true;
 
   # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.displayManager.gdm.debug = true;
 
-  services.greetd = {
-    enable = true;
-    settings = rec {
-      initial_session = {
-        command =
-          "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --time --cmd hyprland -g Hola!";
-        user = "jgirco";
-      };
-      default_session = initial_session;
-    };
-  };
-
-  # Enable i3wm
-  # services.xserver.windowManager.i3 = {
+  # services.greetd = {
   #   enable = true;
+  #   settings = rec {
+  #     initial_session = {
+  #       command =
+  #         "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --time --cmd hyprland -g Hola!";
+  #       user = "jgirco";
+  #     };
+  #     default_session = initial_session;
+  #   };
   # };
+
+  programs.regreet = { enable = true; };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -138,10 +144,10 @@ in {
       default = {
         ids = [ "*" ];
         settings = {
-          main = {
-            "rightshift" = "up";
-            "up" = "down";
-          };
+          # main = {
+          #   "rightshift" = "up";
+          #   "up" = "down";
+          # };
           "shift+alt" = {
             "h" = "left";
             "k" = "up";
@@ -180,7 +186,17 @@ in {
     # don’t shutdown when power button is short-pressed
     lidSwitch = "ignore";
     powerKey = "hibernate";
+    extraConfig = ''
+      IdleAction=lock
+      IdleActionSec =1min
+    '';
   };
+
+  programs.xss-lock = {
+    enable = true;
+    lockerCommand = "${pkgs.gtklock}/bin/gtklock";
+  };
+  security.pam.services.gtklock = { };
 
   systemd.sleep.extraConfig = ''
     AllowSuspend=yes
@@ -193,7 +209,7 @@ in {
   users.users.jgirco = {
     isNormalUser = true;
     description = "Juan Manuel Giraldo";
-    extraGroups = [ "networkmanager" "wheel" "video" "input" "keyd" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "input" "keyd" "sensors" ];
     shell = pkgs.zsh;
   };
 
@@ -224,6 +240,8 @@ in {
     luajit
     wine
     exfatprogs
+    gtklock
+    lm_sensors
 
     devenv
 
@@ -278,9 +296,13 @@ in {
     floorp
     deluge
 
+    yt-dlp
+    parabolic
+
     # Miscelaneous
     tridactyl-native
     nix-prefetch-github
+    lenovo-legion
 
     #games
     gamescope
@@ -363,7 +385,13 @@ in {
       clean.extraArgs = "--keep-since 4d --keep 3";
       flake = "/home/jgirco/.nixos/";
     };
+
+    virt-manager.enable = true;
   };
+
+  users.groups.libvirtd.members = [ "jgirco" ];
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
 
   # List services that you want to enable:
 
