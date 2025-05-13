@@ -54,7 +54,7 @@ with config.colorScheme.palette; {
         },
         }
       config.font = wezterm.font '${font.name}'
-      config.font_size = 13.0
+      config.font_size = 16.0
       config.hide_tab_bar_if_only_one_tab = true
       config.audible_bell="Disabled"
       config.window_background_opacity = 0.75

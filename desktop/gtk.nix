@@ -100,7 +100,7 @@ in {
     iconTheme.package = pkgs.papirus-icon-theme;
 
     font = {
-      size = 12;
+      size = 16;
       name = "Atkinson Hyperlegible Next";
       package = pkgs.atkinson-hyperlegible-next;
       # name = "Lexend Deca";

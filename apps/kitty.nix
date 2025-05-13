@@ -4,13 +4,13 @@ with config.colorScheme.palette; {
   programs.kitty = {
     enable = true;
     font.name = font.name;
-    font.size = 13;
+    font.size = 16;
     shellIntegration.enableZshIntegration = true;
     settings = {
       foreground = "#${base05}";
       background = "#${base00}";
-      # background_opacity = 0.75;
-      # background_tint = 0;
+      background_opacity = 0.75;
+      background_tint = 0;
       selection_fg = "#${base05}";
       selection_bg = "#${base02}";
 
@@ -36,7 +36,7 @@ with config.colorScheme.palette; {
       confirm_os_window_close = 0;
     };
     keybindings = {
-      "alt+n" = "new_os_window_with_cwd";
+      "alt+n" = "clone-in-kitty --type os-window";
       "alt+space" = "launch --stdin-source=@screen --type=overlay  nvim -R";
     };
   };

@@ -117,7 +117,7 @@ in with colors; {
       * {
         border: none;
         font-family: "${font.name}";
-        font-size: 13px;
+        font-size: 16px;
         min-height: 0;
         margin: 2px;
         border-radius: 999px;
@@ -193,6 +193,12 @@ in with colors; {
 
       #tray{
         background: #${orange};
+      }
+
+
+      #tray menu {
+        /* Your custom styles for the tray’s context menu */
+        border-radius: 16px;
       }
 
       #workspaces button,
