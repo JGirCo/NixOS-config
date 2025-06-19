@@ -6,7 +6,9 @@ flake-overlays:
 
 { inputs, config, pkgs, font, browser, ... }:
 
-let maplefont = import ./derivations/maple-font.nix { inherit pkgs; };
+let
+  maplefont = import ./derivations/maple-font.nix { inherit pkgs; };
+  legion-kb-rgb = inputs.legion-kb-rgb.packages.${pkgs.system}.default;
 in {
   imports = [
     # Include the results of the hardware scan.
@@ -60,6 +62,9 @@ in {
   boot.kernelModules = [ "lenovo-legion-module" "amdgpu" "k10temp" ];
   boot.extraModulePackages = with config.boot.kernelPackages;
     [ lenovo-legion-module ];
+
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTR{idVendor}=="048d", ATTR{idProduct}=="c994", MODE="0666"'';
 
   programs.coolercontrol = {
     enable = true;
@@ -240,14 +245,10 @@ in {
     luajit
     wine
     exfatprogs
-    gtklock
     lm_sensors
+    (texlive.combine { inherit (texlive) scheme-medium standalone; })
 
     devenv
-
-    libsForQt5.qt5.qtquickcontrols2
-    libsForQt5.qt5.qtgraphicaleffects
-    libsForQt5.qtstyleplugins
 
     #System tools
     keyd
@@ -262,6 +263,7 @@ in {
     libqalculate
     translate-shell
     plantuml
+    openpomodoro-cli
 
     # TUI Tools
     pavucontrol
@@ -277,6 +279,7 @@ in {
     ncdu
 
     # GUI Tools
+    inputs.zen-browser.packages."${system}".twilight
     newsflash
     blockbench
     prismlauncher
@@ -303,6 +306,7 @@ in {
     tridactyl-native
     nix-prefetch-github
     lenovo-legion
+    legion-kb-rgb
 
     #games
     gamescope
