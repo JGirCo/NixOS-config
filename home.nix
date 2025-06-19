@@ -19,7 +19,7 @@ in {
     ./apps/zathura.nix
     ./desktop/dunst.nix
     ./apps/cava.nix
-    ./apps/directwrite/freecad.nix
+    # ./apps/directwrite/freecad.nix
     ./apps/directwrite/keyd-application-mapper.nix
     ./apps/directwrite/tridactyl.nix
     ./apps/directwrite/darkreader.nix

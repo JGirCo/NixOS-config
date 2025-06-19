@@ -15,22 +15,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
-    # nix-matlab = {
-    #   url = "gitlab:doronbehar/nix-matlab";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
+
+    legion-kb-rgb.url = "github:4JX/L5P-Keyboard-RGB";
+    legion-kb-rgb.inputs.nixpkgs.follows = "nixpkgs";
+
     firefox = {
       url = "github:nix-community/flake-firefox-nightly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    textfox.url = "github:adriankarlen/textfox";
   };
 
-  outputs = { old-norg, nixpkgs, home-manager, nixvim, nix-flatpak, textfox, ...
-    }@inputs:
+  outputs =
+    { old-norg, nixpkgs, home-manager, nixvim, nix-flatpak, ... }@inputs:
     let
       # System settings
       system = "x86_64-linux";
@@ -39,7 +39,7 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "gruvbox-dark-medium";
+      theme = "rose-pine";
       font = {
         name = "Maple Mono NF";
         isNF = false;
@@ -63,11 +63,7 @@
       };
       homeConfigurations."jgirco" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [
-          ./home.nix
-          nixvim.homeManagerModules.nixvim
-          textfox.homeManagerModules.default
-        ];
+        modules = [ ./home.nix nixvim.homeManagerModules.nixvim ];
         extraSpecialArgs = {
           inherit inputs;
           inherit theme;

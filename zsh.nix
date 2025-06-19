@@ -1,6 +1,18 @@
 { pkgs, lib, ... }:
 
-let p10k = builtins.readFile ./p10k.zsh;
+let
+  p10k = builtins.readFile ./p10k.zsh;
+  rebootWithPrompt = pkgs.writeShellScriptBin "rebootWithPrompt" ''
+    read -p "reboot? " -n 1 -r
+    echo "\r"
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+      echo "rebooting..."
+      sleep 2
+      reboot
+    fi
+  '';
+
 in {
   programs = {
     zoxide.enable = true;
@@ -40,6 +52,8 @@ in {
         rcp = "${pkgs.rsync}/bin/rsync -av --info=progress2";
         rmv =
           "${pkgs.rsync}/bin/rsync -av --remove-source-files --info=progress2";
+        reboot = "${rebootWithPrompt}/bin/rebootWithPrompt";
+        poweroff = "echo shutting down... && sleep 30 && poweroff";
       };
       initContent = lib.strings.concatStrings [
         p10k
