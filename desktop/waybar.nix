@@ -11,20 +11,26 @@ in with colors; {
     settings = {
       mainBar = {
         position = "top";
-        # modules-left = [ "pulseaudio" "backlight" "memory" "cpu" ];
-        modules-left = [ "pulseaudio" "cava" "backlight" "memory" "cpu" ];
+        modules-left =
+          [ "pulseaudio" "cava" "backlight" "memory" "cpu" "temperature" ];
         modules-center = [ "hyprland/workspaces" ];
         modules-right = [ "keyboard-state" "battery" "clock" "tray" ];
 
         "cpu" = {
           interval = 10;
-          format = "{}%  ";
+          format = "{usage}%  ";
         };
 
         "memory" = {
           interval = 10;
-          format = "{}% ";
+          format = "{}%  ";
         };
+
+        "temperature" = {
+          interval = 10;
+          format = "{}°C  ";
+        };
+
         "backlight" = {
           format = "{percent}% {icon}";
           format-icons = [ "" "" "" "" "" "" "" "" "" ];
@@ -165,19 +171,27 @@ in with colors; {
         padding-right: 1px;
       }
 
-      #cpu {
-        background: #${blue};
-        color: #${base};
-        border-radius: 0px 999px 999px 0px;
-        margin-left: 0px;
-        padding-right: 8px;
-      }
-
-      #memory{
+      #memory {
         background: #${blue};
         color: #${base};
         border-radius: 999px 0px 0px 999px;
         margin-right: 0px;
+      }
+
+      #cpu {
+        background: #${blue};
+        color: #${base};
+        margin-left: 0px;
+        margin-right: 0px;
+        border-radius: 0px 0px 0px 0px;
+      }
+
+      #temperature {
+        background: #${blue};
+        color: #${base};
+        padding-right: 8px;
+        margin-left: 0px;
+        border-radius: 0px 999px 999px 0px;
       }
 
       #keyboard-state{

@@ -18,7 +18,7 @@ let
     udiskie &
     keyd-application-mapper -d &
     swww-daemon &
-    swww img ~/Pictures/wallpapers/${theme}.jpg --transition-duration 0s&
+    legion-kb-rgb set -e Static -c 100,100,100,100,100,100,100,100,100,100,100,100
     systemctl --user restart pipewire pipewire-pulse &
   '';
 
@@ -29,7 +29,7 @@ let
     waybar & disown
   '';
 
-  lockScript = pkgs.pkgs.writeShellScriptBin "lockScript" ''
+  lockScript = pkgs.writeShellScriptBin "lockScript" ''
     tmpbg="/tmp/screen.png"
     ${pkgs.grim}/bin/grim "$tmpbg"
     ${pkgs.imagemagick}/bin/magick "$tmpbg" -blur 0x5 -fill "#${colors.base}" -colorize 50% "$tmpbg"
@@ -92,7 +92,7 @@ in with colors; {
         {
           timeout = 60; # 1 min.
           on-timeout =
-            "light -O && light -T 0.75"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
+            "light -O && light -T 0.5"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
           on-resume = "light -I"; # monitor backlight restore.
         }
         {
@@ -100,14 +100,18 @@ in with colors; {
           on-timeout = "${lockScript}/bin/lockScript";
         }
         {
-          timeout = 180; # 3 min
+          timeout = 300; # 3 min
           on-timeout = "hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }
         {
-          timeout = 300; # 5 min
+          timeout = 600; # 10 min
           on-timeout = ''
             ${pkgs.gtklock}/bin/gtklock -m ${pkgs.gtklock-powerbar-module}/lib/gtklock/powerbar-module.so -m ${pkgs.gtklock-playerctl-module}/lib/gtklock/playerctl-module.so -b "/tmp/screen.png"'';
+        }
+        {
+          timeout = 1800; # 20 min
+          on-timeout = "systemctl suspend";
         }
       ];
     };
@@ -170,20 +174,24 @@ in with colors; {
 
       animations = {
         enabled = true;
-
-        bezier = "myBezier, 0.25, 0.9, 0.1, 1.02";
+        bezier =
+          [ "myBezier, 0.25, 0.9, 0.1, 1.01" "bounce, 0.34, 1.36, 0.64, 1" ];
         animation = [
           "windows, 1, 7, myBezier"
-          "windowsMove, 1, 7, myBezier"
-          "windowsOut, 1, 7, default, popin 80%"
-          "border, 1, 10, default"
+          "windowsMove, 1, 5, myBezier"
+          "windowsOut, 1, 5, default, popin 10%"
+          "windowsIn, 1, 5, bounce"
+          "border, 1, 7, default"
           "borderangle, 1, 8, default"
           "fade, 1, 7, default"
+          "workspaces, 1, 5, bounce"
         ];
       };
-      # windowrulev2 = [ "opacity 0.75,initialTitle:^(${terminal})$" ]
-      windowrule = [ "animation slide, class:wofi" "stayfocused, class:wofi" ]
-        ++ map (app: app.winrule) scratch-apps;
+      windowrule = [
+        "animation slide, class:wofi"
+        "stayfocused, class:wofi"
+        "opacity 0.75,initialTitle:^(${terminal})$"
+      ] ++ map (app: app.winrule) scratch-apps;
 
       workspace = [ ] ++ map (app: app.workspace) scratch-apps;
 

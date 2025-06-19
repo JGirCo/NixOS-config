@@ -10,7 +10,7 @@ let
     with colors; ''
       @define-color accent_color #${base0D};
       @define-color accent_bg_color mix(#${base0D}, #${base},0.3);
-      @define-color accent_fg_color #${base};
+      @define-color accent_fg_color #${base02};
       @define-color destructive_color #${base0C};
       @define-color destructive_bg_color mix(#${base0C}, #${base},0.3);
       @define-color destructive_fg_color #${base02};
@@ -96,8 +96,8 @@ in {
     enable = true;
     theme.name = "adw-gtk3";
     theme.package = pkgs.adw-gtk3;
-    iconTheme.name = "Papirus";
-    iconTheme.package = pkgs.papirus-icon-theme;
+    iconTheme.name = "Qogir";
+    iconTheme.package = pkgs.qogir-icon-theme;
 
     font = {
       size = 16;
@@ -118,19 +118,10 @@ in {
   qt = {
     enable = true;
     platformTheme.name = "gtk";
-    style.name = "adwaita-dark";
-    style.package = pkgs.adwaita-qt6;
+    style.name = "qt5gtk2";
   };
 
-  home.sessionVariables = { QT_STYLE_OVERRIDE = "adwaita-dark"; };
-  home.packages = [ pkgs.adwaita-qt6 ];
-  # detected automatically:
-  # adwaita, adwaita-dark, adwaita-highcontrast,
-  # adwaita-highcontrastinverse, breeze,
-  # bb10bright, bb10dark, cde, cleanlooks,
-  # gtk2, motif, plastique
-
-  # package to use
+  home.sessionVariables = lib.mkForce { QT_STYLE_OVERRIDE = "qt5gtk2"; };
 
   xdg.configFile."gtk-4.0/gtk.css" = { text = cssContent; };
   xdg.configFile."gtk-3.0/gtk.css" = { text = cssContent; };
