@@ -8,6 +8,7 @@
         "ruff-lsp"
         "arduino-language-server"
         "clangd"
+        "ruby-lsp"
       ];
       lsp.autoAttach = true;
       window.size = 60;

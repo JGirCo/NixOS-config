@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   imports = [
+    ./auto-save.nix
     ./vim-table-mode.nix
     ./knap.nix
     ./typst.nix

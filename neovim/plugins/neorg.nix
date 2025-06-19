@@ -44,10 +44,12 @@
             };
           };
         };
-        "core.concealer" = { config = { icon_preset = "basic"; }; };
+        "core.integrations.image" = { __empty = null; };
+        "core.concealer" = { config = { icon_preset = "varied"; }; };
         "core.export".__empty = null;
         "core.completion".config.engine = "nvim-cmp";
         "core.qol.toc".config.close_after_use = true;
+        "core.latex.renderer".config.renser_on_enter = true;
       };
     };
   };
