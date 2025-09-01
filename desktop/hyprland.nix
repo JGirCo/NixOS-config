@@ -119,6 +119,7 @@ in with colors; {
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
+      misc.disable_hyprland_logo = true;
       exec-once = "${startupScript}/bin/startupScript";
       exec = "${reloadScript}/bin/reloadScript";
       "$mod" = "SUPER";

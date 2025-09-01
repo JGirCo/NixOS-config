@@ -16,6 +16,7 @@ in {
   ];
 
   powerManagement.enable = true;
+  virtualisation.docker.enable = true;
   hardware = {
     bluetooth.enable = true; # enables support for Bluetooth
     bluetooth.powerOnBoot =
@@ -62,6 +63,28 @@ in {
   boot.kernelModules = [ "lenovo-legion-module" "amdgpu" "k10temp" ];
   boot.extraModulePackages = with config.boot.kernelPackages;
     [ lenovo-legion-module ];
+  boot.plymouth = {
+    enable = true;
+    theme = "pixels";
+    themePackages = with pkgs;
+      [
+        # By default we would install all themes
+        (adi1090x-plymouth-themes.override { selected_themes = [ "pixels" ]; })
+      ];
+  };
+
+  boot = {
+    consoleLogLevel = 3;
+    initrd.verbose = false;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "boot.shell_on_fail"
+      "udev.log_priority=3"
+      "rd.systemd.show_status=auto"
+    ];
+    loader.timeout = 0;
+  };
 
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="048d", ATTR{idProduct}=="c994", MODE="0666"'';
@@ -149,11 +172,14 @@ in {
       default = {
         ids = [ "*" ];
         settings = {
-          # main = {
-          #   "rightshift" = "up";
-          #   "up" = "down";
-          # };
+          main = { "f23+meta+shift" = "layer(nav)"; };
           "shift+alt" = {
+            "h" = "left";
+            "k" = "up";
+            "j" = "down";
+            "l" = "right";
+          };
+          "nav" = {
             "h" = "left";
             "k" = "up";
             "j" = "down";
@@ -191,10 +217,6 @@ in {
     # don’t shutdown when power button is short-pressed
     lidSwitch = "ignore";
     powerKey = "hibernate";
-    extraConfig = ''
-      IdleAction=lock
-      IdleActionSec =1min
-    '';
   };
 
   programs.xss-lock = {
@@ -214,7 +236,8 @@ in {
   users.users.jgirco = {
     isNormalUser = true;
     description = "Juan Manuel Giraldo";
-    extraGroups = [ "networkmanager" "wheel" "video" "input" "keyd" "sensors" ];
+    extraGroups =
+      [ "docker" "networkmanager" "wheel" "video" "input" "keyd" "sensors" ];
     shell = pkgs.zsh;
   };
 
@@ -279,6 +302,8 @@ in {
     ncdu
 
     # GUI Tools
+    stm32cubemx
+    kicad
     inputs.zen-browser.packages."${system}".twilight
     newsflash
     blockbench
