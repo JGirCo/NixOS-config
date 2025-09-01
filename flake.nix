@@ -39,7 +39,7 @@
       norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "rose-pine";
+      theme = "rose-pine-dawn";
       font = {
         name = "Maple Mono NF";
         isNF = false;
@@ -63,7 +63,7 @@
       };
       homeConfigurations."jgirco" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ ./home.nix nixvim.homeManagerModules.nixvim ];
+        modules = [ ./home.nix nixvim.homeModules.nixvim ];
         extraSpecialArgs = {
           inherit inputs;
           inherit theme;

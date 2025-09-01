@@ -1,7 +1,7 @@
 { norgpkg, ... }: {
   programs.nixvim = {
     files."after/ftplugin/norg.lua" = {
-      localOpts.conceallevel = 1;
+      # localOpts.conceallevel = 1;
       opts = {
         wrap = true;
         breakindent = true;

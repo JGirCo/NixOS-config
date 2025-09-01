@@ -2,7 +2,6 @@
   programs.nixvim.plugins = {
     treesitter = {
       enable = true;
-
       nixvimInjections = true;
 
       folding = true;
@@ -16,7 +15,6 @@
     treesitter-refactor = {
       enable = true;
       highlightDefinitions.enable = true;
-
     };
 
     hmts.enable = true;

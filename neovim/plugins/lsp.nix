@@ -50,11 +50,11 @@
         servers = {
           tinymist.enable = true;
           nixd = { enable = true; };
-          rust_analyzer = {
-            enable = true;
-            installRustc = true;
-            installCargo = true;
-          };
+          # rust_analyzer = {
+          #   enable = true;
+          #   installRustc = true;
+          #   installCargo = true;
+          # };
           # pylsp = {
           #   enable = true;
           #   settings.plugins = {

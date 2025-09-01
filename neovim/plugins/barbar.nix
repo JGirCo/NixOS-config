@@ -2,11 +2,9 @@
   programs.nixvim.plugins.barbar = {
     enable = true;
     keymaps = {
-      silent = true;
-
-      next = "<leader><TAB>";
-      previous = "<leader><S-TAB>";
-      close = "<leader>q";
+      next.key = "<M-l>";
+      previous.key = "<M-h>";
+      close.key = "<M-w>";
     };
   };
 }

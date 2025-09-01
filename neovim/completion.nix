@@ -12,7 +12,7 @@
       lspkind = {
         enable = false;
 
-        cmp = {
+        settings.cmp = {
           enable = true;
           menu = {
             nvim_lsp = "[LSP]";
@@ -21,7 +21,6 @@
             luasnip = "[snip]";
             buffer = "[buffer]";
             neorg = "[neorg]";
-            cmp_tabby = "[Tabby]";
           };
         };
       };
@@ -45,22 +44,22 @@
 
           snippet.expand =
             "function(args) require('luasnip').lsp_expand(args.body) end";
-          formatting = {
-            fields = [ "menu" "abbr" "kind" ];
-            format = ''
-              function(entry, item)
-                local menu_icon = {
-                  nvim_lsp = '[LSP]',
-                  luasnip = '[SNIP]',
-                  buffer = '[BUF]',
-                  path = '[PATH]',
-                }
-
-                item.menu = menu_icon[entry.source.name]
-                return item
-              end
-            '';
-          };
+          # formatting = {
+          #   fields = [ "menu" "abbr" "kind" ];
+          #   format = ''
+          #     function(entry, item)
+          #       local menu_icon = {
+          #         nvim_lsp = '[LSP]',
+          #         luasnip = '[SNIP]',
+          #         buffer = '[BUF]',
+          #         path = '[PATH]',
+          #       }
+          #
+          #       item.menu = menu_icon[entry.source.name]
+          #       return item
+          #     end
+          #   '';
+          # };
 
           window = {
             completion = {

@@ -1,6 +1,8 @@
 { pkgs, ... }: {
   imports = [
     ./auto-save.nix
+    # ./codecompanion.nix
+    ./hlchunks.nix
     ./vim-table-mode.nix
     ./knap.nix
     ./typst.nix
@@ -15,6 +17,7 @@
     ./which-key.nix
     ./comment.nix
     ./none-ls.nix
+    ./barbar.nix
     # ./floaterm.nix
     # ./harpoon.nix
     ./lsp.nix
@@ -33,6 +36,7 @@
   programs.nixvim = {
 
     plugins = {
+      vimwiki.enable = true;
       gitsigns = {
         enable = true;
         settings = {
@@ -55,7 +59,7 @@
       indent-blankline = {
         enable = true;
         settings.scope = {
-          enabled = true;
+          enable = false;
           show_end = true;
           show_exact_scope = true;
           show_start = true;

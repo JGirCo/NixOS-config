@@ -6,6 +6,8 @@
         nixfmt.enable = true;
         black.enable = true;
         rufo.enable = true;
+        prettier.enable = true;
+        typstyle.enable = true;
       };
     };
     conform-nvim = {
@@ -21,11 +23,12 @@
           css = [ "prettier" ];
           html = [ "prettier" ];
           json = [ "prettier" ];
-          just = [ "just" ];
           lua = [ "stylua" ];
           markdown = [ "prettier" ];
           nix = [ "nixfmt" ];
           ruby = [ "rufo" ];
+          typst = [ "typstyle" ];
+          python = [ "black" ];
         };
       };
     };
