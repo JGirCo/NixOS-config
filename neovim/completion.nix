@@ -1,5 +1,31 @@
 {
   programs.nixvim = {
+    keymaps = [
+      {
+        mode = [ "i" "s" ];
+        key = "<C-k>";
+        action.__raw = ''
+          function()
+           local ls = require "luasnip"
+           if ls.expand_or_jumpable() then
+             ls.expand_or_jump()
+           end
+          end
+        '';
+      }
+      {
+        mode = [ "i" "s" ];
+        key = "<C-j>";
+        action.__raw = ''
+          function()
+           local ls = require "luasnip"
+           if ls.jumpable(-1) then
+             ls.jump(-1)
+           end
+          end
+        '';
+      }
+    ];
     opts.completeopt = [ "menu" "menuone" "noselect" ];
 
     plugins = {
@@ -7,11 +33,24 @@
       cmp-buffer.enable = true;
       cmp-path.enable = true;
       cmp-treesitter.enable = true;
-      luasnip.enable = true;
+      luasnip = {
+        enable = true;
+        fromLua = [{
+          paths = ./luasnip;
+          lazyLoad = false;
+        }];
+        settings = {
+          enable_autosnippets = true;
+          exit_roots = false;
+          keep_roots = true;
+          link_roots = true;
+          update_events = [ "TextChanged" "TextChangedI" ];
+        };
+      };
+      friendly-snippets.enable = true;
 
       lspkind = {
         enable = false;
-
         settings.cmp = {
           enable = true;
           menu = {
@@ -40,26 +79,30 @@
               name = "buffer";
               keywordLength = 3;
             }
+            { name = "luasnip"; }
           ];
 
-          snippet.expand =
-            "function(args) require('luasnip').lsp_expand(args.body) end";
-          # formatting = {
-          #   fields = [ "menu" "abbr" "kind" ];
-          #   format = ''
-          #     function(entry, item)
-          #       local menu_icon = {
-          #         nvim_lsp = '[LSP]',
-          #         luasnip = '[SNIP]',
-          #         buffer = '[BUF]',
-          #         path = '[PATH]',
-          #       }
-          #
-          #       item.menu = menu_icon[entry.source.name]
-          #       return item
-          #     end
-          #   '';
-          # };
+          snippet.expand = ''
+            function(args)
+              require('luasnip').lsp_expand(args.body)
+            end
+          '';
+          formatting = {
+            fields = [ "menu" "abbr" "kind" ];
+            format = ''
+              function(entry, item)
+                local menu_icon = {
+                  nvim_lsp = '[LSP]',
+                  luasnip = '[SNIP]',
+                  buffer = '[BUF]',
+                  path = '[PATH]',
+                }
+
+                item.menu = menu_icon[entry.source.name]
+                return item
+              end
+            '';
+          };
 
           window = {
             completion = {
