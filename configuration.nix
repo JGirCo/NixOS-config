@@ -63,28 +63,28 @@ in {
   boot.kernelModules = [ "lenovo-legion-module" "amdgpu" "k10temp" ];
   boot.extraModulePackages = with config.boot.kernelPackages;
     [ lenovo-legion-module ];
-  boot.plymouth = {
-    enable = true;
-    theme = "pixels";
-    themePackages = with pkgs;
-      [
-        # By default we would install all themes
-        (adi1090x-plymouth-themes.override { selected_themes = [ "pixels" ]; })
-      ];
-  };
-
-  boot = {
-    consoleLogLevel = 3;
-    initrd.verbose = false;
-    kernelParams = [
-      "quiet"
-      "splash"
-      "boot.shell_on_fail"
-      "udev.log_priority=3"
-      "rd.systemd.show_status=auto"
-    ];
-    loader.timeout = 0;
-  };
+  # boot.plymouth = {
+  #   enable = true;
+  #   theme = "pixels";
+  #   themePackages = with pkgs;
+  #     [
+  #       # By default we would install all themes
+  #       (adi1090x-plymouth-themes.override { selected_themes = [ "pixels" ]; })
+  #     ];
+  # };
+  #
+  # boot = {
+  #   consoleLogLevel = 3;
+  #   initrd.verbose = false;
+  #   kernelParams = [
+  #     "quiet"
+  #     "splash"
+  #     "boot.shell_on_fail"
+  #     "udev.log_priority=3"
+  #     "rd.systemd.show_status=auto"
+  #   ];
+  #   loader.timeout = 0;
+  # };
 
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="048d", ATTR{idProduct}=="c994", MODE="0666"'';

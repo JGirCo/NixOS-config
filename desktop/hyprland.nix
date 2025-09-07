@@ -29,7 +29,7 @@ let
     waybar & disown
   '';
 
-  lockScript = pkgs.writeShellScriptBin "lockScript" ''
+  prelockScript = pkgs.writeShellScriptBin "prelockScript" ''
     tmpbg="/tmp/screen.png"
     ${pkgs.grim}/bin/grim "$tmpbg"
     ${pkgs.imagemagick}/bin/magick "$tmpbg" -blur 0x5 -fill "#${colors.base}" -colorize 50% "$tmpbg"
@@ -90,17 +90,17 @@ in with colors; {
     settings = {
       listener = [
         {
-          timeout = 60; # 1 min.
+          timeout = 120; # 2 min.
           on-timeout =
             "light -O && light -T 0.5"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
           on-resume = "light -I"; # monitor backlight restore.
         }
         {
-          timeout = 60;
-          on-timeout = "${lockScript}/bin/lockScript";
+          timeout = 120; # 2 min
+          on-timeout = "${prelockScript}/bin/prelockScript";
         }
         {
-          timeout = 300; # 3 min
+          timeout = 300; # 5 min
           on-timeout = "hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }
@@ -110,7 +110,7 @@ in with colors; {
             ${pkgs.gtklock}/bin/gtklock -m ${pkgs.gtklock-powerbar-module}/lib/gtklock/powerbar-module.so -m ${pkgs.gtklock-playerctl-module}/lib/gtklock/playerctl-module.so -b "/tmp/screen.png"'';
         }
         {
-          timeout = 1800; # 20 min
+          timeout = 1200; # 20 min
           on-timeout = "systemctl suspend";
         }
       ];
