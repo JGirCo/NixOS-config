@@ -15,8 +15,9 @@ in {
     ./apps/kitty.nix
     ./desktop/gtk.nix
     ./neovim/default.nix
-    # ./apps/spotifyd.nix
     ./apps/zathura.nix
+    ./apps/ghostty.nix
+    ./apps/tmux.nix
     ./desktop/dunst.nix
     ./apps/cava.nix
     # ./apps/directwrite/freecad.nix

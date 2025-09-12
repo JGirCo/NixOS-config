@@ -7,7 +7,7 @@ let
   right = "l";
   monitorHeight = 1600;
   monitorWidth = 2560;
-  terminal = "kitty";
+  terminal = "ghostty";
 
   colors = import ../colors.nix {
     inherit theme;
@@ -191,7 +191,7 @@ in with colors; {
       windowrule = [
         "animation slide, class:wofi"
         "stayfocused, class:wofi"
-        "opacity 0.75,initialTitle:^(${terminal})$"
+        "opacity 0.75,class:.*${terminal}.*"
       ] ++ map (app: app.winrule) scratch-apps;
 
       workspace = [ ] ++ map (app: app.workspace) scratch-apps;
