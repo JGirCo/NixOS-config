@@ -1,9 +1,10 @@
-{ pkgs, ... }: {
+{
   imports = [
+    ./mini.nix
     ./auto-save.nix
     # ./codecompanion.nix
     ./hlchunks.nix
-    ./vim-table-mode.nix
+    # ./vim-table-mode.nix
     ./knap.nix
     ./typst.nix
     ./navic.nix
@@ -13,9 +14,9 @@
     ./undotree.nix
     ./transparent.nix
     ./image.nix
-    ./surround.nix
+    # ./surround.nix
     ./which-key.nix
-    ./comment.nix
+    # ./comment.nix
     ./none-ls.nix
     ./barbar.nix
     # ./floaterm.nix
@@ -23,9 +24,9 @@
     ./lsp.nix
     ./lualine.nix
     ./markdown-preview.nix
-    ./neorg.nix
+    # ./neorg.nix
     ./neo-tree.nix
-    ./startify.nix
+    # ./startify.nix
     ./tagbar.nix
     ./telescope.nix
     ./treesitter.nix
@@ -37,15 +38,20 @@
 
     plugins = {
       vimwiki.enable = true;
-      gitsigns = {
+      smear-cursor.enable = true;
+      treesitter-context = {
         enable = true;
-        settings = {
-          signs = {
-            add.text = "+";
-            change.text = "~";
-          };
-        };
+        settings = { separator = "-"; };
       };
+      # gitsigns = {
+      #   enable = true;
+      #   settings = {
+      #     signs = {
+      #       add.text = "+";
+      #       change.text = "~";
+      #     };
+      #   };
+      # };
       nvim-autopairs.enable = true;
       plantuml-syntax.enable = true;
 
@@ -54,7 +60,15 @@
         settings.user_default_options.names = true;
       };
       oil.enable = true;
-      lsp-lines.enable = true;
+      # lsp-lines.enable = true;
+      tiny-inline-diagnostic = {
+        enable = true;
+        settings = {
+          multilines.enabled = true;
+          multilines.always_show = true;
+        };
+      };
+      nix.enable = true;
       # rainbow-delimiters.enable = true;
       indent-blankline = {
         enable = true;
@@ -65,7 +79,6 @@
           show_start = true;
         };
       };
-      fugitive.enable = true;
       transparent = {
         enable = true;
         autoLoad = true;

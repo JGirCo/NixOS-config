@@ -213,7 +213,7 @@ in {
     pulse.enable = true;
   };
 
-  services.logind = {
+  services.logind.settings.Login = {
     # don’t shutdown when power button is short-pressed
     lidSwitch = "ignore";
     powerKey = "hibernate";
@@ -304,6 +304,8 @@ in {
     # GUI Tools
     stm32cubemx
     kicad
+    kicadAddons.kikit
+    kikit
     inputs.zen-browser.packages."${system}".twilight
     newsflash
     blockbench

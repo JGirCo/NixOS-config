@@ -6,7 +6,7 @@ let
   };
 in {
   programs.nixvim.plugins.hlchunk = {
-    enable = true;
+    enable = false;
     settings = {
       chunk = {
         enable = true;

@@ -1,5 +1,11 @@
 {
   programs.nixvim = {
+    keymaps = [{
+      mode = [ "n" ];
+      key = "<leader>F";
+      options.desc = "Implement fix";
+      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+    }];
     plugins = {
       lsp = {
         enable = true;
@@ -7,11 +13,6 @@
         keymaps = {
           silent = true;
           diagnostic = {
-            # Navigate in diagnostics
-            "<leader>F" = {
-              action = "setloclist";
-              desc = "Open diagnostic quick[F]ix list";
-            };
             "<leader>d" = {
               action = "open_float";
               desc = "Open diagnostic float";

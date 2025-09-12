@@ -14,10 +14,6 @@
     };
 
     highlightOverride.Normal.bg = "none";
-    diagnostic.settings = {
-      signs = { text = { "vim.diagnostic.severity.ERROR" = ""; }; };
-      virtual_lines = true;
-    };
     opts = {
       updatetime = 100; # Faster completion
 
@@ -30,7 +26,7 @@
       splitbelow = true; # A new window is put below the current one
       splitright = true; # A new window is put right of the current one
 
-      swapfile = false; # Disable the swap file
+      swapfile = true; # Enable the swap file
       modeline = true; # Tags such as 'vim:ft=sh'
       modelines = 100; # Sets the type of modelines
       undofile = true; # Automatically save and restore undo history
@@ -50,7 +46,6 @@
       signcolumn = "yes"; # Whether to show the signcolumn
       colorcolumn = "0"; # Columns to highlight
       laststatus = 3; # When to use a status line for the last window
-      fileencoding = "utf-8"; # File-content encoding for the current buffer
       termguicolors = true; # Enables 24-bit RGB color in the |TUI|
       spell = false; # Highlight spelling mistakes (local to window)
       wrap = false; # Prevent text from wrapping

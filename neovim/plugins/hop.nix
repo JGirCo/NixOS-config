@@ -4,12 +4,12 @@
     keymaps = [
       {
         mode = [ "n" ];
-        key = "s";
+        key = ";";
         action = ":HopVertical<CR>";
       }
       {
         mode = [ "n" ];
-        key = "S";
+        key = ",";
         action = ":HopChar2CurrentLine<CR>";
       }
     ];

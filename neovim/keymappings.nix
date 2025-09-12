@@ -122,7 +122,7 @@
         options = {
           silent = true;
           noremap = true;
-          desc = "Jump to start";
+          desc = "Jump to first non whitespace character";
         };
       }
     ];

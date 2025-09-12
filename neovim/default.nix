@@ -7,7 +7,7 @@ let
 
 in {
   imports = [
-    ./debugging.nix
+    # ./debugging.nix
     ./autocommands.nix
     ./completion.nix
     ./keymappings.nix
@@ -29,8 +29,5 @@ in {
     vimAlias = true;
 
     luaLoader.enable = true;
-
-    # Highlight and remove extra white spaces
-    match.ExtraWhitespace = "\\s\\+$";
   };
 }
