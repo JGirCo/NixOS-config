@@ -56,7 +56,7 @@ let
     (scratch-program {
       name = "volume";
       key = "V";
-      command = "pavucontrol";
+      command = "ghostty -e wiremix";
       title = "Volume Control";
     })
 
@@ -71,6 +71,7 @@ let
 in with colors; {
   imports = [ ./waybar.nix ];
   home.packages = with pkgs; [
+    mpris-notifier
     swww
     waybar
     dunst
@@ -90,7 +91,7 @@ in with colors; {
     settings = {
       listener = [
         {
-          timeout = 120; # 2 min.
+          timeout = 121; # 2 min.
           on-timeout =
             "light -O && light -T 0.5"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
           on-resume = "light -I"; # monitor backlight restore.
@@ -166,8 +167,9 @@ in with colors; {
         shadow.enabled = false;
 
         blur = {
+          xray = true;
           enabled = true;
-          size = 5;
+          size = 9;
           passes = 2;
           noise = 1.0e-2;
         };
@@ -228,9 +230,7 @@ in with colors; {
         "$mod SHIFT, ${right}, movewindow, r"
         "$mod SHIFT, ${up}, movewindow, u"
         "$mod SHIFT, ${down}, movewindow, d"
-
-        "$mod, S, togglespecialworkspace, magic"
-        "$mod SHIFT, S, movetoworkspace, special:magic"
+        "$mod, S, togglesplit"
         ''
           , PRINT, exec, grim -g "$(slurp)" - | convert -  -shave 1x1 PNG: - | wl-copy''
 

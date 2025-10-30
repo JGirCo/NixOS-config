@@ -1,16 +1,32 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, theme, ... }:
 
 let
+
+  colors = import ./colors.nix {
+    inherit theme;
+    inherit lib;
+  };
+
   p10k = builtins.readFile ./p10k.zsh;
+  poweroffWithPrompt = pkgs.writeShellScriptBin "poweroffWithPrompt" ''
+    ${pkgs.gum}/bin/gum confirm "Power off?" \
+    --no-show-help \
+    --prompt.foreground "#${colors.text2}" \
+    --selected.foreground "#${colors.base}" \
+    --selected.background "#${colors.focused}" \
+    --unselected.foreground "#${colors.base}" \
+    --unselected.background "#${colors.inactive}" \
+    && poweroff
+  '';
   rebootWithPrompt = pkgs.writeShellScriptBin "rebootWithPrompt" ''
-    read -p "reboot? " -n 1 -r
-    echo "\r"
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-      echo "rebooting..."
-      sleep 2
-      reboot
-    fi
+    ${pkgs.gum}/bin/gum confirm "Reboot?" \
+    --no-show-help \
+    --prompt.foreground "#${colors.text2}" \
+    --selected.foreground "#${colors.base}" \
+    --selected.background "#${colors.focused}" \
+    --unselected.foreground "#${colors.base}" \
+    --unselected.background "#${colors.inactive}" \
+    && reboot
   '';
 
 in {
@@ -48,25 +64,25 @@ in {
         mkdir = "mkdir -pv";
         py = "python";
         nd = "nix develop -c zsh";
-        thesis = "cd ~/Documents/thesis && nvim index.norg";
         rcp = "${pkgs.rsync}/bin/rsync -av --info=progress2";
         rmv =
           "${pkgs.rsync}/bin/rsync -av --remove-source-files --info=progress2";
         reboot = "${rebootWithPrompt}/bin/rebootWithPrompt";
-        poweroff = "echo shutting down... && sleep 30 && poweroff";
+        poweroff = "${poweroffWithPrompt}/bin/poweroffWithPrompt";
       };
       initContent = lib.strings.concatStrings [
         p10k
         ''
-          export PATH="$HOME/.emacs.d/bin:$PATH"
-          export PATH="$PWD/diagslave/x86_64-linux-gnu:$PATH"
-          export PATH="$PWD/modpoll/modpoll/x86_64-linux-gnu:$PATH"
           source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
         ''
 
         ''
           bindkey "^[k" history-beginning-search-backward
           bindkey "^[j" history-beginning-search-forward
+        ''
+
+        ''
+          eval "$(direnv hook zsh)"
         ''
       ];
     };
