@@ -4,26 +4,27 @@
     ./auto-save.nix
     # ./codecompanion.nix
     ./hlchunks.nix
-    # ./vim-table-mode.nix
+    ./vim-table-mode.nix
     ./knap.nix
     ./typst.nix
     ./navic.nix
-    ./barbecue.nix
+    # ./barbecue.nix
+    # ./barbar.nix
+    # ./bufferline.nix
     ./navbuddy.nix
     ./hop.nix
     ./undotree.nix
-    ./transparent.nix
+    # ./transparent.nix
     ./image.nix
     # ./surround.nix
     ./which-key.nix
     # ./comment.nix
     ./none-ls.nix
-    ./barbar.nix
     # ./floaterm.nix
     # ./harpoon.nix
     ./lsp.nix
     ./lualine.nix
-    ./markdown-preview.nix
+    # ./markdown-preview.nix
     # ./neorg.nix
     ./neo-tree.nix
     # ./startify.nix
@@ -35,13 +36,20 @@
   ];
 
   programs.nixvim = {
+    files."after/ftplugin/markdown.lua" = {
+      localOpts.conceallevel = 1;
+      opts = {
+        wrap = true;
+        breakindent = true;
+        linebreak = true;
+      };
+    };
 
     plugins = {
-      vimwiki.enable = true;
       smear-cursor.enable = true;
       treesitter-context = {
         enable = true;
-        settings = { separator = "-"; };
+        # settings = { separator = ""; };
       };
       # gitsigns = {
       #   enable = true;
@@ -52,7 +60,7 @@
       #     };
       #   };
       # };
-      nvim-autopairs.enable = true;
+      # nvim-autopairs.enable = true;
       plantuml-syntax.enable = true;
 
       colorizer = {
@@ -60,7 +68,8 @@
         settings.user_default_options.names = true;
       };
       oil.enable = true;
-      # lsp-lines.enable = true;
+      markview.enable = true;
+      lsp-lines.enable = true;
       tiny-inline-diagnostic = {
         enable = true;
         settings = {
@@ -79,10 +88,14 @@
           show_start = true;
         };
       };
-      transparent = {
-        enable = true;
-        autoLoad = true;
-      };
+
+      # transparent = {
+      #   enable = true;
+      #   autoLoad = true;
+      # };
     };
+    # extraPlugins = [ pkgs.vimPlugins.tabby-nvim ];
+    # extraConfigLua = "require('tabby').setup()";
   };
+
 }

@@ -3,7 +3,7 @@
     keymaps = [
       {
         mode = [ "i" "s" ];
-        key = "<C-k>";
+        key = "<C-j>";
         action.__raw = ''
           function()
            local ls = require "luasnip"
@@ -15,7 +15,7 @@
       }
       {
         mode = [ "i" "s" ];
-        key = "<C-j>";
+        key = "<C-k>";
         action.__raw = ''
           function()
            local ls = require "luasnip"

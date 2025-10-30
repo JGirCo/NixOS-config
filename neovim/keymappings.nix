@@ -106,6 +106,28 @@
 
       {
         mode = [ "n" ];
+        key = "<M-h>";
+        action = "<cmd>bp<CR>";
+        options = {
+          silent = true;
+          noremap = true;
+          desc = "previous buffer";
+        };
+      }
+
+      {
+        mode = [ "n" ];
+        key = "<M-l>";
+        action = "<cmd>bn<CR>";
+        options = {
+          silent = true;
+          noremap = true;
+          desc = "next buffer";
+        };
+      }
+
+      {
+        mode = [ "n" ];
         key = "L";
         action = "$";
         options = {

@@ -37,37 +37,28 @@
           };
         };
 
-        enabledServers = [{
-          name = "arduino_language_server";
-          extraOptions = {
-            cmd = [ "arduino-language-server" ];
-            capabilities = [
-              "default_capabilities.textDocument.semanticTokens = vim.NIL"
-              "default_capabilities.workspace.semanticTokens = vim.NIL"
-            ];
-          };
-        }];
+        # enabledServers = [{
+        #   name = "arduino_language_server";
+        #   extraOptions = {
+        #     cmd = [ "arduino-language-server" ];
+        #     capabilities = [
+        #       "default_capabilities.textDocument.semanticTokens = vim.NIL"
+        #       "default_capabilities.workspace.semanticTokens = vim.NIL"
+        #     ];
+        #   };
+        # }];
 
         servers = {
           tinymist.enable = true;
+          ts_ls.enable = true;
           nixd = { enable = true; };
           # rust_analyzer = {
           #   enable = true;
           #   installRustc = true;
           #   installCargo = true;
           # };
-          # pylsp = {
-          #   enable = true;
-          #   settings.plugins = {
-          #     jedi.enabled = true;
-          #     jedi_completion.enabled = true;
-          #     jedi_definition.enabled = true;
-          #     jedi_hover.enabled = true;
-          #     pyright.enabled = true;
-          #   };
-          # };
           pyright = {
-            enable = true;
+            enable = false;
             extraOptions.settings = {
               # Using Ruff's import organizer
               pyright.disableOrganizeImports = true;
@@ -77,21 +68,23 @@
               };
             };
           };
+          pylsp = { enable = true; };
 
           ruff = {
             enable = true;
-            onAttach.function = ''
-              if client.name == 'ruff' then
-                -- Disable hover in favor of Pyright
-                client.server_capabilities.hoverProvider = false
-              end
-            '';
+            # onAttach.function = ''
+            #   if client.name == 'ruff' then
+            #     -- Disable hover in favor of Pyright
+            #     client.server_capabilities.hoverProvider = false
+            #   end
+            # '';
           };
           clangd.enable = true;
           lua_ls.enable = true;
           ruby_lsp.enable = true;
         };
       };
+      lsp-signature.enable = true;
     };
   };
 }

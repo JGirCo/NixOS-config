@@ -14,6 +14,11 @@
     };
 
     highlightOverride.Normal.bg = "none";
+    diagnostic.settings = {
+      virtual_lines = false;
+      signs = true;
+      underline = true;
+    };
     opts = {
       updatetime = 100; # Faster completion
 
@@ -25,7 +30,8 @@
       mousemodel = "extend"; # Mouse right-click extends the current selection
       splitbelow = true; # A new window is put below the current one
       splitright = true; # A new window is put right of the current one
-
+      cmdheight = 0;
+      numberwidth = 1;
       swapfile = true; # Enable the swap file
       modeline = true; # Tags such as 'vim:ft=sh'
       modelines = 100; # Sets the type of modelines
@@ -70,5 +76,18 @@
       #Conceal
       conceallevel = 2;
     };
+    extraConfigLua = ''
+      local signs = {
+        Error = " ",
+        Warn = " ",
+        Hint = " ",
+        Info = " "
+      }
+
+      for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+      end
+    '';
   };
 }

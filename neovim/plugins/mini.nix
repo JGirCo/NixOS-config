@@ -6,6 +6,7 @@
       ai = { };
       icons = { };
       pairs = { };
+      # tabline = { };
       surround = {
         mappings = {
           add = "sa";
@@ -18,7 +19,6 @@
           suffix_next = "n";
         };
       };
-      animate = { cursor.enable = false; };
       notify = { };
       git = { };
       indentscope = { };

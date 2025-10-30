@@ -35,7 +35,7 @@
     # Enable spellcheck for some filetypes
     {
       event = "FileType";
-      pattern = [ "tex" "latex" "markdown" "norg" "typ" ];
+      pattern = [ "tex" "latex" "markdown" "norg" "typ" "md" ];
       command = "setlocal spell spelllang=en,es";
     }
     {

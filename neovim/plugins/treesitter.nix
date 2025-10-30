@@ -8,7 +8,18 @@
       settings = {
         highlight.enable = true;
         indent.enable = true;
-        ensureInstalled = [ "nix" "arduino" "python" "rust" "norg" ];
+        ensureInstalled = [
+          "markdown"
+          "markdown_inline"
+          "htl"
+          "yaml"
+          "typst"
+          "nix"
+          "arduino"
+          "python"
+          "rust"
+          "norg"
+        ];
       };
     };
 

@@ -1,10 +1,11 @@
 { pkgs, ... }: {
   programs.nixvim = {
-    extraLuaPackages = ps: [ ps.magick ];
     extraPackages = [ pkgs.imagemagick ];
     plugins.image = {
       enable = true;
-      settings.backend = "kitty";
+      settings.integrations = { markdown.enabled = true; };
+      settings.hijack_file_patterns =
+        [ "*.png" "*.jpg" "*.jpeg" "*.gif" "*.webp" "*.svg" ];
     };
   };
 }

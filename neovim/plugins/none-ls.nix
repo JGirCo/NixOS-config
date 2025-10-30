@@ -7,6 +7,7 @@
         black.enable = true;
         rufo.enable = true;
         prettier.enable = true;
+        prettier.disableTsServerFormatter = true;
         typstyle.enable = true;
       };
     };
