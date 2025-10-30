@@ -6,8 +6,12 @@ with config.colorScheme.palette; {
     settings = {
 
       font-size = 16;
-      font-family = "Maple Mono NF";
+      font-family = font.name;
       theme = "default";
+      window-padding-y = 0;
+      window-padding-x = 4;
+      keybind = [ "alt+shift+h=previous_tab" "alt+shift+l=next_tab" ];
+      linux-cgroup = "never";
     };
     enableZshIntegration = true;
     themes = {

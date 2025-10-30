@@ -81,11 +81,11 @@ let
           --tridactyl-hintspan-fg: #${text2};
           --tridactyl-hintspan-bg: #${base};
           --tridactyl-hintspan-border-color: #${focused};
-          --tridactyl-hintspan-border-width: 3px;
+          --tridactyl-hintspan-border-width: 1px;
           --tridactyl-hint-active-fg: #${base};
           --tridactyl-hint-active-bg: #${focused};
           --tridactyl-hint-active-outline: 0px solid #000;
-          --tridactyl-hint-bg: color-mix(in srgb, #${focused}, transparent 97%);
+          --tridactyl-hint-bg: color-mix(in srgb, #${focused}, transparent 90%);
           --tridactyl-hint-outline: 1px solid var(--tridactyl-hintspan-bg);
           --tridactyl-cmplt-option-height: 1.9em;
           --tridactyl-border-radius: 16px;
@@ -144,6 +144,8 @@ let
           overflow: hidden;
       }
 
+
+
       :root #completions > div {
           max-height: calc(20 * var(--tridactyl-cmplt-option-height));
           min-height: calc(10 * var(--tridactyl-cmplt-option-height));
@@ -151,10 +153,10 @@ let
       }
 
       :root #completions > div > table {
-          border-spacing: 5px;
-          border-collapse: separate;
-          table-layout: fixed;
-          border-radius: var(--tridactyl-border-radius);
+        border-spacing: 5px;
+        border-collapse: separate;
+        table-layout: fixed;
+        border-radius: var(--tridactyl-border-radius);
       }
 
 
@@ -193,18 +195,20 @@ let
           text-align: center !important;
       }
 
+
       #completions table tr td.prefix,
       #completions table tr td.container {
           display: none !important;
       }
 
       #completions table tr td.icon {
-          background-color: transparent !important;
+        background-color: transparent !important;
       }
 
 
-      body {
-          width: calc(100% - 10px);
+      :root #body {
+        width: calc(100% - 10px);
+        background: transparent !important;
       }
 
       .focused td,
