@@ -8,25 +8,29 @@ in {
   imports = [
 
     ./zsh.nix
-    # ./desktop/i3.nix
     ./desktop/hyprland.nix
     ./desktop/wofi.nix
+    ./desktop/gtk.nix
+    ./desktop/dunst.nix
+    # ./desktop/niri.nix
+
     ./apps/wezterm.nix
     ./apps/kitty.nix
-    ./desktop/gtk.nix
+    ./apps/zen.nix
+
     ./neovim/default.nix
+
     ./apps/zathura.nix
     ./apps/ghostty.nix
     ./apps/tmux.nix
-    ./desktop/dunst.nix
     ./apps/cava.nix
-    # ./apps/directwrite/freecad.nix
     ./apps/directwrite/keyd-application-mapper.nix
     ./apps/directwrite/tridactyl.nix
     ./apps/directwrite/darkreader.nix
     ./apps/directwrite/blockbench.nix
-    # ./apps/textfox.nix
+
     ./scripts/default.nix
+
     inputs.nix-colors.homeManagerModules.default
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];

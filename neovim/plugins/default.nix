@@ -2,30 +2,23 @@
   imports = [
     ./mini.nix
     ./auto-save.nix
-    # ./codecompanion.nix
     ./hlchunks.nix
     ./vim-table-mode.nix
     ./knap.nix
     ./typst.nix
     ./navic.nix
-    # ./barbecue.nix
-    # ./barbar.nix
-    # ./bufferline.nix
     ./navbuddy.nix
     ./hop.nix
     ./undotree.nix
-    # ./transparent.nix
     ./image.nix
     # ./surround.nix
     ./which-key.nix
-    # ./comment.nix
     ./none-ls.nix
     # ./floaterm.nix
     # ./harpoon.nix
     ./lsp.nix
     ./lualine.nix
     # ./markdown-preview.nix
-    # ./neorg.nix
     ./neo-tree.nix
     # ./startify.nix
     ./tagbar.nix

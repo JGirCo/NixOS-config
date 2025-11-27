@@ -6,6 +6,7 @@
       options.desc = "Implement fix";
       action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
     }];
+    lsp.inlayHints.enable = true;
     plugins = {
       lsp = {
         enable = true;
@@ -57,18 +58,10 @@
           #   installRustc = true;
           #   installCargo = true;
           # };
-          pyright = {
-            enable = false;
-            extraOptions.settings = {
-              # Using Ruff's import organizer
-              pyright.disableOrganizeImports = true;
-              python.analysis = {
-                # Ignore all files for analysis to exclusively use Ruff for linting
-                ignore.__raw = "{ '*' }";
-              };
-            };
+          pylsp = {
+            enable = true;
+            package = null;
           };
-          pylsp = { enable = true; };
 
           ruff = {
             enable = true;

@@ -15,6 +15,14 @@ in {
     ./hardware-configuration.nix
   ];
 
+  services.hardware.bolt.enable = true;
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 37711 ]; # Allow the specific Minecraft LAN port
+    allowedUDPPorts = [ 37711 ]; # Allow the specific Minecraft LAN port
+  };
+
   powerManagement.enable = true;
   virtualisation.docker.enable = true;
   hardware = {
@@ -27,7 +35,6 @@ in {
 
       # Modesetting is required.
       modesetting.enable = true;
-      powerManagement.enable = false;
       powerManagement.finegrained = false;
       dynamicBoost.enable = true;
 
@@ -63,36 +70,10 @@ in {
   boot.kernelModules = [ "lenovo-legion-module" "amdgpu" "k10temp" ];
   boot.extraModulePackages = with config.boot.kernelPackages;
     [ lenovo-legion-module ];
-  # boot.plymouth = {
-  #   enable = true;
-  #   theme = "pixels";
-  #   themePackages = with pkgs;
-  #     [
-  #       # By default we would install all themes
-  #       (adi1090x-plymouth-themes.override { selected_themes = [ "pixels" ]; })
-  #     ];
-  # };
-  #
-  # boot = {
-  #   consoleLogLevel = 3;
-  #   initrd.verbose = false;
-  #   kernelParams = [
-  #     "quiet"
-  #     "splash"
-  #     "boot.shell_on_fail"
-  #     "udev.log_priority=3"
-  #     "rd.systemd.show_status=auto"
-  #   ];
-  #   loader.timeout = 0;
-  # };
 
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="048d", ATTR{idProduct}=="c994", MODE="0666"'';
 
-  programs.coolercontrol = {
-    enable = true;
-    nvidiaSupport = true;
-  };
   services.preload.enable = true;
 
   # Experimental features
@@ -106,8 +87,27 @@ in {
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  services.grafana = {
+    enable = true;
+    settings = {
+      server = {
+        # Listening Address - Use 127.0.0.1 for local access
+        http_addr = "127.0.0.1";
+        # and Port - Default is 3000
+        http_port = 3000;
+        # Grafana needs to know on which domain and URL it's running
+        # Set domain to localhost
+        domain = "localhost";
+        # Set root_url to use http and localhost:port, without a subpath
+        root_url = "http://localhost:3000/";
+        # Set to false since it's running at the root of the domain/port
+        serve_from_sub_path = false;
+      };
+    };
+  };
+
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = { enable = true; };
 
   # Enable network manager applet
   programs.nm-applet.enable = true;
@@ -143,22 +143,17 @@ in {
   services.xserver.excludePackages = [ pkgs.xterm ];
   services.autorandr.enable = true;
 
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.displayManager.gdm.debug = true;
-
-  # services.greetd = {
-  #   enable = true;
-  #   settings = rec {
-  #     initial_session = {
-  #       command =
-  #         "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --time --cmd hyprland -g Hola!";
-  #       user = "jgirco";
-  #     };
-  #     default_session = initial_session;
-  #   };
-  # };
-
-  programs.regreet = { enable = true; };
+  # programs.regreet = { enable = true; };
+  services.displayManager.ly.enable = true;
+  services.displayManager.ly.settings = {
+    load = true;
+    save = true;
+    # animation = "colormix";
+    bigclock = "en";
+    # colormix_col1 = "0x00FFD7FF";
+    # colormix_col2 = "0x005BCEFA";
+    # colormix_col3 = "0x02FFFFFF";
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -172,13 +167,13 @@ in {
       default = {
         ids = [ "*" ];
         settings = {
-          main = { "f23+meta+shift" = "layer(nav)"; };
-          "shift+alt" = {
-            "h" = "left";
-            "k" = "up";
-            "j" = "down";
-            "l" = "right";
-          };
+          main = { "f23+leftmeta+leftshift" = "layer(nav)"; };
+          # "shift+alt" = {
+          #   "h" = "left";
+          #   "k" = "up";
+          #   "j" = "down";
+          #   "l" = "right";
+          # };
           "nav" = {
             "h" = "left";
             "k" = "up";
@@ -223,7 +218,8 @@ in {
     enable = true;
     lockerCommand = "${pkgs.gtklock}/bin/gtklock";
   };
-  security.pam.services.gtklock = { };
+
+  security.pam.services = { gtklock = { }; };
 
   systemd.sleep.extraConfig = ''
     AllowSuspend=yes
@@ -271,25 +267,26 @@ in {
     lm_sensors
     (texlive.combine { inherit (texlive) scheme-medium standalone; })
 
-    devenv
-
     #System tools
     keyd
     acpi
     pamixer
     playerctl
     udiskie
+    ffmpeg
+
+    #Network tools
+    mosquitto
 
     # Terminal Tools
-    kitty
-    wezterm
     libqalculate
     translate-shell
     plantuml
     openpomodoro-cli
 
     # TUI Tools
-    pavucontrol
+    ytermusic
+    wiremix
     cava
     emacs
     yazi-unwrapped
@@ -302,11 +299,17 @@ in {
     ncdu
 
     # GUI Tools
+    cavalier
+    mqttx
     stm32cubemx
-    kicad
-    kicadAddons.kikit
-    kikit
-    inputs.zen-browser.packages."${system}".twilight
+    kicad-unstable
+    python313Packages.python-lsp-server
+    python313Packages.python-lsp-black
+    # kicadAddons.kikit
+    # kicadAddons.kikit-library
+    # kikit
+    # python313Packages.kikit
+    # inputs.zen-browser.packages."${system}".twilight
     newsflash
     blockbench
     prismlauncher
@@ -318,22 +321,25 @@ in {
     zotero
     vipsdisp
     libreoffice
-    pcmanfm
+    nautilus
     inkscape
     bottles
     lutris
     ungoogled-chromium
-    floorp
-    deluge
+    # floorp
+    # deluge
+    qbittorrent
 
     yt-dlp
     parabolic
 
     # Miscelaneous
+    mpris-scrobbler
     tridactyl-native
     nix-prefetch-github
     lenovo-legion
-    legion-kb-rgb
+    # legion-kb-rgb
+    gtklock
 
     #games
     gamescope
@@ -343,7 +349,6 @@ in {
   nixpkgs.overlays = flake-overlays;
 
   environment.sessionVariables = rec {
-    QT_STYLE_OVERRIDE = "kvantum";
     GSK_RENDERER = "gl";
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
@@ -369,11 +374,8 @@ in {
 
   fonts.fontDir.enable = true;
   fonts.packages = if font.isNF then
-  # with pkgs; [ (nerdfonts.override { fonts = [ font.nameNF ]; }) ]
     with pkgs; [ nerdfonts ]
-  else
-  # with pkgs; [ maple-mono miracode monaspace ];
-  [
+  else [
     maplefont
     pkgs.atkinson-hyperlegible-next
     pkgs.lexend
@@ -382,6 +384,7 @@ in {
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs = {
+    direnv = { enable = true; };
 
     neovim = {
       enable = true;
@@ -389,10 +392,7 @@ in {
     };
     zsh.enable = true;
     light.enable = true;
-    kdeconnect = {
-      enable = true;
-      package = pkgs.valent;
-    };
+    kdeconnect = { enable = true; };
     dconf.enable = true;
     firefox = {
       enable = true;
@@ -413,7 +413,8 @@ in {
     nh = {
       enable = true;
       clean.enable = true;
-      clean.extraArgs = "--keep-since 4d --keep 3";
+      clean.extraArgs = "--keep-since 7d --keep 2";
+      clean.dates = "monthly";
       flake = "/home/jgirco/.nixos/";
     };
 

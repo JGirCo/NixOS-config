@@ -18,7 +18,7 @@ let
     udiskie &
     keyd-application-mapper -d &
     swww-daemon &
-    legion-kb-rgb set -e Static -c 100,100,100,100,100,100,100,100,100,100,100,100
+    # legion-kb-rgb set -e Static -c 100,100,100,100,100,100,100,100,100,100,100,100
     systemctl --user restart pipewire pipewire-pulse &
   '';
 
@@ -233,6 +233,7 @@ in with colors; {
         "$mod, S, togglesplit"
         ''
           , PRINT, exec, grim -g "$(slurp)" - | convert -  -shave 1x1 PNG: - | wl-copy''
+        ''SHIFT, PRINT, exec, grim -g "$(slurp)" - | swappy -f -''
 
         "$mod, 0, workspace, 10"
         "$mod SHIFT, 0, movetoworkspacesilent, 10"
