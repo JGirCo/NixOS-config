@@ -37,7 +37,6 @@
       pkgs = nixpkgs.legacyPackages.${system};
 
       # USER settings
-      theme = "rose-pine";
       font = {
         name = "Maple Mono NF";
         isNF = false;
@@ -47,6 +46,36 @@
       };
       browser = { name = "zen-twilight"; };
       flake-overlays = [ ];
+      mkHomeConfig = themeName: home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules =
+          [ ./home.nix nixvim.homeModules.nixvim niri.homeModules.niri ];
+        extraSpecialArgs = {
+          inherit inputs;
+          theme = themeName;
+          inherit browser;
+          inherit font;
+        };
+      };
+      themes = [
+        "ayu-light"
+        "catppuccin-latte"
+        "dracula"
+        "everforest-light"
+        "gruvbox-dark-medium"
+        "gruvbox-light-medium"
+        "gruvbox-light-soft"
+        "kanagawa-light"
+        "melange"
+        "oxocarbon-light"
+        "rebecca"
+        "rose-pine-dawn"
+        "rose-pine"
+        "saga"
+        "template"
+        "tokyo-night-moon"
+        "trans"
+      ];
     in {
       nixosConfigurations = {
         nixos = lib.nixosSystem {
@@ -62,16 +91,8 @@
           };
         };
       };
-      homeConfigurations."jgirco" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules =
-          [ ./home.nix nixvim.homeModules.nixvim niri.homeModules.niri ];
-        extraSpecialArgs = {
-          inherit inputs;
-          inherit theme;
-          inherit browser;
-          inherit font;
-        };
+      homeConfigurations = (lib.genAttrs themes (themeName: mkHomeConfig themeName)) // {
+        "jgirco" = mkHomeConfig "rose-pine";
       };
     };
 }
