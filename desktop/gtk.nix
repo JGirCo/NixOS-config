@@ -2,8 +2,9 @@
 
 let
   colors = import ../colors.nix {
-    inherit theme;
     inherit lib;
+    inherit theme;
+
   };
 
   cssContent = with config.colorScheme.palette;
@@ -101,10 +102,7 @@ in {
 
     font = {
       size = 16;
-      name = "Atkinson Hyperlegible Next";
-      package = pkgs.atkinson-hyperlegible-next;
-      # name = "Lexend Deca";
-      # package = pkgs.lexend;
+      name = font.sans;
     };
   };
 
@@ -115,14 +113,87 @@ in {
     size = 24;
   };
 
+  # Qt configuration
   qt = {
     enable = true;
-    platformTheme.name = "gtk";
-    style.name = "qt5gtk2";
+    platformTheme.name = "qt5ct"; # Force Qt5 apps to use qt5ct
+    # style.name is ignored when using qt5ct
   };
 
-  home.sessionVariables = lib.mkForce { QT_STYLE_OVERRIDE = "qt5gtk2"; };
+  # Install the actual tools
+  home.packages = with pkgs; [
+    libsForQt5.qt5ct
+    kdePackages.qt6ct
+    libsForQt5.qtstyleplugins # Still needed as a backend
+  ];
+
+  # Environment variables (critical)
+  home.sessionVariables = {
+    QT_QPA_PLATFORMTHEME = "qt5ct";
+    # QT_STYLE_OVERRIDE = "kvantum";
+  };
 
   xdg.configFile."gtk-4.0/gtk.css" = { text = cssContent; };
   xdg.configFile."gtk-3.0/gtk.css" = { text = cssContent; };
+  xdg.configFile."qt5ct/colors/Custom.conf".text = let
+    # Helper: add 'ff' alpha channel (fully opaque) to 6-digit hex
+    rgba = c: "#${c}ff";
+
+    # Active palette (21 colors)
+    active = with config.colorScheme.palette;
+      with colors; [
+        base
+        text2
+        base01
+        base
+        base02
+        text2
+        text2
+        base02
+        text2
+        base02
+        base02
+        base03
+        base00
+        base04
+        base08
+        base0D
+        base02
+        base0D
+        base0E
+        base
+        base
+      ];
+
+    # Disabled palette (dimmed)
+    disabled = with config.colorScheme.palette;
+      with colors; [
+        base01
+        base03
+        base00
+        base01
+        base00
+        base03
+        base03
+        base03
+        base03
+        base03
+        base03
+        base04
+        base05
+        base04
+        base08
+        base03
+        base03
+        base03
+        base03
+        base01
+        base01
+      ];
+  in ''
+    [ColorScheme]
+    active_colors=${lib.concatStringsSep "," (map rgba active)}
+    disabled_colors=${lib.concatStringsSep "," (map rgba disabled)}
+    inactive_colors=${lib.concatStringsSep "," (map rgba active)}
+  '';
 }

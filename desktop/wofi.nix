@@ -1,4 +1,4 @@
-{ config, lib, pkgs, theme, font, ... }:
+{ config, lib, pkgs, theme, ... }:
 
 let
   colors = import ../colors.nix {

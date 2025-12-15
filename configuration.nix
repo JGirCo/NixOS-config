@@ -4,11 +4,24 @@
 
 flake-overlays:
 
-{ inputs, config, pkgs, font, browser, ... }:
+{ inputs, config, pkgs, lib, browser, font, ... }:
 
+with pkgs;
 let
   maplefont = import ./derivations/maple-font.nix { inherit pkgs; };
-  legion-kb-rgb = inputs.legion-kb-rgb.packages.${pkgs.system}.default;
+  legion-kb-rgb =
+    inputs.legion-kb-rgb.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+  patchDesktop = pkg: from: to:
+    lib.hiPrio (pkgs.runCommand "offload-${pkg.name}" { } ''
+      ${coreutils}/bin/mkdir -p $out/share/applications
+      for file in ${pkg}/share/applications/*.desktop; do
+        base=$(${coreutils}/bin/basename "$file")
+        ${gnused}/bin/sed 's#${from}#${to}#g' "$file" > $out/share/applications/$base
+      done
+    '');
+
+  GPUOffloadApp = pkg: patchDesktop pkg "^Exec=" "Exec=nvidia-offload ";
 in {
   imports = [
     # Include the results of the hardware scan.
@@ -73,8 +86,6 @@ in {
 
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="048d", ATTR{idProduct}=="c994", MODE="0666"'';
-
-  services.preload.enable = true;
 
   # Experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -283,6 +294,7 @@ in {
     translate-shell
     plantuml
     openpomodoro-cli
+    gemini-cli-bin
 
     # TUI Tools
     ytermusic
@@ -302,17 +314,15 @@ in {
     cavalier
     mqttx
     stm32cubemx
-    kicad-unstable
+    kicad
     python313Packages.python-lsp-server
     python313Packages.python-lsp-black
     # kicadAddons.kikit
     # kicadAddons.kikit-library
     # kikit
     # python313Packages.kikit
-    # inputs.zen-browser.packages."${system}".twilight
     newsflash
     blockbench
-    prismlauncher
     freecad-wayland
     celluloid
     gparted
@@ -344,6 +354,10 @@ in {
     #games
     gamescope
     _2048-in-terminal
+    prismlauncher
+
+    (GPUOffloadApp steam)
+    (GPUOffloadApp prismlauncher)
   ];
 
   nixpkgs.overlays = flake-overlays;
@@ -379,13 +393,13 @@ in {
     maplefont
     pkgs.atkinson-hyperlegible-next
     pkgs.lexend
+    pkgs.ibm-plex
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs = {
     direnv = { enable = true; };
-
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -394,11 +408,12 @@ in {
     light.enable = true;
     kdeconnect = { enable = true; };
     dconf.enable = true;
-    firefox = {
-      enable = true;
-      package = inputs.firefox.packages.${pkgs.system}.firefox-nightly-bin;
-      nativeMessagingHosts.packages = [ pkgs.firefoxpwa pkgs.tridactyl-native ];
-    };
+    # firefox = {
+    #   enable = true;
+    #   package =
+    #     inputs.firefox.packages.${pkgs.stdenv.hostPlatform.system}.firefox-nightly-bin;
+    #   nativeMessagingHosts.packages = [ pkgs.firefoxpwa pkgs.tridactyl-native ];
+    # };
 
     steam = {
       enable = true;
@@ -417,8 +432,6 @@ in {
       clean.dates = "monthly";
       flake = "/home/jgirco/.nixos/";
     };
-
-    virt-manager.enable = true;
   };
 
   users.groups.libvirtd.members = [ "jgirco" ];

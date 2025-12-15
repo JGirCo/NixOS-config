@@ -1,45 +1,137 @@
-{ lib, theme, font, ... }:
+{ lib, theme, font, pkgs, config, ... }:
 let
   colors = import ../colors.nix {
     inherit theme;
     inherit lib;
   };
-in with colors; {
-  services.dunst.enable = true;
-  services.dunst.settings = {
-    global = {
-      width = 300;
-      height = 300;
-      origin = "top-right";
-      offset = "8x8";
-      separator_height = 2;
-      padding = 8;
-      font = "${font.name} 13";
-      corner_radius = 10;
-    };
+in with colors;
+with config.colorScheme.palette; {
+  home.packages = [ pkgs.libnotify ]; # to enable notify-send
+  services.swaync = {
+    enable = true;
+    settings = {
+      "$schema" = "/etc/xdg/swaync/configSchema.json";
 
-    urgency_low = {
-      background = "#${base}";
-      foreground = "#${text2}";
-      frame_color = "#${focused}";
+      positionX = "right";
+      positionY = "top";
+      control-center-margin-top = 20;
+      control-center-margin-bottom = 0;
+      control-center-margin-right = 20;
+      control-center-margin-left = 0;
+      control-center-width = 500;
+      control-center-height = 600;
+      fit-to-screen = false;
+
+      layer = "top";
+      cssPriority = "user";
+      notification-icon-size = 64;
+      notification-body-image-height = 100;
+      notification-body-image-width = 200;
       timeout = 10;
-      frame_width = 2;
-    };
+      timeout-low = 5;
+      timeout-critical = 0;
+      notification-window-width = 500;
+      keyboard-shortcuts = true;
+      image-visibility = "when-available";
+      transition-time = 200;
+      hide-on-clear = true;
+      hide-on-action = true;
+      script-fail-notify = true;
 
-    urgency_normal = {
-      background = "#${base}";
-      foreground = "#${text2}";
-      frame_color = "#${focused}";
-      timeout = 10;
-      frame_width = 2;
+      widgets = [ "title" "dnd" "mpris" "notifications" ];
+      widget-config = {
+        title = {
+          text = "Notifications";
+          clear-all-button = true;
+          button-text = "Clear All";
+        };
+        dnd = { text = "Do Not Disturb"; };
+        label = {
+          max-lines = 5;
+          text = "Label Text";
+        };
+        mpris = {
+          image-size = 96;
+          image-radius = 12;
+        };
+      };
     };
+    style = ''
+      /* Dracula Theme Colors */
+      @define-color foreground #${text2};
+      @define-color background #${base};
+      @define-color background-alpha #${base};
+      @define-color accent #${focused};
+      @define-color current-line #${base};
+      @define-color comment #${base03};
+      @define-color urgent #${urgent};
 
-    urgency_critical = {
-      background = "#${urgent}";
-      foreground = "#${text}";
-      timeout = 120;
-      frame_color = "#${urgent}";
-      frame_width = 0;
-    };
+      /* --- Notification Containers --- */
+
+      .notification-row {
+        margin-bottom: 4px;
+        margin-right: 13px;
+        margin-top: 8px;
+        border-radius: 8px;
+      }
+
+      .notification {
+        background: transparent;
+        border-radius: 8px;
+        margin: 12px 7px 0px 7px;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .notification-content {
+        background: transparent;
+        padding: 6px;
+        border-radius: 8px;
+      }
+
+      .low, .normal {
+        background: @background;
+        color: @foreground;
+        padding: 6px;
+        border-radius: 12px;
+      }
+
+      .critical {
+        background: @urgent;
+        color: @background;
+        padding: 6px;
+        border-radius: 12px;
+      }
+
+      .notification-row {
+          background: transparent;
+          color: @focused;
+      }
+      .summary {
+        color: #${focused};
+        font-size: 16px;
+        font-weight: bold;
+        background: transparent;
+      }
+
+      .body {
+        font-size: 15px;
+        font-weight: normal;
+        background: transparent;
+        color: @foreground;
+      }
+
+      /* --- Critical Text Overrides (Ensure high contrast) --- */
+
+      .critical .summary {
+          color: @background;
+          background: transparent;
+      }
+
+      .critical .body {
+          color: @background;
+          background: transparent;
+      }
+    '';
   };
 }

@@ -89,8 +89,8 @@ let
           --tridactyl-hint-outline: 1px solid var(--tridactyl-hintspan-bg);
           --tridactyl-cmplt-option-height: 1.9em;
           --tridactyl-border-radius: 16px;
-          --tridactyl-font-family: serif;
-          --tridactyl-font-family-sans: serif;
+          --tridactyl-font-family: sans;
+          --tridactyl-font-family-sans: sans;
           --tridactyl-font-size: 12pt;
           --tridactyl-small-font-size: 12px;
           --tridactyl-status-font-family: var(--tridactyl-font-family);

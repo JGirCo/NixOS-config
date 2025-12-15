@@ -4,8 +4,6 @@
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    old-norg.url =
-      "github:nixos/nixpkgs/a343533bccc62400e8a9560423486a3b6c11a23b";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,24 +25,27 @@
       url = "github:nix-community/flake-firefox-nightly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri.url = "github:sodiboo/niri-flake";
+    niri.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    { old-norg, nixpkgs, home-manager, nixvim, nix-flatpak, ... }@inputs:
+  outputs = { nixpkgs, home-manager, nixvim, nix-flatpak, niri, ... }@inputs:
     let
       # System settings
       system = "x86_64-linux";
       inherit (nixpkgs) lib;
       pkgs = nixpkgs.legacyPackages.${system};
-      norgpkg = old-norg.legacyPackages.${system};
 
       # USER settings
-      theme = "everforest-light";
+      theme = "rose-pine";
       font = {
         name = "Maple Mono NF";
         isNF = false;
+        sans = "Lexend deca";
+        serif = "IBM Plex Serif";
+
       };
-      browser = { name = "firefox-nightly"; };
+      browser = { name = "zen-twilight"; };
       flake-overlays = [ ];
     in {
       nixosConfigurations = {
@@ -63,13 +64,13 @@
       };
       homeConfigurations."jgirco" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [ ./home.nix nixvim.homeModules.nixvim ];
+        modules =
+          [ ./home.nix nixvim.homeModules.nixvim niri.homeModules.niri ];
         extraSpecialArgs = {
           inherit inputs;
           inherit theme;
           inherit browser;
           inherit font;
-          inherit norgpkg;
         };
       };
     };
