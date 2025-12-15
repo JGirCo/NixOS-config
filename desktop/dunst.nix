@@ -1,10 +1,5 @@
-{ lib, theme, font, pkgs, config, ... }:
-let
-  colors = import ../colors.nix {
-    inherit theme;
-    inherit lib;
-  };
-in with colors;
+{ lib, theme, font, pkgs, config, colors, ... }:
+with colors;
 with config.colorScheme.palette; {
   home.packages = [ pkgs.libnotify ]; # to enable notify-send
   services.swaync = {

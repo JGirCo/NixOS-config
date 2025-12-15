@@ -1,4 +1,4 @@
-{ config, lib, pkgs, theme, font, ... }:
+{ config, lib, pkgs, theme, font, colors, ... }:
 
 let
   mod = "Mod4";
@@ -9,10 +9,6 @@ let
 
   unfocused = "#ffffff00";
   focused_inactive = "#ffffff00";
-  colors = import ../colors.nix {
-    inherit theme;
-    inherit lib;
-  };
 in with colors; {
 
   imports = [ ./picom.nix ];

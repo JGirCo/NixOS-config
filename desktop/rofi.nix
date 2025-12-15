@@ -1,11 +1,4 @@
-{ config, lib, pkgs, theme, font, ... }:
-
-let
-  colors = import ../colors.nix {
-    inherit theme;
-    inherit lib;
-  };
-in with colors; {
+{ config, lib, pkgs, theme, font, colors, ... }: with colors; {
   programs.rofi = {
     enable = true;
     theme = ''

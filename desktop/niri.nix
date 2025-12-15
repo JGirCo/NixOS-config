@@ -1,4 +1,4 @@
-{ lib, pkgs, browser, config, ... }:
+{ lib, pkgs, browser, config, colors, ... }:
 
 let
   up = "k";
@@ -8,11 +8,6 @@ let
   monitorHeight = 1600;
   monitorWidth = 2560;
   terminal = "ghostty";
-
-  colors = import ../colors.nix {
-    inherit lib;
-    palette = config.colorScheme.palette;
-  };
 
   startupScript = pkgs.writeShellScriptBin "startupScript" ''
     udiskie &
@@ -25,7 +20,7 @@ let
   reloadScript = pkgs.writeShellScriptBin "reloadScript" ''
     pkill waybar &
     sleep 0.2
-    swww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any &
+    swww img ~/Pictures/wallpapers/${colors.theme}.jpg --transition-type any &
     waybar & disown
   '';
 

@@ -1,11 +1,6 @@
-{ pkgs, lib, theme, ... }:
+{ pkgs, lib, theme, colors, ... }:
 
 let
-
-  colors = import ./colors.nix {
-    inherit theme;
-    inherit lib;
-  };
 
   p10k = builtins.readFile ./p10k.zsh;
   poweroffWithPrompt = pkgs.writeShellScriptBin "poweroffWithPrompt" ''

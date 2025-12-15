@@ -1,4 +1,4 @@
-{ lib, pkgs, theme, browser, ... }:
+{ lib, pkgs, theme, browser, colors, ... }:
 
 let
   up = "k";
@@ -8,11 +8,6 @@ let
   monitorHeight = 1600;
   monitorWidth = 2560;
   terminal = "ghostty";
-
-  colors = import ../colors.nix {
-    inherit theme;
-    inherit lib;
-  };
 
   startupScript = pkgs.writeShellScriptBin "startupScript" ''
     udiskie &

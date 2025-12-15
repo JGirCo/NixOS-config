@@ -1,9 +1,5 @@
-{ config, theme, lib, ... }:
+{ config, theme, lib, colors, ... }:
 let
-  colors = import ../colors.nix {
-    inherit theme;
-    inherit lib;
-  };
 in with colors; {
   programs.nixvim = {
     colorschemes = if nvimEngine == "builtin" then

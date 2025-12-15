@@ -1,11 +1,6 @@
-{ config, pkgs, lib, theme, font, ... }:
+{ config, pkgs, lib, theme, font, colors, ... }:
 
 let
-  colors = import ../colors.nix {
-    inherit lib;
-    inherit theme;
-
-  };
 
   cssContent = with config.colorScheme.palette;
     with colors; ''

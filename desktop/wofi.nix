@@ -1,11 +1,4 @@
-{ config, lib, pkgs, theme, ... }:
-
-let
-  colors = import ../colors.nix {
-    inherit theme;
-    inherit lib;
-  };
-in with colors; {
+{ config, lib, pkgs, theme, colors, ... }: with colors; {
   programs.wofi = {
     enable = true;
 

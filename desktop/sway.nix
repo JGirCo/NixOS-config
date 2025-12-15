@@ -1,4 +1,4 @@
-{ config, lib, pkgs, theme, font, ... }:
+{ config, lib, pkgs, theme, font, colors, ... }:
 
 let
   mod = "Mod4";
@@ -9,18 +9,6 @@ let
 
   unfocused = "#ffffff00";
   focused_inactive = "#ffffff00";
-  colors = import ../colors.nix {
-    inherit theme;
-    inherit lib;
-  };
-
-  # base = "#${config.colorScheme.palette.base00}";
-  # text = "#${config.colorScheme.palette.base00}";
-  # inactive = "#${config.colorScheme.palette.base03}";
-  # focused = "#${config.colorScheme.palette.base09}";
-  # active = "#${config.colorScheme.palette.base0A}";
-  # urgent = "#${config.colorScheme.palette.base08}";
-  # binding = "#${config.colorScheme.palette.base0E}";
 in with colors; {
   imports = [ ./waybar.nix ];
   home.packages = with pkgs; [
@@ -81,7 +69,8 @@ in with colors; {
           always = true;
         }
         {
-          command = "--no-startup-id ${pkgs.waybar}/bin/waybar";
+          command =
+            "--no-startup-id ${pkgs.waybar}/bin/waybar";
           always = true;
         }
         {

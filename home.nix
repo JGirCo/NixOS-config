@@ -60,6 +60,9 @@ in {
       inherit base0F;
     };
   };
+
+  _module.args.colors = colors;
+
   programs.home-manager.enable = true;
   home = {
     username = "jgirco";

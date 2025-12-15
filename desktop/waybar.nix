@@ -1,11 +1,4 @@
-{ lib, theme, font, ... }:
-
-let
-  colors = import ../colors.nix {
-    inherit theme;
-    inherit lib;
-  };
-in with colors; {
+{ lib, theme, font, colors, ... }: with colors; {
   programs.waybar = {
     enable = true;
     settings = {
