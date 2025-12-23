@@ -21,8 +21,8 @@ in {
     ./neovim/default.nix
 
     ./apps/zathura.nix
-    ./apps/ghostty.nix
     ./apps/tmux.nix
+    # ./apps/ghostty.nix
     ./apps/cava.nix
     ./apps/directwrite/keyd-application-mapper.nix
     ./apps/directwrite/tridactyl.nix

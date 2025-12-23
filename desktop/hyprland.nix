@@ -7,7 +7,7 @@ let
   right = "l";
   monitorHeight = 1600;
   monitorWidth = 2560;
-  terminal = "ghostty";
+  terminal = "kitty";
 
   startupScript = pkgs.writeShellScriptBin "startupScript" ''
     udiskie &
@@ -51,7 +51,7 @@ let
     (scratch-program {
       name = "volume";
       key = "V";
-      command = "ghostty -e wiremix";
+      command = "kitty -e wiremix";
       title = "Volume Control";
     })
 
