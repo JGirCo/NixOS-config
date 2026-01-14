@@ -4,7 +4,7 @@
       enable = true;
       nixvimInjections = true;
 
-      folding = true;
+      folding.enable = true;
       settings = {
         highlight.enable = true;
         indent.enable = true;
@@ -23,10 +23,10 @@
       };
     };
 
-    treesitter-refactor = {
-      enable = true;
-      settings.highlightDefinitions.enable = true;
-    };
+    # treesitter-refactor = {
+    #   enable = true;
+    #   settings.highlightDefinitions.enable = true;
+    # };
 
     hmts.enable = true;
   };

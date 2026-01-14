@@ -32,10 +32,9 @@ let
 
   scratch-program = { name, command, key, title }: {
     keybind = "MOD5, ${key}, togglespecialworkspace, ${name}";
-    winrule =
-      "minsize ${builtins.toString (builtins.floor (monitorWidth * 0.75))} ${
-        builtins.toString (builtins.floor (monitorHeight * 0.75))
-      },title:(${title})(.*)";
+    winrule = "match:title ^(${title})(.*)$, min_size ${
+        builtins.toString (builtins.floor (monitorWidth * 0.75))
+      } ${builtins.toString (builtins.floor (monitorHeight * 0.75))}";
 
     workspace = "special:${name},on-created-empty:[float] ${command}";
   };
@@ -52,7 +51,7 @@ let
       name = "volume";
       key = "V";
       command = "kitty -e wiremix";
-      title = "Volume Control";
+      title = "wiremix";
     })
 
     (scratch-program {
@@ -186,9 +185,9 @@ in with colors; {
         ];
       };
       windowrule = [
-        "animation slide, class:wofi"
-        "stayfocused, class:wofi"
-        "opacity 0.75,class:.*${terminal}.*"
+        "match:class ^wofi$, animation slide"
+        "match:class ^wofi$, stay_focused true"
+        "match:class .*${terminal}.*, opacity 0.75"
       ] ++ map (app: app.winrule) scratch-apps;
 
       workspace = [ ] ++ map (app: app.workspace) scratch-apps;

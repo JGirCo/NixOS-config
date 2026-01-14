@@ -46,17 +46,18 @@
       };
       browser = { name = "zen-twilight"; };
       flake-overlays = [ ];
-      mkHomeConfig = themeName: home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules =
-          [ ./home.nix nixvim.homeModules.nixvim niri.homeModules.niri ];
-        extraSpecialArgs = {
-          inherit inputs;
-          theme = themeName;
-          inherit browser;
-          inherit font;
+      mkHomeConfig = themeName:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules =
+            [ ./home.nix nixvim.homeModules.nixvim niri.homeModules.niri ];
+          extraSpecialArgs = {
+            inherit inputs;
+            theme = themeName;
+            inherit browser;
+            inherit font;
+          };
         };
-      };
       themes = [
         "ayu-light"
         "catppuccin-latte"
@@ -91,8 +92,9 @@
           };
         };
       };
-      homeConfigurations = (lib.genAttrs themes (themeName: mkHomeConfig themeName)) // {
-        "jgirco" = mkHomeConfig "rose-pine";
-      };
+      homeConfigurations =
+        (lib.genAttrs themes (themeName: mkHomeConfig themeName)) // {
+          "jgirco" = mkHomeConfig "rose-pine";
+        };
     };
 }
