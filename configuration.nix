@@ -294,7 +294,7 @@ in {
     plantuml
     openpomodoro-cli
     gemini-cli-bin
-    claude-code
+    opencode
 
     # TUI Tools
     ytermusic
@@ -387,6 +387,9 @@ in {
     "x-scheme-handler/about" = "${browser.name}.desktop";
     "x-scheme-handler/unknown" = "${browser.name}.desktop";
   };
+
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   fonts.fontDir.enable = true;
   fonts.packages = if font.isNF then

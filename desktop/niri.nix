@@ -9,7 +9,7 @@ let
     swww-daemon &
     systemctl --user restart pipewire pipewire-pulse &
     waybar &
-    dunst &
+    swaynotificationcenter &
     mpris-notifier &
     swww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any &
   '';
@@ -32,7 +32,7 @@ in with colors; {
     mpris-notifier
     swww
     waybar
-    dunst
+    swaynotificationcenter
     wofi
     grim
     slurp
@@ -155,12 +155,12 @@ in with colors; {
           open-floating = true;
         }
         {
-          matches = [{ app-id = "^kitty$"; title = ".*wiremix.*"; }];
+          matches = [{ title = "^wiremix-scratchpad$"; }];
           open-on-workspace = "scratch";
           open-floating = true;
         }
         {
-          matches = [{ app-id = "^zen-twilight$"; title = ".*WhatsApp.*"; }];
+          matches = [{ app-id = "^zen-twilight$"; title = ".*whatsapp-scratchpad.*"; }];
           open-on-workspace = "scratch";
           open-floating = true;
         }
@@ -191,8 +191,8 @@ in with colors; {
 
         # Scratchpad keybindings
         "Mod5+B".action.spawn = sh "nscratch -id .blueman-manager-wrapped -s blueman-manager";
-        "Mod5+V".action.spawn = sh "nscratch -t wiremix -s 'kitty -e wiremix'";
-        "Mod5+W".action.spawn = sh "nscratch -t '.*WhatsApp.*Zen Twilight' -s '${browser.name} --new-window web.whatsapp.com -P Whatsapp'";
+        "Mod5+V".action.spawn = sh "nscratch -t 'wiremix-scratchpad' -s 'kitty --name wiremix-scratchpad -e wiremix'";
+        "Mod5+W".action.spawn = sh "nscratch -t 'whatsapp-scratchpad' -s '${browser.name} --class whatsapp-scratchpad --new-window web.whatsapp.com -P Whatsapp'";
 
         # Window Management
         "Mod+Q".action.close-window = [ ];

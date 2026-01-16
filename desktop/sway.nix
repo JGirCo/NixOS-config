@@ -16,7 +16,7 @@ in with colors; {
     # wbg # The only one that works consistently...
     swww
     waybar
-    dunst
+    swaynotificationcenter
     wofi
     swayfx
     grim

@@ -68,7 +68,7 @@ in with colors; {
     mpris-notifier
     swww
     waybar
-    dunst
+    swaynotificationcenter
     wofi
     grim
     slurp
