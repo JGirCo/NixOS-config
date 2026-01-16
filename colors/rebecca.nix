@@ -19,6 +19,7 @@
   key = {
     wezterm = "rebecca";
     nvim = "rebecca";
+    darklight = "prefer-dark";
   };
   nvimEngine = "base16";
 }

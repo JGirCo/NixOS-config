@@ -19,5 +19,6 @@
   key = {
     wezterm = "Ayu Light (Gogh)";
     nvim = "ayu";
+    darklight = "prefer-light";
   };
 }

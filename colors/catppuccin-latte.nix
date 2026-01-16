@@ -19,5 +19,6 @@
   key = {
     wezterm = "catppuccin-latte";
     nvim = "catppuccin";
+    darklight = "prefer-light";
   };
 }

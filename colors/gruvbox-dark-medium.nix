@@ -19,5 +19,6 @@
   key = {
     wezterm = "Gruvbox Dark (Gogh)";
     nvim = "gruvbox";
+    darklight = "prefer-dark";
   };
 }

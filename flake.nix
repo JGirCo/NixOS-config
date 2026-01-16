@@ -27,9 +27,11 @@
     };
     niri.url = "github:sodiboo/niri-flake";
     niri.inputs.nixpkgs.follows = "nixpkgs";
+    niri-scratchpad.url = "github:gvolpe/niri-scratchpad";
+    niri-scratchpad.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, nix-flatpak, niri, ... }@inputs:
+  outputs = { nixpkgs, home-manager, nixvim, nix-flatpak, niri, niri-scratchpad, ... }@inputs:
     let
       # System settings
       system = "x86_64-linux";

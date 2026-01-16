@@ -16,7 +16,10 @@
   purple = "673ab7";
   orange = "ff6f00";
 
-  key = { nvim = "oxocarbon"; };
+  key = { 
+    nvim = "oxocarbon";
+    darklight = "prefer-light";
+  };
   nvimEngine = "builtin";
   isBase16Builtin = false;
   base16 = {

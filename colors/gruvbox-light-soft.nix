@@ -16,5 +16,8 @@
   purple = "8f3f71";
   orange = "af3a03";
 
-  key = { nvim = "gruvbox"; };
+  key = { 
+    nvim = "gruvbox";
+    darklight = "prefer-light";
+  };
 }

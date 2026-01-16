@@ -12,7 +12,7 @@ in {
     ./desktop/wofi.nix
     ./desktop/gtk.nix
     ./desktop/dunst.nix
-    # ./desktop/niri.nix
+    ./desktop/niri.nix
 
     ./apps/wezterm.nix
     ./apps/kitty.nix

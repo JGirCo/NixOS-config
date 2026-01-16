@@ -19,6 +19,7 @@
   key = {
     wezterm = "Dracula";
     nvim = "dracula";
+    darklight = "prefer-dark";
   };
   isBase16Builtin = false;
   base16 = {

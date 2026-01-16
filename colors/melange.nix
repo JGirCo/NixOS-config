@@ -19,6 +19,7 @@
   key = {
     wezterm = "Stella (base16)";
     nvim = "melange";
+    darklight = "prefer-light";
   };
   nvimEngine = "builtin";
   isBase16Builtin = false;

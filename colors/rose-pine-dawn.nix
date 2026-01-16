@@ -19,5 +19,6 @@
   key = {
     wezterm = "rose-pine-dawn";
     nvim = "rose-pine";
+    darklight = "prefer-light";
   };
 }

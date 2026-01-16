@@ -78,11 +78,10 @@ in {
     };
   };
 
-  programs.hyprland = { enable = true; };
-
   boot.kernelModules = [ "lenovo-legion-module" "amdgpu" "k10temp" ];
   boot.extraModulePackages = with config.boot.kernelPackages;
     [ lenovo-legion-module ];
+  boot.extraModprobeConfig = "options snd_hda_intel power_save=0";
 
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="048d", ATTR{idProduct}=="c994", MODE="0666"'';
@@ -295,6 +294,7 @@ in {
     plantuml
     openpomodoro-cli
     gemini-cli-bin
+    claude-code
 
     # TUI Tools
     ytermusic
@@ -342,6 +342,8 @@ in {
 
     yt-dlp
     parabolic
+    discord
+    darktable
 
     # Miscelaneous
     mpris-scrobbler
@@ -378,7 +380,7 @@ in {
   };
 
   xdg.mime.defaultApplications = {
-    "inode/directory" = "pcmanfm.desktop";
+    "inode/directory" = "nautilus.desktop";
     "image/png" = "vipsdisp.desktop";
     "x-scheme-handler/http" = "${browser.name}.desktop";
     "x-scheme-handler/https" = "${browser.name}.desktop";

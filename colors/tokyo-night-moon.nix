@@ -19,6 +19,7 @@
   key = {
     wezterm = "tokyonight";
     nvim = "tokyonight";
+    darklight = "prefer-dark";
   };
 
   nvimEngine = "base16";
