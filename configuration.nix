@@ -164,6 +164,7 @@ in {
     # colormix_col2 = "0x005BCEFA";
     # colormix_col3 = "0x02FFFFFF";
   };
+  programs.hyprland.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -295,6 +296,7 @@ in {
     openpomodoro-cli
     gemini-cli-bin
     opencode
+    claude-code
 
     # TUI Tools
     ytermusic
@@ -311,6 +313,7 @@ in {
     ncdu
 
     # GUI Tools
+    pureref
     cavalier
     mqttx
     stm32cubemx
