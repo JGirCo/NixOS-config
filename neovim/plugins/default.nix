@@ -11,21 +11,18 @@
     ./hop.nix
     ./undotree.nix
     ./image.nix
-    # ./surround.nix
     ./which-key.nix
     ./none-ls.nix
-    # ./floaterm.nix
-    # ./harpoon.nix
     ./lsp.nix
     ./lualine.nix
-    # ./markdown-preview.nix
     ./neo-tree.nix
-    # ./startify.nix
     ./tagbar.nix
     ./telescope.nix
     ./treesitter.nix
     ./hardtime.nix
-    # ./vimtex.nix
+    ./gitsigns.nix
+    ./goto-preview.nix
+    ./trouble.nix
   ];
 
   programs.nixvim = {
@@ -42,18 +39,7 @@
       smear-cursor.enable = true;
       treesitter-context = {
         enable = true;
-        # settings = { separator = ""; };
       };
-      # gitsigns = {
-      #   enable = true;
-      #   settings = {
-      #     signs = {
-      #       add.text = "+";
-      #       change.text = "~";
-      #     };
-      #   };
-      # };
-      # nvim-autopairs.enable = true;
       plantuml-syntax.enable = true;
 
       colorizer = {
@@ -71,7 +57,6 @@
         };
       };
       nix.enable = true;
-      # rainbow-delimiters.enable = true;
       indent-blankline = {
         enable = true;
         settings.scope = {
@@ -81,14 +66,7 @@
           show_start = true;
         };
       };
-
-      # transparent = {
-      #   enable = true;
-      #   autoLoad = true;
-      # };
     };
-    # extraPlugins = [ pkgs.vimPlugins.tabby-nvim ];
-    # extraConfigLua = "require('tabby').setup()";
   };
 
 }

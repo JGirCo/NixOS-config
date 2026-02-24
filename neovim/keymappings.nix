@@ -1,4 +1,5 @@
-{ config, lib, ... }: {
+{ config, lib, ... }:
+{
   programs.nixvim = {
     globals = {
       mapleader = " ";
@@ -67,7 +68,7 @@
         options = {
           silent = true;
           noremap = true;
-          desc = "nav to left window";
+          desc = "Nav to left window";
         };
       }
 
@@ -78,7 +79,7 @@
         options = {
           silent = true;
           noremap = true;
-          desc = "nav to right window";
+          desc = "Nav to right window";
         };
       }
 
@@ -89,7 +90,7 @@
         options = {
           silent = true;
           noremap = true;
-          desc = "nav to bottom window";
+          desc = "Nav to bottom window";
         };
       }
 
@@ -100,7 +101,7 @@
         options = {
           silent = true;
           noremap = true;
-          desc = "nav to upper window";
+          desc = "Nav to upper window";
         };
       }
 
@@ -111,7 +112,7 @@
         options = {
           silent = true;
           noremap = true;
-          desc = "previous buffer";
+          desc = "Previous buffer";
         };
       }
 
@@ -122,7 +123,18 @@
         options = {
           silent = true;
           noremap = true;
-          desc = "next buffer";
+          desc = "Next buffer";
+        };
+      }
+
+      {
+        mode = [ "n" ];
+        key = "<M-w>";
+        action = "<cmd>bd<CR>";
+        options = {
+          silent = true;
+          noremap = true;
+          desc = "Close buffer";
         };
       }
 

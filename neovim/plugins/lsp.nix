@@ -1,11 +1,13 @@
 {
   programs.nixvim = {
-    keymaps = [{
-      mode = [ "n" ];
-      key = "<leader>F";
-      options.desc = "Implement fix";
-      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
-    }];
+    keymaps = [
+      {
+        mode = [ "n" ];
+        key = "<leader>F";
+        options.desc = "Implement fix";
+        action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+      }
+    ];
     lsp.inlayHints.enable = true;
     plugins = {
       lsp = {
@@ -52,12 +54,14 @@
         servers = {
           tinymist.enable = true;
           ts_ls.enable = true;
-          nixd = { enable = true; };
-          # rust_analyzer = {
-          #   enable = true;
-          #   installRustc = true;
-          #   installCargo = true;
-          # };
+          nixd = {
+            enable = true;
+          };
+          rust_analyzer = {
+            enable = true;
+            installRustc = true;
+            installCargo = true;
+          };
           pylsp = {
             enable = true;
             package = null;
