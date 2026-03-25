@@ -4,25 +4,36 @@
 
 flake-overlays:
 
-{ inputs, config, pkgs, lib, browser, font, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  lib,
+  browser,
+  font,
+  ...
+}:
 
 with pkgs;
 let
   maplefont = import ./derivations/maple-font.nix { inherit pkgs; };
-  legion-kb-rgb =
-    inputs.legion-kb-rgb.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  legion-kb-rgb = inputs.legion-kb-rgb.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-  patchDesktop = pkg: from: to:
-    lib.hiPrio (pkgs.runCommand "offload-${pkg.name}" { } ''
-      ${coreutils}/bin/mkdir -p $out/share/applications
-      for file in ${pkg}/share/applications/*.desktop; do
-        base=$(${coreutils}/bin/basename "$file")
-        ${gnused}/bin/sed 's#${from}#${to}#g' "$file" > $out/share/applications/$base
-      done
-    '');
+  patchDesktop =
+    pkg: from: to:
+    lib.hiPrio (
+      pkgs.runCommand "offload-${pkg.name}" { } ''
+        ${coreutils}/bin/mkdir -p $out/share/applications
+        for file in ${pkg}/share/applications/*.desktop; do
+          base=$(${coreutils}/bin/basename "$file")
+          ${gnused}/bin/sed 's#${from}#${to}#g' "$file" > $out/share/applications/$base
+        done
+      ''
+    );
 
   GPUOffloadApp = pkg: patchDesktop pkg "^Exec=" "Exec=nvidia-offload ";
-in {
+in
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -38,10 +49,12 @@ in {
 
   powerManagement.enable = true;
   virtualisation.docker.enable = true;
+  boot.initrd.kernelModules = [ "nvme" ];
+  boot.resumeDevice = "/dev/disk/by-uuid/4b3336c0-2ee7-47ee-9ae8-4842776879e4";
+  boot.kernelParams = [ "resume=UUID=4b3336c0-2ee7-47ee-9ae8-4842776879e4" ];
   hardware = {
     bluetooth.enable = true; # enables support for Bluetooth
-    bluetooth.powerOnBoot =
-      true; # powers up the default Bluetooth controller on boot
+    bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
     graphics.enable = true;
     amdgpu.initrd.enable = false;
     nvidia = {
@@ -78,17 +91,25 @@ in {
     };
   };
 
-  boot.kernelModules = [ "lenovo-legion-module" "amdgpu" "k10temp" ];
-  boot.extraModulePackages = with config.boot.kernelPackages;
-    [ lenovo-legion-module ];
+  boot.kernelModules = [
+    "lenovo-legion-module"
+    "amdgpu"
+    "k10temp"
+  ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ lenovo-legion-module ];
   boot.extraModprobeConfig = "options snd_hda_intel power_save=0";
 
-  services.udev.extraRules = ''
-    SUBSYSTEM=="usb", ATTR{idVendor}=="048d", ATTR{idProduct}=="c994", MODE="0666"'';
+  services.udev.extraRules = ''SUBSYSTEM=="usb", ATTR{idVendor}=="048d", ATTR{idProduct}=="c994", MODE="0666"'';
 
   # Experimental features
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" "jgirco" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+  nix.settings.trusted-users = [
+    "root"
+    "jgirco"
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -97,27 +118,29 @@ in {
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  services.grafana = {
-    enable = true;
-    settings = {
-      server = {
-        # Listening Address - Use 127.0.0.1 for local access
-        http_addr = "127.0.0.1";
-        # and Port - Default is 3000
-        http_port = 3000;
-        # Grafana needs to know on which domain and URL it's running
-        # Set domain to localhost
-        domain = "localhost";
-        # Set root_url to use http and localhost:port, without a subpath
-        root_url = "http://localhost:3000/";
-        # Set to false since it's running at the root of the domain/port
-        serve_from_sub_path = false;
-      };
-    };
-  };
+  # services.grafana = {
+  #   enable = true;
+  #   settings = {
+  #     server = {
+  #       # Listening Address - Use 127.0.0.1 for local access
+  #       http_addr = "127.0.0.1";
+  #       # and Port - Default is 3000
+  #       http_port = 3000;
+  #       # Grafana needs to know on which domain and URL it's running
+  #       # Set domain to localhost
+  #       domain = "localhost";
+  #       # Set root_url to use http and localhost:port, without a subpath
+  #       root_url = "http://localhost:3000/";
+  #       # Set to false since it's running at the root of the domain/port
+  #       serve_from_sub_path = false;
+  #     };
+  #   };
+  # };
 
   # Enable networking
-  networking.networkmanager = { enable = true; };
+  networking.networkmanager = {
+    enable = true;
+  };
 
   # Enable network manager applet
   programs.nm-applet.enable = true;
@@ -178,7 +201,9 @@ in {
       default = {
         ids = [ "*" ];
         settings = {
-          main = { "f23+leftmeta+leftshift" = "layer(nav)"; };
+          main = {
+            "f23+leftmeta+leftshift" = "layer(nav)";
+          };
           # "shift+alt" = {
           #   "h" = "left";
           #   "k" = "up";
@@ -196,7 +221,12 @@ in {
     };
   };
 
-  users.groups.keyd = { members = [ "root" "jgirco" ]; };
+  users.groups.keyd = {
+    members = [
+      "root"
+      "jgirco"
+    ];
+  };
   systemd.services.keyd.serviceConfig.CapabilityBoundingSet = [ "CAP_SETGID" ];
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -231,21 +261,29 @@ in {
     lockerCommand = "${pkgs.gtklock}/bin/gtklock";
   };
 
-  security.pam.services = { gtklock = { }; };
+  security.pam.services = {
+    gtklock = { };
+  };
 
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=yes
-    AllowHibernation=yes
-    AllowHybridSleep=yes
-    AllowSuspendThenHibernate=yes
-  '';
+  systemd.sleep.settings.Sleep = {
+    AllowSuspend = "yes";
+    AllowHibernation = "yes";
+    AllowSuspendThenHibernate = "yes";
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jgirco = {
     isNormalUser = true;
     description = "Juan Manuel Giraldo";
-    extraGroups =
-      [ "docker" "networkmanager" "wheel" "video" "input" "keyd" "sensors" ];
+    extraGroups = [
+      "docker"
+      "networkmanager"
+      "wheel"
+      "video"
+      "input"
+      "keyd"
+      "sensors"
+    ];
     shell = pkgs.zsh;
   };
 
@@ -258,7 +296,10 @@ in {
 
   services.flatpak = {
     enable = true;
-    packages = [ "de.z_ray.OptimusUI" "io.github.qwersyk.Newelle" ];
+    packages = [
+      "de.z_ray.OptimusUI"
+      "io.github.qwersyk.Newelle"
+    ];
   };
   environment.systemPackages = with pkgs; [
     # Basic tools
@@ -396,26 +437,31 @@ in {
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   fonts.fontDir.enable = true;
-  fonts.packages = if font.isNF then
-    with pkgs; [ nerdfonts ]
-  else [
-    maplefont
-    pkgs.atkinson-hyperlegible-next
-    pkgs.lexend
-    pkgs.ibm-plex
-  ];
+  fonts.packages =
+    if font.isNF then
+      with pkgs; [ nerdfonts ]
+    else
+      [
+        maplefont
+        pkgs.atkinson-hyperlegible-next
+        pkgs.lexend
+        pkgs.ibm-plex
+      ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs = {
-    direnv = { enable = true; };
+    direnv = {
+      enable = true;
+    };
     neovim = {
       enable = true;
       defaultEditor = true;
     };
     zsh.enable = true;
-    light.enable = true;
-    kdeconnect = { enable = true; };
+    kdeconnect = {
+      enable = true;
+    };
     dconf.enable = true;
     # firefox = {
     #   enable = true;
@@ -426,12 +472,9 @@ in {
 
     steam = {
       enable = true;
-      remotePlay.openFirewall =
-        true; # Open ports in the firewall for Steam Remote Play
-      dedicatedServer.openFirewall =
-        true; # Open ports in the firewall for Source Dedicated Server
-      localNetworkGameTransfers.openFirewall =
-        true; # Open ports in the firewall for Steam Local Network Game Transfers
+      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
     };
 
     nh = {

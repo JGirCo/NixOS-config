@@ -96,24 +96,25 @@ with colors;
     gtklock-powerbar-module
     gtklock-playerctl-module
     gtklock-userinfo-module
+    brightnessctl
   ];
   services.hypridle = {
     enable = true;
     settings = {
       listener = [
         {
-          timeout = 121; # 2 min.
-          on-timeout = "light -O && light -T 0.5"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
-          on-resume = "light -I"; # monitor backlight restore.
-        }
-        {
-          timeout = 120; # 2 min
+          timeout = 300; # 5 min
           on-timeout = "${prelockScript}/bin/prelockScript";
         }
         {
-          timeout = 300; # 5 min
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
+          timeout = 120; # 2 min.
+          on-timeout = "brightnessctl -s; brightnessctl set $(( $(brightnessctl get) / 2 ))"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
+          on-resume = "brightnessctl -r"; # monitor backlight restore.
+        }
+        {
+          timeout = 360; # 6 min.
+          on-timeout = "brightnessctl -s; brightnessctl -n"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
+          on-resume = "brightnessctl -r"; # monitor backlight restore.
         }
         {
           timeout = 600; # 10 min
@@ -153,8 +154,8 @@ with colors;
         ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        ",XF86MonBrightnessUp, exec, light -A 5"
-        ",XF86MonBrightnessDown, exec, light -U 5"
+        ",XF86MonBrightnessUp, exec, brightnessctl set 5%+"
+        ",XF86MonBrightnessDown, exec, brightnessctl set 5%-"
       ];
 
       bindl = [
