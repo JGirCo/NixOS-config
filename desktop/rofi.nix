@@ -1,170 +1,116 @@
-{ config, lib, pkgs, theme, font, colors, ... }: with colors; {
+{
+  config,
+  lib,
+  pkgs,
+  theme,
+  font,
+  colors,
+  ...
+}:
+let
+  inherit (config.lib.formats.rasi) mkLiteral;
+in
+with colors;
+{
   programs.rofi = {
     enable = true;
-    theme = ''
-      /**
-       *
-       * Author : Aditya Shakya (adi1090x)
-       * Github : @adi1090x
-       *
-       * Rofi Theme File
-       * Rofi Version: 1.7.3
-       **/
+    font = "${font.sans} 15";
 
-      /*****----- Configuration -----*****/
-      configuration {
-      	modi:                       "drun";
-          show-icons:                 true;
-          display-drun:               "";
-          display-run:                "";
-          display-filebrowser:        "";
-          display-window:             "";
-      	drun-display-format:        "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
-      	window-format:              "{w}   {c}   {t}";
-      }
+    theme = {
+      "*" = {
+        background-color = mkLiteral "transparent";
+        text-color = mkLiteral "#${text2}";
+        margin = 0;
+        padding = 0;
+        spacing = 0;
+      };
 
-      /*****----- Global Properties -----*****/
-      * {
-          font:                        "Iosevka Nerd Font 10";
-      }
+      window = {
+        location = mkLiteral "center";
+        anchor = mkLiteral "center";
 
-      /*****----- Main Window -----*****/
-      window {
-          /* properties for window widget */
-          transparency:                "real";
-          location:                    center;
-          anchor:                      center;
-          fullscreen:                  false;
-          width:                       800px;
-          x-offset:                    0px;
-          y-offset:                    0px;
+        # Relative sizing
+        width = mkLiteral "30%";
+        # height = mkLiteral "40%";
 
-          /* properties for all widgets */
-          enabled:                     true;
-          margin:                      0px;
-          padding:                     0px;
-          border-radius:               20px;
-          cursor:                      "default";
-          background-color:            #162022;
-          background-image:            url("~/Pictures/wallpapers/rose-pine.jpg", width);
-      }
+        # Shifts the window slightly up to match Wofi's top=25%
 
-      /*****----- Main Box -----*****/
-      mainbox {
-          enabled:                     true;
-          spacing:                     20px;
-          padding:                     40px;
-          background-color:            transparent;
-          children:                    [ "inputbar", "listview" ];
-      }
+        border-radius = mkLiteral "20px";
+        padding = mkLiteral "20px";
+        background-image = mkLiteral ''url("/home/jgirco/Pictures/wallpapers/${theme}.jpg", width)'';
+        border = mkLiteral "2px solid";
+        border-color = mkLiteral "#${focused}";
+      };
 
-      /*****----- Inputbar -----*****/
-      inputbar {
-          enabled:                     true;
-          spacing:                     0px;
-          margin:                      0px 200px 0px 0px;
-          padding:                     25px;
-          border:                      2px;
-          border-radius:               20px;
-          border-color:                white;
-          background-image:            url("~/Pictures/wallpapers/rose-pine-dawn.jpg", none);
-          children:                    [ "textbox-prompt-colon", "entry" ];
-      }
+      mainbox = {
+        spacing = mkLiteral "15px"; # Creates the gap between the search bar and the list
+        children = mkLiteral "[ inputbar, listview ]";
+      };
 
-      textbox-prompt-colon {
-          enabled:                     true;
-          expand:                      false;
-          padding:                     8px 11px;
-          border-radius:               8px;
-          background-color:            white;
-          text-color:                  black;
-          str:                         "";
-      }
-      entry {
-          enabled:                     true;
-          padding:                     8px 12px;
-          border:                      0px;
-          background-color:            transparent;
-          text-color:                  white;
-          cursor:                      text;
-          placeholder:                 "Search...";
-          placeholder-color:           inherit;
-          vertical-align:              0.5;
-          horizontal-align:            0.0;
-      }
+      inputbar = {
+        padding = mkLiteral "10px";
+        border = mkLiteral "2px solid";
+        border-radius = mkLiteral "10px";
+        border-color = mkLiteral "#${focused}";
+        background-color = mkLiteral "#${base}";
+        children = mkLiteral "[ entry ]";
+      };
 
-      /*****----- Listview -----*****/
-      listview {
-          enabled:                     true;
-          columns:                     1;
-          lines:                       8;
-          cycle:                       true;
-          dynamic:                     true;
-          scrollbar:                   false;
-          layout:                      vertical;
-          reverse:                     false;
-          fixed-height:                true;
-          fixed-columns:               true;
+      entry = {
+        placeholder = "Search...";
+        placeholder-color = mkLiteral "#${text2}";
+        cursor = mkLiteral "text";
+        vertical-align = mkLiteral "0.5";
+      };
 
-          spacing:                     10px;
-          margin:                      0px 200px 0px 0px;
-          padding:                     10px;
-          border:                      2px;
-          border-radius:               20px;
-          border-color:                white;
-          background-image:            url("~/Pictures/wallpapers/tokyo-night-moon.jpg", width);
-          cursor:                      "default";
-      }
+      listview = {
+        columns = 1;
+        lines = 8;
+        cycle = true;
+        dynamic = true;
+        scrollbar = false;
+        layout = mkLiteral "vertical";
+        spacing = mkLiteral "5px"; # Replaces Wofi's margin on entries
 
-      /*****----- Elements -----*****/
-      element {
-          enabled:                     true;
-          spacing:                     10px;
-          margin:                      0px;
-          padding:                     5px 10px;
-          border:                      0px;
-          border-radius:               18px;
-          border-color:                white;
-          background-color:            transparent;
-          text-color:                  #162022;
-          cursor:                      pointer;
-      }
-      element selected.normal {
-          background-color:            #162022;
-          text-color:                  white;
-      }
-      element-icon {
-          background-color:            transparent;
-          size:                        32px;
-          cursor:                      inherit;
-      }
-      element-text {
-          background-color:            inherit;
-          text-color:                  inherit;
-          cursor:                      inherit;
-          vertical-align:              0.5;
-          horizontal-align:            0.0;
-      }
+        background-color = mkLiteral "#${base}";
+        border-radius = mkLiteral "10px";
+        padding = mkLiteral "10px";
+      };
 
-      /*****----- Message -----*****/
-      error-message {
-          padding:                     20px;
-          background-color:            transparent;
-          text-color:                  white;
-      }
-      message {
-          padding:                     0px;
-          background-color:            inherit;
-          text-color:                  #FF9030;
-      }
-      textbox {
-          padding:                     0px;
-          border-radius:               0px;
-          background-color:            inherit;
-          text-color:                  inherit;
-          vertical-align:              0.5;
-          horizontal-align:            0.0;
-      }
-    '';
+      element = {
+        padding = mkLiteral "8px 10px";
+        border-radius = mkLiteral "10px";
+        background-color = mkLiteral "#${inactive}";
+        cursor = mkLiteral "pointer";
+        children = mkLiteral "[ element-icon, element-text ]";
+      };
+
+      "element selected" = {
+        background-color = mkLiteral "#${focused}";
+      };
+
+      "element-text" = {
+        text-color = mkLiteral "#${base}";
+        vertical-align = mkLiteral "0.5";
+      };
+
+      "element-text selected" = {
+        text-color = mkLiteral "#${base}";
+      };
+
+      "element-icon" = {
+        size = mkLiteral "24px";
+        padding = mkLiteral "0 10px 0 0";
+      };
+
+      message = {
+        padding = mkLiteral "10px";
+      };
+
+      error-message = {
+        padding = mkLiteral "20px";
+        background-color = mkLiteral "#${base}";
+      };
+    };
   };
 }
