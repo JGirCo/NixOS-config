@@ -1,13 +1,32 @@
-{ lib, theme, font, colors, ... }: with colors; {
+{
+  lib,
+  theme,
+  font,
+  colors,
+  ...
+}:
+with colors;
+{
   programs.waybar = {
     enable = true;
     settings = {
       mainBar = {
         position = "top";
-        modules-left =
-          [ "pulseaudio" "cava" "backlight" "memory" "cpu" "temperature" ];
-        modules-center = [ "hyprland/workspaces" ];
-        modules-right = [ "keyboard-state" "battery" "clock" "tray" ];
+        modules-left = [
+          "pulseaudio"
+          "cava"
+          "backlight"
+          "memory"
+          "cpu"
+          "temperature"
+        ];
+        modules-center = [ "niri/workspaces" ];
+        modules-right = [
+          "keyboard-state"
+          "battery"
+          "clock"
+          "tray"
+        ];
 
         "cpu" = {
           interval = 10;
@@ -26,7 +45,17 @@
 
         "backlight" = {
           format = "{percent}% {icon}";
-          format-icons = [ "" "" "" "" "" "" "" "" "" ];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
 
         "cava" = {
@@ -35,19 +64,30 @@
           bars = 12;
           bar_delimiter = 0;
           method = "pulse";
-          format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+          format-icons = [
+            "▁"
+            "▂"
+            "▃"
+            "▄"
+            "▅"
+            "▆"
+            "▇"
+            "█"
+          ];
         };
 
         "pulseaudio" = {
           format = "{volume}% {icon}";
-          format-icons = [ " " " " " " ];
+          format-icons = [
+            " "
+            " "
+            " "
+          ];
           format-muted = " ";
           on-click = "pavucontrol";
         };
 
-        "hyprland/workspaces" = {
-          disable-scroll = true;
-          all-outputs = true;
+        "niri/workspaces" = {
           format = "{icon}";
           format-icons = {
             "1" = "Ⅰ";
@@ -73,11 +113,19 @@
           format-full = "{capacity}% {icon}";
           format-charging = "{capacity}% 󱐋{icon}";
           format-plugged = "";
-          format-icons = [ " " " " " " " " " " ];
+          format-icons = [
+            " "
+            " "
+            " "
+            " "
+            " "
+          ];
         };
         keyboard-state = {
           numlock = true;
-          format = { numlock = "{icon}"; };
+          format = {
+            numlock = "{icon}";
+          };
           format-icons = {
             unlocked = "<span color='#${purple}'><b>     </b></span>";
             locked = "<span color='#${orange}'><b>1 2 3 4</b></span>";
@@ -91,7 +139,6 @@
           calendar = {
             mode = "month";
             mode-mon-col = 3;
-            # on-scroll = 1;
             format = {
               months = "<span color='#${text2}'><b>{}</b></span>";
               days = "<span color='#${inactive}'>{}</span>";
@@ -101,8 +148,14 @@
           };
           actions = {
             on-click-right = "mode";
-            on-scroll-up = [ "tz_up" "shift_up" ];
-            on-scroll-down = [ "tz_down" "shift_down" ];
+            on-scroll-up = [
+              "tz_up"
+              "shift_up"
+            ];
+            on-scroll-down = [
+              "tz_down"
+              "shift_down"
+            ];
           };
         };
       };
@@ -152,7 +205,6 @@
         background: #${green};
         color: #${base};
         border-radius: 0px 999px 999px 0px;
-        /* margin-right: 4px; */
         margin-left: 0px;
         padding-left: 8px;
         padding-right: 8px;
@@ -202,9 +254,7 @@
         background: #${orange};
       }
 
-
       #tray menu {
-        /* Your custom styles for the tray’s context menu */
         border-radius: 16px;
       }
 
@@ -254,29 +304,29 @@
       }
 
        #workspaces {
-          transition: none;
-          background: #${inactive};
+         transition: none;
+         background: #${inactive};
        }
 
        #workspaces button {
-          background: transparent;
-          color: #${base};
-          padding-bottom: 3px;
-          margin: 0px;
+         background: transparent;
+         color: #${base};
+         padding-bottom: 3px;
+         margin: 0px;
        }
 
        #workspaces button.active {
-          background: #${focused};
-          color: #${base};
-          animation-name: selection;
-          animation-duration: 1s;
-          padding-left: 8px;
-          padding-right: 8px;
+         background: #${focused};
+         color: #${base};
+         animation-name: selection;
+         animation-duration: 1s;
+         padding-left: 8px;
+         padding-right: 8px;
        }
 
        #workspaces button.urgent {
-          background: #${urgent};
-          color: #${base};
+         background: #${urgent};
+         color: #${base};
        }
     '';
   };

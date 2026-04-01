@@ -188,6 +188,7 @@ in
     # colormix_col3 = "0x02FFFFFF";
   };
   programs.hyprland.enable = true;
+  programs.niri.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {

@@ -39,7 +39,7 @@ let
     --selected.background "#${colors.focused}" \
     --cursor.foreground "#${colors.focused}" \
     --item.foreground "#${colors.inactive}" \
-    "ayu-light" "catppuccin-latte" "dracula" "everforest-light" "gruvbox-dark-medium" "gruvbox-light-medium" "gruvbox-light-soft" "kanagawa-light" "melange" "oxocarbon-light" "rebecca" "rose-pine-dawn" "rose-pine" "saga" "template" "tokyo-night-moon" "trans")
+    "ayu-light" "catppuccin-macchiato" "catppuccin-latte" "dracula" "everforest-light" "gruvbox-dark-medium" "gruvbox-light-medium" "gruvbox-light-soft" "kanagawa-light" "melange" "oxocarbon-light" "rebecca" "rose-pine-dawn" "rose-pine" "saga" "template" "tokyo-night-moon" "trans")
     if [ -n "$THEME" ]; then
       home-manager switch --flake ~/.nixos/#$THEME
     fi

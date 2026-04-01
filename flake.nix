@@ -27,11 +27,29 @@
     };
     niri.url = "github:sodiboo/niri-flake";
     niri.inputs.nixpkgs.follows = "nixpkgs";
-    niri-scratchpad.url = "github:gvolpe/niri-scratchpad";
-    niri-scratchpad.inputs.nixpkgs.follows = "nixpkgs";
+
+    niri-animations = {
+      url = "github:jgarza9788/niri-animation-collection";
+      flake = false;
+    };
+
+    elephant.url = "github:abenz1267/elephant";
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.elephant.follows = "elephant";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, nix-flatpak, niri, niri-scratchpad, ... }@inputs:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      nixvim,
+      nix-flatpak,
+      walker,
+      niri,
+      ...
+    }@inputs:
     let
       # System settings
       system = "x86_64-linux";
@@ -46,13 +64,20 @@
         serif = "IBM Plex Serif";
 
       };
-      browser = { name = "zen-twilight"; };
+      browser = {
+        name = "zen-twilight";
+      };
       flake-overlays = [ ];
-      mkHomeConfig = themeName:
+      mkHomeConfig =
+        themeName:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules =
-            [ ./home.nix nixvim.homeModules.nixvim niri.homeModules.niri ];
+          modules = [
+            ./home.nix
+            nixvim.homeModules.nixvim
+            walker.homeManagerModules.default
+            niri.homeModules.niri
+          ];
           extraSpecialArgs = {
             inherit inputs;
             theme = themeName;
@@ -63,6 +88,7 @@
       themes = [
         "ayu-light"
         "catppuccin-latte"
+        "catppuccin-macchiato"
         "dracula"
         "everforest-light"
         "gruvbox-dark-medium"
@@ -79,7 +105,8 @@
         "tokyo-night-moon"
         "trans"
       ];
-    in {
+    in
+    {
       nixosConfigurations = {
         nixos = lib.nixosSystem {
           inherit system;
@@ -94,9 +121,8 @@
           };
         };
       };
-      homeConfigurations =
-        (lib.genAttrs themes (themeName: mkHomeConfig themeName)) // {
-          "jgirco" = mkHomeConfig "rose-pine";
-        };
+      homeConfigurations = (lib.genAttrs themes (themeName: mkHomeConfig themeName)) // {
+        "jgirco" = mkHomeConfig "rose-pine";
+      };
     };
 }

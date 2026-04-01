@@ -23,6 +23,8 @@ let
     kdeconnectd &
     # legion-kb-rgb set -e Static -c 100,100,100,100,100,100,100,100,100,100,100,100
     systemctl --user restart pipewire pipewire-pulse &
+    elephant &
+    walker --gapplication-service &
   '';
 
   reloadScript = pkgs.writeShellScriptBin "reloadScript" ''
@@ -86,7 +88,6 @@ with colors;
     swww
     waybar
     swaynotificationcenter
-    wofi
     grim
     slurp
     swappy
@@ -105,11 +106,6 @@ with colors;
         {
           timeout = 300; # 5 min
           on-timeout = "${prelockScript}/bin/prelockScript";
-        }
-        {
-          timeout = 120; # 2 min.
-          on-timeout = "brightnessctl -s; brightnessctl set $(( $(brightnessctl get) / 2 ))"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
-          on-resume = "brightnessctl -r"; # monitor backlight restore.
         }
         {
           timeout = 360; # 6 min.
@@ -204,8 +200,8 @@ with colors;
         ];
       };
       windowrule = [
-        "match:class ^wofi$, animation slide"
-        "match:class ^wofi$, stay_focused true"
+        "match:class ^walker$, animation slide"
+        "match:class ^walker$, stay_focused true"
         "match:class .*${terminal}.*, opacity 0.75"
       ]
       ++ map (app: app.winrule) scratch-apps;
@@ -222,7 +218,6 @@ with colors;
         force_split = 2;
       };
 
-      # bindr = [ "$mod, SUPER_L,exec,pkill wofi || wofi --show drun" ];
       binde = [
         "$mod ALT, ${right}, resizeactive, 10 0"
         "$mod ALT, ${left}, resizeactive, -10 0"
@@ -231,12 +226,11 @@ with colors;
       ];
 
       bind = [
-        "$mod, D ,exec,pkill wofi || wofi --show drun"
+        "$mod, D ,exec,walker"
         "$mod, T, exec, ${terminal}"
         "$mod, Q, killactive"
         "$mod, F, fullscreen"
         "$mod, B, exec, ${browser.name}"
-        "$mod, R, exec, rofi -show drun"
 
         "$mod, ${left}, movefocus, l"
         "$mod, ${right}, movefocus, r"
