@@ -246,8 +246,8 @@ with colors;
         # Focus
         "Mod+H".action.focus-column-left = [ ];
         "Mod+L".action.focus-column-right = [ ];
-        "Mod+K".action.focus-window-up = [ ];
-        "Mod+J".action.focus-window-down = [ ];
+        "Mod+K".action.focus-window-or-workspace-up = [ ];
+        "Mod+J".action.focus-window-or-workspace-down = [ ];
 
         # Move
         "Mod+Shift+H".action.move-column-left = [ ];

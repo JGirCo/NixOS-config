@@ -12,37 +12,49 @@ with colors;
     settings = {
       mainBar = {
         position = "top";
+        # We use groups here for the shared background/animation benefits
         modules-left = [
-          "pulseaudio"
-          "cava"
+          "group/audio"
           "backlight"
-          "memory"
-          "cpu"
-          "temperature"
+          "group/hardware"
         ];
         modules-center = [ "niri/workspaces" ];
         modules-right = [
-          "keyboard-state"
           "battery"
           "clock"
           "tray"
         ];
 
+        "group/audio" = {
+          orientation = "inherit";
+          modules = [
+            "mpris"
+            "pulseaudio"
+            "cava"
+          ];
+        };
+
+        "group/hardware" = {
+          orientation = "inherit";
+          modules = [
+            "memory"
+            "cpu"
+            "temperature"
+          ];
+        };
+
         "cpu" = {
           interval = 10;
           format = "{usage}%  ";
         };
-
         "memory" = {
           interval = 10;
           format = "{}%  ";
         };
-
         "temperature" = {
           interval = 10;
           format = "{}°C  ";
         };
-
         "backlight" = {
           format = "{percent}% {icon}";
           format-icons = [
@@ -58,8 +70,20 @@ with colors;
           ];
         };
 
+        "mpris" = {
+          format = "{player_icon}";
+          player-icons = {
+            default = "󰎆 ";
+          };
+          status-icons = {
+            paused = "󰏤 ";
+          };
+        };
+
         "cava" = {
           framerate = 30;
+          hide_on_silence = true;
+          stereo = false;
           autosens = 1;
           bars = 12;
           bar_delimiter = 0;
@@ -88,17 +112,18 @@ with colors;
         };
 
         "niri/workspaces" = {
-          format = "{icon}";
+          # format = "{icon}";
+          format = "<b>{icon}</b>";
           format-icons = {
-            "1" = "Ⅰ";
-            "2" = "Ⅱ";
-            "3" = "Ⅲ";
-            "4" = "Ⅳ";
-            "5" = "Ⅴ";
-            "6" = "Ⅵ";
-            "7" = "Ⅶ";
-            "8" = "Ⅷ";
-            "9" = "Ⅸ";
+            "1" = "α";
+            "2" = "β";
+            "3" = "γ";
+            "4" = "δ";
+            "5" = "ε";
+            "6" = "ϛ";
+            "7" = "ζ";
+            "8" = "η";
+            "9" = "θ";
             "10" = " ";
           };
         };
@@ -109,10 +134,9 @@ with colors;
             warning = 30;
             critical = 10;
           };
-          format = "{capacity}% {icon}";
-          format-full = "{capacity}% {icon}";
           format-charging = "{capacity}% 󱐋{icon}";
           format-plugged = "";
+          format = "{capacity}% {icon}";
           format-icons = [
             " "
             " "
@@ -121,66 +145,201 @@ with colors;
             " "
           ];
         };
-        keyboard-state = {
-          numlock = true;
-          format = {
-            numlock = "{icon}";
-          };
-          format-icons = {
-            unlocked = "<span color='#${purple}'><b>     </b></span>";
-            locked = "<span color='#${orange}'><b>1 2 3 4</b></span>";
-          };
-        };
+
         "clock" = {
           interval = 60;
           format = "{:%H:%M}  ";
-          format-alt = "{:%A, %B %d, %Y (%R)} 󰃭 ";
-          tooltip-format = "<tt><small>{calendar}</small></tt>";
-          calendar = {
-            mode = "month";
-            mode-mon-col = 3;
-            format = {
-              months = "<span color='#${text2}'><b>{}</b></span>";
-              days = "<span color='#${inactive}'>{}</span>";
-              weekdays = "<span color='#${alt}'><b>{}</b></span>";
-              today = "<span color='#${focused}'><b>{}</b></span>";
-            };
-          };
           actions = {
             on-click-right = "mode";
-            on-scroll-up = [
-              "tz_up"
-              "shift_up"
-            ];
-            on-scroll-down = [
-              "tz_down"
-              "shift_down"
-            ];
+            on-scroll-up = "shift_up";
+            on-scroll-down = "shift_down";
           };
         };
       };
     };
+
     style = ''
       @keyframes selection {
-        0%   {margin-top: 0px; padding-bottom: 1px;}
-        10%  {margin-top: -4px; padding-bottom: 4px;}
-        100% {margin-top: 0px; padding-bottom: 1px;}
+        0% {
+          margin-top: 0px;
+          margin-bottom: 0px;
+          padding-top: 0px;
+          padding-bottom: 0px;
+        }
+        30% {
+          margin-top: -4px;
+          margin-bottom: -4px;
+          padding-bottom: 4px;
+          padding-top: 4px;
+        }
+        100% {
+          margin-top: 0px;
+          margin-bottom: 0px;
+          padding-top: 0px;
+          padding-bottom: 0px;
+        }
       }
+
+      @keyframes gradient_flow {
+        0% { background-position: 200% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      /* Global Reset - Restoring your 13px scale */
       * {
         border: none;
         font-family: "${font.name}";
         font-size: 16px;
         min-height: 0;
         margin: 2px;
-        border-radius: 999px;
         margin-bottom: 0px;
+        border-radius: 999px;
       }
 
+      /* This creates that 20px "up" margin gap you missed */
       window#waybar {
         background: rgba(0,0,0,0);
         color: #${text2};
-        opacity: 1;
         padding-top: 20px;
+      }
+
+      /* --- Audio Group (The Animated Pill) --- */
+
+      #audio {
+        background: #${alt};
+        margin: 5px 2px 0 2px;
+        border-radius: 999px;
+        min-height: 24px;
+      }
+
+      #mpris, #pulseaudio, #cava {
+        background: transparent;
+        color: #${base};
+        margin: 0;
+        padding: 0;
+      }
+
+      #mpris {
+        border-radius: 999px;
+        padding: 0 5px 0 10px;
+        transition: all 0.3s ease;
+      }
+
+      #mpris.playing {
+        background: linear-gradient(90deg, #${base},#${alt},#${alt}, #${base});
+        background-size: 200% 200%;
+        animation: gradient_flow 3s linear infinite;
+        color: #${base};
+      }
+
+      #pulseaudio {
+        padding: 0 8px 0 4px;
+      }
+
+      #cava {
+        padding: 0 12px 0 4px;
+        border-radius: 0 999px 999px 0;
+      }
+
+      /* --- Hardware Group (The Blue Pill) --- */
+      #hardware {
+        background: #${blue};
+        color: #${base};
+      }
+
+      #hardware * {
+        margin: 0;
+      }
+
+      #memory {
+        padding: 0 4px 0 10px;
+        background: transparent;
+      }
+
+      #cpu {
+        padding: 0 4px;
+        background: transparent;
+      }
+
+      #temperature {
+        padding: 0 10px 0 4px;
+        background: transparent;
+      }
+
+      /* --- Workspaces --- */
+      #workspaces {
+        background: #${inactive};
+      }
+
+      #workspaces button {
+        font-size: 16px;
+        background: transparent;
+        color: #${base};
+        padding: 0 6px;
+        padding-bottom: 3px;
+        margin: 0px;
+      }
+
+      #workspaces button label {
+          font-size: 20px;
+          padding: 0;
+          margin: 0;
+      }
+
+      #workspaces button.active {
+        font-size: 20px;
+        background: #${focused};
+        color: #${base};
+        animation-name: selection;
+        animation-duration: 1s;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+
+      #workspaces button label {
+          font-size: 20px;
+          font-weight: bold;
+          padding: 0;
+          margin: 0;
+      }
+
+      /* --- The Rest of the Modules --- */
+      #backlight {
+        background: #${text2};
+        color: #${base};
+        padding: 0 8px;
+      }
+
+      #clock {
+        background: #${purple};
+        color: #${base};
+        padding: 0 10px;
+      }
+
+      #tray {
+        background: #${orange};
+        padding: 0 10px;
+      }
+
+      #battery {
+        background: #${green};
+        color: #${base};
+        padding: 0 10px;
+      }
+      #battery.charging,
+      #battery.plugged {
+        background: #${base};
+        color: #${text2};
+      }
+
+      #battery.warning { background: #${yellow}; }
+      #battery.critical:not(.charging) {
+        background: #${red};
+        animation: blink 0.5s steps(12) infinite alternate;
+      }
+
+      @keyframes blink {
+        to { background: #${base}; color: #${text2}; }
       }
 
       tooltip {
@@ -190,144 +349,8 @@ with colors;
 
       tooltip label {
         color: #${text2};
-        font-size: 16px;
-        text-shadow: 0px 0px 0px #${base};
+        font-size: 13px;
       }
-      #pulseaudio {
-        background: #${green};
-        color: #${base};
-        border-radius: 999px 0px 0px 999px;
-        padding-right: 10px;
-        margin-right: 0px;
-      }
-
-      #cava {
-        background: #${green};
-        color: #${base};
-        border-radius: 0px 999px 999px 0px;
-        margin-left: 0px;
-        padding-left: 8px;
-        padding-right: 8px;
-      }
-
-      #backlight {
-        background: #${text2};
-        color: #${base};
-        padding-right: 1px;
-      }
-
-      #memory {
-        background: #${blue};
-        color: #${base};
-        border-radius: 999px 0px 0px 999px;
-        margin-right: 0px;
-      }
-
-      #cpu {
-        background: #${blue};
-        color: #${base};
-        margin-left: 0px;
-        margin-right: 0px;
-        border-radius: 0px 0px 0px 0px;
-      }
-
-      #temperature {
-        background: #${blue};
-        color: #${base};
-        padding-right: 8px;
-        margin-left: 0px;
-        border-radius: 0px 999px 999px 0px;
-      }
-
-      #keyboard-state{
-        background: #${base};
-        color: #${base};
-        padding: 0px 3px;
-      }
-
-      #clock{
-        background: #${purple};
-        color: #${base};
-      }
-
-      #tray{
-        background: #${orange};
-      }
-
-      #tray menu {
-        border-radius: 16px;
-      }
-
-      #workspaces button,
-      #cpu,
-      #memory,
-      #pulseaudio,
-      #backlight,
-      #tray,
-      #clock {
-        padding: 0 6px;
-      }
-
-      #battery{
-        background: #${green};
-        color: #${base};
-        padding: 0 6px;
-        padding-right: 6px;
-      }
-
-      #battery.warning {
-        background: #${yellow};
-        color: #${base};
-      }
-
-      #battery.charging,
-      #battery.plugged {
-        background: #${base};
-        color: #${text2};
-      }
-
-      @keyframes blink {
-        to {
-          background: #${base};
-          color: #${text2};
-        }
-      }
-
-      #battery.critical:not(.charging) {
-        background: #${red};
-        color: #${base};
-        animation-name: blink;
-        animation-duration: 0.5s;
-        animation-timing-function: steps(12);
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-      }
-
-       #workspaces {
-         transition: none;
-         background: #${inactive};
-       }
-
-       #workspaces button {
-         background: transparent;
-         color: #${base};
-         padding-bottom: 3px;
-         margin: 0px;
-       }
-
-       #workspaces button.active {
-         background: #${focused};
-         color: #${base};
-         animation-name: selection;
-         animation-duration: 1s;
-         padding-left: 8px;
-         padding-right: 8px;
-       }
-
-       #workspaces button.urgent {
-         background: #${urgent};
-         color: #${base};
-       }
     '';
   };
 }
