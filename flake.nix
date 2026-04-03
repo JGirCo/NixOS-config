@@ -122,7 +122,7 @@
         };
       };
       homeConfigurations = (lib.genAttrs themes (themeName: mkHomeConfig themeName)) // {
-        "jgirco" = mkHomeConfig "rose-pine";
+        "jgirco" = mkHomeConfig "catppuccin-macchiato";
       };
     };
 }

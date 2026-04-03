@@ -39,14 +39,36 @@ with colors;
         @define-color accent_bg_color #${focused};
         @define-color theme_fg_color #${text2};
         @define-color inactive_bg_color #${inactive};
-        @define-color base_color #${base}; /* Added base color for the text */
+        @define-color base_color #${base};
 
-        /* Reset all styles */
+        /* Window Entrance Animation */
+        @keyframes pop-in {
+          0% {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes pulse-once {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+
         * {
           all: unset;
         }
 
-        /* The Background */
         .box-wrapper {
           background-image: url('/home/jgirco/Pictures/wallpapers/${theme}.jpg');
           background-size: cover;
@@ -54,9 +76,10 @@ with colors;
           background-position: center;
           padding: 20px;
           border-radius: 20px;
+
+          animation: pop-in 0.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        /* The Search Bar */
         .input {
           caret-color: @theme_fg_color;
           background: @base_color;
@@ -66,39 +89,46 @@ with colors;
           border-radius: 10px;
           margin-bottom: 20px;
           margin-top: 20px;
+
+          /* Smooth border color transition on focus */
+          transition: border-color 0.15s ease-in-out;
         }
 
         .input placeholder {
           opacity: 0.5;
         }
 
-        /* --- THE LIST ITEMS --- */
         .list {
           background: transparent;
+          /* Add padding so scaled items don't hit the scroll window edges */
+          padding: 4px;
         }
 
         .item-box {
           border-radius: 10px;
           padding: 10px;
-          background: @inactive_bg_color; /* Restores the unselected pill background */
-          margin-bottom: 8px; /* Restores the gaps between the pills */
+          background: @inactive_bg_color;
+          /* Replaced margin-bottom with a full margin shorthand: top right bottom left */
+          margin: 0px 4px 8px 4px;
+
+          transition: background-color 0.15s ease, transform 0.1s ease;
         }
+
         scrolledwindow {
           background-color: @base_color;
           border-radius: 20px;
           padding: 20px;
         }
 
-        /* Selected state */
         child:hover .item-box,
         child:selected .item-box {
           background: @accent_bg_color;
+          animation: pulse-once 0.2s ease-out;
         }
 
-        /* Text colors inside the pills */
         .item-text {
           font-size: 20px;
-          color: @base_color; /* Forces dark text so it is readable on the pills */
+          color: @base_color;
         }
 
         .item-subtext {
@@ -111,7 +141,6 @@ with colors;
           margin-right: 10px;
         }
 
-        /* Quick activation labels (F1, F2) with dark background */
         .item-quick-activation {
           margin-left: 10px;
           background-color: @base_color;
@@ -121,7 +150,6 @@ with colors;
           font-weight: bold;
         }
 
-        /* Keybinds at the bottom with dark background */
         .keybinds-wrapper {
           margin-top: 150px;
           background-color: @theme_fg_color;
@@ -136,7 +164,6 @@ with colors;
           color: @accent_bg_color;
         }
 
-        /* Other defaults */
         .placeholder, .elephant-hint { color: @theme_fg_color; opacity: 0.5; }
         .normal-icons { -gtk-icon-size: 16px; }
         .large-icons { -gtk-icon-size: 32px; }

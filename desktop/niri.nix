@@ -44,6 +44,65 @@ let
     cmd
   ];
 
+  mkTerminalApplet =
+    {
+      name,
+      command,
+      key,
+      appId ? "${name}-applet",
+    }:
+    {
+      bind = {
+        "Mod5+${key}".action.spawn = [
+          "sh"
+          "-c"
+          ''
+            if niri msg --json focused-window | ${pkgs.jq}/bin/jq -e '.app_id == "${appId}"' > /dev/null; then
+              niri msg action close-window
+            elif ! niri msg action focus-window "app-id='${appId}'"; then
+              kitty --app-id "${appId}" ${command}
+            fi
+          ''
+        ];
+      };
+
+      rule = {
+        matches = [ { app-id = appId; } ];
+        open-floating = true;
+        default-column-width = {
+          proportion = 0.6;
+        };
+        default-window-height = {
+          proportion = 0.6;
+        };
+      };
+    };
+  terminalApplets = [
+    (mkTerminalApplet {
+      name = "volume";
+      key = "V";
+      command = "wiremix";
+    })
+
+    (mkTerminalApplet {
+      name = "wifi";
+      key = "W";
+      command = "nmtui";
+    })
+
+    (mkTerminalApplet {
+      name = "bluetooth";
+      key = "Shift+B";
+      command = "bluetui";
+    })
+
+    (mkTerminalApplet {
+      name = "monitor";
+      key = "M";
+      command = "btm";
+    })
+  ];
+
 in
 with colors;
 {
@@ -161,153 +220,107 @@ with colors;
         }
         {
           matches = [ { app-id = "^zen$"; } ];
-          default-column-width = {
-            proportion = 0.6;
-          };
           open-maximized = false;
           open-fullscreen = false;
         }
-        # Scratchpad window rules
-        {
-          matches = [ { app-id = "^\\.blueman-manager-wrapped$"; } ];
-          open-on-workspace = "scratch";
-          open-floating = true;
-        }
-        {
-          matches = [ { title = "^wiremix-scratchpad$"; } ];
-          open-on-workspace = "scratch";
-          open-floating = true;
-        }
-        {
-          matches = [
-            {
-              app-id = "^zen-twilight$";
-              title = ".*whatsapp-scratchpad.*";
-            }
-          ];
-          open-on-workspace = "scratch";
-          open-floating = true;
-        }
-        {
-          matches = [ { app-id = "^pavucontrol$"; } ];
-          open-floating = true;
-        }
-      ];
+      ]
+      ++ (map (x: x.rule) terminalApplets);
 
-      binds =
-        let
-          # Helper to generate workspace binds
-          workspaces = builtins.listToAttrs (
-            builtins.concatLists (
-              builtins.genList (
-                i:
-                let
-                  ws = i + 1;
-                  key = toString ws;
-                in
-                [
-                  {
-                    name = "Mod+${key}";
-                    value.action.focus-workspace = ws;
-                  }
-                  {
-                    name = "Mod+Shift+${key}";
-                    value.action.move-window-to-workspace = ws;
-                  }
-                ]
-              ) 9
-            )
-          );
-        in
-        workspaces
-        // {
-          # Applications
-          "Mod+T".action.spawn = "${terminal}";
-          "Mod+B".action.spawn = "${browser.name}";
-          "Mod+D".action.spawn = sh "walker";
+      binds = {
+        # Applications
+        "Mod+T".action.spawn = "${terminal}";
+        "Mod+B".action.spawn = "${browser.name}";
+        "Mod+D".action.spawn = sh "walker";
 
-          # Scratchpad keybindings
-          "Mod5+B".action.spawn = "walker -m bluetooth";
-          "Mod5+V".action.spawn =
-            sh "nscratch -t 'wiremix-scratchpad' -s 'kitty --name wiremix-scratchpad -e wiremix'";
-          "Mod5+W".action.spawn =
-            sh "nscratch -t 'whatsapp-scratchpad' -s '${browser.name} --class whatsapp-scratchpad --new-window web.whatsapp.com -P Whatsapp'";
+        "Mod5+B".action.spawn = sh "walker -m bluetooth";
+        "Mod5+V".action.spawn = sh ''kitty --app-id "wiremix-scratchpad" wiremix'';
+        # "Mod5+W".action.spawn =
+        #   sh "nscratch -t 'whatsapp-scratchpad' -s '${browser.name} --class whatsapp-scratchpad --new-window web.whatsapp.com -P Whatsapp'";
 
-          # Window Management
-          "Mod+Q".action.close-window = [ ];
-          "Mod+F".action.fullscreen-window = [ ];
-          "Mod+O".action.toggle-overview = [ ];
-          "Mod+Shift+R".action.spawn = sh "${reloadScript}/bin/reloadScript";
+        # Window Management
+        "Mod+Q".action.close-window = [ ];
+        "Mod+F".action.fullscreen-window = [ ];
+        "Mod+O".action.toggle-overview = [ ];
+        "Mod+Shift+R".action.spawn = sh "${reloadScript}/bin/reloadScript";
 
-          # Focus
-          "Mod+H".action.focus-column-left = [ ];
-          "Mod+L".action.focus-column-right = [ ];
-          "Mod+K".action.focus-window-up = [ ];
-          "Mod+J".action.focus-window-down = [ ];
+        # Focus
+        "Mod+H".action.focus-column-left = [ ];
+        "Mod+L".action.focus-column-right = [ ];
+        "Mod+K".action.focus-window-up = [ ];
+        "Mod+J".action.focus-window-down = [ ];
 
-          # Move
-          "Mod+Shift+H".action.move-column-left = [ ];
-          "Mod+Shift+L".action.move-column-right = [ ];
-          "Mod+Shift+K".action.move-window-up-or-to-workspace-up = [ ];
-          "Mod+Shift+J".action.move-window-down-or-to-workspace-down = [ ];
+        # Move
+        "Mod+Shift+H".action.move-column-left = [ ];
+        "Mod+Shift+L".action.move-column-right = [ ];
+        "Mod+Shift+K".action.move-window-up-or-to-workspace-up = [ ];
+        "Mod+Shift+J".action.move-window-down-or-to-workspace-down = [ ];
 
-          # Stacking (Vertical Tiling)
-          "Mod+V".action.consume-or-expel-window-left = [ ];
-          "Mod+BracketLeft".action.consume-or-expel-window-left = [ ];
-          "Mod+BracketRight".action.consume-or-expel-window-right = [ ];
+        # Stacking (Vertical Tiling)
+        "Mod+V".action.consume-or-expel-window-left = [ ];
+        "Mod+BracketLeft".action.consume-or-expel-window-left = [ ];
+        "Mod+BracketRight".action.consume-or-expel-window-right = [ ];
 
-          # Resize
-          "Mod+R".action.switch-preset-column-width = [ ];
-          "Mod+Alt+H".action.set-column-width = "-10%";
-          "Mod+Alt+L".action.set-column-width = "+10%";
-          "Mod+Alt+K".action.set-window-height = "-10%";
-          "Mod+Alt+J".action.set-window-height = "+10%";
+        # Resize
+        "Mod+R".action.switch-preset-column-width = [ ];
+        "Mod+Alt+H".action.set-column-width = "-10%";
+        "Mod+Alt+L".action.set-column-width = "+10%";
+        "Mod+Alt+K".action.set-window-height = "-10%";
+        "Mod+Alt+J".action.set-window-height = "+10%";
 
-          # Niri Specifics - Column Operations
-          "Mod+C".action.center-column = [ ];
-          "Mod+M".action.maximize-column = [ ];
-          "Mod+Shift+M".action.reset-window-height = [ ];
-          "Mod+Home".action.focus-column-first = [ ];
-          "Mod+End".action.focus-column-last = [ ];
-          "Mod+Slash".action.show-hotkey-overlay = [ ];
+        # Niri Specifics - Column Operations
+        "Mod+C".action.center-column = [ ];
+        "Mod+M".action.maximize-column = [ ];
+        "Mod+Shift+M".action.reset-window-height = [ ];
+        "Mod+Home".action.focus-column-first = [ ];
+        "Mod+End".action.focus-column-last = [ ];
+        "Mod+Slash".action.show-hotkey-overlay = [ ];
 
-          # Workspace Navigation (Vertical)
-          "Mod+U".action.focus-workspace-down = [ ];
-          "Mod+I".action.focus-workspace-up = [ ];
-          "Mod+WheelScrollDown".action.focus-workspace-down = [ ];
-          "Mod+WheelScrollUp".action.focus-workspace-up = [ ];
+        # Workspace Navigation (Vertical)
+        "Mod+U".action.focus-workspace-down = [ ];
+        "Mod+I".action.focus-workspace-up = [ ];
+        "Mod+WheelScrollDown".action.focus-workspace-down = [ ];
+        "Mod+WheelScrollUp".action.focus-workspace-up = [ ];
 
-          # Workspace Movement
-          "Mod+Ctrl+U".action.move-workspace-down = [ ];
-          "Mod+Ctrl+I".action.move-workspace-up = [ ];
+        # Workspace Movement
+        "Mod+Ctrl+U".action.move-workspace-down = [ ];
+        "Mod+Ctrl+I".action.move-workspace-up = [ ];
 
-          # Move Column to Workspace
-          "Mod+Shift+U".action.move-column-to-workspace-down = [ ];
-          "Mod+Shift+I".action.move-column-to-workspace-up = [ ];
-          "Mod+Shift+WheelScrollDown".action.move-column-to-workspace-down = [ ];
-          "Mod+Shift+WheelScrollUp".action.move-column-to-workspace-up = [ ];
+        # Move Column to Workspace
+        "Mod+Shift+U".action.move-column-to-workspace-down = [ ];
+        "Mod+Shift+I".action.move-column-to-workspace-up = [ ];
+        "Mod+Shift+WheelScrollDown".action.move-column-to-workspace-down = [ ];
+        "Mod+Shift+WheelScrollUp".action.move-column-to-workspace-up = [ ];
 
-          # Screenshots
-          "Print".action.spawn = sh ''grim -g "$(slurp)" - | convert - -shave 1x1 PNG: - | wl-copy'';
-          "Shift+Print".action.spawn = sh ''grim -g "$(slurp)" - | swappy -f -'';
+        # Screenshots
+        "Print".action.spawn = sh ''grim -g "$(slurp)" - | convert - -shave 1x1 PNG: - | wl-copy'';
+        "Shift+Print".action.spawn = sh ''grim -g "$(slurp)" - | swappy -f -'';
 
-          # Volume and Media
-          "XF86AudioRaiseVolume".action.spawn = sh "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+";
-          "XF86AudioLowerVolume".action.spawn = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-          "XF86AudioMute".action.spawn = sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-          "XF86AudioMicMute".action.spawn = sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-          "XF86MonBrightnessUp".action.spawn = sh "light -A 5";
-          "XF86MonBrightnessDown".action.spawn = sh "light -U 5";
+        # Volume and Media
+        "XF86AudioRaiseVolume".action.spawn = sh "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+";
+        "XF86AudioLowerVolume".action.spawn = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+        "XF86AudioMute".action.spawn = sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        "XF86AudioMicMute".action.spawn = sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+        "XF86MonBrightnessUp".action.spawn = sh "light -A 5";
+        "XF86MonBrightnessDown".action.spawn = sh "light -U 5";
 
-          "XF86AudioNext".action.spawn = sh "playerctl next";
-          "XF86AudioPause".action.spawn = sh "playerctl play-pause";
-          "XF86AudioPlay".action.spawn = sh "playerctl play-pause";
-          "XF86AudioPrev".action.spawn = sh "playerctl previous";
+        "XF86AudioNext".action.spawn = sh "playerctl next";
+        "XF86AudioPause".action.spawn = sh "playerctl play-pause";
+        "XF86AudioPlay".action.spawn = sh "playerctl play-pause";
+        "XF86AudioPrev".action.spawn = sh "playerctl previous";
 
-          # Workspace 10
-          "Mod+0".action.focus-workspace = 10;
-          "Mod+Shift+0".action.move-window-to-workspace = 10;
-        };
+        "Mod+1".action.focus-workspace = 1;
+        "Mod+2".action.focus-workspace = 2;
+        "Mod+3".action.focus-workspace = 3;
+        "Mod+4".action.focus-workspace = 4;
+        "Mod+5".action.focus-workspace = 5;
+        "Mod+6".action.focus-workspace = 6;
+        "Mod+7".action.focus-workspace = 7;
+        "Mod+8".action.focus-workspace = 8;
+        "Mod+9".action.focus-workspace = 9;
+        "Mod+0".action.focus-workspace = 10;
+        "Mod+Shift+0".action.move-window-to-workspace = 10;
+      }
+      // (builtins.foldl' (acc: val: acc // val.bind) { } terminalApplets);
     };
   };
 }

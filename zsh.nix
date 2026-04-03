@@ -41,7 +41,7 @@ let
     --item.foreground "#${colors.inactive}" \
     "ayu-light" "catppuccin-macchiato" "catppuccin-latte" "dracula" "everforest-light" "gruvbox-dark-medium" "gruvbox-light-medium" "gruvbox-light-soft" "kanagawa-light" "melange" "oxocarbon-light" "rebecca" "rose-pine-dawn" "rose-pine" "saga" "template" "tokyo-night-moon" "trans")
     if [ -n "$THEME" ]; then
-      home-manager switch --flake ~/.nixos/#$THEME
+      nh home switch -c $THEME
     fi
   '';
 in

@@ -187,7 +187,7 @@ in
     # colormix_col2 = "0x005BCEFA";
     # colormix_col3 = "0x02FFFFFF";
   };
-  programs.hyprland.enable = true;
+  # programs.hyprland.enable = true;
   programs.niri.enable = true;
 
   # Configure keymap in X11
@@ -349,7 +349,7 @@ in
     yazi-unwrapped
     lazygit
     bottom
-    bluetuith
+    bluetui
     spotify-player
     zsh-powerlevel10k
     pulsemixer

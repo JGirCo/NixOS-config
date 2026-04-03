@@ -17,9 +17,9 @@ in
   imports = [
 
     ./zsh.nix
-    ./desktop/hyprland.nix
-    ./desktop/wofi.nix
-    ./desktop/rofi.nix
+    # ./desktop/hyprland.nix
+    # ./desktop/wofi.nix
+    # ./desktop/rofi.nix
     ./desktop/walker.nix
     ./desktop/gtk.nix
     ./desktop/dunst.nix
@@ -39,7 +39,7 @@ in
     ./apps/directwrite/keyd-application-mapper.nix
     ./apps/directwrite/tridactyl.nix
     ./apps/directwrite/darkreader.nix
-    ./apps/directwrite/blockbench.nix
+    # ./apps/directwrite/blockbench.nix
 
     ./scripts/default.nix
 
