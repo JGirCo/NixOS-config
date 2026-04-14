@@ -1,6 +1,14 @@
-{ config, lib, pkgs, theme, font, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  theme,
+  font,
+  ...
+}:
 
-with config.colorScheme.palette; {
+with config.colorScheme.palette;
+{
   programs.kitty = {
     enable = true;
     font.name = font.name;
@@ -9,8 +17,7 @@ with config.colorScheme.palette; {
     settings = {
       foreground = "#${base05}";
       background = "#${base00}";
-      # background_opacity = 0.75;
-      # background_tint = 0;
+      background_tint = 0;
       selection_fg = "#${base05}";
       selection_bg = "#${base02}";
 

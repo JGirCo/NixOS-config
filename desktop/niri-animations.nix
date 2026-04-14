@@ -1,53 +1,83 @@
 let
-  ditherGlitchShader = ''
-    // Digital dither pattern generator
-    float dither8x8(vec2 uv) {
-      int x = int(mod(uv.x, 8.0));
-      int y = int(mod(uv.y, 8.0));
-      int index = x + y * 8;
-      float limit = 0.0;
+  smokeCommon = ''
+    float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 
-      // This is a standard 8x8 Bayer threshold map
-      if (x < 8) {
-        if (index == 0) limit = 0.015625; if (index == 1) limit = 0.515625;
-        if (index == 2) limit = 0.140625; if (index == 3) limit = 0.640625;
-        // ... (The shader in the repo uses a mathematical approach to this)
-      }
-      return limit;
+    float noise(vec2 p) {
+        vec2 i = floor(p);
+        vec2 f = fract(p);
+        f = f * f * (3.0 - 2.0 * f);
+        float a = hash(i);
+        float b = hash(i + vec2(1.0, 0.0));
+        float c = hash(i + vec2(0.0, 1.0));
+        float d = hash(i + vec2(1.0, 1.0));
+        return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
     }
 
-    vec4 dither_glitch(vec3 coords_geo, vec3 size_geo, float progress, bool opening) {
-        float p = opening ? 1.0 - progress : progress;
-        vec2 uv = coords_geo.xy;
-
-        // Apply a "scanline" jitter based on progress
-        float jitter = (fract(sin(dot(vec2(uv.y, p), vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * p * 0.05;
-        vec2 distorted_uv = vec2(uv.x + jitter, uv.y);
-
-        vec2 tex_uv = (niri_geo_to_tex * vec3(distorted_uv, 1.0)).st;
-        vec4 color = texture2D(niri_tex, tex_uv);
-
-        // Chromatic aberration
-        float shift = p * 0.02;
-        color.r = texture2D(niri_tex, (niri_geo_to_tex * vec3(distorted_uv + vec2(shift, 0.0), 1.0)).st).r;
-        color.b = texture2D(niri_tex, (niri_geo_to_tex * vec3(distorted_uv - vec2(shift, 0.0), 1.0)).st).b;
-
-        // Dither transparency
-        // We use screen-space coordinates for the dither pixels
-        vec2 screen_pos = distorted_uv * size_geo.xy;
-        float threshold = fract(sin(dot(floor(screen_pos/2.0), vec2(12.9898,78.233))) * 43758.5453);
-
-        if (threshold < p) discard;
-
-        return color;
+    float fbm(vec2 p) {
+        float v = 0.0;
+        float amp = 0.5;
+        for (int i = 0; i < 6; i++) {
+            v += amp * noise(p);
+            p *= 2.0;
+            amp *= 0.5;
+        }
+        return v;
     }
 
+    float warpedFbm(vec2 p, float t) {
+        vec2 q = vec2(fbm(p + vec2(0.0, 0.0)), fbm(p + vec2(5.2, 1.3)));
+        vec2 r = vec2(fbm(p + 6.0 * q + vec2(1.7, 9.2) + 0.25 * t), fbm(p + 6.0 * q + vec2(8.3, 2.8) + 0.22 * t));
+        vec2 s = vec2(fbm(p + 5.0 * r + vec2(3.1, 7.4) + 0.18 * t), fbm(p + 5.0 * r + vec2(6.7, 0.9) + 0.2 * t));
+        return fbm(p + 6.0 * s);
+    }
+  '';
+
+  smokeShaderOpen = smokeCommon + ''
     vec4 open_color(vec3 coords_geo, vec3 size_geo) {
-        return dither_glitch(coords_geo, size_geo, niri_clamped_progress, true);
-    }
+        float p = niri_clamped_progress;
+        vec2 uv = coords_geo.xy;
+        float seed = niri_random_seed * 100.0;
+        float t = p * 12.0 + seed;
 
+        float fluid = warpedFbm(uv * 2.0 + seed, t);
+        vec2 center = uv - 0.5;
+        float dist = length(center * vec2(1.0, 0.7));
+
+        float appear = (1.0 - dist * 1.2) + (1.0 - fluid) * 0.7;
+        float reveal = smoothstep(appear + 0.5, appear - 0.5, (1.0 - p) * 1.8);
+        float distort_strength = (1.0 - p) * (1.0 - p) * 0.35;
+
+        vec2 wq = vec2(fbm(uv * 2.0 + vec2(0.0, t * 0.2)), fbm(uv * 2.0 + vec2(5.2, t * 0.2)));
+        vec2 wr = vec2(fbm(uv * 2.0 + 4.0 * wq + vec2(1.7, 9.2)), fbm(uv * 2.0 + 4.0 * wq + vec2(8.3, 2.8)));
+        vec2 warped_uv = uv + (wr - 0.5) * distort_strength;
+
+        vec3 tex_coords = niri_geo_to_tex * vec3(warped_uv, 1.0);
+        return texture2D(niri_tex, tex_coords.st) * reveal;
+    }
+  '';
+
+  smokeShaderClose = smokeCommon + ''
     vec4 close_color(vec3 coords_geo, vec3 size_geo) {
-        return dither_glitch(coords_geo, size_geo, niri_clamped_progress, false);
+        float p = niri_clamped_progress;
+        vec2 uv = coords_geo.xy;
+        float seed = niri_random_seed * 100.0;
+        float t = p * 12.0 + seed;
+
+        float fluid = warpedFbm(uv * 2.0 + seed, t);
+        vec2 center = uv - 0.5;
+        float dist = length(center * vec2(1.0, 0.7));
+
+        float dissolve = (1.0 - dist) * 1.2 + fluid * 0.7;
+        float remain = smoothstep(dissolve + 0.5, dissolve - 0.5, p * 1.8);
+        float distort_strength = p * p * 0.4;
+
+        vec2 wq = vec2(fbm(uv * 2.0 + vec2(0.0, t * 0.2)), fbm(uv * 2.0 + vec2(5.2, t * 0.2)));
+        vec2 wr = vec2(fbm(uv * 2.0 + 4.0 * wq + vec2(1.7, 9.2)), fbm(uv * 2.0 + 4.0 * wq + vec2(8.3, 2.8)));
+        vec2 warped_uv = uv + (wr - 0.5) * distort_strength;
+
+        vec3 tex_coords = niri_geo_to_tex * vec3(warped_uv, 1.0);
+        float tail = smoothstep(1.0, 0.8, p);
+        return texture2D(niri_tex, tex_coords.st) * remain * tail;
     }
   '';
 in
@@ -55,17 +85,17 @@ in
   programs.niri.settings.animations = {
     window-open = {
       kind.easing = {
-        duration-ms = 500;
-        curve = "ease-out-cubic";
+        duration-ms = 300;
+        curve = "linear";
       };
-      custom-shader = ditherGlitchShader;
+      custom-shader = smokeShaderOpen;
     };
     window-close = {
       kind.easing = {
-        duration-ms = 400;
-        curve = "ease-out-cubic";
+        duration-ms = 300;
+        curve = "linear";
       };
-      custom-shader = ditherGlitchShader;
+      custom-shader = smokeShaderClose;
     };
   };
 }

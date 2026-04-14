@@ -48,6 +48,7 @@
       nix-flatpak,
       walker,
       niri,
+      zen-browser,
       ...
     }@inputs:
     let
@@ -77,6 +78,7 @@
             nixvim.homeModules.nixvim
             walker.homeManagerModules.default
             niri.homeModules.niri
+            zen-browser.homeModules.twilight-official
           ];
           extraSpecialArgs = {
             inherit inputs;

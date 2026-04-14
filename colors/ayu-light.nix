@@ -4,7 +4,7 @@
   text2 = "5c6773";
   inactive = "f2ae49";
   focused = "fa8d3e";
-  alt = "36a3d9";
+  alt = "a37acc";
   urgent = "f07178";
   binding = "a37acc";
 

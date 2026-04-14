@@ -14,9 +14,6 @@ let
   };
 in
 {
-  imports = [
-    inputs.zen-browser.homeModules.twilight-official
-  ];
 
   # FIXME: Temporary workaround - Zen Browser still defaults to ~/.zen instead of ~/.config/zen
   # even though version 1.19t should use XDG dirs. Remove this once upstream fixes the issue.
@@ -36,7 +33,7 @@ in
     name = "default";
     id = 0;
     preConfig = ''
-      user_pref("mod.sameerasw.zen_transparency_color", "#${colors.base}E1");
+      user_pref("mod.sameerasw.zen_transparency_color", "#${colors.base}E5");
     '';
     isDefault = true;
   };
@@ -45,7 +42,7 @@ in
     name = "Whatsapp";
     id = 1;
     preConfig = ''
-      user_pref("mod.sameerasw.zen_transparency_color", "#${colors.base}E0");
+      user_pref("mod.sameerasw.zen_transparency_color", "#${colors.base}E5");
     '';
     isDefault = false;
   };

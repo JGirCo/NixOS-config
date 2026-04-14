@@ -1,6 +1,15 @@
-{ lib, theme, font, pkgs, config, colors, ... }:
+{
+  lib,
+  theme,
+  font,
+  pkgs,
+  config,
+  colors,
+  ...
+}:
 with colors;
-with config.colorScheme.palette; {
+with config.colorScheme.palette;
+{
   home.packages = [ pkgs.libnotify ]; # to enable notify-send
   services.swaync = {
     enable = true;
@@ -33,14 +42,21 @@ with config.colorScheme.palette; {
       hide-on-action = true;
       script-fail-notify = true;
 
-      widgets = [ "title" "dnd" "mpris" "notifications" ];
+      widgets = [
+        "title"
+        "dnd"
+        "mpris"
+        "notifications"
+      ];
       widget-config = {
         title = {
           text = "Notifications";
           clear-all-button = true;
           button-text = "Clear All";
         };
-        dnd = { text = "Do Not Disturb"; };
+        dnd = {
+          text = "Do Not Disturb";
+        };
         label = {
           max-lines = 5;
           text = "Label Text";

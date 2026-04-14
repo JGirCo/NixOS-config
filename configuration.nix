@@ -181,11 +181,15 @@ in
   services.displayManager.ly.settings = {
     load = true;
     save = true;
-    # animation = "colormix";
-    bigclock = "en";
-    # colormix_col1 = "0x00FFD7FF";
-    # colormix_col2 = "0x005BCEFA";
-    # colormix_col3 = "0x02FFFFFF";
+    # bigclock = "en";
+    caption = ''
+      .        :  .,::::::  .        :  .,:::::::::.    :::.::::::::::::   ...    :::      .::.::::::      .::..,:::::: :::::::..  .,::::::
+      ;;,.    ;;; ;;;;\'\'\'\'  ;;,.    ;;; ;;;;\'\'\'\'`;;;;,  `;;;;;;;;;;;\'\'\'\'.;;;;;;;. \';;,   ,;;;\' ;;;\';;,   ,;;;\' ;;;;\'\'\'\' ;;;;``;;;; ;;;;\'\'\'\'
+      [[[[, ,[[[[, [[cccc   [[[[, ,[[[[, [[cccc   [[[[[. \'[[     [[    ,[[     \[[,\[[  .[[/   [[[ \[[  .[[/    [[cccc   [[[,/[[[\'  [[cccc
+      $$$$$$$$"$$$ $$""""   $$$$$$$$"$$$ $$""""   $$$ "Y$c$$     $$    $$$,     $$$ Y$c.$$"    $$$  Y$c.$$"     $$""""   $$$$$$c    $$""""
+      888 Y88" 888o888oo,__ 888 Y88" 888o888oo,__ 888    Y88     88,   "888,_ _,88P  Y88P      888   Y88P       888oo,__ 888b "88bo,888oo,__
+      MMM  M\'  "MMM""""YUMMMMMM  M\'  "MMM""""YUMMMMMM     YM     MMM     "YMMMMMP"    MP       MMM    MP        """"YUMMMMMMM   "W" """"YUMMM
+    '';
   };
   # programs.hyprland.enable = true;
   programs.niri.enable = true;

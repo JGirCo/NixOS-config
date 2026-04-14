@@ -159,6 +159,16 @@
           desc = "Jump to first non whitespace character";
         };
       }
+      {
+        mode = "i";
+        key = "<C-c>";
+        action = "<Esc>b~ea";
+        options = {
+          silent = true;
+          noremap = true;
+          desc = "Change the case of the first letter of the current word";
+        };
+      }
     ];
   };
 }
