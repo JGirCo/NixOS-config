@@ -16,6 +16,7 @@ in
 {
   imports = [
 
+    ./home-services.nix
     ./zsh.nix
     # ./desktop/hyprland.nix
     # ./desktop/wofi.nix
@@ -38,7 +39,7 @@ in
     ./apps/cava.nix
     ./apps/directwrite/keyd-application-mapper.nix
     ./apps/directwrite/tridactyl.nix
-    ./apps/directwrite/darkreader.nix
+    # ./apps/directwrite/darkreader.nix
     # ./apps/directwrite/blockbench.nix
 
     ./scripts/default.nix

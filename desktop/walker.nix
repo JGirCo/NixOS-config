@@ -1,13 +1,12 @@
 {
-  config,
-  lib,
-  pkgs,
+  inputs,
   theme,
   colors,
   ...
 }:
 with colors;
 {
+
   programs.walker = {
     enable = true;
     runAsService = true;
@@ -15,6 +14,7 @@ with colors;
     config = {
       theme = "wofi-ported";
       terminal = "kitty";
+      providers.desktop_applications.enable = true;
       list = {
         show_scrollbar = false;
       };
@@ -22,14 +22,26 @@ with colors;
         placeholder = "";
       };
       close_when_open = true;
+
       keybinds = {
+        accept = [ "Space" ];
         next = [
           "ctrl j"
           "Tab"
         ];
         previous = [
           "ctrl k"
-          "shift Tab"
+          "ISO_Left_Tab"
+        ];
+        quick_activate = [
+          "F1"
+          "F2"
+          "F3"
+          "F4"
+          "F5"
+          "F6"
+          "F7"
+          "F8"
         ];
       };
     };

@@ -1,33 +1,18 @@
 {
-  lib,
   pkgs,
   theme,
   browser,
   colors,
-  inputs,
   ...
 }:
 
 let
   terminal = "kitty";
 
-  startupScript = pkgs.writeShellScriptBin "startupScript" ''
-    udiskie &
-    keyd-application-mapper -d &
-    swww-daemon &
-    kdeconnectd &
-    systemctl --user restart pipewire pipewire-pulse &
-    waybar &
-    swaynotificationcenter &
-    mpris-notifier &
-    elephant &
-    walker --gapplication-service &
-  '';
-
   reloadScript = pkgs.writeShellScriptBin "reloadScript" ''
     niri msg action load-config-file &
     sleep 0.2 &
-    touch /tmp/executed &
+    systemctl --user restart sawyosd.service &
     swww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any &
   '';
 
@@ -108,6 +93,7 @@ with colors;
 {
   imports = [ ./waybar.nix ];
   home.packages = with pkgs; [
+    brightnessctl
     xwayland-satellite
     mpris-notifier
     swww
@@ -125,23 +111,33 @@ with colors;
     gtklock-userinfo-module
   ];
 
+  services.swayosd = {
+    enable = true;
+  };
+  xdg.configFile."swayosd/style.css".text = ''
+    window#osd {
+        /* The main background of the overlay */
+        background: #${base};
+        border-radius: 12px; /* Optional: smooth out the corners */
+    }
+
+    progress {
+        background: #${text2};
+    }
+  '';
+
   services.hypridle = {
     enable = true;
     settings = {
       listener = [
         {
-          timeout = 121; # 2 min.
-          on-timeout = "light -O && light -T 0.5"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
-          on-resume = "light -I"; # monitor backlight restore.
-        }
-        {
-          timeout = 120; # 2 min
+          timeout = 300; # 5 min
           on-timeout = "${prelockScript}/bin/prelockScript";
         }
         {
-          timeout = 300; # 5 min
-          on-timeout = "niri msg action do-screen-transition --delay-ms 500 && niri msg action power-off-monitors";
-          on-resume = "niri msg action power-on-monitors";
+          timeout = 360; # 6 min.
+          on-timeout = "brightnessctl -s; brightnessctl -n"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
+          on-resume = "brightnessctl -r"; # monitor backlight restore.
         }
         {
           timeout = 600; # 10 min
@@ -159,8 +155,13 @@ with colors;
     enable = true;
     settings = {
       spawn-at-startup = [
-        { command = [ "${startupScript}/bin/startupScript" ]; }
-        { command = [ "${pkgs.xwayland-satellite}/bin/xwayland-satellite" ]; }
+        {
+          command = [
+            "bash"
+            "-c"
+            "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP NIRI_SOCKET PATH && systemctl --user restart elephant.service"
+          ];
+        }
       ];
       input = {
         keyboard.xkb.layout = "latam";
@@ -176,6 +177,10 @@ with colors;
       layout = {
 
         gaps = 16;
+        # struts = {
+        #   top = -16;
+        # };
+        always-center-single-column = true;
         # center-focused-column = "never";
 
         preset-column-widths = [
@@ -195,7 +200,6 @@ with colors;
             angle = 45;
             from = "${focused}";
             to = "${alt}";
-            relative-to = "workspace-view";
           };
         };
       };
@@ -296,12 +300,12 @@ with colors;
         "Shift+Print".action.spawn = sh ''grim -g "$(slurp)" - | swappy -f -'';
 
         # Volume and Media
-        "XF86AudioRaiseVolume".action.spawn = sh "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+";
-        "XF86AudioLowerVolume".action.spawn = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-        "XF86AudioMute".action.spawn = sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-        "XF86AudioMicMute".action.spawn = sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-        "XF86MonBrightnessUp".action.spawn = sh "light -A 5";
-        "XF86MonBrightnessDown".action.spawn = sh "light -U 5";
+        "XF86AudioRaiseVolume".action.spawn = sh "swayosd-client --output-volume raise --max-volume 100";
+        "XF86AudioLowerVolume".action.spawn = sh "swayosd-client --output-volume lower";
+        "XF86AudioMute".action.spawn = sh "swayosd-client --output-volume mute-toggle";
+        "XF86AudioMicMute".action.spawn = sh "swayosd-client --input-volume mute-toggle";
+        "XF86MonBrightnessUp".action.spawn = sh "swayosd-client --brightness raise";
+        "XF86MonBrightnessDown".action.spawn = sh "swayosd-client --brightness lower";
 
         "XF86AudioNext".action.spawn = sh "playerctl next";
         "XF86AudioPause".action.spawn = sh "playerctl play-pause";
