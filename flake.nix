@@ -68,12 +68,13 @@
       browser = {
         name = "zen-twilight";
       };
-      flake-overlays = [ ];
+      flake-overlays = [ niri.overlays.niri ];
       mkHomeConfig =
         themeName:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
+            { nixpkgs.overlays = flake-overlays; }
             ./home.nix
             nixvim.homeModules.nixvim
             walker.homeManagerModules.default

@@ -1,7 +1,7 @@
 {
   programs.nixvim.plugins = {
     treesitter = {
-      enable = true;
+      enable = false;
       nixvimInjections = true;
 
       folding.enable = true;
@@ -30,4 +30,17 @@
 
     hmts.enable = true;
   };
+  # Enable native highlighting for the buffers you use
+  extraConfigLua = ''
+    vim.api.nvim_create_autocmd('FileType', {
+      callback = function()
+        -- Try to start native treesitter highlighting
+        local ok, _ = pcall(vim.treesitter.start)
+        if not ok then
+          -- Fallback to standard regex highlighting if parser is missing
+          vim.cmd("syntax on")
+        end
+      end,
+    })
+  '';
 }

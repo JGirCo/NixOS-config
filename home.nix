@@ -85,4 +85,25 @@ in
     stateVersion = "23.11";
   };
 
+  home.packages = with pkgs; [
+
+    #GUI
+    freecad-wayland
+    celluloid
+    gparted
+    yt-dlp
+    parabolic
+    # discord
+    darktable
+
+    #TUI
+    cava
+    yazi-unwrapped
+    wiremix
+    lazygit
+    bottom
+    bluetui
+    pulsemixer
+    yt-dlp
+  ];
 }

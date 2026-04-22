@@ -8,20 +8,19 @@
   ...
 }:
 {
+  services.kdeconnect = {
+    enable = true;
+    indicator = true;
+  };
+
   systemd.user.services = {
     # Background Daemons
 
-    # Put these alongside your other top-level Home Manager configurations
-    services.swaync.enable = true;
-    services.kdeconnect = {
-      enable = true;
-      indicator = true; # Adds the tray icon if you want it
-    };
-    swww-daemon = {
+    awww-daemon = {
       Unit.Description = "Wayland wallpaper daemon";
       Install.WantedBy = [ "graphical-session.target" ];
       Service = {
-        ExecStart = "${pkgs.swww}/bin/swww-daemon";
+        ExecStart = "${pkgs.awww}/bin/awww-daemon";
         Restart = "on-failure";
         RestartSec = "1";
       };
@@ -69,6 +68,21 @@
         ConditionEnvironment = lib.mkForce "";
       };
       Install.WantedBy = lib.mkForce [ "graphical-session.target" ];
+    };
+    apply-theme = {
+      Unit.Description = "Apply Niri theme and wallpaper";
+      Install.WantedBy = [ "xdg-desktop-autostart.target" ];
+      Service = {
+        RemainAfterExit = true;
+        Type = "oneshot";
+        X-RestartIfChanged = true;
+        ExecStart = "${pkgs.writeShellScript "apply-theme-script" ''
+          niri msg action load-config-file
+          sleep 0.2
+          systemctl --user restart --no-block swayosd.service
+          uwsm app -- ${pkgs.awww}/bin/awww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any
+        ''}";
+      };
     };
   };
 

@@ -13,7 +13,7 @@ let
     niri msg action load-config-file &
     sleep 0.2 &
     systemctl --user restart sawyosd.service &
-    swww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any &
+    awww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any &
   '';
 
   prelockScript = pkgs.writeShellScriptBin "prelockScript" ''
@@ -72,7 +72,7 @@ let
     (mkTerminalApplet {
       name = "wifi";
       key = "W";
-      command = "nmtui";
+      command = "impala";
     })
 
     (mkTerminalApplet {
@@ -91,12 +91,13 @@ let
 in
 with colors;
 {
-  imports = [ ./waybar.nix ];
+  imports = [ ./waybar-vertical.nix ];
   home.packages = with pkgs; [
+    impala
     brightnessctl
     xwayland-satellite
     mpris-notifier
-    swww
+    awww
     waybar
     swaynotificationcenter
     grim
@@ -152,17 +153,18 @@ with colors;
   };
 
   programs.niri = {
+    package = pkgs.niri-unstable;
     enable = true;
     settings = {
-      spawn-at-startup = [
-        {
-          command = [
-            "bash"
-            "-c"
-            "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP NIRI_SOCKET PATH && systemctl --user restart elephant.service"
-          ];
-        }
-      ];
+      # spawn-at-startup = [
+      #   {
+      #     command = [
+      #       "bash"
+      #       "-c"
+      #       "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP NIRI_SOCKET PATH && systemctl --user restart elephant.service"
+      #     ];
+      #   }
+      # ];
       input = {
         keyboard.xkb.layout = "latam";
         touchpad.natural-scroll = true;

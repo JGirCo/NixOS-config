@@ -25,6 +25,8 @@ with config.colorScheme.palette;
       control-center-width = 500;
       control-center-height = 600;
       fit-to-screen = false;
+      "notification-2fa-action" = false;
+      "notification-inline-replies" = false;
 
       layer = "top";
       cssPriority = "user";
@@ -35,7 +37,7 @@ with config.colorScheme.palette;
       timeout-low = 5;
       timeout-critical = 0;
       notification-window-width = 500;
-      keyboard-shortcuts = true;
+      keyboard-shortcuts = false;
       image-visibility = "when-available";
       transition-time = 200;
       hide-on-clear = true;
