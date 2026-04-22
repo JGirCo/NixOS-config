@@ -1,46 +1,26 @@
+{ pkgs, ... }:
 {
   programs.nixvim.plugins = {
     treesitter = {
-      enable = false;
-      nixvimInjections = true;
+      enable = true;
 
-      folding.enable = true;
+      nixGrammars = true;
+
+      grammarPackages = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+        lua
+        vim
+        vimdoc
+        markdown
+        nix
+        python
+        typst
+      ];
+
       settings = {
         highlight.enable = true;
         indent.enable = true;
-        ensureInstalled = [
-          "markdown"
-          "markdown_inline"
-          "htl"
-          "yaml"
-          "typst"
-          "nix"
-          "arduino"
-          "python"
-          "rust"
-          "norg"
-        ];
+        incremental_selection.enable = true;
       };
     };
-
-    # treesitter-refactor = {
-    #   enable = true;
-    #   settings.highlightDefinitions.enable = true;
-    # };
-
-    hmts.enable = true;
   };
-  # Enable native highlighting for the buffers you use
-  extraConfigLua = ''
-    vim.api.nvim_create_autocmd('FileType', {
-      callback = function()
-        -- Try to start native treesitter highlighting
-        local ok, _ = pcall(vim.treesitter.start)
-        if not ok then
-          -- Fallback to standard regex highlighting if parser is missing
-          vim.cmd("syntax on")
-        end
-      end,
-    })
-  '';
 }

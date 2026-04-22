@@ -46,6 +46,10 @@ in
     allowedTCPPorts = [ 37711 ]; # Allow the specific Minecraft LAN port
     allowedUDPPorts = [ 37711 ]; # Allow the specific Minecraft LAN port
   };
+  programs.weylus = {
+    enable = true;
+    openFirewall = true;
+  };
 
   powerManagement.enable = true;
   virtualisation.docker.enable = true;
@@ -115,35 +119,35 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "nixos";
+  networking.wireless.enable = false;
+  networking.networkmanager.enable = false;
+  networking.dhcpcd.enable = false;
+  networking.useNetworkd = true;
 
-  # services.grafana = {
-  #   enable = true;
-  #   settings = {
-  #     server = {
-  #       # Listening Address - Use 127.0.0.1 for local access
-  #       http_addr = "127.0.0.1";
-  #       # and Port - Default is 3000
-  #       http_port = 3000;
-  #       # Grafana needs to know on which domain and URL it's running
-  #       # Set domain to localhost
-  #       domain = "localhost";
-  #       # Set root_url to use http and localhost:port, without a subpath
-  #       root_url = "http://localhost:3000/";
-  #       # Set to false since it's running at the root of the domain/port
-  #       serve_from_sub_path = false;
-  #     };
-  #   };
-  # };
-
-  # Enable networking
-  networking.networkmanager = {
-    enable = true;
+  systemd.network.networks."20-wireless" = {
+    matchConfig.Name = "wl*"; # This will match your wlo1 interface
+    networkConfig = {
+      DHCP = "yes";
+      IgnoreCarrierLoss = "3s";
+    };
   };
 
-  # Enable network manager applet
-  programs.nm-applet.enable = true;
+  # Enable iwd
+  networking.wireless.iwd.enable = true;
+  networking.wireless.iwd.settings = {
+    IPv6 = {
+      Enabled = true;
+    };
+    Network = {
+      EnableNetworkConfiguration = true;
+      NameResolvingService = "systemd"; # Add this line
+    };
+    Settings = {
+      AutoConnect = true;
+    };
+  };
+  services.resolved.enable = true;
 
   # Enable bluetooth
 
@@ -176,23 +180,55 @@ in
   services.xserver.excludePackages = [ pkgs.xterm ];
   services.autorandr.enable = true;
 
-  # programs.regreet = { enable = true; };
-  services.displayManager.ly.enable = true;
-  services.displayManager.ly.settings = {
-    load = true;
-    save = true;
-    # bigclock = "en";
-    caption = ''
-      .        :  .,::::::  .        :  .,:::::::::.    :::.::::::::::::   ...    :::      .::.::::::      .::..,:::::: :::::::..  .,::::::
-      ;;,.    ;;; ;;;;\'\'\'\'  ;;,.    ;;; ;;;;\'\'\'\'`;;;;,  `;;;;;;;;;;;\'\'\'\'.;;;;;;;. \';;,   ,;;;\' ;;;\';;,   ,;;;\' ;;;;\'\'\'\' ;;;;``;;;; ;;;;\'\'\'\'
-      [[[[, ,[[[[, [[cccc   [[[[, ,[[[[, [[cccc   [[[[[. \'[[     [[    ,[[     \[[,\[[  .[[/   [[[ \[[  .[[/    [[cccc   [[[,/[[[\'  [[cccc
-      $$$$$$$$"$$$ $$""""   $$$$$$$$"$$$ $$""""   $$$ "Y$c$$     $$    $$$,     $$$ Y$c.$$"    $$$  Y$c.$$"     $$""""   $$$$$$c    $$""""
-      888 Y88" 888o888oo,__ 888 Y88" 888o888oo,__ 888    Y88     88,   "888,_ _,88P  Y88P      888   Y88P       888oo,__ 888b "88bo,888oo,__
-      MMM  M\'  "MMM""""YUMMMMMM  M\'  "MMM""""YUMMMMMM     YM     MMM     "YMMMMMP"    MP       MMM    MP        """"YUMMMMMMM   "W" """"YUMMM
-    '';
-  };
-  # programs.hyprland.enable = true;
+  services.xserver.desktopManager.cinnamon.enable = true;
   programs.niri.enable = true;
+  programs.niri.package = pkgs.niri-unstable;
+
+  programs.uwsm = {
+    enable = true;
+    waylandCompositors.niri = {
+      prettyName = "Niri";
+      comment = "Niri compositor managed by UWSM";
+      binPath = "/run/current-system/sw/bin/niri";
+      extraArgs = [ "--session" ];
+    };
+  };
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = ''
+          ${pkgs.tuigreet}/bin/tuigreet \
+            --time \
+            --time-format '%I:%M %p | %A, %B %d' \
+            --issue \
+            --asterisks \
+            --greet-align left \
+            --remember \
+            --remember-session \
+            --cmd 'uwsm start niri-uwsm.desktop'
+        '';
+        user = "greeter";
+      };
+    };
+  };
+
+  # Optional but recommended: suppress kernel logging to the console
+  # so your TTY greeter doesn't get visually corrupted by boot messages.
+  boot.consoleLogLevel = 0;
+  boot.initrd.verbose = false;
+
+  # This is required so tuigreet can find the sessions
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal"; # Better for debugging!
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -346,36 +382,16 @@ in
     claude-code
 
     # TUI Tools
-    ytermusic
-    wiremix
-    cava
-    emacs
-    yazi-unwrapped
-    lazygit
-    bottom
-    bluetui
-    spotify-player
-    zsh-powerlevel10k
-    pulsemixer
     ncdu
+    ytermusic
+    ouch-rar
 
     # GUI Tools
     pureref
-    cavalier
-    mqttx
-    stm32cubemx
     kicad
     python313Packages.python-lsp-server
     python313Packages.python-lsp-black
-    # kicadAddons.kikit
-    # kicadAddons.kikit-library
-    # kikit
-    # python313Packages.kikit
-    newsflash
     blockbench
-    freecad-wayland
-    celluloid
-    gparted
     pavucontrol
     ripdrag
     zotero
@@ -389,11 +405,6 @@ in
     # floorp
     # deluge
     qbittorrent
-
-    yt-dlp
-    parabolic
-    discord
-    darktable
 
     # Miscelaneous
     mpris-scrobbler
@@ -420,14 +431,31 @@ in
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
-    GBM_BACKEND = ''
-      nvidia-drm
-      __GLX_VENDOR_LIBRARY_NAME=nvidia'';
+    # These are distinct variables and should be treated as such
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    LIBVA_DRIVER_NAME = "nvidia"; # Usually needed for hardware accel
 
-    # Not officially in the specification
     XDG_BIN_HOME = "$HOME/.local/bin";
-    PATH = [ "${XDG_BIN_HOME}" ];
   };
+
+  environment.etc."issue".text = ''
+    ███╗   ███╗███████╗███╗   ███╗███████╗███╗   ██╗████████╗ ██████╗
+    ████╗ ████║██╔════╝████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔═══██╗
+    ██╔████╔██║█████╗  ██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ██║   ██║
+    ██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ██║   ██║
+    ██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ╚██████╔╝
+    ╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝
+
+    ██╗   ██╗██╗██╗   ██╗███████╗██████╗ ███████╗
+    ██║   ██║██║██║   ██║██╔════╝██╔══██╗██╔════╝
+    ██║   ██║██║██║   ██║█████╗  ██████╔╝█████╗
+    ╚██╗ ██╔╝██║╚██╗ ██╔╝██╔══╝  ██╔══██╗██╔══╝
+     ╚████╔╝ ██║ ╚████╔╝ ███████╗██║  ██║███████╗
+      ╚═══╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝╚══════╝
+  '';
+
+  environment.localBinInPath = true;
 
   xdg.mime.defaultApplications = {
     "inode/directory" = "nautilus.desktop";

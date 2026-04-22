@@ -4,6 +4,7 @@
   theme,
   lib,
   config,
+  font,
   ...
 }:
 
@@ -36,6 +37,17 @@ in
       user_pref("mod.sameerasw.zen_transparency_color", "#${colors.base}E5");
     '';
     isDefault = true;
+    settings = {
+      "browser.display.use_document_fonts" = 0;
+
+      # Force the default proportional font to be sans-serif
+      "font.default.x-western" = "sans-serif";
+
+      # Define your specific fonts
+      "font.name.sans-serif.x-western" = font.sans; # Or your preferred sans font
+      "font.name.serif.x-western" = font.serif;
+      "font.name.monospace.x-western" = font.name;
+    };
   };
 
   programs.zen-browser.profiles."Whatsapp" = {

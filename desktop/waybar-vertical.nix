@@ -14,6 +14,9 @@ with colors;
         position = "left";
         layer = "top";
         width = 40;
+        margin-left = 8;
+        margin-bottom = 8;
+        margin-top = 8;
 
         modules-left = [
           "group/audio"
@@ -24,6 +27,7 @@ with colors;
         modules-right = [
           "battery"
           "clock"
+          "network"
           "tray"
         ];
 
@@ -31,8 +35,30 @@ with colors;
           orientation = "vertical";
           modules = [
             "mpris"
+            "cava"
             "pulseaudio"
-            # "cava" # Removed: Text-based visualizers break vertical constraints.
+          ];
+        };
+
+        "cava" = {
+          rotate = 270;
+          framerate = 60;
+          hide_on_silence = true;
+          stereo = false;
+          autosens = 1;
+          sensitivity = 4;
+          bars = 12;
+          bar_delimiter = 0;
+          method = "pulse";
+          format-icons = [
+            "▁"
+            "▂"
+            "▃"
+            "▄"
+            "▅"
+            "▆"
+            "▇"
+            "█"
           ];
         };
 
@@ -47,20 +73,43 @@ with colors;
 
         "cpu" = {
           interval = 10;
-          format = "";
+          format = "<span font_size='12pt'>{: .1f}%</span>\n󰾆";
           tooltip-format = "{usage}% Usage";
+          justify = "center";
         };
 
         "memory" = {
           interval = 10;
-          format = "";
+          format = "<span font_size='12pt'>{}%</span>\n ";
           tooltip-format = "{}% RAM";
+          justify = "center";
         };
 
         "temperature" = {
           interval = 10;
-          format = "";
+          format = "<span font_size='12pt'>{}°</span>\n";
           tooltip-format = "{}°C";
+          justify = "center";
+        };
+
+        "battery" = {
+          interval = 5;
+          states = {
+            warning = 30;
+            critical = 10;
+          };
+          format-charging = "<span font_size='12pt'>{capacity}%</span>\n󱐋\n{icon}";
+          format-full = "";
+          format = "<span font_size='12pt'>{capacity}%</span>\n{icon}";
+          tooltip-format = "{capacity}% Battery";
+          format-icons = [
+            " "
+            " "
+            " "
+            " "
+            " "
+          ];
+          justify = "center";
         };
 
         "backlight" = {
@@ -80,13 +129,13 @@ with colors;
         };
 
         "mpris" = {
-          format = "{player_icon}";
+          format = "<span font_size='25pt'>󰽰</span>";
           tooltip-format = "{dynamic}";
           player-icons = {
-            default = "󰝚 ";
+            default = "󰽰";
           };
           status-icons = {
-            paused = "󰏤 ";
+            paused = "󰏤";
           };
         };
 
@@ -118,25 +167,6 @@ with colors;
           };
         };
 
-        "battery" = {
-          interval = 5;
-          states = {
-            warning = 30;
-            critical = 10;
-          };
-          format-charging = "󱐋\n{icon}";
-          format-full = "";
-          format = "{icon}";
-          tooltip-format = "{capacity}% Battery";
-          format-icons = [
-            " "
-            " "
-            " "
-            " "
-            " "
-          ];
-        };
-
         "clock" = {
           interval = 60;
           format = "{:%H\n%M}";
@@ -146,6 +176,19 @@ with colors;
             on-scroll-up = "shift_up";
             on-scroll-down = "shift_down";
           };
+        };
+        network = {
+          format-wifi = "{icon}";
+          format-ethernet = "󰈀 ";
+          format-disconnected = "󰤭 ";
+          format-icons = [
+            "󰤯 "
+            "󰤟 "
+            "󰤢 "
+            "󰤥 "
+            "󰤨 "
+          ];
+          tooltip-format = "{essid} - {signalStrength}%";
         };
       };
     };
@@ -162,6 +205,7 @@ with colors;
       @define-color inactive #${inactive};
       @define-color yellow   #${yellow};
       @define-color red      #${red};
+      @define-color pink      #${pink};
 
       * {
         font-family: "${font.sans}";
@@ -178,9 +222,9 @@ with colors;
       #waybar .module:not(#workspaces),
       #workspaces button,
       #mpris,
+      #cava,
       #pulseaudio,
       #memory,
-      #cpu,
       #temperature {
           padding: 10px 0;
           color: @base;
@@ -193,6 +237,11 @@ with colors;
       }
       #hardware {
         background: @blue;
+        padding: 0;
+        margin: 0;
+      }
+      #waybar #cpu label {
+        margin-right: 20px; /* Manually nudge the label until it looks centered */
       }
       #workspaces {
         background: @inactive;
@@ -203,7 +252,11 @@ with colors;
       }
       #clock {
         background: @purple;
-        padding: 10px 5px !important;
+        padding: 10px 5px;
+      }
+      #network {
+        background: @pink;
+        padding: 10px 5px;
       }
       #tray {
         background: @orange;
@@ -215,9 +268,9 @@ with colors;
       /* Dynamic Animations & States */
       #mpris.playing,
       #battery.charging {
-        background: linear-gradient(180deg, @base, @alt, @sky, @base);
-        background-size: 200% 200%;
-        animation: gradient_flow 3s linear infinite;
+          background: linear-gradient(-45deg, @base, @alt, @base);
+          background-size: 300% 300%;
+          animation: gradient_flow 3s ease infinite;
       }
 
       #waybar #mpris {
@@ -268,13 +321,17 @@ with colors;
 
       /* Keyframes */
       @keyframes gradient_flow {
-        from {
-          background-position: 50% 200%;
-        }
-        to {
-          background-position: 50% 0%;
-        }
+          0% {
+              background-position: 0% 50%;
+          }
+          50% {
+              background-position: 100% 50%;
+          }
+          100% {
+              background-position: 0% 50%;
+          }
       }
+
 
       @keyframes blink {
         from {
