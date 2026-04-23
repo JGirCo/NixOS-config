@@ -18,6 +18,7 @@ in
 
     ./home-services.nix
     ./zsh.nix
+    ./apps/opencode.nix
     # ./desktop/hyprland.nix
     # ./desktop/wofi.nix
     # ./desktop/rofi.nix

@@ -422,6 +422,10 @@ in
     (GPUOffloadApp steam)
     (GPUOffloadApp prismlauncher)
   ];
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-cuda;
+  };
 
   nixpkgs.overlays = flake-overlays;
 
