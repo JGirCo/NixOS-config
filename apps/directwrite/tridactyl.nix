@@ -1,4 +1,9 @@
-{ config, theme, lib, ... }:
+{
+  config,
+  theme,
+  lib,
+  ...
+}:
 let
   colors = import ../../colors.nix {
     inherit theme;
@@ -38,6 +43,9 @@ let
     bindurl https://www.youtube.com f hint -Jc [class*="yt-simple-endpoint"],[class*="yt-spec-button-shape-next__button-text-content"]
     bindurl https://www.youtube.com F hint -Jbc [class*="yt-simple-endpoint"]
 
+    " " Easier ytMusic navigation
+    bindurl music.youtube.com f hint -c a, button, [role="button"], ytmusic-play-button-renderer, ytmusic-navigation-button-renderer
+
     " " Focus on input
     bind i focusinput
 
@@ -49,7 +57,7 @@ let
     autocmd DocStart ^http(s?)://www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
 
     " "
-    set editorcmd wezterm start nvim
+    set editorcmd kitty start nvim
 
     " " Search engines
     set searchurls.nix https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=
@@ -69,8 +77,10 @@ let
     unbind d
     unbind u
   '';
-  cssconfig = with config.colorScheme.palette;
-    with colors; ''
+  cssconfig =
+    with config.colorScheme.palette;
+    with colors;
+    ''
       :root {
           --tridactyl-bg: #${base};
           --tridactyl-fg: #${text2};
@@ -245,7 +255,8 @@ let
       }
 
     '';
-in {
+in
+{
   xdg = {
     configFile = {
       tridactyl = {

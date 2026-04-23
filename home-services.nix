@@ -16,6 +16,22 @@
   systemd.user.services = {
     # Background Daemons
 
+    iwgtk = {
+      Unit = {
+        Description = "iwd wireless GUI tray indicator";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+      Service = {
+        ExecStart = "${pkgs.iwgtk}/bin/iwgtk -i";
+        Restart = "on-failure";
+        RestartSec = "3";
+      };
+    };
+
+    # Background Daemons
+
     awww-daemon = {
       Unit.Description = "Wayland wallpaper daemon";
       Install.WantedBy = [ "graphical-session.target" ];

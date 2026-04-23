@@ -27,7 +27,7 @@ with colors;
         modules-right = [
           "battery"
           "clock"
-          "network"
+          # "network"
           "tray"
         ];
 
@@ -72,8 +72,8 @@ with colors;
         };
 
         "cpu" = {
-          interval = 10;
-          format = "<span font_size='12pt'>{: .1f}%</span>\n󰾆";
+          interval = 2;
+          format = "<span font_size='12pt'>{usage}%</span>\n󰾆";
           tooltip-format = "{usage}% Usage";
           justify = "center";
         };
@@ -177,29 +177,30 @@ with colors;
             on-scroll-down = "shift_down";
           };
         };
-        network = {
-          format-wifi = "{icon}";
-          format-ethernet = "󰈀 ";
-          format-disconnected = "󰤭 ";
-          format-icons = [
-            "󰤯 "
-            "󰤟 "
-            "󰤢 "
-            "󰤥 "
-            "󰤨 "
-          ];
-          tooltip-format = "{essid} - {signalStrength}%";
-        };
+        # network = {
+        #   format-wifi = "{icon}";
+        #   format-ethernet = "󰈀 ";
+        #   format-disconnected = "󰤭 ";
+        #   format-icons = [
+        #     "󰤯 "
+        #     "󰤟 "
+        #     "󰤢 "
+        #     "󰤥 "
+        #     "󰤨 "
+        #   ];
+        #   tooltip-format = "{essid} - {signalStrength}%";
+        # };
       };
     };
 
     style = ''
       /* Color Palette - Catppuccin Macchiato flavor */
       @define-color base     #${base};
+      @define-color focused     #${focused};
       @define-color text     #${text2};
       @define-color blue     #${blue};
       @define-color alt      #${alt};
-      @define-color orange   #${focused};
+      @define-color orange   #${orange};
       @define-color purple #${purple};
       @define-color green    #${green};
       @define-color inactive #${inactive};
@@ -259,7 +260,7 @@ with colors;
         padding: 10px 5px;
       }
       #tray {
-        background: @orange;
+        background: @base;
       }
       #battery {
         background: @green;
@@ -297,7 +298,7 @@ with colors;
       }
 
       #workspaces button.active {
-        background: @orange;
+        background: @focused;
         animation: selection 1s;
       }
 
