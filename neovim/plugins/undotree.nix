@@ -10,16 +10,17 @@
         DiffpanelHeight = 10;
       };
     };
-    keymaps = [{
-      key = "<leader>u";
-      mode = "n";
-      action = "<cmd>UndotreeToggle | UndotreeFocus<CR>";
-      options = {
-        silent = true;
-        noremap = true;
-        desc = "[u]ndotree toggle";
-      };
-    }];
+    keymaps = [
+      {
+        key = "<leader>u";
+        mode = "n";
+        action = "<cmd>UndotreeToggle | UndotreeFocus<CR>";
+        options = {
+          silent = true;
+          noremap = true;
+          desc = "[u]ndotree toggle";
+        };
+      }
+    ];
   };
 }
-

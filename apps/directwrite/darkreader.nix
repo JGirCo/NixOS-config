@@ -1,11 +1,19 @@
-{ pkgs, config, theme, lib, ... }:
+{
+  pkgs,
+  config,
+  theme,
+  lib,
+  ...
+}:
 let
   colors = import ../../colors.nix {
     inherit theme;
     inherit lib;
   };
-  appconfig = with config.colorScheme.palette;
-    with colors; ''
+  appconfig =
+    with config.colorScheme.palette;
+    with colors;
+    ''
       {
       	    "schemeVersion": 2,
       	    "enabled": true,
@@ -63,7 +71,8 @@ let
       	    ]
       	}
     '';
-in {
+in
+{
   xdg = {
     configFile = {
       darkreader = {

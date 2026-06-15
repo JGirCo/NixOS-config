@@ -8,11 +8,13 @@
       };
     };
 
-    keymaps = [{
-      mode = "n";
-      key = "<leader>m";
-      action = ":MarkdownPreview<cr>";
-      options.silent = true;
-    }];
+    keymaps = [
+      {
+        mode = "n";
+        key = "<leader>m";
+        action = ":MarkdownPreview<cr>";
+        options.silent = true;
+      }
+    ];
   };
 }

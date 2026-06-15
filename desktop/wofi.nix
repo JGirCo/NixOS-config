@@ -1,4 +1,13 @@
-{ config, lib, pkgs, theme, colors, ... }: with colors; {
+{
+  config,
+  lib,
+  pkgs,
+  theme,
+  colors,
+  ...
+}:
+with colors;
+{
   programs.wofi = {
     enable = true;
 

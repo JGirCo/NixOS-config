@@ -18,7 +18,7 @@ in
 
     ./home-services.nix
     ./zsh.nix
-    ./apps/opencode.nix
+    # ./apps/opencode.nix
     # ./desktop/hyprland.nix
     # ./desktop/wofi.nix
     # ./desktop/rofi.nix
@@ -86,6 +86,14 @@ in
     stateVersion = "23.11";
   };
 
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [
+    (final: prev: {
+      openldap = prev.openldap.overrideAttrs (oldAttrs: {
+        doCheck = false;
+      });
+    })
+  ];
   home.packages = with pkgs; [
 
     #GUI
@@ -96,6 +104,8 @@ in
     parabolic
     # discord
     darktable
+    bottles
+    lutris
 
     #TUI
     cava

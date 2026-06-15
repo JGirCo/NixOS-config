@@ -4,7 +4,8 @@ let
     inherit theme;
     inherit lib;
   };
-in {
+in
+{
   programs.nixvim.plugins.bufferline = {
     enable = true;
     settings = {
@@ -71,7 +72,9 @@ in {
         # separator_style = [ ""  "" ];
         separator_style = "slant";
         always_show_bufferline = true;
-        indicator = { style = "none"; };
+        indicator = {
+          style = "none";
+        };
         show_buffer_close_icons = false;
 
       };

@@ -22,7 +22,8 @@ let
     s = down
     d = right
   '';
-in {
+in
+{
   xdg = {
     configFile = {
       keyd = {

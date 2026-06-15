@@ -16,24 +16,32 @@
       # | A | B | C                             X | Y | Z |
       # +-------------------------------------------------+
       tabline = {
-        lualine_a = [{
-          __unkeyed-1 = "buffers";
-          separator.left = "";
-          separator.right = "";
-          symbols = { alternate_file = ""; };
-        }];
-        lualine_z = [{
-          __unkeyed-1 = "tabs";
-          separator.left = "";
-          separator.right = "";
-        }];
+        lualine_a = [
+          {
+            __unkeyed-1 = "buffers";
+            separator.left = "";
+            separator.right = "";
+            symbols = {
+              alternate_file = "";
+            };
+          }
+        ];
+        lualine_z = [
+          {
+            __unkeyed-1 = "tabs";
+            separator.left = "";
+            separator.right = "";
+          }
+        ];
       };
       sections = {
-        lualine_a = [{
-          __unkeyed-1 = "mode";
-          separator.left = "";
-          separator.right = "";
-        }];
+        lualine_a = [
+          {
+            __unkeyed-1 = "mode";
+            separator.left = "";
+            separator.right = "";
+          }
+        ];
         lualine_b = [ "branch" ];
         lualine_c = [ "diff" ];
 
@@ -65,15 +73,17 @@
           "lsp_status"
         ];
         lualine_x = [ "diagnostics" ];
-        lualine_z = [{
-          __unkeyed-1 = "filetype";
-          separator.right = "";
-          separator.left = "";
-          filetype_names = {
-            undotree = "Undotree";
-            neo-tree = "File Explorer";
-          };
-        }];
+        lualine_z = [
+          {
+            __unkeyed-1 = "filetype";
+            separator.right = "";
+            separator.left = "";
+            filetype_names = {
+              undotree = "Undotree";
+              neo-tree = "File Explorer";
+            };
+          }
+        ];
       };
     };
   };

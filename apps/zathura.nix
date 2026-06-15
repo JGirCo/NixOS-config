@@ -1,7 +1,14 @@
-{ lib, config, theme, colors, ... }:
+{
+  lib,
+  config,
+  theme,
+  colors,
+  ...
+}:
 
 with colors;
-with config.colorScheme.palette; {
+with config.colorScheme.palette;
+{
   config = {
     programs.zathura = {
       enable = true;

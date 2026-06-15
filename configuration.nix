@@ -125,12 +125,23 @@ in
   networking.dhcpcd.enable = false;
   networking.useNetworkd = true;
 
+  systemd.network.networks."10-wired" = {
+    matchConfig.Name = "en* eth*";
+    networkConfig = {
+      DHCP = "yes";
+    };
+    dhcpV4Config.RouteMetric = lib.mkForce 100;
+    ipv6AcceptRAConfig.RouteMetric = lib.mkForce 100;
+  };
+
   systemd.network.networks."20-wireless" = {
-    matchConfig.Name = "wl*"; # This will match your wlo1 interface
+    matchConfig.Name = "wl*";
     networkConfig = {
       DHCP = "yes";
       IgnoreCarrierLoss = "3s";
     };
+    dhcpV4Config.RouteMetric = 600;
+    ipv6AcceptRAConfig.RouteMetric = 600;
   };
 
   # Enable iwd
@@ -140,8 +151,7 @@ in
       Enabled = true;
     };
     Network = {
-      EnableNetworkConfiguration = true;
-      NameResolvingService = "systemd"; # Add this line
+      EnableNetworkConfiguration = false;
     };
     Settings = {
       AutoConnect = true;
@@ -387,7 +397,6 @@ in
     ouch-rar
 
     # GUI Tools
-    pureref
     kicad
     python313Packages.python-lsp-server
     python313Packages.python-lsp-black
@@ -399,8 +408,6 @@ in
     libreoffice
     nautilus
     inkscape
-    bottles
-    lutris
     ungoogled-chromium
     # floorp
     # deluge
@@ -422,10 +429,10 @@ in
     (GPUOffloadApp steam)
     (GPUOffloadApp prismlauncher)
   ];
-  services.ollama = {
-    enable = true;
-    package = pkgs.ollama-cuda;
-  };
+  # services.ollama = {
+  #   enable = true;
+  #   package = pkgs.ollama-cuda;
+  # };
 
   nixpkgs.overlays = flake-overlays;
 

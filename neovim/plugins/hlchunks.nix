@@ -1,10 +1,16 @@
-{ config, theme, lib, ... }:
+{
+  config,
+  theme,
+  lib,
+  ...
+}:
 let
   colors = import ../../colors.nix {
     inherit theme;
     inherit lib;
   };
-in {
+in
+{
   programs.nixvim.plugins.hlchunk = {
     enable = false;
     settings = {

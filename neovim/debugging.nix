@@ -1,12 +1,20 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.nixvim = {
     plugins = {
       cmp-dap.enable = true;
       dap-python.enable = true;
-      dap-virtual-text = { enable = true; };
+      dap-virtual-text = {
+        enable = true;
+      };
       dap-ui = {
         enable = true;
-        settings.floating.mappings = { close = [ "<ESC>" "q" ]; };
+        settings.floating.mappings = {
+          close = [
+            "<ESC>"
+            "q"
+          ];
+        };
       };
       dap = {
         enable = true;
@@ -31,8 +39,7 @@
       {
         mode = "n";
         key = "<leader>dB";
-        action =
-          "\n        <cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>\n      ";
+        action = "\n        <cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>\n      ";
         options = {
           silent = true;
           desc = "Breakpoint Condition";
@@ -192,7 +199,10 @@
         };
       }
       {
-        mode = [ "n" "v" ];
+        mode = [
+          "n"
+          "v"
+        ];
         key = "<leader>de";
         action = "<cmd>lua require('dapui').eval()<cr>";
         options = {
@@ -203,9 +213,10 @@
       {
         mode = "n";
         key = "<leader>df";
-        action =
-          "<CMD>lua require('dap.ext.vscode').load_launchjs()<CR><CMD>Telescope dap configurations<CR>";
-        options = { desc = "Debug Configurations"; };
+        action = "<CMD>lua require('dap.ext.vscode').load_launchjs()<CR><CMD>Telescope dap configurations<CR>";
+        options = {
+          desc = "Debug Configurations";
+        };
       }
     ];
 

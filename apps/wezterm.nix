@@ -1,6 +1,14 @@
-{ config, lib, pkgs, theme, font, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  theme,
+  font,
+  ...
+}:
 
-with config.colorScheme.palette; {
+with config.colorScheme.palette;
+{
   programs.wezterm = {
     enable = true;
     enableZshIntegration = true;

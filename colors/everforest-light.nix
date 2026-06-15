@@ -16,7 +16,7 @@
   purple = "aF59BA";
   orange = "f57d26";
 
-  key = { 
+  key = {
     nvim = "everforest";
     darklight = "prefer-light";
   };
@@ -43,4 +43,3 @@
     base0F = "#829181";
   };
 }
-

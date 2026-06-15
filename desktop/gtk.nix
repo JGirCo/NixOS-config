@@ -1,9 +1,19 @@
-{ config, pkgs, lib, theme, font, colors, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  theme,
+  font,
+  colors,
+  ...
+}:
 
 let
 
-  cssContent = with config.colorScheme.palette;
-    with colors; ''
+  cssContent =
+    with config.colorScheme.palette;
+    with colors;
+    ''
       @define-color accent_color #${base0D};
       @define-color accent_bg_color mix(#${base0D}, #${base},0.3);
       @define-color accent_fg_color #${base02};
@@ -87,11 +97,15 @@ let
       @define-color dark_5 mix(#${base},black,0.4);
     '';
 
-in {
+in
+{
   dconf.settings = {
-    "org/gnome/desktop/interface" = { color-scheme = colors.key.darklight; };
+    "org/gnome/desktop/interface" = {
+      color-scheme = colors.key.darklight;
+    };
   };
   gtk = {
+    gtk4.theme = null;
     enable = true;
     theme.name = "adw-gtk3";
     theme.package = pkgs.adw-gtk3;
@@ -132,132 +146,148 @@ in {
     # QT_STYLE_OVERRIDE = "kvantum";
   };
 
-  xdg.configFile."gtk-4.0/gtk.css" = { text = cssContent; };
-  xdg.configFile."gtk-3.0/gtk.css" = { text = cssContent; };
-  xdg.configFile."qt5ct/colors/Custom.conf".text = let
-    # Helper: convert to 6-digit hex (no alpha channel needed for qt5ct)
-    rgba = c: "#${c}";
+  xdg.configFile."gtk-4.0/gtk.css" = {
+    text = cssContent;
+  };
+  xdg.configFile."gtk-3.0/gtk.css" = {
+    text = cssContent;
+  };
+  xdg.configFile."qt5ct/colors/Custom.conf".text =
+    let
+      # Helper: convert to 6-digit hex (no alpha channel needed for qt5ct)
+      rgba = c: "#${c}";
 
-    # Active palette (21 colors)
-    # Order: WindowText, Button, Light, Midlight, Dark, Mid, Text, BrightText, ButtonText, Base, Window, Shadow, Highlight, HighlightedText, Link, LinkVisited, AlternateBase, NoRole, ToolTipBase, ToolTipText, PlaceholderText
-    active = with config.colorScheme.palette;
-      with colors; [
-        text2 # Window text
-        base02 # Button background
-        base01 # Bright (lighter than base)
-        base02 # Less bright
-        base03 # Dark
-        base02 # Less dark (mid)
-        text2 # Normal text
-        base # Bright text (contrast)
-        text2 # Button text
-        base # Normal background (for text entry)
-        base # Window background
-        base03 # Shadow
-        focused # Highlight
-        base # Highlighted text
-        base0D # Link
-        base0E # Visited link
-        base01 # Alternate background
-        base # Default (unused)
-        base02 # Tooltip background
-        text2 # Tooltip text
-        base04 # Placeholder text
-      ];
+      # Active palette (21 colors)
+      # Order: WindowText, Button, Light, Midlight, Dark, Mid, Text, BrightText, ButtonText, Base, Window, Shadow, Highlight, HighlightedText, Link, LinkVisited, AlternateBase, NoRole, ToolTipBase, ToolTipText, PlaceholderText
+      active =
+        with config.colorScheme.palette;
+        with colors;
+        [
+          text2 # Window text
+          base02 # Button background
+          base01 # Bright (lighter than base)
+          base02 # Less bright
+          base03 # Dark
+          base02 # Less dark (mid)
+          text2 # Normal text
+          base # Bright text (contrast)
+          text2 # Button text
+          base # Normal background (for text entry)
+          base # Window background
+          base03 # Shadow
+          focused # Highlight
+          base # Highlighted text
+          base0D # Link
+          base0E # Visited link
+          base01 # Alternate background
+          base # Default (unused)
+          base02 # Tooltip background
+          text2 # Tooltip text
+          base04 # Placeholder text
+        ];
 
-    # Disabled palette (dimmed)
-    # Order: WindowText, Button, Light, Midlight, Dark, Mid, Text, BrightText, ButtonText, Base, Window, Shadow, Highlight, HighlightedText, Link, LinkVisited, AlternateBase, NoRole, ToolTipBase, ToolTipText, PlaceholderText
-    disabled = with config.colorScheme.palette;
-      with colors; [
-        base04 # Window text (dimmed)
-        base02 # Button background (dimmed)
-        base03 # Bright (dimmed)
-        base04 # Less bright (dimmed)
-        base04 # Dark (dimmed further)
-        base03 # Less dark (dimmed)
-        base04 # Normal text (dimmed)
-        base03 # Bright text (dimmed)
-        base04 # Button text (dimmed)
-        base01 # Normal background (dimmed)
-        base01 # Window background (dimmed)
-        base04 # Shadow (dimmed)
-        inactive # Highlight (dimmed)
-        base03 # Highlighted text (dimmed)
-        base0D # Link (slightly dimmed)
-        base0E # Visited link (slightly dimmed)
-        base02 # Alternate background (dimmed)
-        base03 # Default (unused, dimmed)
-        base02 # Tooltip background (dimmed)
-        base04 # Tooltip text (dimmed)
-        base04 # Placeholder text (dimmed)
-      ];
-  in ''
-    [ColorScheme]
-    active_colors=${lib.concatStringsSep "," (map rgba active)}
-    disabled_colors=${lib.concatStringsSep "," (map rgba disabled)}
-    inactive_colors=${lib.concatStringsSep "," (map rgba active)}
-  '';
+      # Disabled palette (dimmed)
+      # Order: WindowText, Button, Light, Midlight, Dark, Mid, Text, BrightText, ButtonText, Base, Window, Shadow, Highlight, HighlightedText, Link, LinkVisited, AlternateBase, NoRole, ToolTipBase, ToolTipText, PlaceholderText
+      disabled =
+        with config.colorScheme.palette;
+        with colors;
+        [
+          base04 # Window text (dimmed)
+          base02 # Button background (dimmed)
+          base03 # Bright (dimmed)
+          base04 # Less bright (dimmed)
+          base04 # Dark (dimmed further)
+          base03 # Less dark (dimmed)
+          base04 # Normal text (dimmed)
+          base03 # Bright text (dimmed)
+          base04 # Button text (dimmed)
+          base01 # Normal background (dimmed)
+          base01 # Window background (dimmed)
+          base04 # Shadow (dimmed)
+          inactive # Highlight (dimmed)
+          base03 # Highlighted text (dimmed)
+          base0D # Link (slightly dimmed)
+          base0E # Visited link (slightly dimmed)
+          base02 # Alternate background (dimmed)
+          base03 # Default (unused, dimmed)
+          base02 # Tooltip background (dimmed)
+          base04 # Tooltip text (dimmed)
+          base04 # Placeholder text (dimmed)
+        ];
+    in
+    ''
+      [ColorScheme]
+      active_colors=${lib.concatStringsSep "," (map rgba active)}
+      disabled_colors=${lib.concatStringsSep "," (map rgba disabled)}
+      inactive_colors=${lib.concatStringsSep "," (map rgba active)}
+    '';
 
   # Qt6ct configuration (for Qt6 apps like qbittorrent)
-  xdg.configFile."qt6ct/colors/Custom.conf".text = let
-    # Helper: convert to 6-digit hex (no alpha channel needed for qt6ct)
-    rgba = c: "#${c}";
+  xdg.configFile."qt6ct/colors/Custom.conf".text =
+    let
+      # Helper: convert to 6-digit hex (no alpha channel needed for qt6ct)
+      rgba = c: "#${c}";
 
-    # Active palette (21 colors) - same mapping as qt5ct
-    active = with config.colorScheme.palette;
-      with colors; [
-        text2 # Window text
-        base02 # Button background
-        base01 # Bright (lighter than base)
-        base02 # Less bright
-        base03 # Dark
-        base02 # Less dark (mid)
-        text2 # Normal text
-        base # Bright text (contrast)
-        text2 # Button text
-        base # Normal background (for text entry)
-        base # Window background
-        base03 # Shadow
-        focused # Highlight
-        base # Highlighted text
-        base0D # Link
-        base0E # Visited link
-        base01 # Alternate background
-        base # Default (unused)
-        base02 # Tooltip background
-        text2 # Tooltip text
-        base04 # Placeholder text
-      ];
+      # Active palette (21 colors) - same mapping as qt5ct
+      active =
+        with config.colorScheme.palette;
+        with colors;
+        [
+          text2 # Window text
+          base02 # Button background
+          base01 # Bright (lighter than base)
+          base02 # Less bright
+          base03 # Dark
+          base02 # Less dark (mid)
+          text2 # Normal text
+          base # Bright text (contrast)
+          text2 # Button text
+          base # Normal background (for text entry)
+          base # Window background
+          base03 # Shadow
+          focused # Highlight
+          base # Highlighted text
+          base0D # Link
+          base0E # Visited link
+          base01 # Alternate background
+          base # Default (unused)
+          base02 # Tooltip background
+          text2 # Tooltip text
+          base04 # Placeholder text
+        ];
 
-    # Disabled palette (dimmed)
-    disabled = with config.colorScheme.palette;
-      with colors; [
-        base04 # Window text (dimmed)
-        base02 # Button background (dimmed)
-        base03 # Bright (dimmed)
-        base04 # Less bright (dimmed)
-        base04 # Dark (dimmed further)
-        base03 # Less dark (dimmed)
-        base04 # Normal text (dimmed)
-        base03 # Bright text (dimmed)
-        base04 # Button text (dimmed)
-        base01 # Normal background (dimmed)
-        base01 # Window background (dimmed)
-        base04 # Shadow (dimmed)
-        inactive # Highlight (dimmed)
-        base03 # Highlighted text (dimmed)
-        base0D # Link (slightly dimmed)
-        base0E # Visited link (slightly dimmed)
-        base02 # Alternate background (dimmed)
-        base03 # Default (unused, dimmed)
-        base02 # Tooltip background (dimmed)
-        base04 # Tooltip text (dimmed)
-        base04 # Placeholder text (dimmed)
-      ];
-  in ''
-    [ColorScheme]
-    active_colors=${lib.concatStringsSep "," (map rgba active)}
-    disabled_colors=${lib.concatStringsSep "," (map rgba disabled)}
-    inactive_colors=${lib.concatStringsSep "," (map rgba active)}
-  '';
+      # Disabled palette (dimmed)
+      disabled =
+        with config.colorScheme.palette;
+        with colors;
+        [
+          base04 # Window text (dimmed)
+          base02 # Button background (dimmed)
+          base03 # Bright (dimmed)
+          base04 # Less bright (dimmed)
+          base04 # Dark (dimmed further)
+          base03 # Less dark (dimmed)
+          base04 # Normal text (dimmed)
+          base03 # Bright text (dimmed)
+          base04 # Button text (dimmed)
+          base01 # Normal background (dimmed)
+          base01 # Window background (dimmed)
+          base04 # Shadow (dimmed)
+          inactive # Highlight (dimmed)
+          base03 # Highlighted text (dimmed)
+          base0D # Link (slightly dimmed)
+          base0E # Visited link (slightly dimmed)
+          base02 # Alternate background (dimmed)
+          base03 # Default (unused, dimmed)
+          base02 # Tooltip background (dimmed)
+          base04 # Tooltip text (dimmed)
+          base04 # Placeholder text (dimmed)
+        ];
+    in
+    ''
+      [ColorScheme]
+      active_colors=${lib.concatStringsSep "," (map rgba active)}
+      disabled_colors=${lib.concatStringsSep "," (map rgba disabled)}
+      inactive_colors=${lib.concatStringsSep "," (map rgba active)}
+    '';
 }

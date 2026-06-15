@@ -15,10 +15,12 @@
       #   window.size = 60;
       # };
     };
-    keymaps = [{
-      mode = [ "n" ];
-      key = "<leader>v";
-      action = ":AerialNavToggle<CR>";
-    }];
+    keymaps = [
+      {
+        mode = [ "n" ];
+        key = "<leader>v";
+        action = ":AerialNavToggle<CR>";
+      }
+    ];
   };
 }

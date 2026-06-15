@@ -1,6 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.nixvim = {
-    extraPlugins = [{ plugin = pkgs.vimPlugins.plantuml-nvim; }];
+    extraPlugins = [ { plugin = pkgs.vimPlugins.plantuml-nvim; } ];
     extraConfigLua = ''
       require('plantuml').setup({
       viewer = "${pkgs.vipsdisp}/bin/vipsdisp",

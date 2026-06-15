@@ -1,12 +1,19 @@
-{ config, theme, lib, ... }:
+{
+  config,
+  theme,
+  lib,
+  ...
+}:
 
 let
   colors = import ../../colors.nix {
     inherit theme;
     inherit lib;
   };
-  qssContent = with config.colorScheme.palette;
-    with colors; ''
+  qssContent =
+    with config.colorScheme.palette;
+    with colors;
+    ''
       /*
       vi: ft=css
 
@@ -2303,7 +2310,7 @@ let
           background: red;
       }
     '';
-in {
-  home.file."~/.local/share/FreeCAD/Mod/Dracula/Dracula/Dracula.qss".text =
-    qssContent;
+in
+{
+  home.file."~/.local/share/FreeCAD/Mod/Dracula/Dracula/Dracula.qss".text = qssContent;
 }

@@ -1,4 +1,12 @@
-{ config, lib, pkgs, theme, font, colors, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  theme,
+  font,
+  colors,
+  ...
+}:
 
 let
   mod = "Mod4";
@@ -9,7 +17,9 @@ let
 
   unfocused = "#ffffff00";
   focused_inactive = "#ffffff00";
-in with colors; {
+in
+with colors;
+{
 
   imports = [ ./picom.nix ];
   home.packages = with pkgs; [
@@ -29,7 +39,9 @@ in with colors; {
       defaultWorkspace = "workspace number 1";
       workspaceAutoBackAndForth = true;
 
-      assigns = { "10: background" = [{ class = "^spotify$"; }]; };
+      assigns = {
+        "10: background" = [ { class = "^spotify$"; } ];
+      };
 
       fonts = {
         names = [ "${font} Nerd Font" ];
@@ -38,13 +50,11 @@ in with colors; {
       startup = [
         { command = "--no-startup-id dex --autostart --environment i3"; }
         {
-          command =
-            "--no-startup-id feh --bg-scale ~/Pictures/wallpapers/${theme}.jpg";
+          command = "--no-startup-id feh --bg-scale ~/Pictures/wallpapers/${theme}.jpg";
           always = true;
         }
         {
-          command =
-            "--no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork";
+          command = "--no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork";
         }
         { command = "--no-startup-id nm-applet"; }
         { command = "--no-startup-id picom -CGb"; }
@@ -60,8 +70,7 @@ in with colors; {
       keybindings = lib.mkOptionDefault {
         "${mod}+q" = "kill";
         "${mod}+b" = "exec floorp";
-        "${mod}+d" =
-          "exec rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi";
+        "${mod}+d" = "exec rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi";
         "${mod}+t" = "exec wezterm";
         "${mod}+m" = "exec emacsclient -r";
         "${mod}+s" = "exec wezterm start spt;exec spotify";
@@ -94,38 +103,25 @@ in with colors; {
 
         "${mod}+Shift+c" = "reload";
 
-        "${mod}+Shift+1" =
-          "move container to workspace number 1; workspace number 1";
-        "${mod}+Shift+2" =
-          "move container to workspace number 2; workspace number 2";
-        "${mod}+Shift+3" =
-          "move container to workspace number 3; workspace number 3";
-        "${mod}+Shift+4" =
-          "move container to workspace number 4; workspace number 4";
-        "${mod}+Shift+5" =
-          "move container to workspace number 5; workspace number 5";
-        "${mod}+Shift+6" =
-          "move container to workspace number 6; workspace number 6";
-        "${mod}+Shift+7" =
-          "move container to workspace number 7; workspace number 7";
-        "${mod}+Shift+8" =
-          "move container to workspace number 8; workspace number 8";
-        "${mod}+Shift+9" =
-          "move container to workspace number 9; workspace number 9";
-        "${mod}+Shift+10" =
-          "move container to workspace number 10; workspace number 10";
+        "${mod}+Shift+1" = "move container to workspace number 1; workspace number 1";
+        "${mod}+Shift+2" = "move container to workspace number 2; workspace number 2";
+        "${mod}+Shift+3" = "move container to workspace number 3; workspace number 3";
+        "${mod}+Shift+4" = "move container to workspace number 4; workspace number 4";
+        "${mod}+Shift+5" = "move container to workspace number 5; workspace number 5";
+        "${mod}+Shift+6" = "move container to workspace number 6; workspace number 6";
+        "${mod}+Shift+7" = "move container to workspace number 7; workspace number 7";
+        "${mod}+Shift+8" = "move container to workspace number 8; workspace number 8";
+        "${mod}+Shift+9" = "move container to workspace number 9; workspace number 9";
+        "${mod}+Shift+10" = "move container to workspace number 10; workspace number 10";
 
-        "XF86AudioRaiseVolume" =
-          "exec --no-startup-id pamixer -i 5 && pkill -RTMIN+12 i3blocks";
-        "XF86AudioLowerVolume" =
-          "exec --no-startup-id pamixer -d 5 && pkill -RTMIN+12 i3blocks ";
+        "XF86AudioRaiseVolume" = "exec --no-startup-id pamixer -i 5 && pkill -RTMIN+12 i3blocks";
+        "XF86AudioLowerVolume" = "exec --no-startup-id pamixer -d 5 && pkill -RTMIN+12 i3blocks ";
         "XF86AudioMute" =
           "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+12 i3blocks";
         "XF86AudioMicMute" =
           "exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status";
         "XF86MonBrightnessUp" = "exec light -A 5 && pkill -RTMIN+15 i3blocks";
-        "XF86MonBrightnessDown" =
-          "exec light -U 5 && pkill -SIGRTMIN+15 i3blocks";
+        "XF86MonBrightnessDown" = "exec light -U 5 && pkill -SIGRTMIN+15 i3blocks";
       };
       modes = {
         resize = {
@@ -142,39 +138,40 @@ in with colors; {
         };
       };
 
-      bars = [{
-        fonts = {
-          names = [ "${font} Nerd Font" ];
-          size = 9.0;
-        };
-        position = "bottom";
-        statusCommand =
-          "SCRIPT_DIR=~/.config/i3blocks ${pkgs.i3blocks}/bin/i3blocks -c ~/.config/i3blocks/${theme}";
-        colors = {
-          background = "${base}ff";
-          separator = text;
-          bindingMode = {
-            background = binding;
-            border = binding;
-            text = base;
+      bars = [
+        {
+          fonts = {
+            names = [ "${font} Nerd Font" ];
+            size = 9.0;
           };
-          focusedWorkspace = {
-            background = focused;
-            border = focused;
-            text = base;
+          position = "bottom";
+          statusCommand = "SCRIPT_DIR=~/.config/i3blocks ${pkgs.i3blocks}/bin/i3blocks -c ~/.config/i3blocks/${theme}";
+          colors = {
+            background = "${base}ff";
+            separator = text;
+            bindingMode = {
+              background = binding;
+              border = binding;
+              text = base;
+            };
+            focusedWorkspace = {
+              background = focused;
+              border = focused;
+              text = base;
+            };
+            inactiveWorkspace = {
+              background = inactive;
+              border = inactive;
+              text = text;
+            };
+            urgentWorkspace = {
+              background = urgent;
+              border = urgent;
+              text = base;
+            };
           };
-          inactiveWorkspace = {
-            background = inactive;
-            border = inactive;
-            text = text;
-          };
-          urgentWorkspace = {
-            background = urgent;
-            border = urgent;
-            text = base;
-          };
-        };
-      }];
+        }
+      ];
       colors = {
         focused = {
           background = focused;

@@ -2,7 +2,10 @@
   programs.nixvim = {
     keymaps = [
       {
-        mode = [ "i" "s" ];
+        mode = [
+          "i"
+          "s"
+        ];
         key = "<C-j>";
         action.__raw = ''
           function()
@@ -14,7 +17,10 @@
         '';
       }
       {
-        mode = [ "i" "s" ];
+        mode = [
+          "i"
+          "s"
+        ];
         key = "<C-k>";
         action.__raw = ''
           function()
@@ -26,7 +32,11 @@
         '';
       }
     ];
-    opts.completeopt = [ "menu" "menuone" "noselect" ];
+    opts.completeopt = [
+      "menu"
+      "menuone"
+      "noselect"
+    ];
 
     plugins = {
       cmp-nvim-lsp.enable = true;
@@ -35,16 +45,21 @@
       cmp-treesitter.enable = true;
       luasnip = {
         enable = true;
-        fromLua = [{
-          paths = ./luasnip;
-          lazyLoad = false;
-        }];
+        fromLua = [
+          {
+            paths = ./luasnip;
+            lazyLoad = false;
+          }
+        ];
         settings = {
           enable_autosnippets = true;
           exit_roots = false;
           keep_roots = true;
           link_roots = true;
-          update_events = [ "TextChanged" "TextChangedI" ];
+          update_events = [
+            "TextChanged"
+            "TextChangedI"
+          ];
         };
       };
       friendly-snippets.enable = true;
@@ -68,7 +83,9 @@
         enable = true;
         settings = {
           autoEnableSources = true;
-          performance = { debounce = 150; };
+          performance = {
+            debounce = 150;
+          };
           sources = [
             { name = "path"; }
             {
@@ -88,7 +105,11 @@
             end
           '';
           formatting = {
-            fields = [ "menu" "abbr" "kind" ];
+            fields = [
+              "menu"
+              "abbr"
+              "kind"
+            ];
             format = ''
               function(entry, item)
                 local menu_icon = {
@@ -107,8 +128,7 @@
           window = {
             completion = {
               border = "rounded";
-              winhighlight =
-                "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None";
+              winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None";
               zindex = 1001;
               scrolloff = 0;
               colOffset = 0;
@@ -117,8 +137,7 @@
             };
             documentation = {
               border = "rounded";
-              winhighlight =
-                "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None";
+              winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None";
               zindex = 1001;
               maxHeight = 20;
             };
@@ -129,8 +148,7 @@
             "<C-e>" = "cmp.mapping.close()";
             "<C-f>" = "cmp.mapping.scroll_docs(4)";
             "<CR>" = "cmp.mapping.confirm({ select = true })";
-            "<S-Tab>" =
-              "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+            "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
             "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
           };
 

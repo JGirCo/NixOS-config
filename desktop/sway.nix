@@ -1,4 +1,12 @@
-{ config, lib, pkgs, theme, font, colors, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  theme,
+  font,
+  colors,
+  ...
+}:
 
 let
   mod = "Mod4";
@@ -9,7 +17,9 @@ let
 
   unfocused = "#ffffff00";
   focused_inactive = "#ffffff00";
-in with colors; {
+in
+with colors;
+{
   imports = [ ./waybar.nix ];
   home.packages = with pkgs; [
     # swaybg
@@ -49,10 +59,14 @@ in with colors; {
           tap = "enabled";
           natural_scroll = "enabled";
         };
-        "5215:711:Trust_Wireless_Mouse" = { natural_scroll = "disabled"; };
+        "5215:711:Trust_Wireless_Mouse" = {
+          natural_scroll = "disabled";
+        };
       };
 
-      assigns = { "10" = [{ class = "^Spotify$"; }]; };
+      assigns = {
+        "10" = [ { class = "^Spotify$"; } ];
+      };
 
       fonts = {
         names = [ "${font.name}" ];
@@ -64,18 +78,15 @@ in with colors; {
           always = true;
         }
         {
-          command =
-            "${pkgs.swww}/bin/swww img ~/Pictures/wallpapers/${theme}.jpg";
+          command = "${pkgs.swww}/bin/swww img ~/Pictures/wallpapers/${theme}.jpg";
           always = true;
         }
         {
-          command =
-            "--no-startup-id ${pkgs.waybar}/bin/waybar";
+          command = "--no-startup-id ${pkgs.waybar}/bin/waybar";
           always = true;
         }
         {
-          command =
-            "--no-startup-id systemctl --user restart nm-applet.service";
+          command = "--no-startup-id systemctl --user restart nm-applet.service";
           always = true;
         }
       ];
@@ -94,8 +105,7 @@ in with colors; {
         "${mod}+t" = "exec wezterm";
         "${mod}+m" = "exec emacsclient -r";
         "${mod}+s" = "exec wezterm start spt;exec spotifyd";
-        "Print" = ''
-          exec grim -g "$(slurp)" - | convert -  -shave 1x1 PNG: - | wl-copy'';
+        "Print" = ''exec grim -g "$(slurp)" - | convert -  -shave 1x1 PNG: - | wl-copy'';
         "Shift+Print" = ''exec grim -g "$(slurp)" - | swappy -f -'';
 
         # Focus
@@ -136,17 +146,14 @@ in with colors; {
         "${mod}+Shift+9" = "move container to workspace 9; workspace 9";
         "${mod}+Shift+0" = "move container to workspace 10";
 
-        "XF86AudioRaiseVolume" =
-          "exec --no-startup-id pamixer -i 5 && pkill -RTMIN+12 i3blocks";
-        "XF86AudioLowerVolume" =
-          "exec --no-startup-id pamixer -d 5 && pkill -RTMIN+12 i3blocks ";
+        "XF86AudioRaiseVolume" = "exec --no-startup-id pamixer -i 5 && pkill -RTMIN+12 i3blocks";
+        "XF86AudioLowerVolume" = "exec --no-startup-id pamixer -d 5 && pkill -RTMIN+12 i3blocks ";
         "XF86AudioMute" =
           "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+12 i3blocks";
         "XF86AudioMicMute" =
           "exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status";
         "XF86MonBrightnessUp" = "exec light -A 5 && pkill -RTMIN+15 i3blocks";
-        "XF86MonBrightnessDown" =
-          "exec light -U 5 && pkill -SIGRTMIN+15 i3blocks";
+        "XF86MonBrightnessDown" = "exec light -U 5 && pkill -SIGRTMIN+15 i3blocks";
       };
       modes = {
         resize = {

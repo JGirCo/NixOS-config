@@ -16,7 +16,7 @@
   purple = "957FB8";
   orange = "FF9E3B";
 
-  key = { 
+  key = {
     nvim = "kanagawa";
     darklight = "prefer-light";
   };
@@ -24,8 +24,7 @@
   isBase16Builtin = false;
   base16 = {
     name = "Kanagawa";
-    author =
-      "Originally by rebelot(https://github.com/rebelot), ported by montdor (https://github.com/montdor)";
+    author = "Originally by rebelot(https://github.com/rebelot), ported by montdor (https://github.com/montdor)";
     base00 = "#DCD7BA";
     base01 = "#d2cca6";
     base02 = "#C8C093";
@@ -44,4 +43,3 @@
     base0F = "#D27E99";
   };
 }
-

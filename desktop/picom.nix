@@ -1,11 +1,19 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   services.picom = {
     enable = true;
     shadow = false;
     fade = true;
-    fadeSteps = [ 4.0e-2 4.0e-2 ];
+    fadeSteps = [
+      4.0e-2
+      4.0e-2
+    ];
     inactiveOpacity = 0.95;
     opacityRules = [
       # "85:class_g = 'org.wezfurlong.wezterm'"

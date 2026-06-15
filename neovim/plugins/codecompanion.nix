@@ -17,9 +17,15 @@
           '';
         };
         strategies = {
-          agent = { adapter = "gemini"; };
-          chat = { adapter = "gemini"; };
-          inline = { adapter = "gemini"; };
+          agent = {
+            adapter = "gemini";
+          };
+          chat = {
+            adapter = "gemini";
+          };
+          inline = {
+            adapter = "gemini";
+          };
         };
       };
     };

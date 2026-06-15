@@ -1,6 +1,14 @@
-{ config, lib, pkgs, theme, font, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  theme,
+  font,
+  ...
+}:
 
-with config.colorScheme.palette; {
+with config.colorScheme.palette;
+{
   programs.ghostty = {
     enable = true;
     settings = {
@@ -10,7 +18,10 @@ with config.colorScheme.palette; {
       theme = "default";
       window-padding-y = 0;
       window-padding-x = 4;
-      keybind = [ "alt+shift+h=previous_tab" "alt+shift+l=next_tab" ];
+      keybind = [
+        "alt+shift+h=previous_tab"
+        "alt+shift+l=next_tab"
+      ];
       linux-cgroup = "never";
     };
     enableZshIntegration = true;

@@ -1,12 +1,20 @@
-{ config, theme, lib, font, ... }:
+{
+  config,
+  theme,
+  lib,
+  font,
+  ...
+}:
 
 let
   colors = import ../../colors.nix {
     inherit theme;
     inherit lib;
   };
-  bbtheme = with config.colorScheme.palette;
-    with colors; ''
+  bbtheme =
+    with config.colorScheme.palette;
+    with colors;
+    ''
             {
               "name": "Custom",
               "author": "JGirCo",
@@ -37,7 +45,8 @@ let
               }
             }
     '';
-in {
+in
+{
   xdg = {
     configFile = {
       blockbench = {
@@ -48,4 +57,3 @@ in {
     };
   };
 }
-

@@ -16,7 +16,9 @@
   purple = "dcc3f9";
   orange = "f6dddd";
 
-  key = { darklight = "prefer-dark"; };
+  key = {
+    darklight = "prefer-dark";
+  };
 
   nvimEngine = "base16";
   isBase16Builtin = false;
@@ -41,4 +43,3 @@
     base0F = "#f6dddd";
   };
 }
-

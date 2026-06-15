@@ -4,7 +4,8 @@ let
     inherit theme;
     inherit lib;
   };
-in {
+in
+{
   programs.nixvim = {
 
     highlightOverride.BufferDefaultCurrent = {
@@ -50,7 +51,9 @@ in {
       bg = "#${colors.inactive}";
     };
 
-    highlightOverride.BufferInactiveSign = { fg = "#${colors.focused}"; };
+    highlightOverride.BufferInactiveSign = {
+      fg = "#${colors.focused}";
+    };
 
     plugins.barbar = {
       enable = true;

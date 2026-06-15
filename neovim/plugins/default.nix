@@ -3,7 +3,7 @@
     ./mini.nix
     ./auto-save.nix
     ./hlchunks.nix
-    ./vim-table-mode.nix
+    # ./vim-table-mode.nix
     ./knap.nix
     ./typst.nix
     ./navic.nix

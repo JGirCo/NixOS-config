@@ -1,4 +1,5 @@
-{ norgpkg, ... }: {
+{ norgpkg, ... }:
+{
   programs.nixvim = {
     files."after/ftplugin/norg.lua" = {
       # localOpts.conceallevel = 1;
@@ -35,7 +36,9 @@
       settings.lazy_loading = true;
 
       settings.load = {
-        "core.defaults" = { __empty = null; };
+        "core.defaults" = {
+          __empty = null;
+        };
         "core.dirman" = {
           config = {
             workspaces = {
@@ -44,8 +47,14 @@
             };
           };
         };
-        "core.integrations.image" = { __empty = null; };
-        "core.concealer" = { config = { icon_preset = "varied"; }; };
+        "core.integrations.image" = {
+          __empty = null;
+        };
+        "core.concealer" = {
+          config = {
+            icon_preset = "varied";
+          };
+        };
         "core.export".__empty = null;
         "core.completion".config.engine = "nvim-cmp";
         "core.qol.toc".config.close_after_use = true;

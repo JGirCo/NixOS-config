@@ -1,6 +1,7 @@
 { config, ... }:
 
-with config.colorScheme.palette; {
+with config.colorScheme.palette;
+{
   programs.cava = {
     enable = true;
     settings = {
