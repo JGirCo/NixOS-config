@@ -169,6 +169,42 @@
           desc = "Change the case of the first letter of the current word";
         };
       }
+      {
+        mode = [ "n" ];
+        key = "z=";
+        action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+        options = {
+          silent = true;
+          desc = "LTeX spelling/grammar suggestions";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "zg";
+        action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+        options = {
+          silent = true;
+          desc = "LTeX add word to dictionary";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>se";
+        action = "<cmd>LtexLang en-US<CR>";
+        options = {
+          silent = true;
+          desc = "LTeX language: English";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>ss";
+        action = "<cmd>LtexLang es<CR>";
+        options = {
+          silent = true;
+          desc = "LTeX language: Spanish";
+        };
+      }
     ];
   };
 }

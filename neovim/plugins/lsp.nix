@@ -79,9 +79,38 @@
           clangd.enable = true;
           lua_ls.enable = true;
           ruby_lsp.enable = true;
+          ltex = {
+            enable = true;
+            filetypes = [
+              "markdown"
+              "tex"
+              "typst"
+            ];
+            settings = {
+              ltex = {
+                language = "en-US";
+              };
+            };
+            handlers = {
+              "$/progress" = ''
+                function() end
+              '';
+            };
+          };
         };
       };
       lsp-signature.enable = true;
+      ltex-extra = {
+        enable = true;
+        settings = {
+          init_check = true;
+          load_langs = [
+            "en-US"
+            "es"
+          ];
+          path = ".ltex";
+        };
+      };
     };
   };
 }

@@ -1,14 +1,19 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
-  nvim-spell-es-utf8-dictionary = builtins.fetchurl {
-    url = "https://ftp.nluug.nl/pub/vim/runtime/spell/sk.utf-8.spl";
-    sha256 = "0z2kc2n5kidqyi62155wsclw00726klpw9nmx2g37wmn89p374dq";
+  esThes = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/Konfekt/vim-thesauri/master/es.ths";
+    sha256 = "028525a94e90542df6c4af988221ecb4862509aab39aaaa559825a009651e1e0";
   };
-
-in {
+  enThes = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/Konfekt/vim-thesauri/master/en.ths";
+    sha256 = "953a632f719004f8a2217e6dff5aaaed088adc547e400f4a3813099f1daf7173";
+  };
+in
+{
   imports = [
     # ./debugging.nix
     ./autocommands.nix
+    ./commands.nix
     ./completion.nix
     ./keymappings.nix
     ./options.nix
@@ -18,8 +23,6 @@ in {
   ];
 
   home.shellAliases.v = "nvim";
-  home.file."${config.xdg.configHome}/nvim/spell/es.utf-8.spl".source =
-    nvim-spell-es-utf8-dictionary;
 
   programs.nixvim = {
     enable = true;
@@ -29,5 +32,26 @@ in {
     vimAlias = true;
 
     luaLoader.enable = true;
+
+    autoCmd = [
+      {
+        event = "FileType";
+        pattern = [
+          "markdown"
+          "tex"
+          "typst"
+        ];
+        command = "setlocal thesaurus=${enThes},${esThes}";
+      }
+    ];
+
+    keymaps = [
+      {
+        mode = [ "i" ];
+        key = "<F7>";
+        options.desc = "Thesaurus completion";
+        action = "<C-x><C-t>";
+      }
+    ];
   };
 }

@@ -32,17 +32,10 @@
       command = "setlocal tabstop=2 shiftwidth=2";
     }
 
-    # Enable spellcheck for some filetypes
-    {
-      event = "FileType";
-      pattern = [ "tex" "latex" "markdown" "norg" "typ" "md" ];
-      command = "setlocal spell spelllang=en,es";
-    }
     {
       event = "FileType";
       pattern = "[norg, typ]";
-      command =
-        "setlocal norelativenumber nonumber colorcolumn=0 conceallevel=2";
+      command = "setlocal norelativenumber nonumber colorcolumn=0 conceallevel=2";
     }
   ];
 }
