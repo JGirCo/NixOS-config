@@ -208,17 +208,7 @@ in
     enable = true;
     settings = {
       default_session = {
-        command = ''
-          ${pkgs.tuigreet}/bin/tuigreet \
-            --time \
-            --time-format '%I:%M %p | %A, %B %d' \
-            --issue \
-            --asterisks \
-            --greet-align left \
-            --remember \
-            --remember-session \
-            --cmd 'uwsm start niri-uwsm.desktop'
-        '';
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %A, %B %d' --issue --asterisks --greet-align left --remember --remember-session --cmd 'uwsm start niri-uwsm.desktop'";
         user = "greeter";
       };
     };

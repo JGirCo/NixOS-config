@@ -2,13 +2,10 @@
   config,
   theme,
   lib,
+  colors,
   ...
 }:
 let
-  colors = import ../../colors.nix {
-    inherit theme;
-    inherit lib;
-  };
   # from https://github.com/tridactyl/tridactyl/blob/master/.tridactylrc
   appconfig = ''
 

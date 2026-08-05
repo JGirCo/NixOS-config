@@ -106,6 +106,7 @@ in
     darktable
     bottles
     lutris
+    vlc
 
     #TUI
     cava
@@ -115,6 +116,5 @@ in
     bottom
     bluetui
     pulsemixer
-    yt-dlp
   ];
 }

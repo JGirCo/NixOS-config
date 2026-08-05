@@ -6,48 +6,50 @@
   ...
 }:
 
-with colors;
-with config.colorScheme.palette;
+let
+  themeLib = import ../lib/theme.nix {
+    inherit lib colors;
+    palette = config.colorScheme.palette;
+  };
+in
 {
-  config = {
-    programs.zathura = {
-      enable = true;
-      options = {
-        default-bg = "#${base}";
-        default-fg = "#${text2}";
+  programs.zathura = {
+    enable = true;
+    options = {
+      default-bg = themeLib.semantic.bg;
+      default-fg = themeLib.semantic.fg;
 
-        statusbar-fg = "#${base02}";
-        statusbar-bg = "#${base01}";
+      statusbar-fg = themeLib.terminal.brights.black;
+      statusbar-bg = themeLib.terminal.colors.black;
 
-        inputbar-bg = "#${base}";
-        inputbar-fg = "#${text2}";
+      inputbar-bg = themeLib.semantic.bg;
+      inputbar-fg = themeLib.semantic.fg;
 
-        notification-bg = "#${base}";
-        notification-fg = "#${text2}";
+      notification-bg = themeLib.semantic.bg;
+      notification-fg = themeLib.semantic.fg;
 
-        notification-error-bg = "#${base}";
-        notification-error-fg = "#${base08}";
+      notification-error-bg = themeLib.semantic.bg;
+      notification-error-fg = themeLib.semantic.red;
 
-        notification-warning-bg = "#${base}";
-        notification-warning-fg = "#${base08}";
+      notification-warning-bg = themeLib.semantic.bg;
+      notification-warning-fg = themeLib.semantic.red;
 
-        highlight-color = "#${base0A}";
-        highlight-active-color = "#${base0D}";
+      highlight-color = themeLib.terminal.brights.yellow;
+      highlight-active-color = themeLib.terminal.colors.blue;
 
-        completion-bg = "#${base03}";
-        completion-fg = "#${base0D}";
+      completion-bg = themeLib.terminal.brights.black;
+      completion-fg = themeLib.terminal.colors.blue;
 
-        completion-highlight-fg = "#${text2}";
-        completion-highlight-bg = "#${base0D}";
+      completion-highlight-fg = themeLib.semantic.fg;
+      completion-highlight-bg = themeLib.terminal.colors.blue;
 
-        recolor-lightcolor = "#${base}";
-        recolor-darkcolor = "#${text2}";
+      recolor-lightcolor = themeLib.semantic.bg;
+      recolor-darkcolor = themeLib.semantic.fg;
 
-        recolor = "true";
-        recolor-keephue = "true";
+      recolor = "true";
+      recolor-keephue = "true";
 
-        selection-clipboard = "clipboard";
-      };
+      selection-clipboard = "clipboard";
     };
   };
 }

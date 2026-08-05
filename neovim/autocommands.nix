@@ -32,10 +32,10 @@
       command = "setlocal tabstop=2 shiftwidth=2";
     }
 
-    {
-      event = "FileType";
-      pattern = "[norg, typ]";
-      command = "setlocal norelativenumber nonumber colorcolumn=0 conceallevel=2";
-    }
+    # {
+    #   event = "FileType";
+    #   pattern = "[norg, typ]";
+    #   command = "setlocal norelativenumber nonumber colorcolumn=0 conceallevel=2";
+    # }
   ];
 }

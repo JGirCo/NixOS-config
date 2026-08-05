@@ -1,21 +1,21 @@
-{ config, ... }:
+{
+  config,
+  lib,
+  colors,
+  ...
+}:
 
-with config.colorScheme.palette;
+let
+  themeLib = import ../lib/theme.nix {
+    inherit lib colors;
+    palette = config.colorScheme.palette;
+  };
+in
 {
   programs.cava = {
     enable = true;
     settings = {
-      color = {
-        gradient = 1;
-        gradient_count = 7;
-        gradient_color_7 = "'#${base0E}'";
-        gradient_color_6 = "'#${base08}'";
-        gradient_color_5 = "'#${base09}'";
-        gradient_color_4 = "'#${base0A}'";
-        gradient_color_3 = "'#${base0B}'";
-        gradient_color_2 = "'#${base0C}'";
-        gradient_color_1 = "'#${base0D}'";
-      };
+      color = themeLib.cavaGradient;
     };
   };
 }

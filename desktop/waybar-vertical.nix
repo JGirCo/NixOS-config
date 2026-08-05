@@ -5,7 +5,27 @@
   colors,
   ...
 }:
-with colors;
+
+let
+  themeLib = import ../lib/theme.nix {
+    inherit colors lib;
+    palette = null;
+  };
+  inherit (themeLib.semantic)
+    bg
+    fg
+    accent
+    secondary
+    alt
+    blue
+    green
+    yellow
+    orange
+    red
+    purple
+    pink
+    ;
+in
 {
   programs.waybar = {
     enable = true;
@@ -195,18 +215,18 @@ with colors;
 
     style = ''
       /* Color Palette - Catppuccin Macchiato flavor */
-      @define-color base     #${base};
-      @define-color focused     #${focused};
-      @define-color text     #${text2};
-      @define-color blue     #${blue};
-      @define-color alt      #${alt};
-      @define-color orange   #${orange};
-      @define-color purple #${purple};
-      @define-color green    #${green};
-      @define-color inactive #${inactive};
-      @define-color yellow   #${yellow};
-      @define-color red      #${red};
-      @define-color pink      #${pink};
+      @define-color base     ${bg};
+      @define-color focused     ${accent};
+      @define-color text     ${fg};
+      @define-color blue     ${blue};
+      @define-color alt      ${alt};
+      @define-color orange   ${orange};
+      @define-color purple   ${purple};
+      @define-color green    ${green};
+      @define-color inactive ${secondary};
+      @define-color yellow   ${yellow};
+      @define-color red      ${red};
+      @define-color pink     ${pink};
 
       * {
         font-family: "${font.sans}";

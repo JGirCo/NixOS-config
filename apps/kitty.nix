@@ -4,10 +4,16 @@
   pkgs,
   theme,
   font,
+  colors,
   ...
 }:
 
-with config.colorScheme.palette;
+let
+  themeLib = import ../lib/theme.nix {
+    inherit lib colors;
+    palette = config.colorScheme.palette;
+  };
+in
 {
   programs.kitty = {
     enable = true;
@@ -15,29 +21,29 @@ with config.colorScheme.palette;
     font.size = 16;
     shellIntegration.enableZshIntegration = true;
     settings = {
-      foreground = "#${base05}";
-      background = "#${base00}";
+      foreground = themeLib.terminal.fg;
+      background = themeLib.terminal.bg;
       background_tint = 0;
-      selection_fg = "#${base05}";
-      selection_bg = "#${base02}";
+      selection_fg = themeLib.terminal.selectionFg;
+      selection_bg = themeLib.terminal.selectionBg;
 
-      color0 = "#${base00}";
-      color1 = "#${base08}";
-      color2 = "#${base0B}";
-      color3 = "#${base09}";
-      color4 = "#${base0D}";
-      color5 = "#${base0E}";
-      color6 = "#${base0C}";
-      color7 = "#${base06}";
+      color0 = themeLib.terminal.colors.black;
+      color1 = themeLib.terminal.colors.red;
+      color2 = themeLib.terminal.colors.green;
+      color3 = themeLib.terminal.colors.yellow;
+      color4 = themeLib.terminal.colors.blue;
+      color5 = themeLib.terminal.colors.magenta;
+      color6 = themeLib.terminal.colors.cyan;
+      color7 = themeLib.terminal.colors.white;
 
-      color8 = "#${base03}";
-      color9 = "#${base08}";
-      color10 = "#${base0B}";
-      color11 = "#${base0A}";
-      color12 = "#${base0D}";
-      color13 = "#${base0E}";
-      color14 = "#${base0C}";
-      color15 = "#${base05}";
+      color8 = themeLib.terminal.brights.black;
+      color9 = themeLib.terminal.brights.red;
+      color10 = themeLib.terminal.brights.green;
+      color11 = themeLib.terminal.brights.yellow;
+      color12 = themeLib.terminal.brights.blue;
+      color13 = themeLib.terminal.brights.magenta;
+      color14 = themeLib.terminal.brights.cyan;
+      color15 = themeLib.terminal.brights.white;
 
       enable_audio_bell = "no";
       confirm_os_window_close = 0;

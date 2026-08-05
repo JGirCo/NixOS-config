@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   programs.nixvim = {
     keymaps = [
@@ -61,6 +62,9 @@
             enable = true;
             installRustc = true;
             installCargo = true;
+            settings = {
+              check.command = "clippy";
+            };
           };
           pylsp = {
             enable = true;
@@ -76,26 +80,35 @@
             #   end
             # '';
           };
-          clangd.enable = true;
           lua_ls.enable = true;
           ruby_lsp.enable = true;
           ltex = {
             enable = true;
+            package = pkgs.ltex-ls-plus;
+            cmd = [ "ltex-ls-plus" ];
             filetypes = [
               "markdown"
               "tex"
               "typst"
+              "typ"
             ];
             settings = {
               ltex = {
                 language = "en-US";
+                enabled = [
+                  "latex"
+                  "tex"
+                  "bib"
+                  "markdown"
+                  "html"
+                  "typst"
+                  "typ"
+                ];
               };
             };
-            handlers = {
-              "$/progress" = ''
-                function() end
-              '';
-            };
+            onAttach.function = ''
+              client.handlers["$/progress"] = function() end
+            '';
           };
         };
       };

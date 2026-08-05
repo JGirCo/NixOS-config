@@ -5,17 +5,20 @@
   lib,
   config,
   font,
+  colors,
   ...
 }:
 
 let
-  colors = import ../colors.nix {
-    inherit theme;
-    inherit lib;
+  themeLib = import ../lib/theme.nix {
+    inherit lib colors;
+    palette = config.colorScheme.palette;
   };
+  bg = themeLib.semantic.bg;
+  transparencyDefault = "${bg}E5";
+  transparencyTest = "${bg}C0";
 in
 {
-
   # FIXME: Temporary workaround - Zen Browser still defaults to ~/.zen instead of ~/.config/zen
   # even though version 1.19t should use XDG dirs. Remove this once upstream fixes the issue.
   # See: https://github.com/0xc000022070/zen-browser-flake#missing-configuration-after-update
@@ -34,17 +37,13 @@ in
     name = "default";
     id = 0;
     preConfig = ''
-      user_pref("mod.sameerasw.zen_transparency_color", "#${colors.base}E5");
+      user_pref("mod.sameerasw.zen_transparency_color", "${transparencyDefault}");
     '';
     isDefault = true;
     settings = {
-      "browser.display.use_document_fonts" = 0;
-
-      # Force the default proportional font to be sans-serif
+      # "browser.display.use_document_fonts" = 0;
       "font.default.x-western" = "sans-serif";
-
-      # Define your specific fonts
-      "font.name.sans-serif.x-western" = font.sans; # Or your preferred sans font
+      "font.name.sans-serif.x-western" = font.sans;
       "font.name.serif.x-western" = font.serif;
       "font.name.monospace.x-western" = font.name;
     };
@@ -54,7 +53,7 @@ in
     name = "Whatsapp";
     id = 1;
     preConfig = ''
-      user_pref("mod.sameerasw.zen_transparency_color", "#${colors.base}E5");
+      user_pref("mod.sameerasw.zen_transparency_color", "${transparencyDefault}");
     '';
     isDefault = false;
   };
@@ -63,7 +62,7 @@ in
     name = "test";
     id = 2;
     preConfig = ''
-      user_pref("mod.sameerasw.zen_transparency_color", "#${colors.base}C0");
+      user_pref("mod.sameerasw.zen_transparency_color", "${transparencyTest}");
     '';
     isDefault = false;
   };

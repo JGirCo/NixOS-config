@@ -2,13 +2,16 @@
   programs.nixvim.plugins = {
     none-ls = {
       enable = true;
-      sources.formatting = {
-        nixfmt.enable = true;
-        black.enable = true;
-        rufo.enable = true;
-        prettier.enable = true;
-        prettier.disableTsServerFormatter = true;
-        typstyle.enable = true;
+      sources = {
+        formatting = {
+          nixfmt.enable = true;
+          black.enable = true;
+          rufo.enable = true;
+          prettier.enable = true;
+          prettier.disableTsServerFormatter = true;
+          typstyle.enable = true;
+        };
+        diagnostics = { };
       };
     };
     conform-nvim = {
@@ -28,6 +31,7 @@
           markdown = [ "prettier" ];
           nix = [ "nixfmt" ];
           ruby = [ "rufo" ];
+          rust = [ "rustfmt" ];
           typst = [ "typstyle" ];
           python = [ "black" ];
         };

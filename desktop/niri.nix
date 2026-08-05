@@ -1,5 +1,7 @@
 {
   pkgs,
+  lib,
+  config,
   theme,
   browser,
   colors,
@@ -7,24 +9,29 @@
 }:
 
 let
+  themeLib = import ../lib/theme.nix {
+    inherit lib colors;
+    palette = config.colorScheme.palette;
+  };
+
   terminal = "kitty";
 
   reloadScript = pkgs.writeShellScriptBin "reloadScript" ''
-    niri msg action load-config-file &
-    sleep 0.2 &
-    systemctl --user restart sawyosd.service &
-    awww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any &
+    niri msg action load-config-file
+    sleep 0.2
+    systemctl --user restart swayosd.service
+    awww img ~/Pictures/wallpapers/${theme}.jpg --transition-type any
   '';
 
   prelockScript = pkgs.writeShellScriptBin "prelockScript" ''
     tmpbg="/tmp/screen.png"
     ${pkgs.grim}/bin/grim "$tmpbg"
-    ${pkgs.imagemagick}/bin/magick "$tmpbg" -blur 0x5 -fill "#${colors.base}" -colorize 50% "$tmpbg"
+    ${pkgs.imagemagick}/bin/magick "$tmpbg" -blur 0x5 -fill "${themeLib.semantic.bg}" -colorize 50% "$tmpbg"
   '';
 
   # Helper for shell commands
   sh = cmd: [
-    "${pkgs.bash}/bin/sh"
+    "${pkgs.bash}/bin/bash"
     "-c"
     cmd
   ];
@@ -89,7 +96,6 @@ let
   ];
 
 in
-with colors;
 {
   imports = [ ./waybar-vertical.nix ];
   home.packages = with pkgs; [
@@ -118,12 +124,12 @@ with colors;
   xdg.configFile."swayosd/style.css".text = ''
     window#osd {
         /* The main background of the overlay */
-        background: #${base};
+        background: ${themeLib.semantic.bg};
         border-radius: 12px; /* Optional: smooth out the corners */
     }
 
     progress {
-        background: #${text2};
+        background: ${themeLib.semantic.fg};
     }
   '';
 
@@ -174,7 +180,7 @@ with colors;
       };
 
       overview = {
-        backdrop-color = "#${colors.base}"; # Uses your theme's base color
+        backdrop-color = "${themeLib.semantic.bg}"; # Uses your theme's base color
       };
       layout = {
 
@@ -200,8 +206,8 @@ with colors;
           width = 8;
           active.gradient = {
             angle = 45;
-            from = "${focused}";
-            to = "${alt}";
+            from = "${colors.focused}";
+            to = "${colors.alt}";
           };
         };
       };

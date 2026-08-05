@@ -1,10 +1,17 @@
 {
   inputs,
   theme,
+  lib,
   colors,
   ...
 }:
-with colors;
+
+let
+  themeLib = import ../lib/theme.nix {
+    inherit colors lib;
+    palette = null;
+  };
+in
 {
 
   programs.walker = {
@@ -48,10 +55,10 @@ with colors;
 
     themes."wofi-ported" = {
       style = ''
-        @define-color accent_bg_color #${focused};
-        @define-color theme_fg_color #${text2};
-        @define-color inactive_bg_color #${inactive};
-        @define-color base_color #${base};
+        @define-color accent_bg_color ${themeLib.semantic.accent};
+        @define-color theme_fg_color ${themeLib.semantic.fg};
+        @define-color inactive_bg_color ${themeLib.semantic.secondary};
+        @define-color base_color ${themeLib.semantic.bg};
 
         /* Window Entrance Animation */
         @keyframes pop-in {
