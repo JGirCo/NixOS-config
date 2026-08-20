@@ -57,15 +57,17 @@ in
   boot.resumeDevice = "/dev/disk/by-uuid/4b3336c0-2ee7-47ee-9ae8-4842776879e4";
   boot.kernelParams = [ "resume=UUID=4b3336c0-2ee7-47ee-9ae8-4842776879e4" ];
   hardware = {
+    cpu.amd.updateMicrocode = true;
+    graphics.enable = true;
+    graphics.enable32Bit = true;
     bluetooth.enable = true; # enables support for Bluetooth
     bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
-    graphics.enable = true;
     amdgpu.initrd.enable = false;
     nvidia = {
 
       # Modesetting is required.
       modesetting.enable = true;
-      powerManagement.finegrained = false;
+      powerManagement.finegrained = true;
       dynamicBoost.enable = true;
 
       # Use the NVidia open source kernel module (not to be confused with the
@@ -89,8 +91,8 @@ in
           enable = true;
           enableOffloadCmd = true;
         };
-        amdgpuBusId = "PCI:1:0:0";
-        nvidiaBusId = "PCI:5:0:0";
+        amdgpuBusId = "PCI:5:0:0";
+        nvidiaBusId = "PCI:1:0:0";
       };
     };
   };
@@ -186,7 +188,10 @@ in
   services.gvfs.enable = true;
   security.polkit.enable = true;
   services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [
+    "nvidia"
+    "amdgpu"
+  ];
   services.xserver.excludePackages = [ pkgs.xterm ];
   services.autorandr.enable = true;
 
@@ -292,9 +297,11 @@ in
   };
 
   services.logind.settings.Login = {
-    # don’t shutdown when power button is short-pressed
-    lidSwitch = "ignore";
-    powerKey = "hibernate";
+    # never suspend when the lid is closed
+    HandleLidSwitch = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+    # hibernate when the power button is short-pressed
+    HandlePowerKey = "hibernate";
   };
 
   programs.xss-lock = {
@@ -387,6 +394,7 @@ in
     ouch-rar
 
     # GUI Tools
+    rpi-imager
     kicad
     python313Packages.python-lsp-server
     python313Packages.python-lsp-black
@@ -432,11 +440,6 @@ in
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
-    # These are distinct variables and should be treated as such
-    GBM_BACKEND = "nvidia-drm";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    LIBVA_DRIVER_NAME = "nvidia"; # Usually needed for hardware accel
-
     XDG_BIN_HOME = "$HOME/.local/bin";
   };
 

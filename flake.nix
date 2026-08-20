@@ -24,7 +24,7 @@
       url = "github:nix-community/flake-firefox-nightly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri.url = "github:sodiboo/niri-flake";
+    niri.url = "github:sodiboo/niri-flake/6bb99ff875919f03ea6054026619d999061e1170";
     niri.inputs.nixpkgs.follows = "nixpkgs";
 
     niri-animations = {

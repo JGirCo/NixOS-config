@@ -152,7 +152,7 @@ in
         }
         {
           timeout = 1200; # 20 min
-          on-timeout = "systemctl suspend";
+          on-timeout = ''${pkgs.bash}/bin/bash -c 'if grep -q "open" /proc/acpi/button/lid/*/state 2>/dev/null; then systemctl suspend; fi' '';
         }
       ];
     };

@@ -98,6 +98,7 @@ in
 
     #GUI
     freecad-wayland
+    mangohud
     celluloid
     gparted
     yt-dlp
@@ -109,6 +110,7 @@ in
     vlc
 
     #TUI
+    bitwarden-cli
     cava
     yazi-unwrapped
     wiremix
