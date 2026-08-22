@@ -55,7 +55,12 @@ in
   virtualisation.docker.enable = true;
   boot.initrd.kernelModules = [ "nvme" ];
   boot.resumeDevice = "/dev/disk/by-uuid/4b3336c0-2ee7-47ee-9ae8-4842776879e4";
-  boot.kernelParams = [ "resume=UUID=4b3336c0-2ee7-47ee-9ae8-4842776879e4" ];
+  boot.kernelParams = [
+    "resume=UUID=4b3336c0-2ee7-47ee-9ae8-4842776879e4"
+    "nvidia-drm.modeset=1"
+  ];
+
+  # "video=HDMI-A-1:1280x960@60e"
   hardware = {
     cpu.amd.updateMicrocode = true;
     graphics.enable = true;
@@ -324,6 +329,8 @@ in
     isNormalUser = true;
     description = "Juan Manuel Giraldo";
     extraGroups = [
+      "uinput"
+      "render"
       "docker"
       "networkmanager"
       "wheel"
@@ -367,6 +374,7 @@ in
     exfatprogs
     lm_sensors
     (texlive.combine { inherit (texlive) scheme-medium standalone; })
+    wlr-randr
 
     #System tools
     keyd
@@ -387,11 +395,10 @@ in
     gemini-cli-bin
     opencode
     claude-code
-
-    # TUI Tools
     ncdu
     ytermusic
     ouch-rar
+    steamcmd
 
     # GUI Tools
     rpi-imager
@@ -526,6 +533,25 @@ in
   users.groups.libvirtd.members = [ "jgirco" ];
   virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
+
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = false; # Required for Wayland KMS screen capture
+    openFirewall = true;
+    package = pkgs.sunshine.override {
+      cudaSupport = true;
+    };
+  };
+  systemd.user.services.sunshine = {
+    path = with pkgs; [
+      wlr-randr
+      steam
+      bash
+    ];
+  };
+
+  hardware.uinput.enable = true;
 
   # List services that you want to enable:
 

@@ -118,5 +118,6 @@ in
     bottom
     bluetui
     pulsemixer
+    skyscraper
   ];
 }
