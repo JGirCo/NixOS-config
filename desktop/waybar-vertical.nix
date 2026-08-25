@@ -2,14 +2,14 @@
   lib,
   theme,
   font,
+  config,
   colors,
   ...
 }:
 
 let
   themeLib = import ../lib/theme.nix {
-    inherit colors lib;
-    palette = null;
+    inherit config lib colors;
   };
   inherit (themeLib.semantic)
     bg

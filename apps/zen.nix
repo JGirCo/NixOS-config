@@ -11,8 +11,7 @@
 
 let
   themeLib = import ../lib/theme.nix {
-    inherit lib colors;
-    palette = config.colorScheme.palette;
+    inherit config lib colors;
   };
   bg = themeLib.semantic.bg;
   transparencyDefault = "${bg}E5";

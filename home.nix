@@ -7,11 +7,15 @@
   lib,
   ...
 }:
+
 let
-  colors = import ./colors.nix {
-    inherit theme;
-    inherit lib;
-  };
+  themes = import ./themes.nix;
+  themeColors = themes.${theme} or themes."catppuccin-macchiato";
+  colors = themeColors
+    // {
+      nvimEngine = themeColors.nvimEngine or "builtin";
+      isBase16Builtin = themeColors.isBase16Builtin or true;
+    };
 in
 {
   imports = [
@@ -22,8 +26,8 @@ in
     # ./desktop/hyprland.nix
     # ./desktop/wofi.nix
     # ./desktop/rofi.nix
+    ./desktop/stylix.nix
     ./desktop/walker.nix
-    ./desktop/gtk.nix
     ./desktop/dunst.nix
     ./desktop/niri.nix
     ./desktop/niri-animations.nix
@@ -45,37 +49,8 @@ in
 
     ./scripts/default.nix
 
-    inputs.nix-colors.homeManagerModules.default
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
-
-  colorScheme =
-    if colors.isBase16Builtin then
-      inputs.nix-colors.colorSchemes.${theme}
-    else
-      {
-        slug = "pasque";
-        name = "Pasque";
-        author = "Gabriel Fontes (https://github.com/Misterio77)";
-        palette = with colors.base16; {
-          inherit base00;
-          inherit base01;
-          inherit base02;
-          inherit base03;
-          inherit base04;
-          inherit base05;
-          inherit base06;
-          inherit base07;
-          inherit base08;
-          inherit base09;
-          inherit base0A;
-          inherit base0B;
-          inherit base0C;
-          inherit base0D;
-          inherit base0E;
-          inherit base0F;
-        };
-      };
 
   _module.args.colors = colors;
 

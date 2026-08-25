@@ -8,7 +8,7 @@
   ...
 }:
 with colors;
-with config.colorScheme.palette;
+with config.lib.stylix.colors;
 {
   home.packages = [ pkgs.libnotify ]; # to enable notify-send
   services.swaync = {

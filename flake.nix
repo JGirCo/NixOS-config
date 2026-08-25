@@ -11,8 +11,9 @@
     nixvim = {
       url = "github:nix-community/nixvim";
     };
-    nix-colors.url = "github:misterio77/nix-colors";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+
+    stylix.url = "github:danth/stylix";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
@@ -48,6 +49,7 @@
       walker,
       niri,
       zen-browser,
+      stylix,
       ...
     }@inputs:
     let
@@ -76,6 +78,7 @@
             { nixpkgs.overlays = flake-overlays; }
             ./home.nix
             nixvim.homeModules.nixvim
+            stylix.homeModules.stylix
             walker.homeManagerModules.default
             niri.homeModules.niri
             zen-browser.homeModules.twilight-official

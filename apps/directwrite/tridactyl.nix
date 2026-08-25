@@ -75,7 +75,6 @@ let
     unbind u
   '';
   cssconfig =
-    with config.colorScheme.palette;
     with colors;
     ''
       :root {

@@ -34,7 +34,7 @@ with colors;
             else
               {
                 enable = true;
-                colorscheme = with config.colorScheme.palette; {
+                colorscheme = with config.lib.stylix.colors; {
                   base00 = "#${base00}";
                   base01 = "#${base01}";
                   base02 = "#${base02}";
@@ -67,7 +67,7 @@ with colors;
               };
               custom_palettes = {
                 main = {
-                  pastel = with config.colorScheme.palette; {
+                  pastel = with config.lib.stylix.colors; {
                     color0 = "#${base00}";
                     color1 = "#${base01}";
                     color2 = "#${base02}";

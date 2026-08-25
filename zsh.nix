@@ -42,6 +42,14 @@ let
     "ayu-light" "catppuccin-macchiato" "catppuccin-latte" "dracula" "everforest-light" "gruvbox-dark-medium" "gruvbox-light-medium" "gruvbox-light-soft" "kanagawa-light" "melange" "oxocarbon-light" "rebecca" "rose-pine-dawn" "rose-pine" "saga" "template" "tokyo-night-moon" "trans")
     if [ -n "$THEME" ]; then
       nh home switch -c $THEME
+
+      # Restart apps that cache their theme at startup.
+      pkill -x nautilus 2>/dev/null || true
+      pkill -x qbittorrent 2>/dev/null || true
+      pkill -x org.gnome.Nautilus 2>/dev/null || true
+      systemctl --user restart swaync.service 2>/dev/null || true
+      killall -q gtk-query-settings gsettings-data-convert 2>/dev/null || true
+      echo "Theme switched to $THEME — GTK/Qt apps restarted."
     fi
   '';
 in
