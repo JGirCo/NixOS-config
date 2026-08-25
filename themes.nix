@@ -1,5 +1,6 @@
 {
   "ayu-light" = {
+    polarity = "light";
     base = "fafafa";
     text = "fafafa";
     text2 = "5c6773";
@@ -27,6 +28,7 @@
   };
 
   "catppuccin-latte" = {
+    polarity = "light";
     base = "eff1f5";
     text = "eff1f5";
     text2 = "4c4f69";
@@ -54,6 +56,7 @@
   };
 
   "catppuccin-macchiato" = {
+    polarity = "dark";
     base = "181926";
     text = "181926";
     text2 = "cad3f5";
@@ -86,6 +89,7 @@
   };
 
   "dracula" = {
+    polarity = "dark";
     base = "282a36";
     text = "282a36";
     text2 = "f8f8f2";
@@ -130,6 +134,7 @@
   };
 
   "everforest-light" = {
+    polarity = "light";
     base = "f3ead3";
     text = "f3ead3";
     text2 = "5c6a72";
@@ -174,6 +179,7 @@
   };
 
   "gruvbox-dark-medium" = {
+    polarity = "dark";
     base = "282828";
     text = "282828";
     text2 = "ebdbb2";
@@ -201,6 +207,7 @@
   };
 
   "gruvbox-light-medium" = {
+    polarity = "light";
     base = "fbf1c7";
     text = "fbf1c7";
     text2 = "3c3836";
@@ -228,6 +235,7 @@
   };
 
   "gruvbox-light-soft" = {
+    polarity = "light";
     base = "fbf1c7";
     text = "fbf1c7";
     text2 = "282828";
@@ -254,6 +262,7 @@
   };
 
   "kanagawa-light" = {
+    polarity = "light";
     base = "dcd7ba";
     text = "dcd7ba";
     text2 = "1f1f28";
@@ -298,6 +307,7 @@
   };
 
   "melange" = {
+    polarity = "light";
     base = "e9e1db";
     text = "e9e1db";
     text2 = "54433a";
@@ -343,6 +353,7 @@
   };
 
   "oxocarbon-light" = {
+    polarity = "light";
     base = "f2f4f8";
     text = "f2f4f8";
     text2 = "525252";
@@ -387,6 +398,7 @@
   };
 
   "rebecca" = {
+    polarity = "dark";
     base = "292a44";
     text = "292a44";
     text2 = "f1eff8";
@@ -415,6 +427,7 @@
   };
 
   "rose-pine-dawn" = {
+    polarity = "light";
     base = "faf4ed";
     text = "faf4ed";
     text2 = "575279";
@@ -442,6 +455,7 @@
   };
 
   "rose-pine" = {
+    polarity = "dark";
     base = "191224";
     text = "191224";
     text2 = "e0def4";
@@ -469,6 +483,7 @@
   };
 
   "saga" = {
+    polarity = "dark";
     base = "05080a";
     text = "05080a";
     text2 = "dce2f7";
@@ -513,6 +528,7 @@
   };
 
   "template" = {
+    polarity = "light";
     base = "f8f8f8";
     text = "f8f8f8";
     text2 = "181818";
@@ -557,6 +573,7 @@
   };
 
   "tokyo-night-moon" = {
+    polarity = "dark";
     base = "222436";
     text = "222436";
     text2 = "c8d3f5";
@@ -603,6 +620,7 @@
   };
 
   "trans" = {
+    polarity = "light";
     base = "ffffff";
     text = "ffffff";
     text2 = "905b75";
