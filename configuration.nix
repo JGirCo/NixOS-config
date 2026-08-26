@@ -593,30 +593,33 @@ in
       ...
     }:
     let
-      steam-session = pkgs.writeShellScript "steam-session" ''
-        export XDG_SESSION_TYPE=wayland
-        export XDG_CURRENT_DESKTOP=gamescope
-
-        ${pkgs.systemd}/bin/systemctl --user start pipewire.service wireplumber.service
-        ${pkgs.systemd}/bin/systemctl --user import-environment \
-          WAYLAND_DISPLAY DISPLAY XDG_RUNTIME_DIR \
-          XDG_SESSION_TYPE XDG_CURRENT_DESKTOP \
-          PULSE_RUNTIME_PATH PULSE_SERVER
-
-        ${pkgs.systemd}/bin/systemctl --user start graphical-session.target
-        ${pkgs.systemd}/bin/systemctl --user start sunshine.service
-
-        exec ${pkgs.steam}/bin/steam -gamepadui
+      niriConsoleConfig = pkgs.writeText "niri-console.kdl" ''
+        output "eDP-1" {
+          mode "2560x1600"
+        }
+        spawn-at-startup "${pkgs.steam}/bin/steam" "-gamepadui"
       '';
     in
     {
+      programs.uwsm.waylandCompositors.niri-console = {
+        prettyName = "Niri Console";
+        comment = "Minimal console session for Steam-Console";
+        binPath = "/run/current-system/sw/bin/niri";
+        extraArgs = [ "--session" "--config" "${niriConsoleConfig}" ];
+      };
 
-programs.gamescope.enable = true;
+      services.greetd.settings.default_session = {
+        user = "jgirco";
+        command = lib.mkForce "${pkgs.uwsm}/bin/uwsm start niri-console-uwsm.desktop";
+      };
 
       services.sunshine = {
         enable = true;
-        autoStart = lib.mkForce false;
-        capSysAdmin = lib.mkForce true;
+        autoStart = lib.mkForce true;
+        capSysAdmin = lib.mkForce false;
+        settings = {
+          capture = "wlr";
+        };
       };
 
       services.actkbd = {
@@ -648,12 +651,6 @@ programs.gamescope.enable = true;
             command = "${pkgs.util-linux}/bin/runuser -u jgirco -- ${pkgs.bash}/bin/bash -c 'export XDG_RUNTIME_DIR=/run/user/\$(id -u); ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+'";
           }
         ];
-      };
-
-      # ── Greetd session ───────────────────────────────────────
-      services.greetd.settings.default_session = {
-        user = "jgirco";
-        command = lib.mkForce "${pkgs.gamescope}/bin/gamescope -f --steam --xwayland-count 1 -w 2560 -h 1600 -W 2560 -H 1600 --force-grab-cursor -- ${steam-session}";
       };
     };
   users.groups.libvirtd.members = [ "jgirco" ];
