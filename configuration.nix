@@ -604,8 +604,13 @@ in
       programs.uwsm.waylandCompositors.niri-console = {
         prettyName = "Niri Console";
         comment = "Minimal console session for Steam-Console";
-        binPath = "/run/current-system/sw/bin/niri";
-        extraArgs = [ "--session" "--config" "${niriConsoleConfig}" ];
+        binPath = "${pkgs.writeShellScript "niri-console-wrapper" ''
+          for svc in waybar awww-daemon iwgtk apply-theme; do
+            ${pkgs.systemd}/bin/systemctl --user mask --runtime "$svc.service" 2>/dev/null || true
+          done
+          exec /run/current-system/sw/bin/niri --session --config ${niriConsoleConfig}
+        ''}";
+        extraArgs = [ ];
       };
 
       services.greetd.settings.default_session = {
@@ -616,10 +621,6 @@ in
       services.sunshine = {
         enable = true;
         autoStart = lib.mkForce true;
-        capSysAdmin = lib.mkForce false;
-        settings = {
-          capture = "wlr";
-        };
       };
 
       services.actkbd = {
