@@ -52,7 +52,10 @@ in
   };
 
   powerManagement.enable = true;
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = false; # Systemd socket will spin up daemon on first docker command
+  };
   boot.initrd.kernelModules = [ "nvme" ];
   boot.resumeDevice = "/dev/disk/by-uuid/4b3336c0-2ee7-47ee-9ae8-4842776879e4";
   boot.kernelParams = [
@@ -103,9 +106,9 @@ in
   };
 
   boot.kernelModules = [
-    "lenovo-legion-module"
+    "lenovo-legion"
     "amdgpu"
-    "k10temp"
+    "nvme"
   ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ lenovo-legion-module ];
   boot.extraModprobeConfig = "options snd_hda_intel power_save=0";
@@ -150,6 +153,7 @@ in
     dhcpV4Config.RouteMetric = 600;
     ipv6AcceptRAConfig.RouteMetric = 600;
   };
+  systemd.network.wait-online.enable = false;
 
   # Enable iwd
   networking.wireless.iwd.enable = true;
@@ -214,12 +218,44 @@ in
     };
   };
 
+  # Permanent system-level theming (dracula).
+  # Home-manager Stylix handles per-theme user app theming; this one themes
+  # system-level pieces (console TTY colors for the greeter, fontconfig, gtk,
+  # qt fallbacks) and stays fixed regardless of the home-manager theme.
+  stylix = {
+    enable = true;
+    polarity = "dark";
+    image = "/home/jgirco/Pictures/wallpapers/dracula.jpg";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+
+    fonts = {
+      monospace = {
+        name = "Maple Mono NF";
+        package = pkgs.maple-mono.NF;
+      };
+      sansSerif = {
+        name = "Lexend deca";
+        package = pkgs.lexend;
+      };
+      serif = {
+        name = "IBM Plex Serif";
+        package = pkgs.ibm-plex;
+      };
+    };
+
+    cursor = {
+      name = "Bibata-Modern-Ice";
+      package = pkgs.bibata-cursors;
+      size = 24;
+    };
+  };
+
   services.greetd = {
     enable = true;
     settings = {
       default_session = {
         command = "${pkgs.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %A, %B %d' --issue --asterisks --greet-align left --remember --remember-session --cmd 'uwsm start niri-uwsm.desktop'";
-        user = "greeter";
+        user = "jgirco";
       };
     };
   };
@@ -306,7 +342,7 @@ in
     HandleLidSwitch = "ignore";
     HandleLidSwitchExternalPower = "ignore";
     # hibernate when the power button is short-pressed
-    HandlePowerKey = "hibernate";
+    HandlePowerKey = lib.mkDefault "hibernate";
   };
 
   programs.xss-lock = {
@@ -329,6 +365,7 @@ in
     isNormalUser = true;
     description = "Juan Manuel Giraldo";
     extraGroups = [
+      "input"
       "uinput"
       "render"
       "docker"
@@ -338,6 +375,7 @@ in
       "input"
       "keyd"
       "sensors"
+      "audio"
     ];
     shell = pkgs.zsh;
   };
@@ -373,7 +411,6 @@ in
     wine
     exfatprogs
     lm_sensors
-    (texlive.combine { inherit (texlive) scheme-medium standalone; })
     wlr-randr
 
     #System tools
@@ -392,7 +429,6 @@ in
     translate-shell
     plantuml
     openpomodoro-cli
-    gemini-cli-bin
     opencode
     claude-code
     ncdu
@@ -412,11 +448,19 @@ in
     vipsdisp
     libreoffice
     nautilus
-    inkscape
     ungoogled-chromium
     # floorp
     # deluge
     qbittorrent
+    (retroarch.withCores (
+      cores: with cores; [
+        snes9x
+        ppsspp
+        swanstation
+        dolphin
+      ]
+    ))
+    steam-rom-manager
 
     # Miscelaneous
     mpris-scrobbler
@@ -438,6 +482,8 @@ in
   #   enable = true;
   #   package = pkgs.ollama-cuda;
   # };
+
+  environment.pathsToLink = [ "/lib" ];
 
   nixpkgs.overlays = flake-overlays;
 
@@ -530,6 +576,86 @@ in
     };
   };
 
+  programs.gamemode = {
+    enable = true;
+    settings = {
+      general = {
+        renice = 10;
+      };
+    };
+  };
+
+  specialisation."Steam-Console".configuration =
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    let
+      steam-session = pkgs.writeShellScript "steam-session" ''
+        export XDG_SESSION_TYPE=wayland
+        export XDG_CURRENT_DESKTOP=gamescope
+
+        ${pkgs.systemd}/bin/systemctl --user start pipewire.service wireplumber.service
+        ${pkgs.systemd}/bin/systemctl --user import-environment \
+          WAYLAND_DISPLAY DISPLAY XDG_RUNTIME_DIR \
+          XDG_SESSION_TYPE XDG_CURRENT_DESKTOP \
+          PULSE_RUNTIME_PATH PULSE_SERVER
+
+        ${pkgs.systemd}/bin/systemctl --user start graphical-session.target
+        ${pkgs.systemd}/bin/systemctl --user start sunshine.service
+
+        exec ${pkgs.steam}/bin/steam -gamepadui
+      '';
+    in
+    {
+
+programs.gamescope.enable = true;
+
+      services.sunshine = {
+        enable = true;
+        autoStart = lib.mkForce false;
+        capSysAdmin = lib.mkForce true;
+      };
+
+      services.actkbd = {
+        enable = true;
+        bindings = [
+          {
+            keys = [ 224 ];
+            events = [ "key" ];
+            command = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+          }
+          {
+            keys = [ 225 ];
+            events = [ "key" ];
+            command = "${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
+          }
+          {
+            keys = [ 113 ];
+            events = [ "key" ];
+            command = "${pkgs.util-linux}/bin/runuser -u jgirco -- ${pkgs.bash}/bin/bash -c 'export XDG_RUNTIME_DIR=/run/user/\$(id -u); ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle'";
+          }
+          {
+            keys = [ 114 ];
+            events = [ "key" "rep" ];
+            command = "${pkgs.util-linux}/bin/runuser -u jgirco -- ${pkgs.bash}/bin/bash -c 'export XDG_RUNTIME_DIR=/run/user/\$(id -u); ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-'";
+          }
+          {
+            keys = [ 115 ];
+            events = [ "key" "rep" ];
+            command = "${pkgs.util-linux}/bin/runuser -u jgirco -- ${pkgs.bash}/bin/bash -c 'export XDG_RUNTIME_DIR=/run/user/\$(id -u); ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+'";
+          }
+        ];
+      };
+
+      # ── Greetd session ───────────────────────────────────────
+      services.greetd.settings.default_session = {
+        user = "jgirco";
+        command = lib.mkForce "${pkgs.gamescope}/bin/gamescope -f --steam --xwayland-count 1 -w 2560 -h 1600 -W 2560 -H 1600 --force-grab-cursor -- ${steam-session}";
+      };
+    };
   users.groups.libvirtd.members = [ "jgirco" ];
   virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
