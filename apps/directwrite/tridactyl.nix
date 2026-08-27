@@ -74,183 +74,181 @@ let
     unbind d
     unbind u
   '';
-  cssconfig =
-    with colors;
-    ''
-      :root {
-          --tridactyl-bg: #${base};
-          --tridactyl-fg: #${text2};
-          --tridactyl-status-border: 2px solid #${alt};
-          --tridactyl-status-border-radius: 999px;
-          --tridactyl-of-fg: #${text2};
-          --tridactyl-of-bg: #${base};
-          --tridactyl-hintspan-fg: #${text2};
-          --tridactyl-hintspan-bg: #${base};
-          --tridactyl-hintspan-border-color: #${focused};
-          --tridactyl-hintspan-border-width: 1px;
-          --tridactyl-hint-active-fg: #${base};
-          --tridactyl-hint-active-bg: #${focused};
-          --tridactyl-hint-active-outline: 0px solid #000;
-          --tridactyl-hint-bg: color-mix(in srgb, #${focused}, transparent 90%);
-          --tridactyl-hint-outline: 1px solid var(--tridactyl-hintspan-bg);
-          --tridactyl-cmplt-option-height: 1.9em;
-          --tridactyl-border-radius: 16px;
-          --tridactyl-font-family: sans;
-          --tridactyl-font-family-sans: sans;
-          --tridactyl-font-size: 12pt;
-          --tridactyl-small-font-size: 12px;
-          --tridactyl-status-font-family: var(--tridactyl-font-family);
-          --tridactyl-status-font-size: var(--tridactyl-small-font-size);
-          --tridactyl-hintspan-font-family: var(--tridactyl-font-family-sans);
-          --tridactyl-hintspan-font-size: var(--tridactyl-small-font-size);
-          --tridactyl-hintspan-font-weight: bold;
-          --tridactyl-vs-font-family: var(--tridactyl-font-family);
-          --tridactyl-cmdl-font-family: var(--tridactyl-font-family);
-          --tridactyl-cmdl-font-size: 15pt;
-          --tridactyl-cmplt-font-size: 10pt;
-          --tridactyl-cmplt-font-family: var(--tridactyl-font-family);
-          --tridactyl-header-font-weight: bold;
-      }
+  cssconfig = with colors; ''
+    :root {
+        --tridactyl-bg: #${base};
+        --tridactyl-fg: #${text2};
+        --tridactyl-status-border: 2px solid #${alt};
+        --tridactyl-status-border-radius: 999px;
+        --tridactyl-of-fg: #${text2};
+        --tridactyl-of-bg: #${base};
+        --tridactyl-hintspan-fg: #${text2};
+        --tridactyl-hintspan-bg: #${base};
+        --tridactyl-hintspan-border-color: #${focused};
+        --tridactyl-hintspan-border-width: 1px;
+        --tridactyl-hint-active-fg: #${base};
+        --tridactyl-hint-active-bg: #${focused};
+        --tridactyl-hint-active-outline: 0px solid #000;
+        --tridactyl-hint-bg: color-mix(in srgb, #${focused}, transparent 90%);
+        --tridactyl-hint-outline: 1px solid var(--tridactyl-hintspan-bg);
+        --tridactyl-cmplt-option-height: 1.9em;
+        --tridactyl-border-radius: 16px;
+        --tridactyl-font-family: sans;
+        --tridactyl-font-family-sans: sans;
+        --tridactyl-font-size: 12pt;
+        --tridactyl-small-font-size: 12px;
+        --tridactyl-status-font-family: var(--tridactyl-font-family);
+        --tridactyl-status-font-size: var(--tridactyl-small-font-size);
+        --tridactyl-hintspan-font-family: var(--tridactyl-font-family-sans);
+        --tridactyl-hintspan-font-size: var(--tridactyl-small-font-size);
+        --tridactyl-hintspan-font-weight: bold;
+        --tridactyl-vs-font-family: var(--tridactyl-font-family);
+        --tridactyl-cmdl-font-family: var(--tridactyl-font-family);
+        --tridactyl-cmdl-font-size: 15pt;
+        --tridactyl-cmplt-font-size: 10pt;
+        --tridactyl-cmplt-font-family: var(--tridactyl-font-family);
+        --tridactyl-header-font-weight: bold;
+    }
 
-      :root.TridactylOwnNamespace {
-          scrollbar-width: thin;
-      }
+    :root.TridactylOwnNamespace {
+        scrollbar-width: thin;
+    }
 
-      :root.TridactylOwnNamespace a {
-          color: #3b84ef;
-      }
+    :root.TridactylOwnNamespace a {
+        color: #3b84ef;
+    }
 
-      :root.TridactylOwnNamespace code {
-          background-color: #2a333c;
-          padding: 3px 7px;
-      }
+    :root.TridactylOwnNamespace code {
+        background-color: #2a333c;
+        padding: 3px 7px;
+    }
 
-      :root #command-line-holder {
-          border: 3px solid #${focused};
-          border-radius: var(--tridactyl-border-radius) !important;
-          order: 1;
-      }
+    :root #command-line-holder {
+        border: 3px solid #${focused};
+        border-radius: var(--tridactyl-border-radius) !important;
+        order: 1;
+    }
 
-      :root #tridactyl-colon::before {
-          content: "";
-      }
+    :root #tridactyl-colon::before {
+        content: "";
+    }
 
-      :root #tridactyl-input {
-          width: 96%;
-          padding: 1rem;
-          border-radius: var(--tridactyl-border-radius) !important;
-          padding-right: 4px !important;
-      }
+    :root #tridactyl-input {
+        width: 96%;
+        padding: 1rem;
+        border-radius: var(--tridactyl-border-radius) !important;
+        padding-right: 4px !important;
+    }
 
-      :root #completions {
-          border: 3px solid #${focused};
-          order: 2;
-          margin-top: 10px;
-          border-radius: var(--tridactyl-border-radius);
-          overflow: hidden;
-      }
-
-
-
-      :root #completions > div {
-          max-height: calc(20 * var(--tridactyl-cmplt-option-height));
-          min-height: calc(10 * var(--tridactyl-cmplt-option-height));
-          padding: 1rem;
-      }
-
-      :root #completions > div > table {
-        border-spacing: 5px;
-        border-collapse: separate;
-        table-layout: fixed;
+    :root #completions {
+        border: 3px solid #${focused};
+        order: 2;
+        margin-top: 10px;
         border-radius: var(--tridactyl-border-radius);
-      }
+        overflow: hidden;
+    }
 
 
-      :root #completions table {
-          padding: 1rem;
-      }
 
-      :root #completions table tr td {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          background-color: #${inactive};
-          border-radius: 999px;
-      }
+    :root #completions > div {
+        max-height: calc(20 * var(--tridactyl-cmplt-option-height));
+        min-height: calc(10 * var(--tridactyl-cmplt-option-height));
+        padding: 1rem;
+    }
 
-      :root #completions table tr td.title,
-      :root #completions table tr td.documentation,
-      :root #completions table tr td.content {
-          padding-left: 1rem;
-      }
-
-      :root #completions table tr .title {
-          width: 50%;
-      }
-
-      :root #completions tr .documentation {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-      }
-
-      :root #completions .sectionHeader {
-          background: #${alt};
-          margin: 0 1rem 0 1rem !important;
-          border-radius: var(--tridactyl-border-radius) !important;
-          text-align: center !important;
-      }
+    :root #completions > div > table {
+      border-spacing: 5px;
+      border-collapse: separate;
+      table-layout: fixed;
+      border-radius: var(--tridactyl-border-radius);
+    }
 
 
-      #completions table tr td.prefix,
-      #completions table tr td.container {
-          display: none !important;
-      }
+    :root #completions table {
+        padding: 1rem;
+    }
 
-      #completions table tr td.icon {
-        background-color: transparent !important;
-      }
+    :root #completions table tr td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        background-color: #${inactive};
+        border-radius: 999px;
+    }
+
+    :root #completions table tr td.title,
+    :root #completions table tr td.documentation,
+    :root #completions table tr td.content {
+        padding-left: 1rem;
+    }
+
+    :root #completions table tr .title {
+        width: 50%;
+    }
+
+    :root #completions tr .documentation {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    :root #completions .sectionHeader {
+        background: #${alt};
+        margin: 0 1rem 0 1rem !important;
+        border-radius: var(--tridactyl-border-radius) !important;
+        text-align: center !important;
+    }
 
 
-      :root #body {
-        width: calc(100% - 10px);
-        background: transparent !important;
-      }
+    #completions table tr td.prefix,
+    #completions table tr td.container {
+        display: none !important;
+    }
 
-      .focused td,
-      .focused .url {
-          background-color: #${focused} !important;
-      }
+    #completions table tr td.icon {
+      background-color: transparent !important;
+    }
 
-      .url {
-          background: #${inactive} !important;
-          color: #${base} !important;
-      }
 
-      :root #cmdline_iframe {
-          position: fixed !important;
-          bottom: unset;
-          top: 25% !important;
-          left: 10% !important;
-          z-index: 2147483647 !important;
-          width: 80% !important;
-          color-scheme: only light;
-      }
+    :root #body {
+      width: calc(100% - 10px);
+      background: transparent !important;
+    }
 
-      :root .TridactylStatusIndicator {
-          position: fixed !important;
-          bottom: 10px !important;
-          right: 10px !important;
-          font-weight: bold !important;
-          padding: 5px !important;
-      }
+    .focused td,
+    .focused .url {
+        background-color: #${focused} !important;
+    }
 
-      span.TridactylHint {
-          border-radius : 999px !important;
-          min-width: 1em !important
-      }
+    .url {
+        background: #${inactive} !important;
+        color: #${base} !important;
+    }
 
-    '';
+    :root #cmdline_iframe {
+        position: fixed !important;
+        bottom: unset;
+        top: 25% !important;
+        left: 10% !important;
+        z-index: 2147483647 !important;
+        width: 80% !important;
+        color-scheme: only light;
+    }
+
+    :root .TridactylStatusIndicator {
+        position: fixed !important;
+        bottom: 10px !important;
+        right: 10px !important;
+        font-weight: bold !important;
+        padding: 5px !important;
+    }
+
+    span.TridactylHint {
+        border-radius : 999px !important;
+        min-width: 1em !important
+    }
+
+  '';
 in
 {
   xdg = {

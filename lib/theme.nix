@@ -1,4 +1,8 @@
-{ config, lib, colors }:
+{
+  config,
+  lib,
+  colors,
+}:
 
 let
   palette = config.lib.stylix.colors;
