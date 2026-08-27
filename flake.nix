@@ -118,6 +118,7 @@
           modules = [
             (import ./configuration.nix flake-overlays)
             nix-flatpak.nixosModules.nix-flatpak
+            stylix.nixosModules.stylix
           ];
           specialArgs = {
             inherit browser;

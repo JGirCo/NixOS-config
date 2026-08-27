@@ -35,6 +35,14 @@ let
     }
   ];
 
+  # Build a declarative store linkFarm for cores—no runtime bash loops required
+  retroCoresDir = pkgs.linkFarm "esde-retroarch-cores" (
+    map (s: {
+      name = "${s.core}_libretro.so";
+      path = "${pkgs.libretro.${s.core}}/lib/retroarch/cores/${s.core}_libretro.so";
+    }) retroSystems
+  );
+
   actkbdBindings = [
     {
       keys = [ 224 ];
@@ -89,9 +97,9 @@ let
 
         export vk_khr_present_wait=false
         export ENABLE_GAMESCOPE_WSI=1
+        export STEAM_FRAME_FORCE_CLOSE=1
         export XDG_SESSION_TYPE=wayland
         export XDG_CURRENT_DESKTOP=gamescope
-        export STEAM_FRAME_FORCE_CLOSE=1
 
         ${pkgs.systemd}/bin/systemctl --user start pipewire.service wireplumber.service || true
         ${pkgs.systemd}/bin/systemctl --user import-environment \
@@ -144,18 +152,40 @@ let
     };
   };
 
+  # Isolated script for parsing Steam manifests cleanly
+  syncSteamGames = pkgs.writeShellScriptBin "sync-steam-games" ''
+        set -euo pipefail
+        STEAMDIR="$HOME/.local/share/Steam/steamapps"
+        ESDEROMS="$HOME/ROMs"
+        mkdir -p "$ESDEROMS/steam"
+        rm -f "$ESDEROMS/steam"/*.desktop
+
+        if [ -d "$STEAMDIR" ]; then
+          for mf in "$STEAMDIR"/appmanifest_*.acf; do
+            [ -e "$mf" ] || continue
+            appid=$(sed -n 's/.*"appid"[[:space:]]*"\([0-9]*\)".*/\1/p' "$mf" | head -1)
+            name=$(sed -n 's/.*"name"[[:space:]]*"\(.*\)".*/\1/p' "$mf" | head -1)
+            [ -n "$appid" ] && [ -n "$name" ] || continue
+            cat > "$ESDEROMS/steam/$name.desktop" <<EOF
+    [Desktop Entry]
+    Type=Application
+    Name=$name
+    Exec=${pkgs.steam}/bin/steam -silent steam://rungameid/$appid
+    EOF
+          done
+        fi
+  '';
+
+  # Lean session launcher script
   esdeConsole = pkgs.writeShellScriptBin "esde-console" ''
         set -euo pipefail
         ROMROOT="$HOME/Games/ROMS"
         ESDEROMS="$HOME/ROMs"
-        CORESDIR="$HOME/.config/retroarch/cores"
-        STEAMDIR="$HOME/.local/share/Steam/steamapps"
-        mkdir -p "$CORESDIR" "$ESDEROMS" "$ESDEROMS/steam" "$HOME/.local/bin" "$HOME/.config/retroarch"
 
-        ${lib.concatMapStringsSep "\n" (
-          s:
-          "ln -sf ${pkgs.libretro.${s.core}}/lib/retroarch/cores/${s.core}_libretro.so \"$CORESDIR/${s.core}_libretro.so\""
-        ) retroSystems}
+        mkdir -p "$HOME/.config/retroarch" "$ESDEROMS" "$HOME/.local/bin"
+
+        # Link the pre-built core farm straight into RetroArch's path
+        ln -sfn "${retroCoresDir}" "$HOME/.config/retroarch/cores"
 
         ${lib.concatMapStringsSep "\n" (
           s:
@@ -166,31 +196,18 @@ let
     video_fullscreen = "true"
     video_windowed_fullscreen = "true"
     CFG
-        rm -f "$HOME/.local/bin/retroarch"
+
         cat > "$HOME/.local/bin/retroarch" <<EOF
     #!${pkgs.bash}/bin/bash
     exec ${pkgs.retroarch}/bin/retroarch --appendconfig="\$HOME/.config/retroarch/niri-console.cfg" "\$@"
     EOF
         chmod +x "$HOME/.local/bin/retroarch"
 
-        rm -f "$ESDEROMS/steam"/*.desktop
+        # Update Steam shortcuts
+        ${syncSteamGames}/bin/sync-steam-games
 
-        if [ -d "$STEAMDIR" ]; then
-          for mf in "$STEAMDIR"/appmanifest_*.acf; do
-            [ -e "$mf" ] || continue
-            appid=$(sed -n 's/.*"appid"[[:space:]]*"\([0-9]*\)".*/\1/p' "$mf" | head -1)
-            name=$(sed -n 's/.*"name"[[:space:]]*"\(.*\)".*/\1/p' "$mf" | head -1)
-            [ -n "$appid" ] && [ -n "$name" ] || continue
-        cat > "$ESDEROMS/steam/$name.desktop" <<EOF
-        [Desktop Entry]
-        Type=Application
-        Name=$name
-        Exec=${pkgs.steam}/bin/steam -silent steam://rungameid/$appid
-        EOF
-          done
-        fi
-
-        STEAM_FRAME_FORCE_CLOSE=1 ${pkgs.steam}/bin/steam -silent -nochatui -nofriendsui &
+        # Spawn Steam silently in the background and launch ES-DE
+        ${pkgs.steam}/bin/steam -silent -nochatui -nofriendsui &
         sleep 2
 
         exec ${esde}/bin/es-de

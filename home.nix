@@ -11,11 +11,10 @@
 let
   themes = import ./themes.nix;
   themeColors = themes.${theme} or themes."catppuccin-macchiato";
-  colors = themeColors
-    // {
-      nvimEngine = themeColors.nvimEngine or "builtin";
-      isBase16Builtin = themeColors.isBase16Builtin or true;
-    };
+  colors = themeColors // {
+    nvimEngine = themeColors.nvimEngine or "builtin";
+    isBase16Builtin = themeColors.isBase16Builtin or true;
+  };
 in
 {
   imports = [
@@ -72,6 +71,7 @@ in
   home.packages = with pkgs; [
 
     #GUI
+    inkscape
     freecad-wayland
     mangohud
     celluloid
