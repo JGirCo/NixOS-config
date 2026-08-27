@@ -31,8 +31,8 @@ in
         package = pkgs.maple-mono.NF;
       };
       sansSerif = {
-        name = "Lexend deca";
-        package = pkgs.lexend;
+        name = "Atkinson Hyperlegible Next";
+        package = pkgs.atkinson-hyperlegible;
       };
       serif = {
         name = "IBM Plex Serif";
@@ -53,6 +53,7 @@ in
       light = "Qogir";
     };
 
+    targets.grub.enable = false;
     targets.waybar.enable = false;
     targets.qt.enable = true;
     targets.kitty.enable = false;

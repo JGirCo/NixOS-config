@@ -29,14 +29,10 @@
     };
   };
 
-  # Permanent system-level theming (dracula).
-  # Home-manager Stylix handles per-theme user app theming; this one themes
-  # system-level pieces (console TTY colors for the greeter, fontconfig, gtk,
-  # qt fallbacks) and stays fixed regardless of the home-manager theme.
   stylix = {
     enable = true;
+    targets.grub.enable = false;
     polarity = "dark";
-    image = "/home/jgirco/Pictures/wallpapers/dracula.jpg";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
 
     fonts = {
@@ -71,7 +67,6 @@
     };
   };
 
-  # This is required so tuigreet can find the sessions
   systemd.services.greetd.serviceConfig = {
     Type = "idle";
     StandardInput = "tty";
