@@ -26,7 +26,7 @@ let
 
             # 1. Purge broken symlinks in the target directory
             # '-type l' looks for symlinks, '! -exec test -e {} \;' checks if the target is missing
-            ${pkgs.findutils}/bin/find "$target" -type l ! -exec test -e {} \; -delete
+            ${pkgs.findutils}/bin/find "$target" -type l -delete
 
             # 2. Find and link the files matching your criteria
             # -print0 and xargs -0 safely handle filenames with spaces or weird characters

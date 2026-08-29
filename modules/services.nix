@@ -22,18 +22,11 @@
 
   services.sunshine = {
     enable = true;
-    autoStart = true;
-    capSysAdmin = false; # Required for Wayland KMS screen capture
+    autoStart = false;
+    capSysAdmin = false;
     openFirewall = true;
     package = pkgs.sunshine.override {
       cudaSupport = true;
     };
-  };
-  systemd.user.services.sunshine = {
-    path = with pkgs; [
-      wlr-randr
-      steam
-      bash
-    ];
   };
 }

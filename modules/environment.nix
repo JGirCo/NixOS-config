@@ -74,7 +74,6 @@ in
       [
         maplefont
         pkgs.atkinson-hyperlegible-next
-        pkgs.lexend
         pkgs.ibm-plex
       ];
 

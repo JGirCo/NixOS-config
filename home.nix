@@ -71,7 +71,6 @@ in
   home.packages = with pkgs; [
 
     #GUI
-    inkscape
     freecad-wayland
     mangohud
     celluloid
@@ -94,5 +93,6 @@ in
     bluetui
     pulsemixer
     skyscraper
+    inputs.wl_shimeji.packages.${stdenv.hostPlatform.system}.default
   ];
 }

@@ -28,9 +28,23 @@
     niri.url = "github:sodiboo/niri-flake/6bb99ff875919f03ea6054026619d999061e1170";
     niri.inputs.nixpkgs.follows = "nixpkgs";
 
+    minegrub-world-sel-theme = {
+      url = "github:Lxtharia/minegrub-world-sel-theme/dev";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    minecraft-plymouth-theme = {
+      url = "github:nikp123/minecraft-plymouth-theme";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     niri-animations = {
       url = "github:jgarza9788/niri-animation-collection";
       flake = false;
+    };
+
+    wl_shimeji = {
+      url = "git+https://github.com/CluelessCatBurger/wl_shimeji?submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     elephant.url = "github:abenz1267/elephant";
@@ -62,7 +76,7 @@
       font = {
         name = "Maple Mono NF";
         isNF = false;
-        sans = "Lexend deca";
+        sans = "Atkinson Hyperlegible Next";
         serif = "IBM Plex Serif";
 
       };
@@ -119,6 +133,8 @@
             (import ./configuration.nix flake-overlays)
             nix-flatpak.nixosModules.nix-flatpak
             stylix.nixosModules.stylix
+            inputs.minegrub-world-sel-theme.nixosModules.default
+            inputs.minecraft-plymouth-theme.nixosModules.default
           ];
           specialArgs = {
             inherit browser;

@@ -32,7 +32,7 @@ in
       };
       sansSerif = {
         name = "Atkinson Hyperlegible Next";
-        package = pkgs.atkinson-hyperlegible;
+        package = pkgs.atkinson-hyperlegible-next;
       };
       serif = {
         name = "IBM Plex Serif";
@@ -53,7 +53,6 @@ in
       light = "Qogir";
     };
 
-    targets.grub.enable = false;
     targets.waybar.enable = false;
     targets.qt.enable = true;
     targets.kitty.enable = false;
