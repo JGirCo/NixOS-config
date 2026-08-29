@@ -111,6 +111,25 @@ let
 
         exec ${spawn}
       '';
+      gamescopeLaunch = pkgs.writeShellScript "gamescope-console-${name}-launch" ''
+        set -euo pipefail
+
+        tvStatus="disconnected"
+        for f in /sys/class/drm/card*-HDMI-A-1/status; do
+          [ -e "$f" ] || continue
+          tvStatus=$(cat "$f")
+        done
+
+        if [ "$tvStatus" = "connected" ]; then
+          # NVIDIA driving the HDMI port
+          gsArgs=(--prefer-vk-device 10de:28e0 -O HDMI-A-1)
+        else
+          # AMD driving the built-in screen
+          gsArgs=(--prefer-vk-device 1002:1900 -O eDP-2)
+        fi
+
+        exec ${pkgs.gamescope}/bin/gamescope -f --xwayland-count 1 -w 2560 -h 1600 --force-grab-cursor "''${gsArgs[@]}" -- ${sessionScript} > /tmp/gamescope-session.log 2>&1
+      '';
     in
     {
       environment.systemPackages = extraPackages;
@@ -135,12 +154,16 @@ let
 
       services.greetd.settings.default_session = {
         user = "jgirco";
-        command = lib.mkForce "${pkgs.gamescope}/bin/gamescope -f --xwayland-count 1 -w 2560 -h 1600 -W 2560 -H 1600 --force-grab-cursor -- ${sessionScript}";
+        # command = lib.mkForce "${pkgs.gamescope}/bin/gamescope -f --xwayland-count 1 -w 2560 -h 1600 -W 2560 -H 1600 --force-grab-cursor -- ${sessionScript}";
+        # command = lib.mkForce "${pkgs.bash}/bin/bash -c 'exec ${pkgs.gamescope}/bin/gamescope -f --xwayland-count 1 -w 2560 -h 1600 -W 2560 -H 1600 --force-grab-cursor -O HDMI-A-1 --prefer-vk-device 10de:28e0 -- ${sessionScript} > /tmp/gamescope-session.log 2>&1'";
+        command = lib.mkForce "${gamescopeLaunch}";
       };
 
       services.logind.settings.Login = {
         HandlePowerKey = lib.mkForce "poweroff";
       };
+      systemd.services."kmsconvt@tty1".enable = false;
+      systemd.services."kmsconvt@tty2".enable = false;
     };
 
   esde = pkgs.appimageTools.wrapType2 {

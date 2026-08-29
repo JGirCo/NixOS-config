@@ -1,7 +1,12 @@
 # Desktop: X11 server, display manager (greetd + tuigreet), compositor (niri+uwsm),
 # Cinnamon fallback DE, polkit, autorandr, system-level stylix theming, xdg mime
 # associations and fontconfig.
-{ pkgs, browser, ... }:
+{
+  pkgs,
+  browser,
+  lib,
+  ...
+}:
 {
   # Enable the X11 windowing system.
   services.udisks2.enable = true;
@@ -31,6 +36,8 @@
 
   stylix = {
     enable = true;
+    targets.kmscon.enable = true;
+    targets.plymouth.enable = false;
     targets.grub.enable = false;
     polarity = "dark";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
@@ -41,8 +48,8 @@
         package = pkgs.maple-mono.NF;
       };
       sansSerif = {
-        name = "Lexend deca";
-        package = pkgs.lexend;
+        name = "Atkinson Hyperlegible Next";
+        package = pkgs.atkinson-hyperlegible-next;
       };
       serif = {
         name = "IBM Plex Serif";
@@ -56,6 +63,9 @@
       size = 24;
     };
   };
+
+  services.kmscon.enable = true;
+  services.kmscon.config.font-size = lib.mkForce 24;
 
   services.greetd = {
     enable = true;
