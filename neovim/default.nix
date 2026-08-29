@@ -11,7 +11,6 @@ let
 in
 {
   imports = [
-    # ./debugging.nix
     ./autocommands.nix
     ./commands.nix
     ./completion.nix

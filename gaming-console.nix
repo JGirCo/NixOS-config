@@ -154,8 +154,6 @@ let
 
       services.greetd.settings.default_session = {
         user = "jgirco";
-        # command = lib.mkForce "${pkgs.gamescope}/bin/gamescope -f --xwayland-count 1 -w 2560 -h 1600 -W 2560 -H 1600 --force-grab-cursor -- ${sessionScript}";
-        # command = lib.mkForce "${pkgs.bash}/bin/bash -c 'exec ${pkgs.gamescope}/bin/gamescope -f --xwayland-count 1 -w 2560 -h 1600 -W 2560 -H 1600 --force-grab-cursor -O HDMI-A-1 --prefer-vk-device 10de:28e0 -- ${sessionScript} > /tmp/gamescope-session.log 2>&1'";
         command = lib.mkForce "${gamescopeLaunch}";
       };
 

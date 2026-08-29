@@ -21,10 +21,6 @@ in
 
     ./home-services.nix
     ./zsh.nix
-    # ./apps/opencode.nix
-    # ./desktop/hyprland.nix
-    # ./desktop/wofi.nix
-    # ./desktop/rofi.nix
     ./desktop/stylix.nix
     ./desktop/walker.nix
     ./desktop/dunst.nix
@@ -39,12 +35,9 @@ in
 
     ./apps/zathura.nix
     ./apps/tmux.nix
-    # ./apps/ghostty.nix
     ./apps/cava.nix
     ./apps/directwrite/keyd-application-mapper.nix
     ./apps/directwrite/tridactyl.nix
-    # ./apps/directwrite/darkreader.nix
-    # ./apps/directwrite/blockbench.nix
 
     ./scripts/default.nix
 
@@ -77,7 +70,6 @@ in
     gparted
     yt-dlp
     parabolic
-    # discord
     darktable
     bottles
     lutris

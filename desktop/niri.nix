@@ -35,6 +35,69 @@ let
     cmd
   ];
 
+  # ── Bind helpers ──────────────────────────────────────────────────────
+  # Each helper returns a single-key attrset ready to merge into `binds`.
+
+  # A bare keybind that calls a no-arg action (e.g. close-window, focus-column-left).
+  bindNoArg =
+    combo: action:
+    {
+      "${combo}".action.${action} = [ ];
+    };
+
+  # A bare keybind that takes a value (e.g. set-column-width, focus-workspace).
+  bindWithArg =
+    combo: action: value:
+    {
+      "${combo}".action.${action} = value;
+    };
+
+  # Convenience wrappers for the common Mod+ / Mod+Shift+ / Mod+Alt+ / Mod+Ctrl+ prefixes.
+  mod = key: action: bindNoArg "Mod+${key}" action;
+  modShift = key: action: bindNoArg "Mod+Shift+${key}" action;
+  modAlt = key: action: value: bindWithArg "Mod+Alt+${key}" action value;
+  modCtrl = key: action: bindNoArg "Mod+Ctrl+${key}" action;
+
+  # Swayosd-driven OSD binds (volume / brightness).
+  swayosd =
+    {
+      combo,
+      flag,
+      extra ? "",
+    }:
+    {
+      "${combo}".action.spawn = sh "swayosd-client --${flag} ${extra}";
+    };
+
+  # playerctl binds.
+  mediaKey = combo: cmd: {
+    "${combo}".action.spawn = sh "playerctl ${cmd}";
+  };
+
+  # Build the 1..10 workspace focus + 0=10 / Shift+0=10 binds.
+  workspaceBinds =
+    let
+      indices = lib.range 1 10;
+    in
+    lib.concatMap (n: [
+      (mod (toString n) "focus-workspace" // { })  # placeholder, see below
+    ]) indices
+    ++ [ ];
+
+  # The list-based form above was getting awkward.  Use a fold instead.
+  workspaceFocusBinds = lib.foldl' (
+    acc: n:
+    let
+      key = if n == 10 then "0" else toString n;
+    in
+    acc // (mod key "focus-workspace")
+  ) { } (lib.range 1 10);
+
+  workspaceMoveBinds = modShift "0" "move-window-to-workspace" // {
+    "Mod+Shift+0".action.move-window-to-workspace = 10;
+  };
+
+  # ── Terminal applets (Mod5+key) ───────────────────────────────────────
   mkTerminalApplet =
     {
       name,
@@ -94,6 +157,96 @@ let
     })
   ];
 
+  # ── Compose the full binds attrset from declarative pieces ───────────
+  binds = lib.mkMerge [
+    # Applications
+    (mod "T" "spawn") // { "Mod+T".action.spawn = "${terminal}"; }
+    (mod "B" "spawn") // { "Mod+B".action.spawn = "${browser.name}"; }
+    (mod "D" "spawn") // { "Mod+D".action.spawn = sh "walker"; }
+    (bindNoArg "Mod5+B" "spawn" // { "Mod5+B".action.spawn = sh "walker -m bluetooth"; })
+
+    # Window Management
+    (mod "Q" "close-window")
+    (mod "F" "fullscreen-window")
+    (mod "O" "toggle-overview")
+    (mod "Shift+R" "spawn" // { "Mod+Shift+R".action.spawn = sh "${reloadScript}/bin/reloadScript"; })
+
+    # Focus (HJKL)
+    (mod "H" "focus-column-left")
+    (mod "L" "focus-column-right")
+    (mod "K" "focus-window-or-workspace-up")
+    (mod "J" "focus-window-or-workspace-down")
+
+    # Move (Shift + HJKL)
+    (modShift "H" "move-column-left")
+    (modShift "L" "move-column-right")
+    (modShift "K" "move-window-up-or-to-workspace-up")
+    (modShift "J" "move-window-down-or-to-workspace-down")
+
+    # Stacking (vertical tiling)
+    (mod "V" "consume-or-expel-window-left")
+    (mod "BracketLeft" "consume-or-expel-window-left")
+    (mod "BracketRight" "consume-or-expel-window-right")
+
+    # Resize (Alt + HJKL)
+    (modAlt "H" "set-column-width" "-10%")
+    (modAlt "L" "set-column-width" "+10%")
+    (modAlt "K" "set-window-height" "-10%")
+    (modAlt "J" "set-window-height" "+10%")
+
+    # Column operations
+    (mod "C" "center-column")
+    (mod "M" "maximize-column")
+    (mod "Shift+M" "reset-window-height")
+    (mod "Home" "focus-column-first")
+    (mod "End" "focus-column-last")
+    (mod "Slash" "show-hotkey-overlay")
+
+    # Workspace navigation (vertical)
+    (mod "U" "focus-workspace-down")
+    (mod "I" "focus-workspace-up")
+    (bindNoArg "Mod+WheelScrollDown" "focus-workspace-down")
+    (bindNoArg "Mod+WheelScrollUp" "focus-workspace-up")
+
+    # Workspace movement
+    (modCtrl "U" "move-workspace-down")
+    (modCtrl "I" "move-workspace-up")
+
+    # Move column to workspace
+    (modShift "U" "move-column-to-workspace-down")
+    (modShift "I" "move-column-to-workspace-up")
+    (modShift "WheelScrollDown" "move-column-to-workspace-down")
+    (modShift "WheelScrollUp" "move-column-to-workspace-up")
+
+    # Screenshots
+    (bindNoArg "Print" "spawn" // {
+      "Print".action.spawn = sh ''grim -g "$(slurp)" - | convert - -shave 1x1 PNG: - | wl-copy'';
+    })
+    (bindNoArg "Shift+Print" "spawn" // {
+      "Shift+Print".action.spawn = sh ''grim -g "$(slurp)" - | swappy -f -'';
+    })
+
+    # Swayosd (volume + brightness)
+    (swayosd { combo = "XF86AudioRaiseVolume"; flag = "output-volume raise"; extra = "--max-volume 100"; })
+    (swayosd { combo = "XF86AudioLowerVolume"; flag = "output-volume lower"; extra = ""; })
+    (swayosd { combo = "XF86AudioMute"; flag = "output-volume mute-toggle"; extra = ""; })
+    (swayosd { combo = "XF86AudioMicMute"; flag = "input-volume mute-toggle"; extra = ""; })
+    (swayosd { combo = "XF86MonBrightnessUp"; flag = "brightness raise"; extra = ""; })
+    (swayosd { combo = "XF86MonBrightnessDown"; flag = "brightness lower"; extra = ""; })
+
+    # Media keys
+    (mediaKey "XF86AudioNext" "next")
+    (mediaKey "XF86AudioPause" "play-pause")
+    (mediaKey "XF86AudioPlay" "play-pause")
+    (mediaKey "XF86AudioPrev" "previous")
+
+    # Numeric workspace focus (1-10) + Shift+0 -> 10
+    workspaceFocusBinds
+    (bindWithArg "Mod+Shift+0" "move-window-to-workspace" 10)
+
+    # Terminal applets
+    (builtins.foldl' (acc: val: acc // val.bind) { } terminalApplets)
+  ];
 in
 {
   imports = [ ./waybar-vertical.nix ];
@@ -161,15 +314,6 @@ in
     package = pkgs.niri-unstable;
     enable = true;
     settings = {
-      # spawn-at-startup = [
-      #   {
-      #     command = [
-      #       "bash"
-      #       "-c"
-      #       "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP NIRI_SOCKET PATH && systemctl --user restart elephant.service"
-      #     ];
-      #   }
-      # ];
       input = {
         keyboard.xkb.layout = "latam";
         touchpad.natural-scroll = true;
@@ -184,11 +328,7 @@ in
       layout = {
 
         gaps = 16;
-        # struts = {
-        #   top = -16;
-        # };
         always-center-single-column = true;
-        # center-focused-column = "never";
 
         preset-column-widths = [
           { proportion = 1.0 / 3.0; }
@@ -237,101 +377,7 @@ in
       ]
       ++ (map (x: x.rule) terminalApplets);
 
-      binds = {
-        # Applications
-        "Mod+T".action.spawn = "${terminal}";
-        "Mod+B".action.spawn = "${browser.name}";
-        "Mod+D".action.spawn = sh "walker";
-
-        "Mod5+B".action.spawn = sh "walker -m bluetooth";
-        "Mod5+V".action.spawn = sh ''kitty --app-id "wiremix-scratchpad" wiremix'';
-        # "Mod5+W".action.spawn =
-        #   sh "nscratch -t 'whatsapp-scratchpad' -s '${browser.name} --class whatsapp-scratchpad --new-window web.whatsapp.com -P Whatsapp'";
-
-        # Window Management
-        "Mod+Q".action.close-window = [ ];
-        "Mod+F".action.fullscreen-window = [ ];
-        "Mod+O".action.toggle-overview = [ ];
-        "Mod+Shift+R".action.spawn = sh "${reloadScript}/bin/reloadScript";
-
-        # Focus
-        "Mod+H".action.focus-column-left = [ ];
-        "Mod+L".action.focus-column-right = [ ];
-        "Mod+K".action.focus-window-or-workspace-up = [ ];
-        "Mod+J".action.focus-window-or-workspace-down = [ ];
-
-        # Move
-        "Mod+Shift+H".action.move-column-left = [ ];
-        "Mod+Shift+L".action.move-column-right = [ ];
-        "Mod+Shift+K".action.move-window-up-or-to-workspace-up = [ ];
-        "Mod+Shift+J".action.move-window-down-or-to-workspace-down = [ ];
-
-        # Stacking (Vertical Tiling)
-        "Mod+V".action.consume-or-expel-window-left = [ ];
-        "Mod+BracketLeft".action.consume-or-expel-window-left = [ ];
-        "Mod+BracketRight".action.consume-or-expel-window-right = [ ];
-
-        # Resize
-        "Mod+R".action.switch-preset-column-width = [ ];
-        "Mod+Alt+H".action.set-column-width = "-10%";
-        "Mod+Alt+L".action.set-column-width = "+10%";
-        "Mod+Alt+K".action.set-window-height = "-10%";
-        "Mod+Alt+J".action.set-window-height = "+10%";
-
-        # Niri Specifics - Column Operations
-        "Mod+C".action.center-column = [ ];
-        "Mod+M".action.maximize-column = [ ];
-        "Mod+Shift+M".action.reset-window-height = [ ];
-        "Mod+Home".action.focus-column-first = [ ];
-        "Mod+End".action.focus-column-last = [ ];
-        "Mod+Slash".action.show-hotkey-overlay = [ ];
-
-        # Workspace Navigation (Vertical)
-        "Mod+U".action.focus-workspace-down = [ ];
-        "Mod+I".action.focus-workspace-up = [ ];
-        "Mod+WheelScrollDown".action.focus-workspace-down = [ ];
-        "Mod+WheelScrollUp".action.focus-workspace-up = [ ];
-
-        # Workspace Movement
-        "Mod+Ctrl+U".action.move-workspace-down = [ ];
-        "Mod+Ctrl+I".action.move-workspace-up = [ ];
-
-        # Move Column to Workspace
-        "Mod+Shift+U".action.move-column-to-workspace-down = [ ];
-        "Mod+Shift+I".action.move-column-to-workspace-up = [ ];
-        "Mod+Shift+WheelScrollDown".action.move-column-to-workspace-down = [ ];
-        "Mod+Shift+WheelScrollUp".action.move-column-to-workspace-up = [ ];
-
-        # Screenshots
-        "Print".action.spawn = sh ''grim -g "$(slurp)" - | convert - -shave 1x1 PNG: - | wl-copy'';
-        "Shift+Print".action.spawn = sh ''grim -g "$(slurp)" - | swappy -f -'';
-
-        # Volume and Media
-        "XF86AudioRaiseVolume".action.spawn = sh "swayosd-client --output-volume raise --max-volume 100";
-        "XF86AudioLowerVolume".action.spawn = sh "swayosd-client --output-volume lower";
-        "XF86AudioMute".action.spawn = sh "swayosd-client --output-volume mute-toggle";
-        "XF86AudioMicMute".action.spawn = sh "swayosd-client --input-volume mute-toggle";
-        "XF86MonBrightnessUp".action.spawn = sh "swayosd-client --brightness raise";
-        "XF86MonBrightnessDown".action.spawn = sh "swayosd-client --brightness lower";
-
-        "XF86AudioNext".action.spawn = sh "playerctl next";
-        "XF86AudioPause".action.spawn = sh "playerctl play-pause";
-        "XF86AudioPlay".action.spawn = sh "playerctl play-pause";
-        "XF86AudioPrev".action.spawn = sh "playerctl previous";
-
-        "Mod+1".action.focus-workspace = 1;
-        "Mod+2".action.focus-workspace = 2;
-        "Mod+3".action.focus-workspace = 3;
-        "Mod+4".action.focus-workspace = 4;
-        "Mod+5".action.focus-workspace = 5;
-        "Mod+6".action.focus-workspace = 6;
-        "Mod+7".action.focus-workspace = 7;
-        "Mod+8".action.focus-workspace = 8;
-        "Mod+9".action.focus-workspace = 9;
-        "Mod+0".action.focus-workspace = 10;
-        "Mod+Shift+0".action.move-window-to-workspace = 10;
-      }
-      // (builtins.foldl' (acc: val: acc // val.bind) { } terminalApplets);
+      inherit binds;
     };
   };
 }
