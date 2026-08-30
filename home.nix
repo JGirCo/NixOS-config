@@ -27,7 +27,6 @@ in
     ./desktop/niri.nix
     ./desktop/niri-animations.nix
 
-    ./apps/wezterm.nix
     ./apps/kitty.nix
     ./apps/zen.nix
 

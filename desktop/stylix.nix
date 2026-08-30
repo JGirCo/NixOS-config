@@ -53,10 +53,15 @@ in
       light = "Qogir";
     };
 
+    targets.zen-browser.profileNames = [
+      "default"
+      "Whatsapp"
+    ];
+
     targets.waybar.enable = false;
     targets.qt.enable = true;
-    targets.kitty.enable = false;
+    targets.kitty.enable = true;
     targets.zathura.enable = false;
-    targets.zen-browser.enable = false;
+    # targets.zen-browser.enable = false;
   };
 }

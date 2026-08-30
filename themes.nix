@@ -19,7 +19,6 @@
     orange = "fa8d3e";
 
     key = {
-      wezterm = "Ayu Light (Gogh)";
       nvim = "ayu";
       darklight = "prefer-light";
     };
@@ -47,7 +46,6 @@
     orange = "fe640b";
 
     key = {
-      wezterm = "catppuccin-latte";
       nvim = "catppuccin";
       darklight = "prefer-light";
     };
@@ -75,7 +73,6 @@
     orange = "f5a97f";
 
     key = {
-      wezterm = "catppuccin-macchiato";
       nvim = "catppuccin";
       darklight = "prefer-dark";
     };
@@ -108,7 +105,6 @@
     orange = "ffb86c";
 
     key = {
-      wezterm = "Dracula";
       nvim = "dracula";
       darklight = "prefer-dark";
     };
@@ -198,7 +194,6 @@
     orange = "f38019";
 
     key = {
-      wezterm = "Gruvbox Dark (Gogh)";
       nvim = "gruvbox";
       darklight = "prefer-dark";
     };
@@ -226,7 +221,6 @@
     orange = "f38019";
 
     key = {
-      wezterm = "GruvboxLight";
       nvim = "gruvbox";
       darklight = "prefer-light";
     };
@@ -326,7 +320,6 @@
     orange = "bc5c00";
 
     key = {
-      wezterm = "Stella (base16)";
       nvim = "melange";
       darklight = "prefer-light";
     };
@@ -417,7 +410,6 @@
     orange = "ffb86c";
 
     key = {
-      wezterm = "rebecca";
       nvim = "rebecca";
       darklight = "prefer-dark";
     };
@@ -446,7 +438,6 @@
     orange = "ea9d34";
 
     key = {
-      wezterm = "rose-pine-dawn";
       nvim = "rose-pine";
       darklight = "prefer-light";
     };
@@ -474,7 +465,6 @@
     orange = "ea9d34";
 
     key = {
-      wezterm = "rose-pine";
       nvim = "rose-pine";
       darklight = "prefer-dark";
     };
@@ -547,7 +537,6 @@
     orange = "e3a68c";
 
     key = {
-      wezterm = "Stella (base16)";
       nvim = "stella";
     };
     nvimEngine = "base16";
@@ -592,7 +581,6 @@
     orange = "ffb86c";
 
     key = {
-      wezterm = "tokyonight";
       nvim = "tokyonight";
       darklight = "prefer-dark";
     };
