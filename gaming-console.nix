@@ -33,6 +33,12 @@ let
       core = "dolphin";
       romsDir = "gc";
     }
+
+    {
+      dir = "Wii";
+      core = "dolphin";
+      romsDir = "wii";
+    }
   ];
 
   # Build a declarative store linkFarm for cores—no runtime bash loops required
@@ -123,6 +129,18 @@ let
         if [ "$tvStatus" = "connected" ]; then
           # NVIDIA driving the HDMI port
           gsArgs=(--prefer-vk-device 10de:28e0 -O HDMI-A-1)
+          # Route audio to the dock: pick the HDMI sink by name so it survives
+          # WirePlumber renumbering between boots. Bump volume and unmute in
+          # case the TV defaults to 0 / muted.
+          hdmiSink=$(${pkgs.wireplumber}/bin/wpctl status \
+            | ${pkgs.gnugrep}/bin/grep 'HDMI' \
+            | ${pkgs.gnugrep}/bin/grep -oE '[0-9]+' \
+            | ${pkgs.coreutils}/bin/head -n1) || true
+          if [ -n "''${hdmiSink:-}" ]; then
+            ${pkgs.wireplumber}/bin/wpctl set-default "$hdmiSink" || true
+            ${pkgs.wireplumber}/bin/wpctl set-volume "$hdmiSink" 100% || true
+            ${pkgs.wireplumber}/bin/wpctl set-mute "$hdmiSink" 0 || true
+          fi
         else
           # AMD driving the built-in screen
           gsArgs=(--prefer-vk-device 1002:1900 -O eDP-2)
@@ -200,18 +218,16 @@ let
   # Lean session launcher script
   esdeConsole = pkgs.writeShellScriptBin "esde-console" ''
         set -euo pipefail
-        ROMROOT="$HOME/Games/ROMS"
-        ESDEROMS="$HOME/ROMs"
+        ESDEROMS="$HOME/Games/ROMS"
 
-        mkdir -p "$HOME/.config/retroarch" "$ESDEROMS" "$HOME/.local/bin"
+        mkdir -p "$HOME/.config/retroarch" "$ESDEROMS/emulators" "$HOME/.local/bin"
+
+        # ES-DE defaults to ~/ROMs; alias it to our real library root so the
+        # upstream es_systems.xml paths (~/ROMs/<system>) just work.
+        ln -sfn "$ESDEROMS" "$HOME/ROMs"
 
         # Link the pre-built core farm straight into RetroArch's path
         ln -sfn "${retroCoresDir}" "$HOME/.config/retroarch/cores"
-
-        ${lib.concatMapStringsSep "\n" (
-          s:
-          "if [ -d \"$ROMROOT/${s.dir}\" ]; then ln -sfn \"$ROMROOT/${s.dir}\" \"$ESDEROMS/${s.romsDir}\"; fi"
-        ) retroSystems}
 
         cat > "$HOME/.config/retroarch/niri-console.cfg" <<'CFG'
     video_fullscreen = "true"
