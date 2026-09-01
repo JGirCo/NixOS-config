@@ -64,8 +64,8 @@
     };
   };
 
-  services.kmscon.enable = true;
-  services.kmscon.config.font-size = lib.mkForce 24;
+  # services.kmscon.enable = true;
+  # services.kmscon.config.font-size = lib.mkForce 24;
 
   services.greetd = {
     enable = true;

@@ -62,6 +62,8 @@ in
     targets.qt.enable = true;
     targets.kitty.enable = true;
     targets.zathura.enable = false;
+    targets.swaync.enable = false;
+    targets.mako.enable = true;
     # targets.zen-browser.enable = false;
   };
 }

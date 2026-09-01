@@ -23,7 +23,6 @@ in
     ./zsh.nix
     ./desktop/stylix.nix
     ./desktop/walker.nix
-    ./desktop/dunst.nix
     ./desktop/niri.nix
     ./desktop/niri-animations.nix
 
@@ -52,6 +51,22 @@ in
     stateVersion = "23.11";
   };
 
+  # Mako notification daemon (replaces swaync). Stylix themes the
+  # default config via targets.mako; we override font + add rounded
+  # corners on top.
+  services.mako.enable = true;
+  services.mako.settings = {
+    font = lib.mkForce "Atkinson Hyperlegible Next 20";
+    border-radius = 16;
+  };
+
+  # Mako is D-Bus activated by default, but the D-Bus service file uses
+  # SystemdService=mako.service, so we need to enable the user service
+  # for D-Bus to be able to start it.
+  home.activation.makoSystemdService = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    systemctl --user enable --now mako.service 2>/dev/null || true
+  '';
+
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [
     (final: prev: {
@@ -61,6 +76,8 @@ in
     })
   ];
   home.packages = with pkgs; [
+    libnotify # for notify-send
+    mako # notification daemon (replaces swaync)
 
     #GUI
     freecad-wayland

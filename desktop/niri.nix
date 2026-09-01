@@ -48,7 +48,9 @@ let
   # Common Mod+ prefix wrappers.
   mod = key: action: bindAct "Mod+${key}" action;
   modShift = key: action: bindAct "Mod+Shift+${key}" action;
-  modAlt = key: action: value: bind "Mod+Alt+${key}" action value;
+  modAlt =
+    key: action: value:
+    bind "Mod+Alt+${key}" action value;
   modCtrl = key: action: bindAct "Mod+Ctrl+${key}" action;
   mod5 = key: action: bindAct "Mod5+${key}" action;
 
@@ -244,14 +246,14 @@ in
     gtklock-userinfo-module
   ];
 
+  # Swayosd service + CSS (stylix doesn't theme swayosd, so we hand-style).
   services.swayosd = {
     enable = true;
   };
   xdg.configFile."swayosd/style.css".text = ''
     window#osd {
-        /* The main background of the overlay */
         background: ${themeLib.semantic.bg};
-        border-radius: 12px; /* Optional: smooth out the corners */
+        border-radius: 12px;
     }
 
     progress {
@@ -269,8 +271,8 @@ in
         }
         {
           timeout = 360; # 6 min.
-          on-timeout = "brightnessctl -s; brightnessctl -n"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
-          on-resume = "brightnessctl -r"; # monitor backlight restore.
+          on-timeout = "brightnessctl -s; brightnessctl -n";
+          on-resume = "brightnessctl -r";
         }
         {
           timeout = 600; # 10 min
