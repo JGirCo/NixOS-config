@@ -8,7 +8,6 @@
 
 let
 
-  p10k = builtins.readFile ./p10k.zsh;
   poweroffWithPrompt = pkgs.writeShellScriptBin "poweroffWithPrompt" ''
     ${pkgs.gum}/bin/gum confirm "Power off?" \
     --no-show-help \
@@ -65,6 +64,94 @@ in
       icons = "auto";
       git = true;
     };
+    starship = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = {
+        add_newline = false;
+        format = " $os $directory $git_branch $git_commit $git_state $git_metrics $git_status $line_break $character";
+        right_format = "$status $cmd_duration $jobs $direnv $nix_shell";
+
+        os = {
+          disabled = false;
+          format = "$symbol ";
+          style = "bold white";
+          symbols = {
+            NixOS = "󱄅 ";
+            Linux = "󱄅 ";
+          };
+        };
+
+        directory = {
+          style = "bold cyan";
+          truncation_length = 3;
+          truncate_to_repo = true;
+          repo_root_style = "bold cyan";
+          before_repo_root_style = "bold cyan";
+        };
+
+        git_branch = {
+          symbol = " ";
+          style = "bold purple";
+          format = "[$symbol$branch(:$remote_branch)]($style) ";
+        };
+
+        git_commit = {
+          style = "bold green";
+          format = "[$hash$tag]($style) ";
+        };
+
+        git_state = {
+          style = "bold yellow";
+        };
+
+        git_metrics = {
+          disabled = false;
+          added_style = "bold green";
+          deleted_style = "bold red";
+        };
+
+        git_status = {
+          style = "bold yellow";
+        };
+
+        status = {
+          disabled = false;
+          format = "[$symbol]($style) ";
+          symbol = "✘";
+          success_symbol = "";
+          style = "bold red";
+        };
+
+        cmd_duration = {
+          min_time = 3000;
+          format = "[$duration]($style) ";
+          style = "bold white";
+          show_milliseconds = false;
+        };
+
+        direnv = {
+          format = "$symbol";
+          symbol = "󱁿 ";
+          style = "bold yellow";
+        };
+
+        nix_shell = {
+          disabled = false;
+        };
+
+        jobs = {
+          disabled = false;
+        };
+
+        character = {
+          success_symbol = "[❯](bold green) ";
+          error_symbol = "[❯](bold red) ";
+          vimcmd_symbol = "[❮](bold green) ";
+          vimcmd_visual_symbol = "[V](bold yellow) ";
+        };
+      };
+    };
     zsh = {
       enable = true;
       plugins = [
@@ -98,21 +185,12 @@ in
         reboot = "${rebootWithPrompt}/bin/rebootWithPrompt";
         poweroff = "${poweroffWithPrompt}/bin/poweroffWithPrompt";
       };
-      initContent = lib.strings.concatStrings [
-        p10k
-        ''
-          source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-        ''
+      initContent = ''
+        bindkey "^[k" history-beginning-search-backward
+        bindkey "^[j" history-beginning-search-forward
 
-        ''
-          bindkey "^[k" history-beginning-search-backward
-          bindkey "^[j" history-beginning-search-forward
-        ''
-
-        ''
-          eval "$(direnv hook zsh)"
-        ''
-      ];
+        eval "$(direnv hook zsh)"
+      '';
     };
   };
 }
