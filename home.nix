@@ -26,7 +26,7 @@ in
     ./desktop/niri.nix
     ./desktop/niri-animations.nix
 
-    ./apps/kitty.nix
+    ./apps/terminal.nix
     ./apps/zen.nix
 
     ./neovim/default.nix
@@ -49,6 +49,11 @@ in
     username = "jgirco";
     homeDirectory = "/home/jgirco";
     stateVersion = "23.11";
+
+    sessionVariables = {
+      THEME = theme;
+      THEME_POLARITY = themeColors.polarity;
+    };
   };
 
   # Mako notification daemon (replaces swaync). Stylix themes the
@@ -102,5 +107,7 @@ in
     pulsemixer
     skyscraper
     inputs.wl_shimeji.packages.${stdenv.hostPlatform.system}.default
+    just
+    gum
   ];
 }

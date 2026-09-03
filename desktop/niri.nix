@@ -62,7 +62,17 @@ let
       flag,
       extra ? [ ],
     }:
-    bind combo "spawn" (sh (lib.concatStringsSep " " ([ "swayosd-client" "--${flag}" ] ++ extra)));
+    bind combo "spawn" (
+      sh (
+        lib.concatStringsSep " " (
+          [
+            "swayosd-client"
+            "--${flag}"
+          ]
+          ++ extra
+        )
+      )
+    );
 
   # playerctl binds.
   mediaKey = combo: cmd: bind combo "spawn" (sh "playerctl ${cmd}");
@@ -144,6 +154,14 @@ let
     (bind "Mod+B" "spawn" browser.name)
     (bind "Mod+D" "spawn" (sh "walker"))
     (bind "Mod5+B" "spawn" (sh "walker -m bluetooth"))
+    (bind "F5" "spawn" [
+      "sh"
+      "-c"
+      ''
+        PID=$(niri msg -j focused-window | ${pkgs.jq}/bin/jq -r '.pid')
+        kitten @ --to "unix:/tmp/mykitty-$PID" send-text --match state:focused "just\r"
+      ''
+    ])
 
     # Window management
     (mod "Q" "close-window")
@@ -204,12 +222,34 @@ let
     (bind "Shift+Print" "spawn" (sh ''grim -g "$(slurp)" - | swappy -f -''))
 
     # Swayosd (volume + brightness)
-    (swayosd { combo = "XF86AudioRaiseVolume"; flag = "output-volume raise"; extra = [ "--max-volume" "100" ]; })
-    (swayosd { combo = "XF86AudioLowerVolume"; flag = "output-volume lower"; })
-    (swayosd { combo = "XF86AudioMute"; flag = "output-volume mute-toggle"; })
-    (swayosd { combo = "XF86AudioMicMute"; flag = "input-volume mute-toggle"; })
-    (swayosd { combo = "XF86MonBrightnessUp"; flag = "brightness raise"; })
-    (swayosd { combo = "XF86MonBrightnessDown"; flag = "brightness lower"; })
+    (swayosd {
+      combo = "XF86AudioRaiseVolume";
+      flag = "output-volume raise";
+      extra = [
+        "--max-volume"
+        "100"
+      ];
+    })
+    (swayosd {
+      combo = "XF86AudioLowerVolume";
+      flag = "output-volume lower";
+    })
+    (swayosd {
+      combo = "XF86AudioMute";
+      flag = "output-volume mute-toggle";
+    })
+    (swayosd {
+      combo = "XF86AudioMicMute";
+      flag = "input-volume mute-toggle";
+    })
+    (swayosd {
+      combo = "XF86MonBrightnessUp";
+      flag = "brightness raise";
+    })
+    (swayosd {
+      combo = "XF86MonBrightnessDown";
+      flag = "brightness lower";
+    })
 
     # Media keys
     (mediaKey "XF86AudioNext" "next")

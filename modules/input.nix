@@ -14,8 +14,11 @@
       default = {
         ids = [ "*" ];
         settings = {
+
           main = {
             "f23+leftmeta+leftshift" = "layer(nav)";
+            "G-enter" = "f13";
+            "rightalt" = "layer(rightalt_layer)";
           };
           # "shift+alt" = {
           #   "h" = "left";
@@ -23,6 +26,10 @@
           #   "j" = "down";
           #   "l" = "right";
           # };
+          "rightalt_layer" = {
+            "j" = "down";
+            "enter" = "f5";
+          };
           "nav" = {
             "h" = "left";
             "k" = "up";

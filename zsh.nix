@@ -7,45 +7,69 @@
 }:
 
 let
+  # Styled wrapper for gum choose
+  themesSet = import ./themes.nix;
 
-  poweroffWithPrompt = pkgs.writeShellScriptBin "poweroffWithPrompt" ''
-    ${pkgs.gum}/bin/gum confirm "Power off?" \
-    --no-show-help \
-    --prompt.foreground "#${colors.text2}" \
-    --selected.foreground "#${colors.base}" \
-    --selected.background "#${colors.focused}" \
-    --unselected.foreground "#${colors.base}" \
-    --unselected.background "#${colors.inactive}" \
-    && poweroff
+  # Automatically extract all theme name keys into a list
+  themes = builtins.attrNames themesSet;
+  gumChoose = pkgs.writeShellScriptBin "gumchoose" ''
+    exec ${pkgs.gum}/bin/gum choose \
+      --no-show-help \
+      --padding "1 1" \
+      --header.foreground "#${colors.text2}" \
+      --selected.foreground "#${colors.base}" \
+      --selected.background "#${colors.focused}" \
+      --cursor.foreground "#${colors.focused}" \
+      --item.foreground "#${colors.inactive}" \
+      "$@"
   '';
-  rebootWithPrompt = pkgs.writeShellScriptBin "rebootWithPrompt" ''
-    ${pkgs.gum}/bin/gum confirm "Reboot?" \
-    --no-show-help \
-    --prompt.foreground "#${colors.text2}" \
-    --selected.foreground "#${colors.base}" \
-    --selected.background "#${colors.focused}" \
-    --unselected.foreground "#${colors.base}" \
-    --unselected.background "#${colors.inactive}" \
-    && reboot
-  '';
+
+  # Helper for styled confirmation prompts
+  mkConfirm =
+    name: prompt: action:
+    pkgs.writeShellScriptBin name ''
+      ${pkgs.gum}/bin/gum confirm "${prompt}" \
+        --no-show-help \
+        --prompt.foreground "#${colors.text2}" \
+        --selected.foreground "#${colors.base}" \
+        --selected.background "#${colors.focused}" \
+        --unselected.foreground "#${colors.base}" \
+        --unselected.background "#${colors.inactive}" \
+        && ${action}
+    '';
+
+  poweroffWithPrompt = mkConfirm "poweroffWithPrompt" "Power off?" "poweroff";
+  rebootWithPrompt = mkConfirm "rebootWithPrompt" "Reboot?" "reboot";
+
+  # themes = [
+  #   "ayu-light"
+  #   "catppuccin-macchiato"
+  #   "catppuccin-latte"
+  #   "dracula"
+  #   "everforest-light"
+  #   "gruvbox-dark-medium"
+  #   "gruvbox-light-medium"
+  #   "gruvbox-light-soft"
+  #   "kanagawa-light"
+  #   "melange"
+  #   "oxocarbon-light"
+  #   "rebecca"
+  #   "rose-pine-dawn"
+  #   "rose-pine"
+  #   "saga"
+  #   "template"
+  #   "tokyo-night-moon"
+  #   "trans"
+  # ];
+
   themeSwitcher = pkgs.writeShellScriptBin "themeSwitcher" ''
-    THEME=$(${pkgs.gum}/bin/gum choose \
-    --no-show-help \
-    --item.foreground "#${colors.base}" \
-    --padding "1 1" \
-    --header.foreground "#${colors.text2}" \
-    --selected.foreground "#${colors.base}" \
-    --selected.background "#${colors.focused}" \
-    --cursor.foreground "#${colors.focused}" \
-    --item.foreground "#${colors.inactive}" \
-    "ayu-light" "catppuccin-macchiato" "catppuccin-latte" "dracula" "everforest-light" "gruvbox-dark-medium" "gruvbox-light-medium" "gruvbox-light-soft" "kanagawa-light" "melange" "oxocarbon-light" "rebecca" "rose-pine-dawn" "rose-pine" "saga" "template" "tokyo-night-moon" "trans")
-    if [ -n "$THEME" ]; then
-      nh home switch -c $THEME
+    THEME=$(${gumChoose}/bin/gumchoose ${builtins.concatStringsSep " " (map (t: "\"${t}\"") themes)})
 
-      # Restart apps that cache their theme at startup.
-      pkill -x nautilus 2>/dev/null || true
-      pkill -x qbittorrent 2>/dev/null || true
-      pkill -x org.gnome.Nautilus 2>/dev/null || true
+    if [ -n "$THEME" ]; then
+      nh home switch -c "$THEME"
+
+      # Restart apps that cache their theme at startup
+      pkill -x nautilus qbittorrent org.gnome.Nautilus 2>/dev/null || true
       systemctl --user restart swaync.service 2>/dev/null || true
       killall -q gtk-query-settings gsettings-data-convert 2>/dev/null || true
       echo "Theme switched to $THEME — GTK/Qt apps restarted."
@@ -53,7 +77,10 @@ let
   '';
 in
 {
-  home.packages = [ themeSwitcher ];
+  home.packages = [
+    themeSwitcher
+    gumChoose
+  ];
 
   programs = {
     zoxide.enable = true;
@@ -77,8 +104,8 @@ in
           format = "$symbol ";
           style = "bold white";
           symbols = {
-            NixOS = "󱄅 ";
-            Linux = "󱄅 ";
+            NixOS = " ";
+            Linux = " ";
           };
         };
 
