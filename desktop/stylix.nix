@@ -64,6 +64,7 @@ in
     targets.zathura.enable = false;
     targets.swaync.enable = false;
     targets.mako.enable = true;
+    targets.nixvim.enable = true;
     # targets.zen-browser.enable = false;
   };
 }

@@ -18,7 +18,6 @@ in
     ./options.nix
     ./plugins
     ./todo.nix
-    ./colors.nix
   ];
 
   home.shellAliases.v = "nvim";
