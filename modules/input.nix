@@ -18,15 +18,8 @@
           main = {
             "f23+leftmeta+leftshift" = "layer(nav)";
             "G-enter" = "f13";
-            "rightalt" = "layer(rightalt_layer)";
           };
-          # "shift+alt" = {
-          #   "h" = "left";
-          #   "k" = "up";
-          #   "j" = "down";
-          #   "l" = "right";
-          # };
-          "rightalt_layer" = {
+          altgr = {
             "j" = "down";
             "enter" = "f5";
           };

@@ -80,6 +80,23 @@ in
       });
     })
   ];
+  home.file = {
+    ".local/share/applications/org.libvips.vipsdisp.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Version=1.4
+      Name=Vipsdisp
+      GenericName=Image Viewer
+      Comment=View large scientific images
+      Icon=org.libvips.vipsdisp
+      Keywords=vipsdisp;graphic;view;image;
+      Categories=Graphics;2DGraphics;RasterGraphics;
+      StartupNotify=true
+      Exec=vipsdisp %U
+      MimeType=image/gif;image/x-fits;image/x-pcx;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/tiff;image/jpeg;image/png;image/x-exr;image/webp;image/x-webp;image/heif;image/heic;image/svg+xml;application/pdf;image/jp2;image/jxl;image/mrxs;image/svs;image/ndpi;image/avf;text/x-matlab;text/csv;
+    '';
+  };
+
   home.packages = with pkgs; [
     libnotify # for notify-send
     mako # notification daemon (replaces swaync)
@@ -91,7 +108,7 @@ in
     gparted
     yt-dlp
     parabolic
-    darktable
+    vipsdisp
     bottles
     lutris
     vlc
@@ -109,5 +126,6 @@ in
     inputs.wl_shimeji.packages.${stdenv.hostPlatform.system}.default
     just
     gum
+    file
   ];
 }

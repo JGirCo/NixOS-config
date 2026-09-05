@@ -89,7 +89,13 @@
 
   xdg.mime.defaultApplications = {
     "inode/directory" = "nautilus.desktop";
-    "image/png" = "vipsdisp.desktop";
+    "image/png" = "org.libvips.vipsdisp.desktop";
+    "image/jpeg" = "org.libvips.vipsdisp.desktop";
+    "application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
+    "video/mp4" = "vlc.desktop";
+    "audio/mpeg" = "vlc.desktop";
+    "text/plain" = "nvim.desktop";
+    "text/x-shellscript" = "kitty.desktop";
     "x-scheme-handler/http" = "${browser.name}.desktop";
     "x-scheme-handler/https" = "${browser.name}.desktop";
     "x-scheme-handler/about" = "${browser.name}.desktop";

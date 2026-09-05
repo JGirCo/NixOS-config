@@ -169,7 +169,7 @@ let
         enable = true;
         bindings = actkbdBindings;
       };
-
+      services.xserver.desktopManager.cinnamon.enable = lib.mkForce false;
       services.greetd.settings.default_session = {
         user = "jgirco";
         command = lib.mkForce "${gamescopeLaunch}";
