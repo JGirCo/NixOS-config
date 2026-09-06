@@ -14,6 +14,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     stylix.url = "github:danth/stylix";
+    nixcord.url = "github:4evy/nixcord";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
@@ -64,6 +65,7 @@
       niri,
       zen-browser,
       stylix,
+      nixcord,
       ...
     }@inputs:
     let
@@ -93,6 +95,7 @@
             ./home.nix
             nixvim.homeModules.nixvim
             stylix.homeModules.stylix
+            nixcord.homeModules.nixcord
             walker.homeManagerModules.default
             niri.homeModules.niri
             zen-browser.homeModules.twilight-official

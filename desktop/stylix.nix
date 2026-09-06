@@ -65,6 +65,8 @@ in
     targets.swaync.enable = false;
     targets.mako.enable = true;
     targets.nixvim.enable = true;
+    targets.vesktop.enable = true;
+    targets.nixcord.enable = true;
     # targets.zen-browser.enable = false;
   };
 }

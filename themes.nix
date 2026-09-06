@@ -609,22 +609,22 @@
 
   "trans" = {
     polarity = "light";
-    base = "ffffff";
-    text = "ffffff";
+    base = "f4f4f6";
+    text = "f4f4f6";
     text2 = "6b3d4f";
-    inactive = "f8cdda";
-    focused = "f5a9b8";
-    alt = "5bcefa";
+    inactive = "BCA4BF";
+    focused = "E094B5";
+    alt = "76c5ff";
     urgent = "ff988b";
-    binding = "ba92d0";
+    binding = "9C9ADF";
 
     red = "ff988b";
-    yellow = "c9a227";
-    pink = "f5a9b8";
-    green = "2e8b57";
-    blue = "5bcefa";
-    purple = "ba92d0";
-    orange = "ffae56";
+    yellow = "E0C094";
+    pink = "E094B5";
+    green = "3aa58a";
+    blue = "76c5ff";
+    purple = "9C9ADF";
+    orange = "ffc6af";
 
     key = {
       darklight = "prefer-light";
@@ -633,21 +633,21 @@
     nvimEngine = "base16";
     isBase16Builtin = false;
     scheme.palette = {
-      base00 = "ffffff";
+      base00 = "f4f4f6";
       base01 = "fbe5ec";
       base02 = "f8cdda";
       base03 = "e6bac8";
       base04 = "d6a7b8";
-      base05 = "c595a7";
+      base05 = "6b3d4f";
       base06 = "b38195";
       base07 = "6b3d4f";
       base08 = "ff988b";
       base09 = "ffae56";
-      base0A = "c9a227";
+      base0A = "E0C094";
       base0B = "2e8b57";
       base0C = "3aa68a";
       base0D = "5bcefa";
-      base0E = "f5a9b8";
+      base0E = "E094B5";
       base0F = "ffc6af";
     };
   };

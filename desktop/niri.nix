@@ -381,10 +381,10 @@ in
           clip-to-geometry = true;
           draw-border-with-background = false;
         }
-        {
-          matches = [ { app-id = "^${terminal}$"; } ];
-          opacity = 0.9;
-        }
+        # {
+          # matches = [ { app-id = "^${terminal}$"; } ];
+          # opacity = 0.9;
+        # }
         {
           matches = [ { app-id = "^zen$"; } ];
           open-maximized = false;

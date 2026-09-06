@@ -28,6 +28,7 @@ in
 
     ./apps/terminal.nix
     ./apps/zen.nix
+    ./apps/nixcord.nix
 
     ./neovim/default.nix
 
