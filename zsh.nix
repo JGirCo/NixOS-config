@@ -41,29 +41,8 @@ let
   poweroffWithPrompt = mkConfirm "poweroffWithPrompt" "Power off?" "poweroff";
   rebootWithPrompt = mkConfirm "rebootWithPrompt" "Reboot?" "reboot";
 
-  # themes = [
-  #   "ayu-light"
-  #   "catppuccin-macchiato"
-  #   "catppuccin-latte"
-  #   "dracula"
-  #   "everforest-light"
-  #   "gruvbox-dark-medium"
-  #   "gruvbox-light-medium"
-  #   "gruvbox-light-soft"
-  #   "kanagawa-light"
-  #   "melange"
-  #   "oxocarbon-light"
-  #   "rebecca"
-  #   "rose-pine-dawn"
-  #   "rose-pine"
-  #   "saga"
-  #   "template"
-  #   "tokyo-night-moon"
-  #   "trans"
-  # ];
-
   themeSwitcher = pkgs.writeShellScriptBin "themeSwitcher" ''
-    THEME=$(${gumChoose}/bin/gumchoose ${builtins.concatStringsSep " " (map (t: "\"${t}\"") themes)})
+    THEME=$(${gumChoose}/bin/gumchoose ${lib.escapeShellArgs themes})
 
     if [ -n "$THEME" ]; then
       nh home switch -c "$THEME"
@@ -83,13 +62,38 @@ in
   ];
 
   programs = {
-    zoxide.enable = true;
-    zoxide.enableZshIntegration = true;
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
+
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+      options = [ "--cmd cd" ];
+    };
     eza = {
       enable = true;
       enableZshIntegration = true;
       icons = "auto";
       git = true;
+    };
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+      defaultCommand = "${pkgs.fd}/bin/fd --type f --hidden --exclude .git";
+      changeDirWidget.command = "${pkgs.fd}/bin/fd --type d --hidden --exclude .git";
+      defaultOptions = [
+        "--height 40%"
+        "--layout=reverse"
+        "--border"
+      ];
+    };
+
+    nix-your-shell = {
+      enable = true;
+      enableZshIntegration = true;
     };
     starship = {
       enable = true;
@@ -183,9 +187,34 @@ in
       enable = true;
       plugins = [
         {
-          name = "vi-mode";
-          src = pkgs.zsh-vi-mode;
-          file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+          name = "zsh-system-clipboard";
+          src = pkgs.zsh-system-clipboard;
+          file = "share/zsh-system-clipboard/zsh-system-clipboard.zsh";
+        }
+        {
+          name = "nix-zsh-completions";
+          src = pkgs.nix-zsh-completions;
+          file = "share/zsh/plugins/nix-zsh-completions/nix-zsh-completions.plugin.zsh";
+        }
+        {
+          name = "fzf-tab";
+          src = pkgs.zsh-fzf-tab;
+          file = "share/fzf-tab/fzf-tab.plugin.zsh";
+        }
+        {
+          name = "zsh-autopair";
+          src = pkgs.zsh-autopair;
+          file = "share/zsh/zsh-autopair/autopair.zsh";
+        }
+        {
+          name = "you-should-use";
+          src = pkgs.zsh-you-should-use;
+          file = "share/zsh/plugins/you-should-use/you-should-use.plugin.zsh";
+        }
+        {
+          name = "zsh-defer";
+          src = pkgs.zsh-defer;
+          file = "share/zsh-defer/zsh-defer.plugin.zsh";
         }
       ];
       enableCompletion = true;
@@ -194,12 +223,9 @@ in
       shellAliases = {
         themes = "${themeSwitcher}/bin/themeSwitcher";
         mktmp = "cd $(mktemp -d)";
-        update = "sudo nixos-rebuild switch --flake ~/.nixos/";
-        rebuildHome = "home-manager switch --flake ~/.nixos/";
         editSystem = "nvim ~/.nixos/configuration.nix";
         ardUpload = "arduino-cli compile --upload";
         ardMonitor = "arduino-cli monitor -p /dev/ttyUSB0 -c 115200";
-        cd = "z";
         ".." = "cd ..";
         "..." = "cd ../../";
         "4." = "cd ../../../";
@@ -212,12 +238,22 @@ in
         reboot = "${rebootWithPrompt}/bin/rebootWithPrompt";
         poweroff = "${poweroffWithPrompt}/bin/poweroffWithPrompt";
       };
-      initContent = ''
+      initExtra = ''
+        # Enable Zsh native Vi mode
+        bindkey -v
+        export KEYTIMEOUT=1
+
+        # Preserve custom history navigation keybindings
         bindkey "^[k" history-beginning-search-backward
         bindkey "^[j" history-beginning-search-forward
 
-        eval "$(direnv hook zsh)"
+        # fzf-tab completion preview configuration
+        zstyle ':fzf-tab:*' use-fzf-default-opts yes
+        zstyle ':completion:*' menu no
+        # zstyle ':fzf-tab:complete:cd:*' fzf-preview '${pkgs.eza}/bin/eza -1 -a --color=always $realpath'
+        # zstyle ':fzf-tab:complete:systemctl:*' fzf-preview 'systemctl status $word'
       '';
     };
   };
+
 }

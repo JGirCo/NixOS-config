@@ -347,9 +347,9 @@ in
         always-center-single-column = true;
 
         preset-column-widths = [
-          { proportion = 1.0 / 3.0; }
+          { proportion = 1.0 / 4.0; }
           { proportion = 1.0 / 2.0; }
-          { proportion = 2.0 / 3.0; }
+          { proportion = 3.0 / 4.0; }
         ];
 
         default-column-width = {
@@ -381,10 +381,10 @@ in
           clip-to-geometry = true;
           draw-border-with-background = false;
         }
-        # {
-          # matches = [ { app-id = "^${terminal}$"; } ];
-          # opacity = 0.9;
-        # }
+        {
+          matches = [ { app-id = "^${terminal}$"; } ];
+          opacity = 0.85;
+        }
         {
           matches = [ { app-id = "^zen$"; } ];
           open-maximized = false;

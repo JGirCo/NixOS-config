@@ -21,7 +21,6 @@
       confirm_os_window_close = 0;
       allow_remote_control = "socket-only";
       listen_on = "unix:/tmp/mykitty";
-      background_opacity = lib.mkForce "0.85";
     };
     keybindings = {
       "alt+n" = "new_os_window_with_cwd";

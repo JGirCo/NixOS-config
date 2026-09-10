@@ -619,12 +619,12 @@
     binding = "9C9ADF";
 
     red = "ff988b";
-    yellow = "E0C094";
+    yellow = "b59300";
     pink = "E094B5";
     green = "3aa58a";
     blue = "76c5ff";
     purple = "9C9ADF";
-    orange = "ffc6af";
+    orange = "ff7a33";
 
     key = {
       darklight = "prefer-light";
