@@ -1,8 +1,6 @@
 {
   config,
   pkgs,
-  nixvim,
-  inputs,
   theme,
   lib,
   ...
@@ -100,15 +98,6 @@ lib.mkMerge [
       };
 
       # UI Elements
-      waybar = {
-        Unit.Description = "Wayland status bar";
-        Service = {
-          ExecStart = "${pkgs.waybar}/bin/waybar";
-          Restart = "always";
-        };
-        Install.WantedBy = [ "graphical-session.target" ];
-      };
-
       swayosd = {
         Service.X-RestartIfChanged = true;
         Unit = {

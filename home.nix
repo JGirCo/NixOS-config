@@ -1,9 +1,8 @@
 {
-  config,
   pkgs,
-  nixvim,
   inputs,
   theme,
+  font,
   lib,
   ...
 }:
@@ -11,10 +10,6 @@
 let
   themes = import ./themes.nix;
   themeColors = themes.${theme} or themes."catppuccin-macchiato";
-  colors = themeColors // {
-    nvimEngine = themeColors.nvimEngine or "builtin";
-    isBase16Builtin = themeColors.isBase16Builtin or true;
-  };
 in
 {
   imports = [
@@ -39,11 +34,9 @@ in
     ./apps/directwrite/tridactyl.nix
 
     ./scripts/default.nix
-
-    inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
-  _module.args.colors = colors;
+  _module.args.colors = themeColors;
 
   programs.home-manager.enable = true;
   home = {
@@ -57,30 +50,35 @@ in
     };
   };
 
-  # Mako notification daemon (replaces swaync). Stylix themes the
-  # default config via targets.mako; we override font + add rounded
-  # corners on top.
+  # Mako notification daemon. Stylix themes the default config via
+  # targets.mako; we override font + add rounded corners on top.
   services.mako.enable = true;
   services.mako.settings = {
-    font = lib.mkForce "Atkinson Hyperlegible Next 20";
+    font = lib.mkForce "${font.sans.name} 20";
     border-radius = 16;
   };
 
-  # Mako is D-Bus activated by default, but the D-Bus service file uses
-  # SystemdService=mako.service, so we need to enable the user service
-  # for D-Bus to be able to start it.
-  home.activation.makoSystemdService = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    systemctl --user enable --now mako.service 2>/dev/null || true
-  '';
+  # The mako package ships a D-Bus-activated systemd unit, but home-manager
+  # neither installs nor enables it. Declare it here so D-Bus can activate it
+  # and it starts with the graphical session (no imperative systemctl needed).
+  systemd.user.services.mako = {
+    Unit = {
+      Description = "Lightweight Wayland notification daemon";
+      Documentation = [ "man:mako(1)" ];
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "dbus";
+      BusName = "org.freedesktop.Notifications";
+      ExecCondition = "/bin/sh -c '[ -n \"$WAYLAND_DISPLAY\" ]'";
+      ExecStart = "${pkgs.mako}/bin/mako";
+      ExecReload = "${pkgs.mako}/bin/makoctl reload";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [
-    (final: prev: {
-      openldap = prev.openldap.overrideAttrs (oldAttrs: {
-        doCheck = false;
-      });
-    })
-  ];
   home.file = {
     ".local/share/applications/org.libvips.vipsdisp.desktop".text = ''
       [Desktop Entry]
@@ -100,7 +98,6 @@ in
 
   home.packages = with pkgs; [
     libnotify # for notify-send
-    mako # notification daemon (replaces swaync)
 
     #GUI
     freecad-wayland

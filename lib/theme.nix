@@ -20,8 +20,7 @@ let
   # Semantic aliases for the expressive colours defined per theme in themes.nix.
   semantic = {
     bg = withHash (colors.base or palette.base00);
-    fg = withHash (colors.text2 or palette.base05);
-    text = withHash (colors.text or palette.base07);
+    fg = withHash (colors.text or palette.base05);
     accent = withHash (colors.focused or palette.base0D);
     secondary = withHash (colors.inactive or palette.base0E);
     alt = withHash (colors.alt or palette.base0A);

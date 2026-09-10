@@ -7,10 +7,6 @@
 flake-overlays:
 
 {
-  inputs,
-  config,
-  pkgs,
-  lib,
   ...
 }:
 

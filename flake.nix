@@ -13,19 +13,18 @@
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    stylix.url = "github:danth/stylix";
-    nixcord.url = "github:4evy/nixcord";
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixcord = {
+      url = "github:4evy/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
 
-    legion-kb-rgb.url = "github:4JX/L5P-Keyboard-RGB";
-    legion-kb-rgb.inputs.nixpkgs.follows = "nixpkgs";
-
-    firefox = {
-      url = "github:nix-community/flake-firefox-nightly";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     niri.url = "github:sodiboo/niri-flake/6bb99ff875919f03ea6054026619d999061e1170";
     niri.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -38,20 +37,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    niri-animations = {
-      url = "github:jgarza9788/niri-animation-collection";
-      flake = false;
-    };
-
     wl_shimeji = {
       url = "git+https://github.com/CluelessCatBurger/wl_shimeji?submodules=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    elephant.url = "github:abenz1267/elephant";
+    elephant = {
+      url = "github:abenz1267/elephant";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     walker = {
       url = "github:abenz1267/walker";
       inputs.elephant.follows = "elephant";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -76,15 +74,24 @@
 
       # USER settings
       font = {
-        name = "Maple Mono NF";
-        isNF = false;
-        sans = "Atkinson Hyperlegible Next";
-        serif = "IBM Plex Serif";
-
+        mono = {
+          name = "Maple Mono NF";
+          package = pkgs.maple-mono.NF;
+        };
+        sans = {
+          name = "Atkinson Hyperlegible Next";
+          package = pkgs.atkinson-hyperlegible-next;
+        };
+        serif = {
+          name = "IBM Plex Serif";
+          package = pkgs.ibm-plex;
+        };
       };
       browser = {
         name = "zen-twilight";
       };
+      # Theme used for the system configuration and the default home config.
+      defaultTheme = "catppuccin-macchiato";
       flake-overlays = [ niri.overlays.niri ];
       mkHomeConfig =
         themeName:
@@ -129,6 +136,8 @@
       ];
     in
     {
+      formatter.${system} = pkgs.nixfmt-tree;
+
       nixosConfigurations = {
         nixos = lib.nixosSystem {
           inherit system;
@@ -143,11 +152,12 @@
             inherit browser;
             inherit font;
             inherit inputs;
+            theme = defaultTheme;
           };
         };
       };
       homeConfigurations = (lib.genAttrs themes (themeName: mkHomeConfig themeName)) // {
-        "jgirco" = mkHomeConfig "catppuccin-macchiato";
+        "jgirco" = mkHomeConfig defaultTheme;
       };
     };
 }

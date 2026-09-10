@@ -74,8 +74,6 @@ in
     libreoffice
     nautilus
     ungoogled-chromium
-    # floorp
-    # deluge
     qbittorrent
     steam-rom-manager
 
@@ -84,7 +82,6 @@ in
     tridactyl-native
     nix-prefetch-github
     lenovo-legion
-    # legion-kb-rgb
     gtklock
 
     #games

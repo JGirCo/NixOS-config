@@ -1,8 +1,5 @@
 {
-  inputs,
-  config,
   pkgs,
-  lib,
   ...
 }:
 
@@ -92,62 +89,68 @@ let
     {
       pkgs,
       lib,
-      config,
       ...
     }:
     let
-      sessionScript = pkgs.writeShellScript "gamescope-console-${name}-session" ''
-        for svc in waybar awww-daemon iwgtk apply-theme; do
-          ${pkgs.systemd}/bin/systemctl --user mask --runtime "$svc.service" 2>/dev/null || true
-        done
+      sessionScript = pkgs.writeShellApplication {
+        name = "gamescope-console-${name}-session";
+        runtimeInputs = [ pkgs.systemd ];
+        text = ''
+          for svc in waybar awww-daemon iwgtk apply-theme; do
+            systemctl --user mask --runtime "$svc.service" 2>/dev/null || true
+          done
 
-        export vk_khr_present_wait=false
-        export ENABLE_GAMESCOPE_WSI=1
-        export STEAM_FRAME_FORCE_CLOSE=1
-        export XDG_SESSION_TYPE=wayland
-        export XDG_CURRENT_DESKTOP=gamescope
+          export vk_khr_present_wait=false
+          export ENABLE_GAMESCOPE_WSI=1
+          export STEAM_FRAME_FORCE_CLOSE=1
+          export XDG_SESSION_TYPE=wayland
+          export XDG_CURRENT_DESKTOP=gamescope
 
-        ${pkgs.systemd}/bin/systemctl --user start pipewire.service wireplumber.service || true
-        ${pkgs.systemd}/bin/systemctl --user import-environment \
-          WAYLAND_DISPLAY DISPLAY XDG_RUNTIME_DIR \
-          XDG_SESSION_TYPE XDG_CURRENT_DESKTOP \
-          PULSE_RUNTIME_PATH PULSE_SERVER || true
-        ${pkgs.systemd}/bin/systemctl --user start graphical-session.target || true
-        ${pkgs.systemd}/bin/systemctl --user start sunshine.service || true
+          systemctl --user start pipewire.service wireplumber.service || true
+          systemctl --user import-environment \
+            WAYLAND_DISPLAY DISPLAY XDG_RUNTIME_DIR \
+            XDG_SESSION_TYPE XDG_CURRENT_DESKTOP \
+            PULSE_RUNTIME_PATH PULSE_SERVER || true
+          systemctl --user start graphical-session.target || true
+          systemctl --user start sunshine.service || true
 
-        exec ${spawn}
-      '';
-      gamescopeLaunch = pkgs.writeShellScript "gamescope-console-${name}-launch" ''
-        set -euo pipefail
+          exec ${spawn}
+        '';
+      };
+      gamescopeLaunch = pkgs.writeShellApplication {
+        name = "gamescope-console-${name}-launch";
+        runtimeInputs = with pkgs; [
+          coreutils
+          gnugrep
+          wireplumber
+        ];
+        text = ''
+          tvStatus="disconnected"
+          for f in /sys/class/drm/card*-HDMI-A-1/status; do
+            [ -e "$f" ] || continue
+            tvStatus=$(cat "$f")
+          done
 
-        tvStatus="disconnected"
-        for f in /sys/class/drm/card*-HDMI-A-1/status; do
-          [ -e "$f" ] || continue
-          tvStatus=$(cat "$f")
-        done
-
-        if [ "$tvStatus" = "connected" ]; then
-          # NVIDIA driving the HDMI port
-          gsArgs=(--prefer-vk-device 10de:28e0 -O HDMI-A-1)
-          # Route audio to the dock: pick the HDMI sink by name so it survives
-          # WirePlumber renumbering between boots. Bump volume and unmute in
-          # case the TV defaults to 0 / muted.
-          hdmiSink=$(${pkgs.wireplumber}/bin/wpctl status \
-            | ${pkgs.gnugrep}/bin/grep 'HDMI' \
-            | ${pkgs.gnugrep}/bin/grep -oE '[0-9]+' \
-            | ${pkgs.coreutils}/bin/head -n1) || true
-          if [ -n "''${hdmiSink:-}" ]; then
-            ${pkgs.wireplumber}/bin/wpctl set-default "$hdmiSink" || true
-            ${pkgs.wireplumber}/bin/wpctl set-volume "$hdmiSink" 100% || true
-            ${pkgs.wireplumber}/bin/wpctl set-mute "$hdmiSink" 0 || true
+          if [ "$tvStatus" = "connected" ]; then
+            # NVIDIA driving the HDMI port
+            gsArgs=(--prefer-vk-device 10de:28e0 -O HDMI-A-1)
+            # Route audio to the dock: pick the HDMI sink by name so it survives
+            # WirePlumber renumbering between boots. Bump volume and unmute in
+            # case the TV defaults to 0 / muted.
+            hdmiSink=$(wpctl status | grep 'HDMI' | grep -oE '[0-9]+' | head -n1) || true
+            if [ -n "''${hdmiSink:-}" ]; then
+              wpctl set-default "$hdmiSink" || true
+              wpctl set-volume "$hdmiSink" 100% || true
+              wpctl set-mute "$hdmiSink" 0 || true
+            fi
+          else
+            # AMD driving the built-in screen
+            gsArgs=(--prefer-vk-device 1002:1900 -O eDP-2)
           fi
-        else
-          # AMD driving the built-in screen
-          gsArgs=(--prefer-vk-device 1002:1900 -O eDP-2)
-        fi
 
-        exec ${pkgs.gamescope}/bin/gamescope -f --xwayland-count 1 -w 2560 -h 1600 --force-grab-cursor "''${gsArgs[@]}" -- ${sessionScript} > /tmp/gamescope-session.log 2>&1
-      '';
+          exec ${pkgs.gamescope}/bin/gamescope -f --xwayland-count 1 -w 2560 -h 1600 --force-grab-cursor "''${gsArgs[@]}" -- ${sessionScript} > /tmp/gamescope-session.log 2>&1
+        '';
+      };
     in
     {
       environment.systemPackages = extraPackages;
@@ -192,63 +195,74 @@ let
   };
 
   # Isolated script for parsing Steam manifests cleanly
-  syncSteamGames = pkgs.writeShellScriptBin "sync-steam-games" ''
-        set -euo pipefail
-        STEAMDIR="$HOME/.local/share/Steam/steamapps"
-        ESDEROMS="$HOME/ROMs"
-        mkdir -p "$ESDEROMS/steam"
-        rm -f "$ESDEROMS/steam"/*.desktop
+  syncSteamGames = pkgs.writeShellApplication {
+    name = "sync-steam-games";
+    runtimeInputs = with pkgs; [
+      coreutils
+      gnused
+    ];
+    text = ''
+      STEAMDIR="$HOME/.local/share/Steam/steamapps"
+      ESDEROMS="$HOME/ROMs"
+      mkdir -p "$ESDEROMS/steam"
+      rm -f "$ESDEROMS/steam"/*.desktop
 
-        if [ -d "$STEAMDIR" ]; then
-          for mf in "$STEAMDIR"/appmanifest_*.acf; do
-            [ -e "$mf" ] || continue
-            appid=$(sed -n 's/.*"appid"[[:space:]]*"\([0-9]*\)".*/\1/p' "$mf" | head -1)
-            name=$(sed -n 's/.*"name"[[:space:]]*"\(.*\)".*/\1/p' "$mf" | head -1)
-            [ -n "$appid" ] && [ -n "$name" ] || continue
-            cat > "$ESDEROMS/steam/$name.desktop" <<EOF
-    [Desktop Entry]
-    Type=Application
-    Name=$name
-    Exec=${pkgs.steam}/bin/steam -silent steam://rungameid/$appid
-    EOF
-          done
-        fi
-  '';
+      if [ -d "$STEAMDIR" ]; then
+        for mf in "$STEAMDIR"/appmanifest_*.acf; do
+          [ -e "$mf" ] || continue
+          appid=$(sed -n 's/.*"appid"[[:space:]]*"\([0-9]*\)".*/\1/p' "$mf" | head -1)
+          name=$(sed -n 's/.*"name"[[:space:]]*"\(.*\)".*/\1/p' "$mf" | head -1)
+          if [ -z "$appid" ] || [ -z "$name" ]; then
+            continue
+          fi
+          cat > "$ESDEROMS/steam/$name.desktop" <<EOF
+      [Desktop Entry]
+      Type=Application
+      Name=$name
+      Exec=${pkgs.steam}/bin/steam -silent steam://rungameid/$appid
+      EOF
+        done
+      fi
+    '';
+  };
 
   # Lean session launcher script
-  esdeConsole = pkgs.writeShellScriptBin "esde-console" ''
-        set -euo pipefail
-        ESDEROMS="$HOME/Games/ROMS"
+  esdeConsole = pkgs.writeShellApplication {
+    name = "esde-console";
+    runtimeInputs = [ pkgs.coreutils ];
+    text = ''
+      ESDEROMS="$HOME/Games/ROMS"
 
-        mkdir -p "$HOME/.config/retroarch" "$ESDEROMS/emulators" "$HOME/.local/bin"
+      mkdir -p "$HOME/.config/retroarch" "$ESDEROMS/emulators" "$HOME/.local/bin"
 
-        # ES-DE defaults to ~/ROMs; alias it to our real library root so the
-        # upstream es_systems.xml paths (~/ROMs/<system>) just work.
-        ln -sfn "$ESDEROMS" "$HOME/ROMs"
+      # ES-DE defaults to ~/ROMs; alias it to our real library root so the
+      # upstream es_systems.xml paths (~/ROMs/<system>) just work.
+      ln -sfn "$ESDEROMS" "$HOME/ROMs"
 
-        # Link the pre-built core farm straight into RetroArch's path
-        ln -sfn "${retroCoresDir}" "$HOME/.config/retroarch/cores"
+      # Link the pre-built core farm straight into RetroArch's path
+      ln -sfn "${retroCoresDir}" "$HOME/.config/retroarch/cores"
 
-        cat > "$HOME/.config/retroarch/niri-console.cfg" <<'CFG'
-    video_fullscreen = "true"
-    video_windowed_fullscreen = "true"
-    CFG
+      cat > "$HOME/.config/retroarch/niri-console.cfg" <<'CFG'
+      video_fullscreen = "true"
+      video_windowed_fullscreen = "true"
+      CFG
 
-        cat > "$HOME/.local/bin/retroarch" <<EOF
-    #!${pkgs.bash}/bin/bash
-    exec ${pkgs.retroarch}/bin/retroarch --appendconfig="\$HOME/.config/retroarch/niri-console.cfg" "\$@"
-    EOF
-        chmod +x "$HOME/.local/bin/retroarch"
+      cat > "$HOME/.local/bin/retroarch" <<'EOF'
+      #!${pkgs.bash}/bin/bash
+      exec ${pkgs.retroarch}/bin/retroarch --appendconfig="$HOME/.config/retroarch/niri-console.cfg" "$@"
+      EOF
+      chmod +x "$HOME/.local/bin/retroarch"
 
-        # Update Steam shortcuts
-        ${syncSteamGames}/bin/sync-steam-games
+      # Update Steam shortcuts
+      ${syncSteamGames}/bin/sync-steam-games
 
-        # Spawn Steam silently in the background and launch ES-DE
-        ${pkgs.steam}/bin/steam -silent -nochatui -nofriendsui &
-        sleep 2
+      # Spawn Steam silently in the background and launch ES-DE
+      ${pkgs.steam}/bin/steam -silent -nochatui -nofriendsui &
+      sleep 2
 
-        exec ${esde}/bin/es-de
-  '';
+      exec ${esde}/bin/es-de
+    '';
+  };
 in
 {
   specialisation = {

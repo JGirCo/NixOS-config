@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  theme,
   colors,
   ...
 }:
@@ -16,7 +15,7 @@ let
     exec ${pkgs.gum}/bin/gum choose \
       --no-show-help \
       --padding "1 1" \
-      --header.foreground "#${colors.text2}" \
+      --header.foreground "#${colors.text}" \
       --selected.foreground "#${colors.base}" \
       --selected.background "#${colors.focused}" \
       --cursor.foreground "#${colors.focused}" \
@@ -30,7 +29,7 @@ let
     pkgs.writeShellScriptBin name ''
       ${pkgs.gum}/bin/gum confirm "${prompt}" \
         --no-show-help \
-        --prompt.foreground "#${colors.text2}" \
+        --prompt.foreground "#${colors.text}" \
         --selected.foreground "#${colors.base}" \
         --selected.background "#${colors.focused}" \
         --unselected.foreground "#${colors.base}" \
@@ -49,7 +48,6 @@ let
 
       # Restart apps that cache their theme at startup
       pkill -x nautilus qbittorrent org.gnome.Nautilus 2>/dev/null || true
-      systemctl --user restart swaync.service 2>/dev/null || true
       killall -q gtk-query-settings gsettings-data-convert 2>/dev/null || true
       echo "Theme switched to $THEME — GTK/Qt apps restarted."
     fi

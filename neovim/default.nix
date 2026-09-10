@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 let
   esThes = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/Konfekt/vim-thesauri/master/es.ths";

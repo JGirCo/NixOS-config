@@ -1,6 +1,5 @@
 {
   lib,
-  theme,
   font,
   config,
   colors,
@@ -29,6 +28,7 @@ in
 {
   programs.waybar = {
     enable = true;
+    systemd.enable = true;
     settings = {
       mainBar = {
         position = "left";
@@ -229,7 +229,7 @@ in
       @define-color pink     ${pink};
 
       * {
-        font-family: "${font.sans}";
+        font-family: "${font.sans.name}";
         font-size: 20px;
         border: none;
         border-radius: 999px;

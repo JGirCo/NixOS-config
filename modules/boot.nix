@@ -1,11 +1,6 @@
 # Boot configuration: bootloader, kernel parameters, resume device, initrd.
-# GRUB theme: currently using minegrub-world-sel. To switch back to Graphite:
-#   1. Set `boot.loader.grub.minegrub-world-sel.enable = false`
-#   2. Set `boot.loader.grub.theme = (import ../derivations/grub-graphite-theme.nix { inherit pkgs; })`
 {
   config,
-  lib,
-  pkgs,
   ...
 }:
 {
@@ -16,7 +11,6 @@
   boot.resumeDevice = "/dev/disk/by-uuid/4b3336c0-2ee7-47ee-9ae8-4842776879e4";
 
   boot.kernelParams = [
-    "resume=UUID=4b3336c0-2ee7-47ee-9ae8-4842776879e4"
     "nvidia-drm.modeset=1"
     "nvidia_drm.fbdev=1"
     "quiet"

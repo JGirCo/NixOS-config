@@ -1,7 +1,4 @@
 {
-  config,
-  theme,
-  lib,
   colors,
   ...
 }:
@@ -77,12 +74,12 @@ let
   cssconfig = with colors; ''
     :root {
         --tridactyl-bg: #${base};
-        --tridactyl-fg: #${text2};
+        --tridactyl-fg: #${text};
         --tridactyl-status-border: 2px solid #${alt};
         --tridactyl-status-border-radius: 999px;
-        --tridactyl-of-fg: #${text2};
+        --tridactyl-of-fg: #${text};
         --tridactyl-of-bg: #${base};
-        --tridactyl-hintspan-fg: #${text2};
+        --tridactyl-hintspan-fg: #${text};
         --tridactyl-hintspan-bg: #${base};
         --tridactyl-hintspan-border-color: #${focused};
         --tridactyl-hintspan-border-width: 1px;

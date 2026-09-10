@@ -1,10 +1,5 @@
 {
-  config,
   lib,
-  pkgs,
-  theme,
-  font,
-  colors,
   ...
 }:
 
@@ -26,28 +21,5 @@
       "alt+n" = "new_os_window_with_cwd";
       "alt+space" = "launch --stdin-source=@screen --type=overlay  nvim -R";
     };
-
   };
-
-  # programs.zellij = {
-  #   enable = true;
-  #   enableZshIntegration = true;
-  #   settings = {
-  #     support_kitty_keyboard_protocol = true;
-  #     default_layout = "compact";
-  #     pane_frames = false;
-  #     show_startup_tips = false;
-  #     keybinds = {
-  #       normal = {
-  #         "bind \"Alt space\"" = {
-  #           EditScrollback = [ ];
-  #         };
-  #         "bind \"Alt n\"" = {
-  #           NewTab = [ ];
-  #         };
-  #       };
-  #     };
-  #   };
-  # };
-
 }

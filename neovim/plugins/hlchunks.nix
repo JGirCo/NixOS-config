@@ -1,7 +1,4 @@
 {
-  config,
-  theme,
-  lib,
   colors,
   ...
 }:

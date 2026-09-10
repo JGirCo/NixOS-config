@@ -4,9 +4,16 @@
 {
   pkgs,
   browser,
-  lib,
+  theme,
+  font,
   ...
 }:
+let
+  themeScheme = import ../lib/scheme.nix {
+    inherit pkgs;
+    themes = import ../themes.nix;
+  } theme;
+in
 {
   # Enable the X11 windowing system.
   services.udisks2.enable = true;
@@ -39,22 +46,12 @@
     targets.kmscon.enable = true;
     targets.plymouth.enable = false;
     targets.grub.enable = false;
-    polarity = "dark";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+    inherit (themeScheme) polarity base16Scheme override;
 
     fonts = {
-      monospace = {
-        name = "Maple Mono NF";
-        package = pkgs.maple-mono.NF;
-      };
-      sansSerif = {
-        name = "Atkinson Hyperlegible Next";
-        package = pkgs.atkinson-hyperlegible-next;
-      };
-      serif = {
-        name = "IBM Plex Serif";
-        package = pkgs.ibm-plex;
-      };
+      monospace = font.mono;
+      sansSerif = font.sans;
+      serif = font.serif;
     };
 
     cursor = {

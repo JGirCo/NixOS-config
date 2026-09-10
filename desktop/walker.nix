@@ -1,5 +1,4 @@
 {
-  inputs,
   theme,
   lib,
   config,

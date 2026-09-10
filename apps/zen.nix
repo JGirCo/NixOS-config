@@ -1,7 +1,5 @@
 {
-  inputs,
   pkgs,
-  theme,
   lib,
   config,
   font,
@@ -15,7 +13,6 @@ let
   };
   bg = themeLib.semantic.bg;
   transparencyDefault = "${bg}E5";
-  transparencyTest = "${bg}C0";
 in
 {
   # FIXME: Temporary workaround - Zen Browser still defaults to ~/.zen instead of ~/.config/zen
@@ -42,9 +39,9 @@ in
     settings = {
       # "browser.display.use_document_fonts" = 0;
       "font.default.x-western" = "sans-serif";
-      "font.name.sans-serif.x-western" = font.sans;
-      "font.name.serif.x-western" = font.serif;
-      "font.name.monospace.x-western" = font.name;
+      "font.name.sans-serif.x-western" = font.sans.name;
+      "font.name.serif.x-western" = font.serif.name;
+      "font.name.monospace.x-western" = font.mono.name;
     };
   };
 
@@ -53,15 +50,6 @@ in
     id = 1;
     preConfig = ''
       user_pref("mod.sameerasw.zen_transparency_color", "${transparencyDefault}");
-    '';
-    isDefault = false;
-  };
-
-  programs.zen-browser.profiles."test" = {
-    name = "test";
-    id = 2;
-    preConfig = ''
-      user_pref("mod.sameerasw.zen_transparency_color", "${transparencyTest}");
     '';
     isDefault = false;
   };

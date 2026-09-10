@@ -1,6 +1,6 @@
 # Hardware-related configuration: CPU, GPU (NVIDIA prime offload + AMD),
 # bluetooth, kernel modules, udev rules, printing, etc.
-{ config, lib, ... }:
+{ config, ... }:
 {
   services.hardware.bolt.enable = true;
 

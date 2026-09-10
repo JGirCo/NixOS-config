@@ -52,7 +52,6 @@ let
     key: action: value:
     bind "Mod+Alt+${key}" action value;
   modCtrl = key: action: bindAct "Mod+Ctrl+${key}" action;
-  mod5 = key: action: bindAct "Mod5+${key}" action;
 
   # Swayosd-driven OSD binds (volume / brightness).
   # Renders `swayosd-client --<flag>` plus any optional extra args.
@@ -274,7 +273,6 @@ in
     mpris-notifier
     awww
     waybar
-    swaynotificationcenter
     grim
     slurp
     swappy

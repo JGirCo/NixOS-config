@@ -1,9 +1,6 @@
 # Environment-level configuration: Nix settings, nixpkgs options, locale,
 # timezone, paths, session variables, MOTD banner, system stateVersion.
-{ pkgs, font, ... }:
-let
-  maplefont = import ../derivations/maple-font.nix { inherit pkgs; };
-in
+{ font, ... }:
 {
   # Experimental features
   nix.settings.experimental-features = [
@@ -67,15 +64,7 @@ in
   environment.localBinInPath = true;
 
   fonts.fontDir.enable = true;
-  fonts.packages =
-    if font.isNF then
-      with pkgs; [ nerdfonts ]
-    else
-      [
-        maplefont
-        pkgs.atkinson-hyperlegible-next
-        pkgs.ibm-plex
-      ];
+  fonts.packages = map (f: f.package) (builtins.attrValues font);
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

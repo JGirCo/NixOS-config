@@ -2,8 +2,7 @@
   "ayu-light" = {
     polarity = "light";
     base = "fafafa";
-    text = "fafafa";
-    text2 = "5c6773";
+    text = "5c6773";
     inactive = "f2ae49";
     focused = "fa8d3e";
     alt = "a37acc";
@@ -18,19 +17,13 @@
     purple = "a37acc";
     orange = "fa8d3e";
 
-    key = {
-      nvim = "ayu";
-      darklight = "prefer-light";
-    };
-
     scheme.file = "ayu-light";
   };
 
   "catppuccin-latte" = {
     polarity = "light";
     base = "eff1f5";
-    text = "eff1f5";
-    text2 = "4c4f69";
+    text = "4c4f69";
     inactive = "04a5e5";
     focused = "1e66f5";
     alt = "179299";
@@ -45,19 +38,13 @@
     purple = "8839ef";
     orange = "fe640b";
 
-    key = {
-      nvim = "catppuccin";
-      darklight = "prefer-light";
-    };
-
     scheme.file = "catppuccin-latte";
   };
 
   "catppuccin-macchiato" = {
     polarity = "dark";
     base = "181926";
-    text = "181926";
-    text2 = "cad3f5";
+    text = "cad3f5";
     inactive = "f4dbd6";
     focused = "f5a97f";
     alt = "7dc4e4";
@@ -72,11 +59,6 @@
     purple = "c6a0f6";
     orange = "f5a97f";
 
-    key = {
-      nvim = "catppuccin";
-      darklight = "prefer-dark";
-    };
-
     scheme.file = "catppuccin-macchiato";
     scheme.override = {
       base00 = "181825";
@@ -88,8 +70,7 @@
   "dracula" = {
     polarity = "dark";
     base = "282a36";
-    text = "282a36";
-    text2 = "f8f8f2";
+    text = "f8f8f2";
     inactive = "6272a4";
     focused = "bd93f9";
     alt = "ff79c6";
@@ -103,12 +84,6 @@
     blue = "8be9fd";
     purple = "bd93f9";
     orange = "ffb86c";
-
-    key = {
-      nvim = "dracula";
-      darklight = "prefer-dark";
-    };
-    isBase16Builtin = false;
     scheme.palette = {
       base00 = "282a36";
       base01 = "1e2030";
@@ -132,8 +107,7 @@
   "everforest-light" = {
     polarity = "light";
     base = "f3ead3";
-    text = "f3ead3";
-    text2 = "5c6a72";
+    text = "5c6a72";
     inactive = "93b259";
     focused = "8da101";
     alt = "dfa000";
@@ -147,13 +121,6 @@
     blue = "3a94c5";
     purple = "af59ba";
     orange = "f57d26";
-
-    key = {
-      nvim = "everforest";
-      darklight = "prefer-light";
-    };
-    nvimEngine = "builtin";
-    isBase16Builtin = false;
     scheme.palette = {
       base00 = "f3ead3";
       base01 = "eae4ca";
@@ -177,8 +144,7 @@
   "gruvbox-dark-medium" = {
     polarity = "dark";
     base = "282828";
-    text = "282828";
-    text2 = "ebdbb2";
+    text = "ebdbb2";
     inactive = "458588";
     focused = "83a598";
     alt = "f38019";
@@ -193,19 +159,13 @@
     purple = "d3869b";
     orange = "f38019";
 
-    key = {
-      nvim = "gruvbox";
-      darklight = "prefer-dark";
-    };
-
     scheme.file = "gruvbox-dark-medium";
   };
 
   "gruvbox-light-medium" = {
     polarity = "light";
     base = "fbf1c7";
-    text = "fbf1c7";
-    text2 = "3c3836";
+    text = "3c3836";
     inactive = "689d6a";
     focused = "427b58";
     alt = "f38019";
@@ -220,19 +180,13 @@
     purple = "8f3f71";
     orange = "f38019";
 
-    key = {
-      nvim = "gruvbox";
-      darklight = "prefer-light";
-    };
-
     scheme.file = "gruvbox-light-medium";
   };
 
   "gruvbox-light-soft" = {
     polarity = "light";
     base = "fbf1c7";
-    text = "fbf1c7";
-    text2 = "282828";
+    text = "282828";
     inactive = "928374";
     focused = "7c6f64";
     alt = "b16286";
@@ -247,19 +201,13 @@
     purple = "8f3f71";
     orange = "af3a03";
 
-    key = {
-      nvim = "gruvbox";
-      darklight = "prefer-light";
-    };
-
     scheme.file = "gruvbox-light-soft";
   };
 
   "kanagawa-light" = {
     polarity = "light";
     base = "dcd7ba";
-    text = "dcd7ba";
-    text2 = "1f1f28";
+    text = "1f1f28";
     inactive = "658594";
     focused = "2d4f67";
     alt = "7e9cd8";
@@ -273,13 +221,6 @@
     blue = "658594";
     purple = "957fb8";
     orange = "ff9e3b";
-
-    key = {
-      nvim = "kanagawa";
-      darklight = "prefer-light";
-    };
-    nvimEngine = "builtin";
-    isBase16Builtin = false;
     scheme.palette = {
       base00 = "dcd7ba";
       base01 = "d2cca6";
@@ -303,8 +244,7 @@
   "melange" = {
     polarity = "light";
     base = "e9e1db";
-    text = "e9e1db";
-    text2 = "54433a";
+    text = "54433a";
     inactive = "7892bd";
     focused = "465aa4";
     alt = "bc5c00";
@@ -318,13 +258,6 @@
     blue = "465aa4";
     purple = "904180";
     orange = "bc5c00";
-
-    key = {
-      nvim = "melange";
-      darklight = "prefer-light";
-    };
-    nvimEngine = "builtin";
-    isBase16Builtin = false;
     scheme.palette = {
       base00 = "f1f1f1";
       base01 = "e9e1db";
@@ -348,8 +281,7 @@
   "oxocarbon-light" = {
     polarity = "light";
     base = "f2f4f8";
-    text = "f2f4f8";
-    text2 = "525252";
+    text = "525252";
     inactive = "ff7eb6";
     focused = "ee5396";
     alt = "0f62fe";
@@ -363,13 +295,6 @@
     blue = "0f52fe";
     purple = "673ab7";
     orange = "ff6f00";
-
-    key = {
-      nvim = "oxocarbon";
-      darklight = "prefer-light";
-    };
-    nvimEngine = "builtin";
-    isBase16Builtin = false;
     scheme.palette = {
       base00 = "f2f4f8";
       base01 = "edf1f6";
@@ -393,8 +318,7 @@
   "rebecca" = {
     polarity = "dark";
     base = "292a44";
-    text = "292a44";
-    text2 = "f1eff8";
+    text = "f1eff8";
     inactive = "666699";
     focused = "6dfedf";
     alt = "ff79c6";
@@ -409,20 +333,13 @@
     purple = "ae81ff";
     orange = "ffb86c";
 
-    key = {
-      nvim = "rebecca";
-      darklight = "prefer-dark";
-    };
-    nvimEngine = "base16";
-
     scheme.file = "rebecca";
   };
 
   "rose-pine-dawn" = {
     polarity = "light";
     base = "faf4ed";
-    text = "faf4ed";
-    text2 = "575279";
+    text = "575279";
     inactive = "d7827e";
     focused = "b4637a";
     alt = "56949f";
@@ -437,19 +354,13 @@
     purple = "907aa9";
     orange = "ea9d34";
 
-    key = {
-      nvim = "rose-pine";
-      darklight = "prefer-light";
-    };
-
     scheme.file = "rose-pine-dawn";
   };
 
   "rose-pine" = {
     polarity = "dark";
     base = "191224";
-    text = "191224";
-    text2 = "e0def4";
+    text = "e0def4";
     inactive = "ebbcba";
     focused = "eb6f92";
     alt = "9ccfd8";
@@ -464,19 +375,13 @@
     purple = "c4a7e7";
     orange = "ea9d34";
 
-    key = {
-      nvim = "rose-pine";
-      darklight = "prefer-dark";
-    };
-
     scheme.file = "rose-pine";
   };
 
   "saga" = {
     polarity = "dark";
     base = "05080a";
-    text = "05080a";
-    text2 = "dce2f7";
+    text = "dce2f7";
     inactive = "dce2f7";
     focused = "ffd4e9";
     alt = "c9fff7";
@@ -491,12 +396,6 @@
     purple = "dcc3f9";
     orange = "f6dddd";
 
-    key = {
-      darklight = "prefer-dark";
-    };
-
-    nvimEngine = "base16";
-    isBase16Builtin = false;
     scheme.palette = {
       base00 = "05080a";
       base01 = "0a1014";
@@ -520,8 +419,7 @@
   "template" = {
     polarity = "light";
     base = "f8f8f8";
-    text = "f8f8f8";
-    text2 = "181818";
+    text = "181818";
     inactive = "c594ff";
     focused = "8865c6";
     alt = "c7c691";
@@ -535,12 +433,6 @@
     blue = "9bc7bf";
     purple = "a5aad4";
     orange = "e3a68c";
-
-    key = {
-      nvim = "stella";
-    };
-    nvimEngine = "base16";
-    isBase16Builtin = false;
     scheme.palette = {
       base00 = "f8f8f8";
       base01 = "e8e8e8";
@@ -564,8 +456,7 @@
   "tokyo-night-moon" = {
     polarity = "dark";
     base = "222436";
-    text = "222436";
-    text2 = "c8d3f5";
+    text = "c8d3f5";
     inactive = "828bb8";
     focused = "ff757f";
     alt = "c3e88d";
@@ -580,13 +471,6 @@
     purple = "bd93f9";
     orange = "ffb86c";
 
-    key = {
-      nvim = "tokyonight";
-      darklight = "prefer-dark";
-    };
-
-    nvimEngine = "base16";
-    isBase16Builtin = false;
     scheme.palette = {
       base00 = "222436";
       base01 = "1e2030";
@@ -610,8 +494,7 @@
   "trans" = {
     polarity = "light";
     base = "f4f4f6";
-    text = "f4f4f6";
-    text2 = "6b3d4f";
+    text = "6b3d4f";
     inactive = "BCA4BF";
     focused = "E094B5";
     alt = "76c5ff";
@@ -626,12 +509,6 @@
     purple = "9C9ADF";
     orange = "ff7a33";
 
-    key = {
-      darklight = "prefer-light";
-    };
-
-    nvimEngine = "base16";
-    isBase16Builtin = false;
     scheme.palette = {
       base00 = "f4f4f6";
       base01 = "fbe5ec";
@@ -643,12 +520,12 @@
       base07 = "6b3d4f";
       base08 = "ff988b";
       base09 = "ffae56";
-      base0A = "E0C094";
+      base0A = "b59300";
       base0B = "2e8b57";
       base0C = "3aa68a";
       base0D = "5bcefa";
       base0E = "E094B5";
-      base0F = "ffc6af";
+      base0F = "ff7a33";
     };
   };
 }

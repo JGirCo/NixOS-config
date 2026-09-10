@@ -23,12 +23,6 @@
       enable = true;
     };
     dconf.enable = true;
-    # firefox = {
-    #   enable = true;
-    #   package =
-    #     inputs.firefox.packages.${pkgs.stdenv.hostPlatform.system}.firefox-nightly-bin;
-    #   nativeMessagingHosts.packages = [ pkgs.firefoxpwa pkgs.tridactyl-native ];
-    # };
 
     nh = {
       enable = true;

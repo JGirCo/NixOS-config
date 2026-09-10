@@ -15,7 +15,6 @@
       "networkmanager"
       "wheel"
       "video"
-      "input"
       "keyd"
       "sensors"
       "audio"
